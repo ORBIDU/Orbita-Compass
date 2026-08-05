@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 
 function SegCtrl({ options, value, onChange, variant = 'default' }) {
@@ -37,8 +38,9 @@ const CustomTooltip = ({ active, payload, label }) => {
 }
 
 export default function SiapPTNPage() {
-  const [mainTab, setMainTab] = useState('snbt')
-  const [subTab, setSubTab] = useState('tryout')
+  const location = useLocation()
+  const [mainTab, setMainTab] = useState(location.state?.mainTab || 'snbt')
+  const [subTab, setSubTab] = useState(location.state?.subTab || 'tryout')
   const [step, setStep] = useState(1)
   const [univ, setUniv] = useState('')
   const [prodi, setProdi] = useState('')
@@ -52,7 +54,7 @@ export default function SiapPTNPage() {
   ]
 
   return (
-    <div className="px-4 py-5 max-w-[640px] mx-auto space-y-4">
+    <div className="px-4 sm:px-6 lg:px-8 py-6 max-w-6xl mx-auto space-y-6">
       {/* Header */}
       <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-5">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">

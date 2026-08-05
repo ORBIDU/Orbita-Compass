@@ -204,14 +204,11 @@ export default function StoryAnimation() {
       {/* ── Layer 6: Logo Reveal (56–90%) ── */}
       <div className="absolute inset-0 flex flex-col items-center justify-center animate-logoFade">
         {/* Logo mark */}
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-10 h-10 bg-gradient-to-br from-orbit-1 to-orbit-2 rounded-lg shadow-lg shadow-orbit-1/30" />
-          <div className="w-14 h-10 bg-gradient-to-br from-sun-1 to-sun-2 rounded-lg shadow-lg shadow-sun-1/30" />
+        <div className="flex items-center justify-center">
+          <img src="/logo-kepala.png" alt="ORBITA" className="h-24 object-contain" />
         </div>
-        {/* Wordmark */}
-        <h2 className="text-4xl font-bold text-cloud tracking-widest mb-3">ORBITA</h2>
         {/* Tagline */}
-        <p className="text-sm text-cloud/50 tracking-wide">Arahkan Masa Depanmu</p>
+        <p className="text-sm text-cloud/50 tracking-wide">The Smart Way to Shape Your Future</p>
         {/* Decorative line */}
         <div className="w-16 h-0.5 bg-gradient-to-r from-orbit-1 to-orbit-2 rounded-full mt-4 opacity-60" />
       </div>

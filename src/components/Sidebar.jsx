@@ -100,20 +100,8 @@ export default function Sidebar({ isOpen, onClose }) {
       >
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="px-6 pt-7 pb-6">
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1">
-                <div className="w-6 h-6 bg-gradient-to-br from-orbit-1 to-orbit-2 rounded-md" />
-                <div className="w-9 h-6 bg-gradient-to-br from-sun-1 to-sun-2 rounded-md" />
-              </div>
-              <h1 className="text-[28px] font-bold">
-                <span className="bg-gradient-to-r from-orbit-1 to-orbit-2 bg-clip-text text-transparent">ORB</span>
-                <span className="bg-gradient-to-r from-sun-1 to-sun-2 bg-clip-text text-transparent">ITA</span>
-              </h1>
-            </div>
-            <p className="text-[10px] font-semibold text-[#64748b] tracking-[0.15em] uppercase mt-1 ml-[60px]">
-              Student Portal
-            </p>
+          <div className="pt-4 pb-4 flex justify-center">
+            <img src="/logo-kepala.png" alt="ORBITA" className="h-16 object-contain" />
           </div>
 
           {/* Navigation */}

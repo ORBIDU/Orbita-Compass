@@ -28,21 +28,38 @@ function Toast({ message, stars, show, onClose }) {
   )
 }
 
+// ── Logo Mapping ──
+const LOGOS = {
+  'Universitas Gadjah Mada': '/logos/ugm.png',
+  'Institut Teknologi Bandung': '/logos/itb.png',
+  'Universitas Sriwijaya': '/logos/unsri.png',
+  'PKN STAN': '/logos/stan.png',
+  'Institut Pemerintahan Dalam Negeri': '/logos/ipdn.jpg',
+}
+
 // ── Ubah Target Modal ──
-function UbahTargetModal({ isOpen, onClose }) {
+function UbahTargetModal({ isOpen, onClose, ptnTarget, kedinasanTarget, onSave }) {
   const [ptnEnabled, setPtnEnabled] = useState(true)
   const [kedinasanEnabled, setKedinasanEnabled] = useState(true)
-  const [ptnUniv, setPtnUniv] = useState('Universitas Indonesia')
-  const [ptnProdi, setPtnProdi] = useState('Sistem Informasi')
-  const [kedSekolah, setKedSekolah] = useState('PKN STAN')
-  const [kedProdi, setKedProdi] = useState('D4 Akuntansi Sektor Publik')
+  const [ptnUniv, setPtnUniv] = useState(ptnTarget.univ)
+  const [ptnProdi, setPtnProdi] = useState(ptnTarget.prodi)
+  const [kedSekolah, setKedSekolah] = useState(kedinasanTarget.sekolah)
+  const [kedProdi, setKedProdi] = useState(kedinasanTarget.prodi)
 
   if (!isOpen) return null
 
-  const univs = ['Universitas Indonesia', 'Institut Teknologi Bandung', 'Universitas Gadjah Mada', 'Universitas Airlangga', 'Universitas Diponegoro', 'Institut Teknologi Sepuluh Nopember', 'Universitas Padjadjaran', 'Universitas Sebelas Maret', 'Universitas Hasanuddin', 'Universitas Sriwijaya']
+  const univs = ['Universitas Gadjah Mada', 'Institut Teknologi Bandung', 'Universitas Sriwijaya']
   const prodis = ['Sistem Informasi', 'Teknik Informatika', 'Ilmu Komputer', 'Matematika', 'Teknik Kimia', 'Teknik Elektro', 'Kedokteran', 'Farmasi', 'Akuntansi', 'Manajemen']
-  const sekolahKed = ['PKN STAN', 'IPDN', 'STIS', 'POLSTAT', 'STIN', 'STMKG']
+  const sekolahKed = ['PKN STAN', 'Institut Pemerintahan Dalam Negeri']
   const prodiKed = ['D4 Akuntansi Sektor Publik', 'D4 Manajemen Keuangan', 'D3 Pajak', 'D3 Kepabeanan', 'D3 Kebendaharaan Negara']
+
+  const handleSave = () => {
+    onSave({
+      ptn: { univ: ptnUniv, prodi: ptnProdi },
+      kedinasan: { sekolah: kedSekolah, prodi: kedProdi }
+    })
+    onClose()
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -129,7 +146,7 @@ function UbahTargetModal({ isOpen, onClose }) {
           <button onClick={onClose} className="flex-1 py-3 rounded-2xl text-[13px] text-[#64748b] border border-slate-200 hover:bg-slate-50 transition-colors cursor-pointer">
             Batal
           </button>
-          <button onClick={onClose} className="flex-1 py-3 rounded-2xl text-[13px] font-bold text-white bg-[#0965fa] hover:bg-[#0755d0] transition-colors cursor-pointer">
+          <button onClick={handleSave} className="flex-1 py-3 rounded-2xl text-[13px] font-bold text-white bg-[#0965fa] hover:bg-[#0755d0] transition-colors cursor-pointer">
             Simpan
           </button>
         </div>
@@ -164,6 +181,8 @@ function CircularProgress({ value, size = 48 }) {
 export default function ActionPlanPage() {
   const [showLb, setShowLb] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const [ptnTarget, setPtnTarget] = useState({ univ: 'Universitas Gadjah Mada', prodi: 'Sistem Informasi' })
+  const [kedinasanTarget, setKedinasanTarget] = useState({ sekolah: 'PKN STAN', prodi: 'D4 Akuntansi Sektor Publik' })
   const [toast, setToast] = useState({ show: false, message: '', stars: 0 })
   const [focusFilters, setFocusFilters] = useState(['snbt'])
   const [completedTasks, setCompletedTasks] = useState({ 3: true })
@@ -217,7 +236,7 @@ export default function ActionPlanPage() {
   if (showLb) return <LeaderboardView onBack={() => setShowLb(false)} totalStars={totalStars} />
 
   return (
-    <div className="px-4 py-5 max-w-[640px] mx-auto space-y-4">
+    <div className="px-4 sm:px-6 lg:px-8 py-6 max-w-6xl mx-auto space-y-6">
       {/* A1 — Hero/Header */}
       <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-5 md:p-7">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
@@ -235,32 +254,53 @@ export default function ActionPlanPage() {
         {/* Targets */}
         <div className="mt-5">
           <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#94a3b8] mb-3">TARGET PERSIAPAN</p>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <div className="flex-1 rounded-2xl border border-[rgba(0,0,0,0.06)] p-4">
-              <p className="text-[9px] uppercase text-[#94a3b8] font-semibold">PTN TARGET</p>
-              <p className="text-[13px] font-bold text-[#0f172a] mt-1">Sistem Informasi</p>
-              <p className="text-[11px] text-[#94a3b8]">Universitas Indonesia</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-stretch">
+            {/* PTN TARGET */}
+            <div className="rounded-2xl border border-[rgba(0,0,0,0.06)] p-4 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <p className="text-[9px] uppercase text-[#94a3b8] font-semibold">PTN TARGET</p>
+                  {LOGOS[ptnTarget.univ] && (
+                    <img src={LOGOS[ptnTarget.univ]} alt={ptnTarget.univ} className="w-8 h-8 object-contain shrink-0" />
+                  )}
+                </div>
+                <p className="text-[14px] font-bold text-[#0f172a]">{ptnTarget.prodi}</p>
+                <p className="text-[11px] text-[#94a3b8] mt-0.5">{ptnTarget.univ}</p>
+              </div>
             </div>
-            <div className="flex-1 rounded-2xl border border-[rgba(0,0,0,0.06)] p-4">
-              <p className="text-[9px] uppercase text-[#94a3b8] font-semibold">KEDINASAN</p>
-              <p className="text-[13px] font-bold text-[#0f172a] mt-1">PKN STAN</p>
-              <p className="text-[11px] text-[#94a3b8]">D4 Akuntansi Sektor Publik</p>
+
+            {/* KEDINASAN */}
+            <div className="rounded-2xl border border-[rgba(0,0,0,0.06)] p-4 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <p className="text-[9px] uppercase text-[#94a3b8] font-semibold">KEDINASAN</p>
+                  {LOGOS[kedinasanTarget.sekolah] && (
+                    <img src={LOGOS[kedinasanTarget.sekolah]} alt={kedinasanTarget.sekolah} className="w-8 h-8 object-contain shrink-0" />
+                  )}
+                </div>
+                <p className="text-[14px] font-bold text-[#0f172a]">{kedinasanTarget.sekolah}</p>
+                <p className="text-[11px] text-[#94a3b8] mt-0.5">{kedinasanTarget.prodi}</p>
+              </div>
             </div>
-            <div className="w-full sm:w-[178px] rounded-2xl border border-[rgba(0,0,0,0.06)] p-4 flex flex-col">
-              <div className="flex items-center gap-1.5">
-                <span className="text-base">⭐</span>
-                <span className="text-[11px] font-bold text-[#0f172a]">Bintang Belajar</span>
-                <div className="relative group ml-auto">
-                  <div className="w-4 h-4 rounded-md bg-[#f1f5f9] flex items-center justify-center cursor-default">
-                    <span className="text-[9px] font-bold text-[#94a3b8]">i</span>
-                  </div>
-                  <div className="absolute bottom-full right-0 mb-2 w-52 bg-[#0f172a] rounded-xl p-3 text-[10px] text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
-                    Setiap aktivitas yang diselesaikan memberikan Bintang Belajar. Bintang menentukan peringkat Leaderboard.
+
+            {/* BINTANG BELAJAR */}
+            <div className="rounded-2xl border border-[rgba(0,0,0,0.06)] p-4 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base">⭐</span>
+                  <span className="text-[11px] font-bold text-[#0f172a]">Bintang Belajar</span>
+                  <div className="relative group ml-auto">
+                    <div className="w-4 h-4 rounded-md bg-[#f1f5f9] flex items-center justify-center cursor-default">
+                      <span className="text-[9px] font-bold text-[#94a3b8]">i</span>
+                    </div>
+                    <div className="absolute bottom-full right-0 mb-2 w-52 bg-[#0f172a] rounded-xl p-3 text-[10px] text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
+                      Setiap aktivitas yang diselesaikan memberikan Bintang Belajar. Bintang menentukan peringkat Leaderboard.
+                    </div>
                   </div>
                 </div>
+                <p className="text-[26px] font-bold text-[#0f172a] mt-1">{totalStars}</p>
               </div>
-              <p className="text-[26px] font-bold text-[#0f172a] mt-1">{totalStars}</p>
-              <button onClick={() => setShowLb(true)} className="mt-auto w-full py-2 rounded-xl border border-[#0965fa30] text-[11px] font-bold text-[#0965fa] hover:bg-[#f0f6ff] transition-colors cursor-pointer">
+              <button onClick={() => setShowLb(true)} className="mt-3 w-full py-2 rounded-xl border border-[#0965fa30] text-[11px] font-bold text-[#0965fa] hover:bg-[#f0f6ff] transition-colors cursor-pointer">
                 Lihat Leaderboard
               </button>
             </div>
@@ -403,7 +443,16 @@ export default function ActionPlanPage() {
       </div>
 
       {/* Modal */}
-      <UbahTargetModal isOpen={showModal} onClose={() => setShowModal(false)} />
+      <UbahTargetModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        ptnTarget={ptnTarget}
+        kedinasanTarget={kedinasanTarget}
+        onSave={({ ptn, kedinasan }) => {
+          setPtnTarget(ptn)
+          setKedinasanTarget(kedinasan)
+        }}
+      />
 
       {/* Toast */}
       <Toast {...toast} onClose={() => setToast(prev => ({ ...prev, show: false }))} />
@@ -471,7 +520,7 @@ function LeaderboardView({ onBack, totalStars }) {
   ]
 
   return (
-    <div className="px-4 py-5 max-w-[640px] mx-auto space-y-4">
+    <div className="px-4 sm:px-6 lg:px-8 py-6 max-w-6xl mx-auto space-y-6">
       {/* Back button */}
       <button onClick={onBack} className="flex items-center gap-2 text-[13px] font-semibold text-[#0965fa] hover:text-[#0755d0] transition-colors cursor-pointer mb-2">
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

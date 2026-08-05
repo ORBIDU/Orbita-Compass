@@ -1,4 +1,6 @@
 import { useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 // ── Mini Radar Chart (SVG) ──
 function MiniRadar({ values, labels, size = 108 }) {
@@ -67,6 +69,8 @@ function MiniRadar({ values, labels, size = 108 }) {
 }
 
 export default function DashboardPage() {
+  const { user } = useAuth()
+  const navigate = useNavigate()
   const today = new Date()
   const dateStr = today.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
 
@@ -83,17 +87,20 @@ export default function DashboardPage() {
   ]
 
   return (
-    <div className="px-4 py-5 max-w-[640px] mx-auto space-y-4">
+    <div className="px-4 sm:px-6 lg:px-8 py-6 max-w-6xl mx-auto space-y-6">
 
       {/* ① HERO BANNER */}
       <div className="relative overflow-hidden rounded-3xl p-6" style={{ background: 'linear-gradient(135deg, #0965fa 0%, #00b2dd 100%)' }}>
         {/* Decorative circles */}
         <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/[0.07]" />
         <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-white/[0.05]" />
-        <div className="relative z-10">
-          <p className="text-[12px] text-white/70">{dateStr}</p>
-          <h2 className="text-[22px] font-black text-white mt-1">Selamat Pagi, Dhiya 👋</h2>
-          <p className="text-[13px] text-white/70 mt-1">Yuk, lanjutkan perjalananmu bersama Orbita!</p>
+        <div className="relative z-10 flex items-center justify-between">
+          <div>
+            <p className="text-[12px] text-white/70">{dateStr}</p>
+            <h2 className="text-[22px] font-black text-white mt-1">Selamat Pagi, {user?.name || 'Siswa'} 👋</h2>
+            <p className="text-[13px] text-white/70 mt-1">Yuk, lanjutkan perjalananmu bersama Orbita!</p>
+          </div>
+          <img src="/logo-icon.png" alt="Orbita Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-xl animate-bounce shrink-0" style={{ animationDuration: '3s' }} />
         </div>
       </div>
 
@@ -119,8 +126,11 @@ export default function DashboardPage() {
             </svg>
             <h3 className="text-[15px] font-black text-[#0f172a]">Today&apos;s Action Plan</h3>
           </div>
-          <button className="text-[11px] font-bold text-[#0965fa] hover:text-[#0755d0] transition-colors cursor-pointer">
-            View All →
+          <button
+            onClick={() => navigate('/action-plan')}
+            className="text-[11px] font-bold text-[#0965fa] hover:text-[#0755d0] transition-colors cursor-pointer"
+          >
+            View All
           </button>
         </div>
 
@@ -188,8 +198,11 @@ export default function DashboardPage() {
         </div>
 
         {/* Footer */}
-        <button className="w-full mt-3 py-2.5 border border-[rgba(0,0,0,0.08)] rounded-xl text-[12px] font-bold text-[#0965fa] hover:bg-[#f8faff] transition-colors cursor-pointer">
-          View All Action Plan →
+        <button
+          onClick={() => navigate('/action-plan')}
+          className="w-full mt-3 py-2.5 border border-[rgba(0,0,0,0.08)] rounded-xl text-[13px] font-bold text-[#0965fa] hover:bg-[#f8faff] transition-colors cursor-pointer"
+        >
+          Lihat Action Plan
         </button>
       </div>
 
@@ -236,39 +249,40 @@ export default function DashboardPage() {
             <svg className="w-4 h-4 text-[#0965fa]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
             </svg>
-            <h4 className="text-[12px] font-black text-[#0f172a]">Orbita Kompas</h4>
+            <h3 className="text-[15px] font-black text-[#0f172a]">Orbita Kompas</h3>
           </div>
-          <p className="text-[9px] font-bold text-[#9ca3af] mb-3">Jurusan yang sangat direkomendasikan</p>
+          <p className="text-[12px] font-bold text-[#9ca3af] mb-3">Jurusan yang sangat direkomendasikan</p>
 
           {/* Top match */}
-          <div className="bg-[#eff6ff] border-[1.5px] border-[#0965fa20] rounded-xl px-3 py-2.5 mb-2">
-            <p className="text-[13px] font-black text-[#0f172a]">🥇 Sistem Informasi</p>
+          <div className="bg-[#eff6ff] border-[1.5px] border-[#0965fa20] rounded-xl px-2 py-1.5 mb-2">
+            <p className="text-[15px] font-black text-[#0f172a]">🥇 Sistem Informasi</p>
           </div>
           {/* Other recs */}
           <div className="space-y-1.5 mb-3">
             <div className="bg-[#f8faff] rounded-lg px-2 py-1.5">
-              <p className="text-[10px] text-[#0f172a]">🥈 Teknik Informatika</p>
+              <p className="text-[15px] text-[#0f172a]">🥈 Teknik Informatika</p>
             </div>
             <div className="bg-[#f8faff] rounded-lg px-2 py-1.5">
-              <p className="text-[10px] text-[#0f172a]">🥉 Ilmu Komputer</p>
+              <p className="text-[15px] text-[#0f172a]">🥉 Ilmu Komputer</p>
             </div>
           </div>
 
           <button
-            className="w-full py-2 rounded-xl text-[10px] font-black text-white hover:opacity-90 transition-all cursor-pointer"
+            onClick={() => navigate('/orbita-kompas')}
+            className="w-full py-2 rounded-xl text-[13px] font-black text-white hover:opacity-90 transition-all cursor-pointer mt-8"
             style={{ background: 'linear-gradient(90deg, #0965fa, #00b2dd)' }}
           >
-            Lihat Orbita Kompas →
+            Lihat Orbita Kompas 
           </button>
         </div>
 
         {/* Performa Card */}
         <div className="bg-white rounded-2xl border border-[rgba(0,0,0,0.06)] shadow-sm p-4">
-          <div className="flex items-center gap-1.5 mb-2">
+          <div className="flex items-center gap-1.5 ">
             <svg className="w-4 h-4 text-[#0965fa]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
             </svg>
-            <h4 className="text-[12px] font-black text-[#0f172a]">Performa</h4>
+            <h3 className="text-[15px] font-black text-[#0f172a]">Performa</h3>
           </div>
 
           {/* Score + Rank */}
@@ -293,11 +307,14 @@ export default function DashboardPage() {
           <MiniRadar
             values={[88, 74, 71, 80, 91]}
             labels={['PU', 'PK', 'LI', 'LE', 'PM']}
-            size={108}
+            size={120}
           />
 
-          <button className="w-full mt-2 py-2 rounded-xl border border-[rgba(0,0,0,0.08)] text-[10px] font-black text-[#0965fa] hover:bg-[#f8faff] transition-colors cursor-pointer">
-            Lihat Performa →
+          <button
+            onClick={() => navigate('/siap-ptn', { state: { mainTab: 'snbt', subTab: 'performa' } })}
+            className="w-full mt-2 py-2 rounded-xl border border-[rgba(0,0,0,0.08)] text-[13px] font-black text-[#0965fa] hover:bg-[#f8faff] transition-colors cursor-pointer"
+          >
+            Lihat Performa
           </button>
         </div>
       </div>

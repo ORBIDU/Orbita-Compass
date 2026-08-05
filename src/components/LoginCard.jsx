@@ -29,18 +29,14 @@ export default function LoginCard() {
     <div className="w-full max-w-md mx-auto px-6">
       <div className="bg-cloud/10 backdrop-blur-xl border border-cloud/20 rounded-2xl p-9">
         {/* Logo Mark + Wordmark */}
-        <div className="flex items-center gap-3 mb-8">
-          <div className="flex items-center gap-1">
-            <div className="w-7 h-7 bg-gradient-to-br from-orbit-1 to-orbit-2 rounded-md" />
-            <div className="w-10 h-7 bg-gradient-to-br from-sun-1 to-sun-2 rounded-md" />
-          </div>
-          <span className="text-2xl font-bold text-cloud tracking-wide">ORBITA</span>
+        <div className="flex items-center justify-center mb-4">
+          <img src="/logo-kepala.png" alt="ORBITA" className="h-16 object-contain" />
         </div>
 
         {/* Headline */}
         <h1 className="text-xl font-bold text-cloud mb-2">Selamat Datang!</h1>
-        <p className="text-sm text-cloud/50 mb-8 leading-relaxed">
-          Platform berbasis AI yang membantu siswa SMA merencanakan jalur pembelajaran dan mempersiapkan masa depan pendidikan.
+        <p className="text-xs text-cloud/50 mb-8 leading-relaxed">
+          Bangun masa depanmu, mulai bersama Orbita.
         </p>
 
         {/* Form */}

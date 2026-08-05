@@ -50,7 +50,7 @@ export default function SiapSKDPage() {
   const cat = categories[activeTab]
 
   return (
-    <div className="px-4 py-5 max-w-[640px] mx-auto space-y-4">
+    <div className="px-4 sm:px-6 lg:px-8 py-6 max-w-6xl mx-auto space-y-6">
       {/* Header */}
       <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-5">
         <div className="flex items-center gap-3 mb-4">

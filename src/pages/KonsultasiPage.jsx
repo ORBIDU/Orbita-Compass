@@ -10,7 +10,7 @@ export default function KonsultasiPage() {
   ]
 
   return (
-    <div className="px-4 py-5 max-w-[640px] mx-auto space-y-4">
+    <div className="px-4 sm:px-6 lg:px-8 py-6 max-w-6xl mx-auto space-y-6">
       <div className="rounded-3xl p-6 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0965fa 0%, #00b2dd 100%)' }}>
         <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/[0.07]" />
         <h1 className="text-[24px] font-bold text-white relative z-10">Konsultasi Guru BK</h1>

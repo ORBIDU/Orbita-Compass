@@ -84,7 +84,7 @@ export default function SNBPPage() {
   }, [step])
 
   return (
-    <div className="px-4 py-5 max-w-4xl mx-auto">
+    <div className="px-4 sm:px-6 lg:px-8 py-6 max-w-6xl mx-auto space-y-6">
       <Stepper current={step} />
 
       {/* Step 0: Input Data */}
