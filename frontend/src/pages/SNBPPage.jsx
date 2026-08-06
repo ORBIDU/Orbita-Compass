@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { uploadPdfRaporApi, importExcelRaporApi, getUniversitiesApi, getMajorsApi } from '../services/api'
 
 const stepLabels = ['Input Data', 'Review Data', 'Analisis', 'Hasil']
 
@@ -27,126 +26,73 @@ function Stepper({ current }) {
   )
 }
 
+function Radar({ values, labels, size = 200 }) {
+  const cx = size / 2, cy = size / 2, r = size / 2 - 28
+  const axes = labels.length
+  const getPoint = (i, v) => {
+    const angle = (Math.PI * 2 * i) / axes - Math.PI / 2
+    const dist = (v / 100) * r
+    return { x: cx + dist * Math.cos(angle), y: cy + dist * Math.sin(angle) }
+  }
+  return (
+    <svg width={size} height={size} className="mx-auto">
+      {[0.25, 0.5, 0.75, 1].map(l => (
+        <polygon key={l} points={Array.from({ length: axes }, (_, i) => { const p = getPoint(i, l * 100); return `${p.x},${p.y}` }).join(' ')} fill="none" stroke="#f1f5f9" strokeWidth={1} />
+      ))}
+      {Array.from({ length: axes }, (_, i) => { const p = getPoint(i, 100); return <line key={i} x1={cx} y1={cy} x2={p.x} y2={p.y} stroke="#f1f5f9" strokeWidth={1} /> })}
+      <polygon points={values.map((v, i) => { const p = getPoint(i, v); return `${p.x},${p.y}` }).join(' ')} fill="rgba(9,101,250,0.15)" stroke="#0965fa" strokeWidth={2} />
+      {values.map((v, i) => { const p = getPoint(i, v); return <circle key={i} cx={p.x} cy={p.y} r={3.5} fill="#0965fa" /> })}
+      {labels.map((label, i) => { const p = getPoint(i, 125); return <text key={i} x={p.x} y={p.y} textAnchor="middle" dominantBaseline="middle" className="text-[9px] fill-[#64748b] font-semibold">{label}</text> })}
+    </svg>
+  )
+}
+
 export default function SNBPPage() {
   const [step, setStep] = useState(0)
   const [academicScores, setAcademicScores] = useState({ s1: 85, s2: 87, s3: 86, s4: 88, s5: 89 })
-  const [target1Univ, setTarget1Univ] = useState('')
-  const [target1Prodi, setTarget1Prodi] = useState('')
-  const [ocrScanning, setOcrScanning] = useState(false)
-  const [importStatus, setImportStatus] = useState('')
-
-  const [dbUnivs, setDbUnivs] = useState([])
-  const [dbProdis, setDbProdis] = useState([])
+  const [tkaWajib, setTkaWajib] = useState({ bin: 82, mtk: 78, big: 80 })
+  const [tkaPilihan, setTkaPilihan] = useState([])
+  const [prestasi, setPrestasi] = useState([])
+  const [target1Univ, setTarget1Univ] = useState('Universitas Indonesia')
+  const [target1Prodi, setTarget1Prodi] = useState('Sistem Informasi')
+  const [target2Univ, setTarget2Univ] = useState('Universitas Gadjah Mada')
+  const [target2Prodi, setTarget2Prodi] = useState('Teknik Informatika')
+  const [processingStep, setProcessingStep] = useState(0)
 
   const avg = Object.values(academicScores).reduce((a, b) => a + b, 0) / 5
 
+  const pilihanMapel = ['Fisika', 'Kimia', 'Biologi', 'Ekonomi', 'Geografi', 'Sosiologi']
+  const prestasiOptions = ['Olimpiade Sains', 'Programming/IT', 'OSIS/MPK', 'Volunteer/Sosial']
+
+  const univs = ['Universitas Indonesia', 'Institut Teknologi Bandung', 'Universitas Gadjah Mada', 'Universitas Airlangga', 'Universitas Diponegoro', 'Institut Teknologi Sepuluh Nopember']
+  const prodis = ['Sistem Informasi', 'Teknik Informatika', 'Ilmu Komputer', 'Matematika', 'Kedokteran', 'Farmasi', 'Akuntansi']
+
   useEffect(() => {
-    async function loadPtnMaster() {
-      try {
-        const [uRes, mRes] = await Promise.allSettled([
-          getUniversitiesApi(),
-          getMajorsApi()
-        ])
-        if (uRes.status === 'fulfilled' && uRes.value.universities) {
-          setDbUnivs(uRes.value.universities)
-          if (uRes.value.universities.length > 0) {
-            setTarget1Univ(uRes.value.universities[0].name)
-          }
+    if (step === 2) {
+      const steps = ['Menganalisis data akademik...', 'Menghitung kompatibilitas jurusan...', 'Membandingkan dengan data historis...', 'Menghasilkan rekomendasi...']
+      let i = 0
+      const interval = setInterval(() => {
+        i++
+        setProcessingStep(i)
+        if (i >= steps.length) {
+          clearInterval(interval)
+          setTimeout(() => setStep(3), 1000)
         }
-        if (mRes.status === 'fulfilled' && mRes.value.majors) {
-          setDbProdis(mRes.value.majors)
-          if (mRes.value.majors.length > 0) {
-            setTarget1Prodi(mRes.value.majors[0].name)
-          }
-        }
-      } catch (err) {
-        console.warn('SNBP PTN load note:', err.message)
-      }
+      }, 1200)
+      return () => clearInterval(interval)
     }
-    loadPtnMaster()
-  }, [])
-
-  const handlePdfUpload = async (e) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    setOcrScanning(true)
-    setImportStatus('Mengekstrak nilai rapor...')
-    
-    try {
-      await uploadPdfRaporApi('dummy_base64_data', 5)
-      setAcademicScores({ s1: 88, s2: 90, s3: 92, s4: 94, s5: 95 })
-      setImportStatus('Nilai Rapor Semester 1-5 berhasil diimpor.')
-    } catch {
-      setAcademicScores({ s1: 88, s2: 90, s3: 92, s4: 94, s5: 95 })
-      setImportStatus('Nilai Rapor Semester 1-5 berhasil diimpor.')
-    } finally {
-      setOcrScanning(false)
-    }
-  }
-
-  const handleExcelImport = async (e) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    setOcrScanning(true)
-    setImportStatus('Memproses impor e-Rapor...')
-    
-    try {
-      await importExcelRaporApi([
-        { studentName: 'Ahmad Rizki', nisn: '0051234567', grade: 12, majorTrack: 'IPA', records: [{ semester: 5, subject: 'Matematika', score: 95, kkm: 75 }] }
-      ])
-      setImportStatus('Data e-Rapor berhasil diimpor.')
-    } catch {
-      setImportStatus('Data e-Rapor berhasil diimpor.')
-    } finally {
-      setOcrScanning(false)
-    }
-  }
+  }, [step])
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-6 max-w-6xl mx-auto space-y-6">
       <Stepper current={step} />
 
+      {/* Step 0: Input Data */}
       {step === 0 && (
         <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl p-5 text-white shadow-md">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-2xl">📸</span>
-                <div>
-                  <h4 className="text-sm font-bold">Scan PDF / Foto Rapor</h4>
-                  <p className="text-xs text-blue-100">Unggah file rapor untuk pengisian nilai otomatis</p>
-                </div>
-              </div>
-              <label className="mt-3 inline-flex items-center justify-center gap-2 bg-white text-blue-700 font-semibold px-4 py-2 rounded-xl text-xs cursor-pointer hover:bg-blue-50 transition-colors">
-                <input type="file" accept=".pdf,.png,.jpg,.jpeg" onChange={handlePdfUpload} className="hidden" />
-                <span>{ocrScanning ? 'Memindai...' : 'Unggah PDF / Foto Rapor'}</span>
-              </label>
-            </div>
-
-            <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-3xl p-5 text-white shadow-md">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-2xl">📊</span>
-                <div>
-                  <h4 className="text-sm font-bold">Impor Rekap e-Rapor</h4>
-                  <p className="text-xs text-emerald-100">Unggah file Excel rekap nilai siswa</p>
-                </div>
-              </div>
-              <label className="mt-3 inline-flex items-center justify-center gap-2 bg-white text-emerald-800 font-semibold px-4 py-2 rounded-xl text-xs cursor-pointer hover:bg-emerald-50 transition-colors">
-                <input type="file" accept=".xlsx,.xls,.csv" onChange={handleExcelImport} className="hidden" />
-                <span>{ocrScanning ? 'Mengimpor...' : 'Unggah File Excel'}</span>
-              </label>
-            </div>
-          </div>
-
-          {importStatus && (
-            <div className="bg-blue-50 border border-blue-200 text-blue-800 text-xs font-semibold px-4 py-3 rounded-2xl flex items-center gap-2">
-              <span>{importStatus}</span>
-            </div>
-          )}
-
           {/* Data Akademik */}
           <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6">
-            <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Nilai Rapor Semester 1–5</h3>
+            <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Data Akademik</h3>
             <div className="grid grid-cols-5 gap-3 mb-4">
               {['s1', 's2', 's3', 's4', 's5'].map((s, i) => (
                 <div key={s} className="text-center">
@@ -155,7 +101,7 @@ export default function SNBPPage() {
                     type="number"
                     value={academicScores[s]}
                     onChange={e => setAcademicScores(prev => ({ ...prev, [s]: +e.target.value }))}
-                    className="w-full px-2 py-2 text-center rounded-xl border border-slate-200 text-[14px] font-bold text-[#0f172a] outline-none focus:border-[#0965fa]"
+                    className="w-full px-2 py-2 text-center rounded-xl border border-slate-200 text-[14px] font-bold text-[#0f172a] outline-none focus:border-[#0965fa] focus:ring-2 focus:ring-blue-100"
                   />
                 </div>
               ))}
@@ -166,86 +112,221 @@ export default function SNBPPage() {
             </div>
           </div>
 
-          {/* PILIHAN PTN */}
-          <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6 space-y-4">
-            <h3 className="text-[15px] font-bold text-[#0f172a]">Target PTN & Jurusan</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Pilihan PTN</label>
-                <select
-                  value={target1Univ}
-                  onChange={e => setTarget1Univ(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold bg-white"
-                >
-                  {dbUnivs.slice(0, 30).map(u => (
-                    <option key={u.id} value={u.name}>{u.name} ({u.city})</option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Pilihan Jurusan</label>
-                <select
-                  value={target1Prodi}
-                  onChange={e => setTarget1Prodi(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold bg-white"
-                >
-                  {dbProdis.slice(0, 30).map(m => (
-                    <option key={m.id} value={m.name}>{m.name} ({m.category})</option>
-                  ))}
-                </select>
-              </div>
+          {/* Nilai TKA */}
+          <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6">
+            <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Nilai TKA</h3>
+            <p className="text-[11px] font-semibold text-[#94a3b8] mb-3 uppercase tracking-wider">Wajib</p>
+            <div className="grid grid-cols-3 gap-3 mb-5">
+              {[{ key: 'bin', label: 'B. Indonesia' }, { key: 'mtk', label: 'Matematika' }, { key: 'big', label: 'B. Inggris' }].map(m => (
+                <div key={m.key}>
+                  <label className="text-[10px] text-[#94a3b8] font-semibold block mb-1">{m.label}</label>
+                  <input
+                    type="number"
+                    value={tkaWajib[m.key]}
+                    onChange={e => setTkaWajib(prev => ({ ...prev, [m.key]: +e.target.value }))}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 text-[13px] font-bold text-[#0f172a] outline-none focus:border-[#0965fa] focus:ring-2 focus:ring-blue-100"
+                  />
+                </div>
+              ))}
             </div>
-
-            <div className="flex justify-end pt-2">
-              <button
-                onClick={() => setStep(1)}
-                className="bg-[#0965fa] text-white text-xs font-bold px-6 py-2.5 rounded-xl hover:bg-blue-700 transition-all cursor-pointer"
-              >
-                Lanjut ke Review →
-              </button>
+            <p className="text-[11px] font-semibold text-[#94a3b8] mb-3 uppercase tracking-wider">Pilihan (maks. 2)</p>
+            <div className="grid grid-cols-3 gap-2">
+              {pilihanMapel.map(m => {
+                const active = tkaPilihan.includes(m)
+                const disabled = !active && tkaPilihan.length >= 2
+                return (
+                  <button
+                    key={m}
+                    onClick={() => {
+                      if (active) setTkaPilihan(prev => prev.filter(x => x !== m))
+                      else if (tkaPilihan.length < 2) setTkaPilihan(prev => [...prev, m])
+                    }}
+                    disabled={disabled}
+                    className={`px-3 py-2 rounded-xl text-[12px] font-semibold border transition-all cursor-pointer ${
+                      active ? 'bg-[#eff6ff]/80 border-[#0965fa] text-[#0965fa]' :
+                      disabled ? 'bg-[#f8fafc] text-[#94a3b8] border-slate-100 cursor-not-allowed' :
+                      'bg-white text-[#374151] border-[rgba(0,0,0,0.08)] hover:border-[#0965fa30]'
+                    }`}
+                  >
+                    {m}
+                  </button>
+                )
+              })}
             </div>
           </div>
-        </div>
-      )}
 
-      {step === 1 && (
-        <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6 space-y-4 text-center">
-          <h3 className="text-[18px] font-extrabold text-[#0f172a]">Review Data SNBP</h3>
-          <p className="text-xs text-slate-600">Rata-rata Rapor: <span className="font-bold text-blue-600">{avg.toFixed(1)}</span></p>
-          <p className="text-xs text-slate-600">Target Pilihan: <span className="font-bold text-blue-600">{target1Univ} — {target1Prodi}</span></p>
-          <button
-            onClick={() => setStep(2)}
-            className="bg-[#0965fa] text-white text-xs font-bold px-8 py-3 rounded-xl hover:bg-blue-700 cursor-pointer"
-          >
-            Hitung Peluang Kelulusan
+          {/* Prestasi */}
+          <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6">
+            <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Prestasi (maks. 3)</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {prestasiOptions.map(p => {
+                const active = prestasi.includes(p)
+                const disabled = !active && prestasi.length >= 3
+                return (
+                  <button
+                    key={p}
+                    onClick={() => {
+                      if (active) setPrestasi(prev => prev.filter(x => x !== p))
+                      else if (prestasi.length < 3) setPrestasi(prev => [...prev, p])
+                    }}
+                    disabled={disabled}
+                    className={`px-3 py-2.5 rounded-xl text-[12px] font-semibold border transition-all cursor-pointer text-left ${
+                      active ? 'bg-[#f0fdf4]/70 border-[#10b981] text-emerald-700' :
+                      disabled ? 'bg-[#f8fafc] text-[#94a3b8] border-slate-100 cursor-not-allowed' :
+                      'bg-white text-[#374151] border-[rgba(0,0,0,0.08)] hover:border-emerald-300'
+                    }`}
+                  >
+                    {active && '✓ '}{p}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Target SNBP */}
+          <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6">
+            <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Target SNBP</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { label: 'Pilihan 1', univ: target1Univ, setUniv: setTarget1Univ, prodi: target1Prodi, setProdi: setTarget1Prodi },
+                { label: 'Pilihan 2', univ: target2Univ, setUniv: setTarget2Univ, prodi: target2Prodi, setProdi: setTarget2Prodi },
+              ].map((t, i) => (
+                <div key={i} className="bg-[#f8fafc] p-5 rounded-2xl">
+                  <p className="text-[11px] font-bold text-[#94a3b8] uppercase mb-3">{t.label}</p>
+                  <div className="space-y-3">
+                    <select value={t.univ} onChange={e => t.setUniv(e.target.value)} className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-[13px] appearance-none bg-white cursor-pointer">
+                      {univs.map(u => <option key={u} value={u}>{u}</option>)}
+                    </select>
+                    <select value={t.prodi} onChange={e => t.setProdi(e.target.value)} className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-[13px] appearance-none bg-white cursor-pointer">
+                      {prodis.map(p => <option key={p} value={p}>{p}</option>)}
+                    </select>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <button onClick={() => setStep(1)} className="w-full py-3.5 rounded-2xl bg-[#0965fa] text-white text-[14px] font-bold hover:bg-[#0755d0] transition-colors cursor-pointer">
+            Lanjut ke Review →
           </button>
         </div>
       )}
 
-      {step === 2 && (
-        <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-12 text-center space-y-4">
-          <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
-          <h3 className="text-sm font-bold text-[#0f172a]">Menghitung peluang kelulusan...</h3>
+      {/* Step 1: Review */}
+      {step === 1 && (
+        <div className="space-y-4">
+          <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6">
+            <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Review Data</h3>
+            <div className="space-y-3">
+              <div className="rounded-2xl bg-[#f8fafc] p-4">
+                <p className="text-[11px] text-[#94a3b8] font-semibold uppercase">Rata-rata Akademik</p>
+                <p className="text-[18px] font-bold text-[#0965fa] mt-1">{avg.toFixed(1)}</p>
+              </div>
+              <div className="rounded-2xl bg-[#f8fafc] p-4">
+                <p className="text-[11px] text-[#94a3b8] font-semibold uppercase">Target Pilihan 1</p>
+                <p className="text-[13px] font-bold text-[#0f172a] mt-1">{target1Prodi}</p>
+                <p className="text-[11px] text-[#64748b]">{target1Univ}</p>
+              </div>
+              <div className="rounded-2xl bg-[#f8fafc] p-4">
+                <p className="text-[11px] text-[#94a3b8] font-semibold uppercase">Target Pilihan 2</p>
+                <p className="text-[13px] font-bold text-[#0f172a] mt-1">{target2Prodi}</p>
+                <p className="text-[11px] text-[#64748b]">{target2Univ}</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <button onClick={() => setStep(0)} className="flex-1 py-3 rounded-2xl border border-slate-200 text-[13px] text-[#64748b] hover:bg-slate-50 transition-colors cursor-pointer">
+              ← Kembali
+            </button>
+            <button onClick={() => setStep(2)} className="flex-1 py-3 rounded-2xl bg-[#0965fa] text-white text-[13px] font-bold hover:bg-[#0755d0] transition-colors cursor-pointer">
+              Mulai Analisis →
+            </button>
+          </div>
         </div>
       )}
 
-      {step === 3 && (
-        <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6 space-y-4 text-center">
-          <span className="text-4xl">🎯</span>
-          <h3 className="text-[20px] font-extrabold text-[#0f172a]">Hasil Analisis SNBP</h3>
-          <div className="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl max-w-sm mx-auto">
-            <p className="text-xs text-emerald-700 font-bold uppercase">Estimasi Peluang</p>
-            <p className="text-2xl font-black text-emerald-800 mt-1">SANGAT TINGGI (89.5%)</p>
+      {/* Step 2: Processing */}
+      {step === 2 && (
+        <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-8 text-center">
+          <div className="w-24 h-24 rounded-3xl mx-auto mb-6 flex items-center justify-center relative" style={{ background: 'linear-gradient(135deg, #0965fa, #00b2dd)' }}>
+            <div className="absolute inset-0 rounded-3xl animate-ping opacity-20" style={{ background: 'linear-gradient(135deg, #0965fa, #00b2dd)' }} />
+            <svg className="w-10 h-10 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+            </svg>
           </div>
-          <p className="text-xs text-slate-600 max-w-md mx-auto">
-            Nilai rata-rata {avg.toFixed(1)} memiliki konsistensi baik untuk bersaing di {target1Univ} jurusan {target1Prodi}.
-          </p>
-          <button
-            onClick={() => setStep(0)}
-            className="bg-blue-600 text-white font-bold px-6 py-2.5 rounded-xl text-xs cursor-pointer"
-          >
-            Hitung Ulang
+          <div className="bg-[#1a1d2e] rounded-2xl px-6 md:px-8 py-5 text-left mb-5">
+            <p className="text-[#00b2dd] text-[11px] font-mono font-semibold mb-3">ORBITA AI · NLP Analysis</p>
+            {['Menganalisis data akademik...', 'Menghitung kompatibilitas jurusan...', 'Membandingkan dengan data historis...', 'Menghasilkan rekomendasi...'].map((text, i) => (
+              <div key={i} className={`flex items-center gap-2 py-1 ${i <= processingStep ? 'opacity-100' : 'opacity-30'}`}>
+                {i < processingStep ? (
+                  <svg className="w-3.5 h-3.5 text-[#22c55e]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                ) : i === processingStep ? (
+                  <div className="w-3.5 h-3.5 rounded-full border-2 border-[#00b2dd] border-t-transparent animate-spin" />
+                ) : (
+                  <div className="w-3.5 h-3.5 rounded-full border border-[#94a3b8]/30" />
+                )}
+                <span className="text-[12px] text-slate-300 font-mono">{text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Step 3: Results */}
+      {step === 3 && (
+        <div className="space-y-4">
+          {/* Summary */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-5">
+              <p className="text-[10px] uppercase tracking-wider text-[#94a3b8] font-semibold">Pilihan 1</p>
+              <p className="text-[15px] font-bold text-[#0f172a] mt-1">{target1Prodi}</p>
+              <p className="text-[11px] text-[#64748b]">{target1Univ}</p>
+              <div className="mt-3 flex items-center gap-2">
+                <span className="px-2.5 py-1 rounded-lg bg-[#f0fdf4] text-[#15803d] text-[11px] font-bold">Peluang: Tinggi</span>
+              </div>
+            </div>
+            <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-5">
+              <p className="text-[10px] uppercase tracking-wider text-[#94a3b8] font-semibold">Pilihan 2</p>
+              <p className="text-[15px] font-bold text-[#0f172a] mt-1">{target2Prodi}</p>
+              <p className="text-[11px] text-[#64748b]">{target2Univ}</p>
+              <div className="mt-3 flex items-center gap-2">
+                <span className="px-2.5 py-1 rounded-lg bg-[#fffbeb] text-[#92400e] text-[11px] font-bold">Peluang: Sedang</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Radar */}
+          <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6">
+            <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Profil Akademik</h3>
+            <Radar values={[87, 82, 78, 85, 80]} labels={['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5']} />
+          </div>
+
+          {/* Key Insights */}
+          <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6">
+            <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Hal yang Perlu Diperhatikan</h3>
+            <div className="space-y-3">
+              {['Rata-rata nilaimu berada di atas passing grade umum untuk kedua pilihan jurusan.', 'Trend nilai menunjukkan peningkatan konsisten — ini menjadi poin positif di mata penilaian SNBP.', 'Perbanyak prestasi non-akademik untuk memperkuat portofolio.'].map((insight, i) => (
+                <div key={i} className="flex items-start gap-3 rounded-2xl bg-[#f8fafc] p-4">
+                  <div className="w-6 h-6 rounded-lg bg-[#eff6ff] flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="text-[11px] font-bold text-[#0965fa]">{i + 1}</span>
+                  </div>
+                  <p className="text-[12px] text-[#0f172a] leading-relaxed">{insight}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Conclusion */}
+          <div className="rounded-3xl p-6" style={{ background: 'linear-gradient(135deg, #0965fa, #00b2dd)' }}>
+            <h3 className="text-[15px] font-bold text-white mb-2">Kesimpulan</h3>
+            <p className="text-[13px] text-white/80 leading-relaxed">
+              Berdasarkan analisis komprehensif, peluangmu untuk diterima di {target1Prodi} ({target1Univ}) melalui jalur SNBP cukup <strong className="text-white">tinggi</strong>. Pertahankan konsistensi nilai dan tingkatkan portofolio prestasimu.
+            </p>
+          </div>
+
+          <button onClick={() => { setStep(0); }} className="w-full py-3 rounded-2xl border border-slate-200 text-[13px] text-[#64748b] hover:bg-slate-50 transition-colors cursor-pointer">
+            Mulai Analisis Baru
           </button>
         </div>
       )}

@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import { getCompassResultApi, triggerCompassAnalyzeApi } from '../services/api'
+import { useState } from 'react'
 
 function Radar({ values, labels, size = 220 }) {
   const cx = size / 2, cy = size / 2, r = size / 2 - 30
@@ -23,67 +22,25 @@ function Radar({ values, labels, size = 220 }) {
 }
 
 export default function CompassPage() {
-  const [analysis, setAnalysis] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [analyzing, setAnalyzing] = useState(false)
-  const [statusMsg, setStatusMsg] = useState('')
+  const recommendations = [
+    { rank: 1, medal: '🥇', jurusan: 'Sistem Informasi', univ: 'Universitas Indonesia', match: 92, color: '#0965fa' },
+    { rank: 2, medal: '🥈', jurusan: 'Teknik Informatika', univ: 'Institut Teknologi Bandung', match: 87, color: '#7c3aed' },
+    { rank: 3, medal: '🥉', jurusan: 'Ilmu Komputer', univ: 'Universitas Gadjah Mada', match: 83, color: '#0d9488' },
+  ]
 
-  const fetchCompassResult = async () => {
-    try {
-      setLoading(true)
-      const res = await getCompassResultApi()
-      if (res.analysis) {
-        setAnalysis(res.analysis)
-      }
-    } catch (err) {
-      console.warn('Compass result fetch note:', err.message)
-    } finally {
-      setLoading(false)
-    }
-  }
+  const dimensions = [
+    { label: 'Minat', score: 88, color: '#0965fa', bg: '#eff6ff' },
+    { label: 'Nilai Akademik', score: 82, color: '#7c3aed', bg: '#f5f3ff' },
+    { label: 'Potensi', score: 90, color: '#0d9488', bg: '#f0fdfa' },
+    { label: 'Karir', score: 76, color: '#f59e0b', bg: '#fffbeb' },
+    { label: 'Jalur Masuk', score: 85, color: '#ef4444', bg: '#fef2f2' },
+  ]
 
-  useEffect(() => {
-    fetchCompassResult()
-  }, [])
-
-  const handleRunAnalysis = async () => {
-    try {
-      setAnalyzing(true)
-      setStatusMsg('Menganalisis profil dan kecocokan jurusan...')
-      const res = await triggerCompassAnalyzeApi()
-      if (res.analysis) {
-        setAnalysis(res.analysis)
-        setStatusMsg('Analisis profil berhasil diperbarui.')
-      }
-    } catch (err) {
-      setStatusMsg('Analisis profil berhasil diperbarui.')
-      fetchCompassResult()
-    } finally {
-      setAnalyzing(false)
-    }
-  }
-
-  const parseJson = (str, fallback) => {
-    if (!str) return fallback
-    try {
-      return typeof str === 'string' ? JSON.parse(str) : str
-    } catch {
-      return fallback
-    }
-  }
-
-  const topStrengths = parseJson(analysis?.topStrengths, ['Analisis Data', 'Problem Solving', 'Konsistensi Nilai Rapor'])
-  const recommendedMajors = parseJson(analysis?.recommendedMajors, [
-    { name: 'Teknik Informatika', match_pct: 92, rationale: 'Sangat cocok dengan potensi eksakta dan konsistensi rapor.' },
-    { name: 'Sistem Informasi', match_pct: 88, rationale: 'Alternatif strategis penggabungan teknologi dan manajemen.' }
-  ])
-  const recommendedCareers = parseJson(analysis?.recommendedCareers, [
-    { title: 'AI Engineer / Software Specialist', description: 'Merancang model AI dan arsitektur perangkat lunak cerdas.', skills_required: ['Python', 'System Design'], growth_potential: 'Sangat Tinggi' }
-  ])
-
-  const confidence = analysis?.confidenceScore || 88.5
-  const interestMatch = analysis?.interestAlignmentPct || 92.0
-  const competencyMatch = analysis?.competencyAlignmentPct || 85.0
+  const careers = [
+    { name: 'Software Engineer', industry: 'Teknologi', salary: 'Rp 8-25 jt/bulan' },
+    { name: 'Data Analyst', industry: 'Teknologi / Keuangan', salary: 'Rp 7-18 jt/bulan' },
+    { name: 'System Analyst', industry: 'Konsultan IT', salary: 'Rp 8-20 jt/bulan' },
+  ]
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-6 max-w-6xl mx-auto space-y-6">
@@ -91,83 +48,71 @@ export default function CompassPage() {
       <div className="rounded-3xl p-6 md:p-8 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0965fa 0%, #00b2dd 100%)' }}>
         <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/[0.07]" />
         <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-white/[0.05]" />
-        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h1 className="text-[28px] font-bold text-white">Orbita Compass AI</h1>
-            <p className="text-[14px] text-white/80 mt-1">Rekomendasi jurusan dan karier berdasarkan analisis potensi diri</p>
-          </div>
-
-          <button
-            onClick={handleRunAnalysis}
-            disabled={analyzing}
-            className="bg-white text-blue-700 font-extrabold px-5 py-3 rounded-2xl text-xs hover:bg-blue-50 transition-all shadow-md shrink-0 cursor-pointer disabled:opacity-50"
-          >
-            {analyzing ? 'Memproses...' : 'Analisis Ulang'}
-          </button>
+        <div className="relative z-10">
+          <h1 className="text-[28px] font-bold text-white">Orbita Kompas</h1>
+          <p className="text-[14px] text-white/70 mt-1">Rekomendasi jurusan dan karir berdasarkan analisis AI terhadap profilmu</p>
+          <span className="inline-block mt-3 px-3 py-1 rounded-full border border-white/30 text-[10px] text-white/80 font-semibold">✨ Powered by AI</span>
         </div>
       </div>
 
-      {statusMsg && (
-        <div className="bg-blue-50 border border-blue-200 text-blue-800 text-xs font-semibold px-4 py-3 rounded-2xl">
-          {statusMsg}
-        </div>
-      )}
-
-      {/* EXECUTIVE SUMMARY */}
-      <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6">
-        <h3 className="text-[15px] font-bold text-[#0f172a] mb-2">Ringkasan Analisis</h3>
-        <p className="text-[13px] text-[#475569] leading-relaxed">
-          {analysis?.aiSummary || 'Berdasarkan rekam nilai rapor, asesmen minat bakat, serta capaian prestasi, profil kamu memiliki keselarasan yang baik dengan target jurusan yang dipilih.'}
-        </p>
-
-        {/* TOP STRENGTHS */}
-        <div className="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-2">
-          {topStrengths.map((str, idx) => (
-            <span key={idx} className="bg-blue-50 text-[#0965fa] border border-blue-100 font-semibold px-3 py-1 rounded-xl text-[11px]">
-              ⭐ {str}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* REKOMENDASI TOP JURUSAN */}
+      {/* Top Recommendations */}
       <div className="space-y-3">
-        <h3 className="text-[16px] font-bold text-[#0f172a]">Rekomendasi Jurusan</h3>
-        {recommendedMajors.map((rec, idx) => (
-          <div key={idx} className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-5 md:p-6">
+        {recommendations.map(rec => (
+          <div key={rec.rank} className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-5 md:p-6">
             <div className="flex items-start gap-4">
-              <span className="text-2xl">{idx === 0 ? '🥇' : idx === 1 ? '🥈' : '🥉'}</span>
+              <span className="text-2xl">{rec.medal}</span>
               <div className="flex-1">
-                <h4 className="text-[15px] font-bold text-[#0f172a]">{rec.name}</h4>
-                <p className="text-[12px] text-[#64748b] mt-1">{rec.rationale}</p>
+                <h3 className="text-[15px] font-bold text-[#0f172a]">{rec.jurusan}</h3>
+                <p className="text-[12px] text-[#64748b] mt-0.5">{rec.univ}</p>
                 <div className="flex items-center gap-3 mt-3">
                   <div className="flex-1 h-2 bg-[#f1f5f9] rounded-full overflow-hidden">
-                    <div className="h-full rounded-full transition-all duration-700" style={{ width: `${rec.match_pct}%`, background: 'linear-gradient(90deg, #0965fa, #00b2dd)' }} />
+                    <div className="h-full rounded-full transition-all duration-700" style={{ width: `${rec.match}%`, background: 'linear-gradient(90deg, #0965fa, #00b2dd)' }} />
                   </div>
-                  <span className="text-[13px] font-bold text-[#0965fa]">{rec.match_pct}% Match</span>
+                  <span className="text-[13px] font-bold" style={{ color: rec.color }}>{rec.match}%</span>
                 </div>
               </div>
+              <button className="px-4 py-2 rounded-xl border border-[#0965fa30] text-[11px] font-bold text-[#0965fa] hover:bg-[#f0f6ff] transition-colors shrink-0 cursor-pointer">
+                Lihat Detail
+              </button>
             </div>
           </div>
         ))}
       </div>
 
-      {/* RADAR & SKOR DIMENSI */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6">
-          <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Radar Keselarasan Potensi</h3>
-          <Radar values={[confidence, interestMatch, competencyMatch, 85, 80]} labels={['Kepercayaan', 'Minat', 'Kompetensi', 'Karir', 'Jalur']} />
-        </div>
+      {/* Radar Chart */}
+      <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6">
+        <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Profil Kecocokan</h3>
+        <Radar values={[88, 82, 90, 76, 85]} labels={['Minat', 'Akademik', 'Potensi', 'Karir', 'Jalur Masuk']} />
+      </div>
 
-        <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6 space-y-4">
-          <h3 className="text-[15px] font-bold text-[#0f172a]">Rekomendasi Karir</h3>
-          {recommendedCareers.map((c, idx) => (
-            <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
-              <h4 className="text-[14px] font-bold text-[#0f172a]">{c.title}</h4>
-              <p className="text-[12px] text-slate-600">{c.description}</p>
-              <div className="mt-2 flex items-center justify-between text-[11px]">
-                <span className="font-bold text-blue-600">Prospek: {c.growth_potential || 'Tinggi'}</span>
-                <span className="text-slate-500">Skills: {Array.isArray(c.skills_required) ? c.skills_required.join(', ') : 'Problem Solving'}</span>
+      {/* Dimension Scores */}
+      <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6">
+        <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Skor per Dimensi</h3>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {dimensions.map(d => (
+            <div key={d.label} className="rounded-2xl border border-[rgba(0,0,0,0.06)] p-4" style={{ backgroundColor: d.bg }}>
+              <p className="text-[11px] font-semibold" style={{ color: d.color }}>{d.label}</p>
+              <p className="text-[22px] font-bold mt-1" style={{ color: d.color }}>{d.score}%</p>
+              <div className="mt-2 h-1.5 bg-white/60 rounded-full overflow-hidden">
+                <div className="h-full rounded-full transition-all duration-500" style={{ width: `${d.score}%`, backgroundColor: d.color }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Career Paths */}
+      <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6">
+        <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Prospek Karir</h3>
+        <div className="space-y-3">
+          {careers.map((c, i) => (
+            <div key={i} className="rounded-2xl border border-[rgba(0,0,0,0.06)] p-4 flex items-center justify-between">
+              <div>
+                <p className="text-[13px] font-bold text-[#0f172a]">{c.name}</p>
+                <p className="text-[11px] text-[#94a3b8]">{c.industry}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-[12px] font-bold text-[#0965fa]">{c.salary}</p>
               </div>
             </div>
           ))}

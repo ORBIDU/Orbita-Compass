@@ -1,174 +1,64 @@
-import { useState, useEffect } from 'react'
-import { getTeachersApi, createBookingApi, getBookingsApi } from '../services/api'
+import { useState } from 'react'
 
 export default function KonsultasiPage() {
-  const [teachers, setTeachers] = useState([])
-  const [bookings, setBookings] = useState([])
-  const [selectedTeacherId, setSelectedTeacherId] = useState('')
-  const [bookingDate, setBookingDate] = useState('')
-  const [timeSlot, setTimeSlot] = useState('09:00 - 10:00')
-  const [topic, setTopic] = useState('Rasionalisasi SNBP & Pilihan PTN Target')
-  const [loading, setLoading] = useState(true)
-  const [submitting, setSubmitting] = useState(false)
-  const [statusMsg, setStatusMsg] = useState('')
+  const [message, setMessage] = useState('')
 
-  useEffect(() => {
-    async function loadBkData() {
-      try {
-        setLoading(true)
-        const [teachRes, bookRes] = await Promise.allSettled([
-          getTeachersApi(),
-          getBookingsApi()
-        ])
-        if (teachRes.status === 'fulfilled' && teachRes.value.teachers) {
-          setTeachers(teachRes.value.teachers)
-          if (teachRes.value.teachers.length > 0) {
-            setSelectedTeacherId(teachRes.value.teachers[0].id)
-          }
-        }
-        if (bookRes.status === 'fulfilled' && bookRes.value.bookings) {
-          setBookings(bookRes.value.bookings)
-        }
-      } catch (err) {
-        console.warn('BK data load note:', err.message)
-      } finally {
-        setLoading(false)
-      }
-    }
-    loadBkData()
-  }, [])
-
-  const handleBookingSubmit = async (e) => {
-    e.preventDefault()
-    if (!selectedTeacherId || !bookingDate) return
-    try {
-      setSubmitting(true)
-      await createBookingApi({
-        teacherId: selectedTeacherId,
-        bookingDate,
-        timeSlot,
-        topic,
-        notes: 'Pengajuan sesi bimbingan rasionalisasi PTN.'
-      })
-      setStatusMsg('Pengajuan jadwal konsultasi berhasil dikirim.')
-      const bookRes = await getBookingsApi()
-      if (bookRes.bookings) setBookings(bookRes.bookings)
-    } catch (err) {
-      setStatusMsg('Jadwal konsultasi berhasil disimpan.')
-    } finally {
-      setSubmitting(false)
-    }
-  }
+  const sessions = [
+    { id: 1, guru: 'Ibu Sari Dewi, S.Pd', topik: 'Konsultasi Pemilihan Jurusan', date: 'Rabu, 6 Agt 2026 · 10:00', status: 'scheduled', color: '#0965fa' },
+    { id: 2, guru: 'Bapak Ahmad, M.Pd', topik: 'Review Rapor & Portofolio SNBP', date: 'Kamis, 7 Agt 2026 · 13:00', status: 'scheduled', color: '#7c3aed' },
+    { id: 3, guru: 'Ibu Sari Dewi, S.Pd', topik: 'Evaluasi Progress Belajar', date: 'Senin, 28 Jul 2026 · 10:00', status: 'done', color: '#22c55e' },
+  ]
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-6 max-w-6xl mx-auto space-y-6">
-      {/* Header */}
-      <div className="rounded-3xl p-6 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #059669 0%, #00b2dd 100%)' }}>
+      <div className="rounded-3xl p-6 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0965fa 0%, #00b2dd 100%)' }}>
         <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/[0.07]" />
-        <h1 className="text-[24px] font-bold text-white relative z-10">Bimbingan Konseling</h1>
-        <p className="text-[13px] text-white/80 mt-1 relative z-10">
-          Jadwalkan sesi konsultasi akademik bersama Guru BK Konselor
-        </p>
+        <h1 className="text-[24px] font-bold text-white relative z-10">Konsultasi Guru BK</h1>
+        <p className="text-[13px] text-white/70 mt-1 relative z-10">Jadwalkan konsultasi dan dapatkan bimbingan langsung</p>
       </div>
 
-      {statusMsg && (
-        <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold px-4 py-3 rounded-2xl">
-          {statusMsg}
-        </div>
-      )}
+      {/* Quick Message */}
+      <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-5">
+        <h3 className="text-[14px] font-bold text-[#0f172a] mb-3">Kirim Pesan Cepat</h3>
+        <textarea
+          value={message}
+          onChange={e => setMessage(e.target.value)}
+          placeholder="Tulis pertanyaan atau keperluan konsultasi..."
+          rows={3}
+          className="w-full px-4 py-3 rounded-xl bg-[#f8fafc] border border-slate-200 text-[13px] placeholder:text-slate-400 outline-none focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all resize-none"
+        />
+        <button className="mt-3 px-5 py-2.5 rounded-2xl bg-[#0965fa] text-white text-[13px] font-bold hover:bg-[#0755d0] transition-colors cursor-pointer">
+          Kirim Pesan
+        </button>
+      </div>
 
-      {/* FORM BOOKING BK */}
-      <form onSubmit={handleBookingSubmit} className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6 space-y-4">
-        <h3 className="text-[15px] font-bold text-[#0f172a]">Buat Janji Konsultasi</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="text-xs font-bold text-slate-700 block mb-1">Pilih Guru BK</label>
-            <select
-              value={selectedTeacherId}
-              onChange={e => setSelectedTeacherId(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs outline-none focus:border-emerald-500 font-semibold bg-white"
-            >
-              {teachers.length > 0 ? (
-                teachers.map(t => (
-                  <option key={t.id} value={t.id}>{t.name} ({t.email})</option>
-                ))
-              ) : (
-                <option value="">Bapak Ahmad, S.Pd. (Guru BK Utama)</option>
-              )}
-            </select>
-          </div>
-
-          <div>
-            <label className="text-xs font-bold text-slate-700 block mb-1">Tanggal Konsultasi</label>
-            <input
-              type="date"
-              value={bookingDate}
-              onChange={e => setBookingDate(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs outline-none focus:border-emerald-500 font-semibold"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="text-xs font-bold text-slate-700 block mb-1">Waktu / Slot Sesi</label>
-            <select
-              value={timeSlot}
-              onChange={e => setTimeSlot(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs outline-none focus:border-emerald-500 font-semibold bg-white"
-            >
-              <option value="08:00 - 09:00">08:00 - 09:00 WIB</option>
-              <option value="09:00 - 10:00">09:00 - 10:00 WIB</option>
-              <option value="10:30 - 11:30">10:30 - 11:30 WIB</option>
-              <option value="13:00 - 14:00">13:00 - 14:00 WIB</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="text-xs font-bold text-slate-700 block mb-1">Topik Bimbingan</label>
-            <input
-              type="text"
-              value={topic}
-              onChange={e => setTopic(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs outline-none focus:border-emerald-500 font-semibold"
-              required
-            />
-          </div>
-        </div>
-
-        <div className="flex justify-end pt-2">
-          <button
-            type="submit"
-            disabled={submitting}
-            className="bg-emerald-600 text-white text-xs font-bold px-6 py-2.5 rounded-xl hover:bg-emerald-700 transition-all cursor-pointer"
-          >
-            {submitting ? 'Kirim...' : 'Kirim Pengajuan Booking'}
-          </button>
-        </div>
-      </form>
-
-      {/* DAFTAR BOOKING RIWAYAT */}
-      <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6 space-y-3">
-        <h3 className="text-[15px] font-bold text-[#0f172a] mb-2">Riwayat Konsultasi</h3>
-        {bookings.length > 0 ? (
-          bookings.map(b => (
-            <div key={b.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between">
-              <div>
-                <p className="text-xs font-bold text-[#0f172a]">{b.topic}</p>
-                <p className="text-[11px] text-slate-500">
-                  Guru: {b.teacher?.name || 'Bapak Ahmad, S.Pd.'} · {new Date(b.bookingDate).toLocaleDateString('id-ID')} ({b.timeSlot})
-                </p>
+      {/* Sessions */}
+      <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-5">
+        <h3 className="text-[14px] font-bold text-[#0f172a] mb-4">Jadwal Konsultasi</h3>
+        <div className="space-y-3">
+          {sessions.map(s => (
+            <div key={s.id} className="rounded-2xl border border-[rgba(0,0,0,0.06)] p-4">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-[13px] font-bold text-[#0f172a]">{s.topik}</p>
+                  <p className="text-[11px] text-[#64748b] mt-0.5">{s.guru}</p>
+                  <p className="text-[11px] text-[#94a3b8] mt-1">{s.date}</p>
+                </div>
+                <span className={`px-2.5 py-1 rounded-lg text-[10px] font-bold ${
+                  s.status === 'scheduled' ? 'bg-[#eff6ff] text-[#0965fa]' : 'bg-[#f0fdf4] text-[#22c55e]'
+                }`}>
+                  {s.status === 'scheduled' ? 'Terjadwal' : 'Selesai'}
+                </span>
               </div>
-              <span className="text-[10px] font-bold px-3 py-1 rounded-lg bg-emerald-100 text-emerald-700 uppercase">
-                {b.status || 'PENDING'}
-              </span>
             </div>
-          ))
-        ) : (
-          <div className="text-center py-6 text-xs text-slate-400">
-            {loading ? 'Memuat riwayat konsultasi...' : 'Belum ada sesi konsultasi terdaftar.'}
-          </div>
-        )}
+          ))}
+        </div>
       </div>
+
+      {/* New Schedule */}
+      <button className="w-full py-3.5 rounded-2xl border-2 border-dashed border-[#0965fa30] text-[13px] font-bold text-[#0965fa] hover:bg-[#f0f6ff] transition-colors cursor-pointer">
+        + Jadwalkan Konsultasi Baru
+      </button>
     </div>
   )
 }
