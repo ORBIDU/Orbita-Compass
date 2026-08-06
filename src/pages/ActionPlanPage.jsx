@@ -256,30 +256,42 @@ export default function ActionPlanPage() {
           <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#94a3b8] mb-3">TARGET PERSIAPAN</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-stretch">
             {/* PTN TARGET */}
-            <div className="rounded-2xl border border-[rgba(0,0,0,0.06)] p-4 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-2">
-                  <p className="text-[9px] uppercase text-[#94a3b8] font-semibold">PTN TARGET</p>
-                  {LOGOS[ptnTarget.univ] && (
-                    <img src={LOGOS[ptnTarget.univ]} alt={ptnTarget.univ} className="w-8 h-8 object-contain shrink-0" />
-                  )}
-                </div>
-                <p className="text-[14px] font-bold text-[#0f172a]">{ptnTarget.prodi}</p>
-                <p className="text-[11px] text-[#94a3b8] mt-0.5">{ptnTarget.univ}</p>
+            <div className="rounded-2xl border border-[rgba(0,0,0,0.06)] p-4 flex items-center gap-3">
+              {/* 70% - Info */}
+              <div className="flex-[7] min-w-0">
+                <p className="text-[9px] uppercase text-[#94a3b8] font-semibold mb-1.5">PTN TARGET</p>
+                <p className="text-[14px] font-bold text-[#0f172a] break-words leading-snug">{ptnTarget.prodi}</p>
+                <p className="text-[11px] text-[#64748b] mt-0.5 break-words">{ptnTarget.univ}</p>
+              </div>
+              {/* 30% - Logo */}
+              <div className="flex-[3] flex items-center justify-center shrink-0">
+                {LOGOS[ptnTarget.univ] ? (
+                  <img src={LOGOS[ptnTarget.univ]} alt={ptnTarget.univ} className="w-18 h-18 object-contain" />
+                ) : (
+                  <div className="w-14 h-14 rounded-full bg-[#f1f5f9] flex items-center justify-center">
+                    <span className="text-[20px]">🎓</span>
+                  </div>
+                )}
               </div>
             </div>
 
             {/* KEDINASAN */}
-            <div className="rounded-2xl border border-[rgba(0,0,0,0.06)] p-4 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-2">
-                  <p className="text-[9px] uppercase text-[#94a3b8] font-semibold">KEDINASAN</p>
-                  {LOGOS[kedinasanTarget.sekolah] && (
-                    <img src={LOGOS[kedinasanTarget.sekolah]} alt={kedinasanTarget.sekolah} className="w-8 h-8 object-contain shrink-0" />
-                  )}
-                </div>
-                <p className="text-[14px] font-bold text-[#0f172a]">{kedinasanTarget.sekolah}</p>
-                <p className="text-[11px] text-[#94a3b8] mt-0.5">{kedinasanTarget.prodi}</p>
+            <div className="rounded-2xl border border-[rgba(0,0,0,0.06)] p-4 flex items-center gap-3">
+              {/* 70% - Info */}
+              <div className="flex-[7] min-w-0">
+                <p className="text-[9px] uppercase text-[#94a3b8] font-semibold mb-1.5">KEDINASAN</p>
+                <p className="text-[14px] font-bold text-[#0f172a] break-words leading-snug">{kedinasanTarget.sekolah}</p>
+                <p className="text-[14px] text-[#64748b] mt-0.5 break-words">{kedinasanTarget.prodi}</p>
+              </div>
+              {/* 30% - Logo */}
+              <div className="flex-[3] flex items-center justify-center shrink-0">
+                {LOGOS[kedinasanTarget.sekolah] ? (
+                  <img src={LOGOS[kedinasanTarget.sekolah]} alt={kedinasanTarget.sekolah} className="w-14 h-14 object-contain" />
+                ) : (
+                  <div className="w-14 h-14 rounded-full bg-[#f1f5f9] flex items-center justify-center">
+                    <span className="text-[20px]">🏛️</span>
+                  </div>
+                )}
               </div>
             </div>
 
