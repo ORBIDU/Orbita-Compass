@@ -131,38 +131,7 @@ export default function LoginCard() {
           </button>
         </form>
 
-        {/* Demo Quick Logins */}
-        <div className="mt-6 pt-5 border-t border-cloud/10">
-          <p className="text-[11px] font-semibold text-cloud/50 uppercase tracking-wider mb-2 text-center">
-            ⚡ Quick Login Demo (Klik untuk Masuk Langsung):
-          </p>
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <button
-              onClick={() => { setEmail('siswa@orbita.id'); setPassword('password123'); setSelectedRole('siswa'); }}
-              className="px-2.5 py-1.5 rounded-md bg-cloud/5 hover:bg-cloud/15 text-cloud/80 hover:text-cloud border border-cloud/10 text-left transition-colors cursor-pointer"
-            >
-              🎓 <b>Siswa IPA</b> (Ahmad)
-            </button>
-            <button
-              onClick={() => { setEmail('budi@orbita.id'); setPassword('password123'); setSelectedRole('siswa'); }}
-              className="px-2.5 py-1.5 rounded-md bg-cloud/5 hover:bg-cloud/15 text-cloud/80 hover:text-cloud border border-cloud/10 text-left transition-colors cursor-pointer"
-            >
-              📚 <b>Siswa IPS</b> (Budi)
-            </button>
-            <button
-              onClick={() => { setEmail('gurubk@orbita.id'); setPassword('password123'); setSelectedRole('gurubk'); }}
-              className="px-2.5 py-1.5 rounded-md bg-cloud/5 hover:bg-cloud/15 text-cloud/80 hover:text-cloud border border-cloud/10 text-left transition-colors cursor-pointer"
-            >
-              👨‍🏫 <b>Guru BK</b> (Ahmad)
-            </button>
-            <button
-              onClick={() => { setEmail('admin@orbita.id'); setPassword('password123'); setSelectedRole('admin'); }}
-              className="px-2.5 py-1.5 rounded-md bg-cloud/5 hover:bg-cloud/15 text-cloud/80 hover:text-cloud border border-cloud/10 text-left transition-colors cursor-pointer"
-            >
-              🛡️ <b>Admin</b> (System)
-            </button>
-          </div>
-        </div>
+
 
         {/* Footer link */}
         <p className="text-center text-xs text-cloud/50 mt-6">
