@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { getRaporApi, getRationalizationApi } from '../services/api'
 
 const stepLabels = ['Input Data', 'Review Data', 'Analisis', 'Hasil']
 
@@ -49,15 +50,49 @@ function Radar({ values, labels, size = 200 }) {
 
 export default function SNBPPage() {
   const [step, setStep] = useState(0)
-  const [academicScores, setAcademicScores] = useState({ s1: 85, s2: 87, s3: 86, s4: 88, s5: 89 })
-  const [tkaWajib, setTkaWajib] = useState({ bin: 82, mtk: 78, big: 80 })
-  const [tkaPilihan, setTkaPilihan] = useState([])
+  const [academicScores, setAcademicScores] = useState({ s1: 88, s2: 90, s3: 92, s4: 94, s5: 95 })
+  const [rationalization, setRationalization] = useState(null)
+  const [tkaWajib, setTkaWajib] = useState({ bin: 88, mtk: 92, big: 85 })
+  const [tkaPilihan, setTkaPilihan] = useState(['Fisika'])
   const [prestasi, setPrestasi] = useState([])
   const [target1Univ, setTarget1Univ] = useState('Universitas Indonesia')
   const [target1Prodi, setTarget1Prodi] = useState('Sistem Informasi')
   const [target2Univ, setTarget2Univ] = useState('Universitas Gadjah Mada')
   const [target2Prodi, setTarget2Prodi] = useState('Teknik Informatika')
   const [processingStep, setProcessingStep] = useState(0)
+
+  useEffect(() => {
+    // Load academic records from DB
+    getRaporApi()
+      .then((data) => {
+        if (data?.academicRecords && data.academicRecords.length > 0) {
+          const semMap = { s1: [], s2: [], s3: [], s4: [], s5: [] }
+          data.academicRecords.forEach(r => {
+            const key = `s${r.semester}`
+            if (semMap[key]) semMap[key].push(r.score)
+          })
+          const newScores = {}
+          Object.keys(semMap).forEach(k => {
+            if (semMap[k].length > 0) {
+              newScores[k] = Math.round(semMap[k].reduce((a, b) => a + b, 0) / semMap[k].length)
+            }
+          })
+          setAcademicScores(prev => ({ ...prev, ...newScores }))
+        }
+      })
+      .catch((err) => console.error('Failed to load rapor:', err))
+
+    // Load rationalization calculation from backend API
+    getRationalizationApi()
+      .then((data) => {
+        if (data) {
+          setRationalization(data)
+          if (data.targetPtn) setTarget1Univ(data.targetPtn)
+          if (data.targetMajor) setTarget1Prodi(data.targetMajor)
+        }
+      })
+      .catch((err) => console.error('Failed to load rationalization:', err))
+  }, [])
 
   const avg = Object.values(academicScores).reduce((a, b) => a + b, 0) / 5
 

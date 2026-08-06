@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { getActionPlansApi, toggleActionPlanApi } from '../services/api'
 
 // ── Toast Component ──
 function Toast({ message, stars, show, onClose }) {
@@ -142,11 +143,11 @@ function UbahTargetModal({ isOpen, onClose, ptnTarget, kedinasanTarget, onSave }
         </div>
 
         {/* Footer */}
-        <div className="px-7 pb-7 flex gap-3">
-          <button onClick={onClose} className="flex-1 py-3 rounded-2xl text-[13px] text-[#64748b] border border-slate-200 hover:bg-slate-50 transition-colors cursor-pointer">
+        <div className="sticky bottom-0 bg-white px-7 py-4 border-t border-slate-100 rounded-b-3xl flex justify-end gap-3 z-10">
+          <button onClick={onClose} className="px-4 py-2.5 rounded-xl text-[13px] font-bold text-[#64748b] hover:bg-slate-100 transition-colors cursor-pointer">
             Batal
           </button>
-          <button onClick={handleSave} className="flex-1 py-3 rounded-2xl text-[13px] font-bold text-white bg-[#0965fa] hover:bg-[#0755d0] transition-colors cursor-pointer">
+          <button onClick={handleSave} className="px-5 py-2.5 rounded-xl bg-[#0965fa] text-white text-[13px] font-bold hover:bg-[#0755d0] transition-colors cursor-pointer shadow-md shadow-[#0965fa]/20">
             Simpan
           </button>
         </div>
@@ -187,16 +188,41 @@ export default function ActionPlanPage() {
   const [focusFilters, setFocusFilters] = useState(['snbt'])
   const [completedTasks, setCompletedTasks] = useState({ 3: true })
   const [weeklyChecks, setWeeklyChecks] = useState({ 0: true, 3: true })
+  const [dbItems, setDbItems] = useState([])
+
+  useEffect(() => {
+    getActionPlansApi()
+      .then((data) => {
+        if (data?.items) {
+          setDbItems(data.items)
+          const compMap = {}
+          data.items.forEach(item => {
+            if (item.completed) compMap[item.id] = true
+          })
+          setCompletedTasks(prev => ({ ...prev, ...compMap }))
+        }
+      })
+      .catch((err) => console.error('Failed to load action plans:', err))
+  }, [])
 
   const totalStars = 127
 
-  const allTasks = [
-    { id: 1, title: 'Guided Practice: Penalaran Matematika', desc: '20 soal latihan terbimbing', stars: 5, badge: 'snbt', focus: ['snbt'] },
-    { id: 2, title: 'Mini Tryout SNBT', desc: 'Simulasi ujian 30 menit', stars: 8, badge: 'snbt', focus: ['snbt'] },
-    { id: 3, title: 'Review Pembahasan TO #4', desc: 'Pelajari pembahasan soal', stars: 3, badge: 'general', focus: ['snbt', 'snbp'] },
-    { id: 4, title: 'Latihan TKA: Biologi', desc: '15 soal biologi dasar', stars: 5, badge: 'snbp', focus: ['snbp'] },
-    { id: 5, title: 'Tryout Lengkap SKD', desc: 'Simulasi SKD 100 soal', stars: 15, badge: 'skd', focus: ['skd'] },
-  ]
+  const allTasks = dbItems.length > 0
+    ? dbItems.map((item) => ({
+        id: item.id,
+        title: item.title,
+        desc: item.description || 'Target persiapan belajar',
+        stars: 5,
+        badge: item.category?.toLowerCase() || 'general',
+        focus: ['snbt', 'snbp', 'skd'],
+      }))
+    : [
+        { id: 1, title: 'Guided Practice: Penalaran Matematika', desc: '20 soal latihan terbimbing', stars: 5, badge: 'snbt', focus: ['snbt'] },
+        { id: 2, title: 'Mini Tryout SNBT', desc: 'Simulasi ujian 30 menit', stars: 8, badge: 'snbt', focus: ['snbt'] },
+        { id: 3, title: 'Review Pembahasan TO #4', desc: 'Pelajari pembahasan soal', stars: 3, badge: 'general', focus: ['snbt', 'snbp'] },
+        { id: 4, title: 'Latihan TKA: Biologi', desc: '15 soal biologi dasar', stars: 5, badge: 'snbp', focus: ['snbp'] },
+        { id: 5, title: 'Tryout Lengkap SKD', desc: 'Simulasi SKD 100 soal', stars: 15, badge: 'skd', focus: ['skd'] },
+      ]
 
   const filteredTasks = allTasks.filter(t => t.focus.some(f => focusFilters.includes(f)))
   const doneCount = filteredTasks.filter(t => completedTasks[t.id]).length
@@ -208,6 +234,7 @@ export default function ActionPlanPage() {
 
   const completeTask = (task) => {
     setCompletedTasks(prev => ({ ...prev, [task.id]: true }))
+    toggleActionPlanApi(task.id, true).catch(() => {})
     setToast({ show: true, message: 'Aktivitas berhasil diselesaikan', stars: task.stars })
   }
 
