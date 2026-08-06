@@ -1,27 +1,10 @@
-import { useState, useEffect } from 'react'
-import { getProfileApi } from '../services/api'
-
 export default function PotensiDiriPage() {
-  const [profile, setProfile] = useState(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    getProfileApi()
-      .then(res => {
-        if (res.profile) setProfile(res.profile)
-      })
-      .catch(err => console.warn('PotensiDiri load note:', err.message))
-      .finally(() => setLoading(false))
-  }, [])
-
-  const assessment = profile?.assessment || { technology: 88, research: 82, creativity: 75, leadership: 70, communication: 78 }
-
   const traits = [
-    { label: 'Teknologi & Algoritma', score: assessment.technology, color: '#0965fa', bg: '#eff6ff', desc: 'Kemampuan berpikir logis, komputasi, dan penyelesaian masalah analitis.' },
-    { label: 'Riset & Metodologi Data', score: assessment.research, color: '#059669', bg: '#f0fdf4', desc: 'Kemampuan melakukan penelusuran ilmiah, eksplorasi data, dan riset.' },
-    { label: 'Kreativitas & Desain', score: assessment.creativity, color: '#7c3aed', bg: '#f5f3ff', desc: 'Kemampuan memvisualisasikan ide, inovasi media, dan berpikir out-of-the-box.' },
-    { label: 'Kepemimpinan & Manajemen', score: assessment.leadership, color: '#f59e0b', bg: '#fffbeb', desc: 'Kemampuan mengorganisir tim, mengambil keputusan, dan mengelola agenda.' },
-    { label: 'Komunikasi Publik', score: assessment.communication, color: '#0d9488', bg: '#f0fdfa', desc: 'Kemampuan menyampaikan gagasan secara tertulis maupun lisan dengan baik.' },
+    { label: 'Logis-Matematis', score: 88, color: '#0965fa', bg: '#eff6ff', desc: 'Kemampuan berpikir logis dan menyelesaikan masalah matematika' },
+    { label: 'Linguistik', score: 72, color: '#059669', bg: '#f0fdf4', desc: 'Kemampuan berbahasa dan komunikasi tertulis' },
+    { label: 'Visual-Spasial', score: 80, color: '#7c3aed', bg: '#f5f3ff', desc: 'Kemampuan memvisualisasikan dan berpikir dalam gambar' },
+    { label: 'Interpersonal', score: 75, color: '#f59e0b', bg: '#fffbeb', desc: 'Kemampuan memahami dan berinteraksi dengan orang lain' },
+    { label: 'Naturalis', score: 65, color: '#0d9488', bg: '#f0fdfa', desc: 'Kemampuan mengenali dan memahami alam sekitar' },
   ]
 
   return (
@@ -29,8 +12,8 @@ export default function PotensiDiriPage() {
       {/* Header */}
       <div className="rounded-3xl p-6 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0965fa 0%, #00b2dd 100%)' }}>
         <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/[0.07]" />
-        <h1 className="text-[24px] font-bold text-white relative z-10">Potensi Diri Real</h1>
-        <p className="text-[13px] text-white/80 mt-1 relative z-10">Kenali 5 dimensi potensi diri kamu yang tersimpan di database sistem</p>
+        <h1 className="text-[24px] font-bold text-white relative z-10">Potensi Diri</h1>
+        <p className="text-[13px] text-white/70 mt-1 relative z-10">Kenali kekuatan dan area pengembanganmu berdasarkan analisis AI</p>
       </div>
 
       {/* Traits */}
