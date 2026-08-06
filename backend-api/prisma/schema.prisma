@@ -1,0 +1,218 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  STUDENT
+  BK_TEACHER
+  ADMIN
+}
+
+enum AlignmentStatus {
+  ALIGNED
+  PARTIAL
+  MISALIGNED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+// 1. Users table
+model User {
+  id           String          @id @default(uuid())
+  email        String          @unique
+  passwordHash String
+  name         String
+  role         Role            @default(STUDENT)
+  avatarUrl    String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  profile          StudentProfile?
+  studentBookings  BkBooking[]     @relation("StudentBookings")
+  teacherBookings  BkBooking[]     @relation("TeacherBookings")
+}
+
+// 2. Student Profiles
+model StudentProfile {
+  id            String      @id @default(uuid())
+  userId        String      @unique
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  schoolName    String
+  grade         Int         // 10, 11, or 12
+  majorTrack    String      // IPA / IPS / Merdeka
+  city          String
+  targetPtnId   String?
+  targetPtn     University? @relation(fields: [targetPtnId], references: [id])
+  targetMajorId String?
+  targetMajor   Major?      @relation(fields: [targetMajorId], references: [id])
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  academicRecords AcademicRecord[]
+  achievements    Achievement[]
+  reflection      Reflection?
+  assessment      Assessment?
+  compassAnalyses CompassAnalysis[]
+  tryoutSessions  TryoutSession[]
+  actionPlanItems ActionPlanItem[]
+}
+
+// 3. Academic Records (Nilai Rapor Smt 1-5)
+model AcademicRecord {
+  id         String         @id @default(uuid())
+  profileId  String
+  profile    StudentProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  semester   Int            // 1 to 5
+  subject    String         // Matematika, Fisika, Bahasa Indonesia, dll.
+  score      Float
+  kkm        Float          @default(75.0)
+  createdAt  DateTime       @default(now())
+
+  @@unique([profileId, semester, subject])
+}
+
+// 4. Achievements (Prestasi)
+model Achievement {
+  id         String         @id @default(uuid())
+  profileId  String
+  profile    StudentProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  title      String
+  category   String         // Academic / Non-Academic
+  level      String         // School, City, Province, National, International
+  year       Int
+  createdAt  DateTime       @default(now())
+}
+
+// 5. Student Reflections
+model Reflection {
+  id          String         @id @default(uuid())
+  profileId   String         @unique
+  profile     StudentProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  interests   String         // Stored as JSON string or comma-separated for SQLite
+  careerGoals String
+  motivation  String?
+  updatedAt   DateTime       @updatedAt
+}
+
+// 6. Interest & Bakat Assessments
+model Assessment {
+  id            String         @id @default(uuid())
+  profileId     String         @unique
+  profile       StudentProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  technology    Float          @default(0)
+  research      Float          @default(0)
+  creativity    Float          @default(0)
+  leadership    Float          @default(0)
+  communication Float          @default(0)
+  updatedAt     DateTime       @updatedAt
+}
+
+// 7. Orbita Compass AI Analysis Output
+model CompassAnalysis {
+  id                    String          @id @default(uuid())
+  profileId             String
+  profile               StudentProfile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  confidenceScore       Float           // 0 - 100
+  interestAlignmentPct  Float           // 0 - 100
+  competencyAlignmentPct Float          // 0 - 100
+  careerAlignmentStatus AlignmentStatus
+  aiSummary             String
+  topStrengths          String          // JSON string for SQLite
+  recommendedMajors    String          // JSON string for SQLite
+  recommendedUnivs     String          // JSON string for SQLite
+  recommendedCareers   String          // JSON string for SQLite
+  analyzedAt            DateTime        @default(now())
+}
+
+// 8. Universities Master Data
+model University {
+  id            String           @id @default(uuid())
+  name          String
+  code          String           @unique
+  city          String
+  type          String           // PTN / PTS / PTK Kedinasan
+  accreditation String           // A, B, Unggul, Baik Sekali
+  logoUrl       String?
+  majors        Major[]
+  students      StudentProfile[]
+}
+
+// 9. Majors Master Data
+model Major {
+  id              String           @id @default(uuid())
+  universityId    String
+  university      University       @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  name            String
+  category        String           // Saintek / Soshum / Vokasi / Kedinasan
+  capacity        Int              // Total Daya tampung
+  capacitySnbp    Int              @default(0) // Kuota SNBP
+  capacitySnbt    Int              @default(0) // Kuota SNBT
+  capacityMandiri Int              @default(0) // Kuota Mandiri
+  passingGrade    Float?           // Passing grade estimate
+  accreditation   String
+  students        StudentProfile[]
+}
+
+// 10. Guidance Counseling Bookings (Guru BK)
+model BkBooking {
+  id          String        @id @default(uuid())
+  studentId   String
+  student     User          @relation("StudentBookings", fields: [studentId], references: [id])
+  teacherId   String
+  teacher     User          @relation("TeacherBookings", fields: [teacherId], references: [id])
+  bookingDate DateTime
+  timeSlot    String        // e.g. "09:00 - 10:00"
+  topic       String
+  notes       String?
+  status      BookingStatus @default(PENDING)
+  createdAt   DateTime      @default(now())
+}
+
+// 11. Practice & Tryout Sessions
+model TryoutSession {
+  id          String         @id @default(uuid())
+  profileId   String
+  profile     StudentProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  type        String         // UTBK / SKD / SNBT
+  totalScore  Float
+  answersJson String         // JSON string for SQLite
+  completedAt DateTime       @default(now())
+}
+
+// 12. Action Plan Calendar Items & Reminders
+model ActionPlanItem {
+  id          String         @id @default(uuid())
+  profileId   String
+  profile     StudentProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  category    String         // SNBT, Rapor, Sertifikat, BK, General
+  dueDate     DateTime
+  completed   Boolean        @default(false)
+  notifyEmail Boolean        @default(true)
+  notifyWa    Boolean        @default(true)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+// 13. Practice Question Bank
+model QuestionBank {
+  id               String   @id @default(uuid())
+  category         String   // utbk / skd
+  subtest          String   // Penalaran Umum, TWK, TIU, TKP, dll.
+  question         String
+  optionsJson      String   // JSON string of options array
+  answerIndex      Int
+  difficultyWeight Float    @default(1.0)
+  createdAt        DateTime @default(now())
+}
