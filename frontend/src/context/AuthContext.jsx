@@ -1,36 +1,83 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
+import { loginApi, getMeApi, setAuthToken, getAuthToken, removeAuthToken } from '../services/api'
 
 const AuthContext = createContext(null)
 
-// Demo accounts
-const ACCOUNTS = [
-  { email: 'siswa@orbita.id', password: 'siswa123', role: 'siswa', name: 'Ahmad Rizki', kelas: 'XII IPA 1', initials: 'AR' },
-  { email: 'wali@orbita.id', password: 'wali123', role: 'wali', name: 'Ibu Sari Dewi', kelas: 'Wali Kelas XII IPA 1', initials: 'SD' },
-  { email: 'gurubk@orbita.id', password: 'gurubk123', role: 'gurubk', name: 'Bapak Ahmad', kelas: 'Guru BK', initials: 'BA' },
-]
+// Map backend role to frontend role label used by RoleSelector
+const ROLE_MAP = {
+  STUDENT: 'siswa',
+  BK_TEACHER: 'gurubk',
+  ADMIN: 'admin',
+}
+
+// Build a frontend-friendly user object from backend response
+function mapBackendUser(backendUser) {
+  const names = (backendUser.name || '').split(' ')
+  const initials = names.length >= 2
+    ? (names[0][0] + names[1][0]).toUpperCase()
+    : (names[0] || 'U').slice(0, 2).toUpperCase()
+
+  const profile = backendUser.profile
+  const kelas = profile
+    ? `${profile.grade ? 'Kelas ' + profile.grade : ''} ${profile.majorTrack || ''}`.trim()
+    : backendUser.role === 'BK_TEACHER' ? 'Guru BK' : 'Administrator'
+
+  return {
+    id: backendUser.id,
+    email: backendUser.email,
+    name: backendUser.name,
+    role: ROLE_MAP[backendUser.role] || 'siswa',
+    backendRole: backendUser.role,
+    initials,
+    kelas: kelas || 'Siswa',
+    avatarUrl: backendUser.avatarUrl,
+    profile: backendUser.profile,
+  }
+}
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-  const login = (email, password, selectedRole) => {
-    const account = ACCOUNTS.find(
-      a => a.email === email && a.password === password && a.role === selectedRole
-    )
-    if (account) {
-      setUser(account)
-      return { success: true }
+  // Auto-restore session from token on mount
+  useEffect(() => {
+    const token = getAuthToken()
+    if (token) {
+      getMeApi()
+        .then((data) => {
+          setUser(mapBackendUser(data.user))
+        })
+        .catch(() => {
+          removeAuthToken()
+        })
+        .finally(() => setLoading(false))
+    } else {
+      setLoading(false)
     }
-    // Also try matching just email + password (role auto-detected)
-    const byCredentials = ACCOUNTS.find(a => a.email === email && a.password === password)
-    if (byCredentials) {
-      setUser(byCredentials)
+  }, [])
+
+  const login = async (email, password, _selectedRole) => {
+    try {
+      const data = await loginApi(email, password)
+      setAuthToken(data.token)
+      setUser(mapBackendUser(data.user))
       return { success: true }
+    } catch (err) {
+      return { success: false, error: err.message || 'Email atau password salah.' }
     }
-    return { success: false, error: 'Email, password, atau role tidak sesuai.' }
   }
 
   const logout = () => {
+    removeAuthToken()
     setUser(null)
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-space-1">
+        <div className="animate-spin w-8 h-8 border-4 border-orbit-2 border-t-transparent rounded-full" />
+      </div>
+    )
   }
 
   return (

@@ -1,6 +1,7 @@
-import { useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { getActionPlansApi } from '../services/api'
 
 // ── Mini Radar Chart (SVG) ──
 function MiniRadar({ values, labels, size = 108 }) {
@@ -73,12 +74,31 @@ export default function DashboardPage() {
   const navigate = useNavigate()
   const today = new Date()
   const dateStr = today.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+  const [actionPlans, setActionPlans] = useState([])
 
-  const missions = [
-    { id: 1, title: '20 soal Penalaran Matematika', status: 'progress', current: 12, max: 20 },
-    { id: 2, title: 'Review TO #4', status: 'pending', current: 0, max: 1 },
-    { id: 3, title: 'Latihan Soal UTBK', status: 'done', current: 1, max: 1 },
-  ]
+  useEffect(() => {
+    getActionPlansApi()
+      .then((data) => {
+        if (data?.items) {
+          setActionPlans(data.items)
+        }
+      })
+      .catch((err) => console.error('Failed to load action plans:', err))
+  }, [])
+
+  const missions = actionPlans.length > 0
+    ? actionPlans.slice(0, 3).map((item) => ({
+        id: item.id,
+        title: item.title,
+        status: item.completed ? 'done' : 'progress',
+        current: item.completed ? 1 : 0,
+        max: 1,
+      }))
+    : [
+        { id: 1, title: '20 soal Penalaran Matematika', status: 'progress', current: 12, max: 20 },
+        { id: 2, title: 'Review TO #4', status: 'pending', current: 0, max: 1 },
+        { id: 3, title: 'Latihan Soal UTBK', status: 'done', current: 1, max: 1 },
+      ]
 
   const timelines = [
     { id: 'snbp', label: 'SNBP', subtitle: 'Seleksi Nasional Berdasarkan Prestasi', color: '#0965fa', bg: '#eff6ff', days: '-', date: 'Belum tersedia', dateColor: '#94a3b8', dateBg: '#f1f5f9' },

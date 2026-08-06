@@ -11,18 +11,21 @@ export default function LoginCard() {
   const [loading, setLoading] = useState(false)
   const { login } = useAuth()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
     setLoading(true)
     
-    setTimeout(() => {
-      const result = login(email, password, selectedRole)
+    try {
+      const result = await login(email, password, selectedRole)
       if (!result.success) {
         setError(result.error)
       }
+    } catch {
+      setError('Terjadi kesalahan jaringan. Pastikan server backend berjalan.')
+    } finally {
       setLoading(false)
-    }, 600) // Small delay for UX
+    }
   }
 
   return (

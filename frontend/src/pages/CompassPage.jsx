@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getCompassResultApi, triggerCompassAnalyzeApi } from '../services/api'
 
 function Radar({ values, labels, size = 220 }) {
   const cx = size / 2, cy = size / 2, r = size / 2 - 30
@@ -22,24 +23,63 @@ function Radar({ values, labels, size = 220 }) {
 }
 
 export default function CompassPage() {
-  const recommendations = [
-    { rank: 1, medal: '🥇', jurusan: 'Sistem Informasi', univ: 'Universitas Indonesia', match: 92, color: '#0965fa' },
-    { rank: 2, medal: '🥈', jurusan: 'Teknik Informatika', univ: 'Institut Teknologi Bandung', match: 87, color: '#7c3aed' },
-    { rank: 3, medal: '🥉', jurusan: 'Ilmu Komputer', univ: 'Universitas Gadjah Mada', match: 83, color: '#0d9488' },
-  ]
+  const [analysis, setAnalysis] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [analyzing, setAnalyzing] = useState(false)
+
+  const fetchCompass = () => {
+    setLoading(true)
+    getCompassResultApi()
+      .then((data) => {
+        if (data?.analysis) {
+          setAnalysis(data.analysis)
+        }
+      })
+      .catch((err) => console.error('Failed to fetch compass:', err))
+      .finally(() => setLoading(false))
+  }
+
+  useEffect(() => {
+    fetchCompass()
+  }, [])
+
+  const handleTriggerAnalysis = async () => {
+    setAnalyzing(true)
+    try {
+      const res = await triggerCompassAnalyzeApi()
+      if (res?.analysis) {
+        setAnalysis(res.analysis)
+      } else {
+        fetchCompass()
+      }
+    } catch (err) {
+      console.error('Analysis trigger failed:', err)
+    } finally {
+      setAnalyzing(false)
+    }
+  }
+
+  // Parse recommended items or fallback to seed defaults
+  const parsedMajors = analysis?.recommendedMajors
+    ? typeof analysis.recommendedMajors === 'string' ? JSON.parse(analysis.recommendedMajors) : analysis.recommendedMajors
+    : [
+        { rank: 1, medal: '🥇', jurusan: 'Sistem Informasi', univ: 'Universitas Indonesia', match: 92, color: '#0965fa' },
+        { rank: 2, medal: '🥈', jurusan: 'Teknik Informatika', univ: 'Institut Teknologi Bandung', match: 87, color: '#7c3aed' },
+        { rank: 3, medal: '🥉', jurusan: 'Ilmu Komputer', univ: 'Universitas Gadjah Mada', match: 83, color: '#0d9488' },
+      ]
+
+  const parsedCareers = analysis?.recommendedCareers
+    ? typeof analysis.recommendedCareers === 'string' ? JSON.parse(analysis.recommendedCareers) : analysis.recommendedCareers
+    : [
+        { name: 'AI Engineer', industry: 'Teknologi & Artificial Intelligence', salary: 'Rp 12-30 jt/bulan' },
+        { name: 'Software Engineer', industry: 'Teknologi Informasi', salary: 'Rp 10-25 jt/bulan' },
+        { name: 'Data Scientist', industry: 'Keuangan & Data Analytics', salary: 'Rp 10-22 jt/bulan' },
+      ]
 
   const dimensions = [
-    { label: 'Minat', score: 88, color: '#0965fa', bg: '#eff6ff' },
-    { label: 'Nilai Akademik', score: 82, color: '#7c3aed', bg: '#f5f3ff' },
-    { label: 'Potensi', score: 90, color: '#0d9488', bg: '#f0fdfa' },
-    { label: 'Karir', score: 76, color: '#f59e0b', bg: '#fffbeb' },
-    { label: 'Jalur Masuk', score: 85, color: '#ef4444', bg: '#fef2f2' },
-  ]
-
-  const careers = [
-    { name: 'Software Engineer', industry: 'Teknologi', salary: 'Rp 8-25 jt/bulan' },
-    { name: 'Data Analyst', industry: 'Teknologi / Keuangan', salary: 'Rp 7-18 jt/bulan' },
-    { name: 'System Analyst', industry: 'Konsultan IT', salary: 'Rp 8-20 jt/bulan' },
+    { label: 'Interest Alignment', score: Math.round(analysis?.interestAlignmentPct || 92), color: '#0965fa', bg: '#eff6ff' },
+    { label: 'Competency Match', score: Math.round(analysis?.competencyAlignmentPct || 85), color: '#7c3aed', bg: '#f5f3ff' },
+    { label: 'Overall Confidence', score: Math.round(analysis?.confidenceScore || 88), color: '#0d9488', bg: '#f0fdfa' },
   ]
 
   return (
@@ -48,47 +88,67 @@ export default function CompassPage() {
       <div className="rounded-3xl p-6 md:p-8 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0965fa 0%, #00b2dd 100%)' }}>
         <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/[0.07]" />
         <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-white/[0.05]" />
-        <div className="relative z-10">
-          <h1 className="text-[28px] font-bold text-white">Orbita Kompas</h1>
-          <p className="text-[14px] text-white/70 mt-1">Rekomendasi jurusan dan karir berdasarkan analisis AI terhadap profilmu</p>
-          <span className="inline-block mt-3 px-3 py-1 rounded-full border border-white/30 text-[10px] text-white/80 font-semibold">✨ Powered by AI</span>
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-[28px] font-bold text-white">Orbita Kompas</h1>
+            <p className="text-[14px] text-white/70 mt-1">Rekomendasi jurusan dan karir berdasarkan analisis AI terhadap profilmu</p>
+            <span className="inline-block mt-3 px-3 py-1 rounded-full border border-white/30 text-[10px] text-white/80 font-semibold">✨ Powered by AI Engine</span>
+          </div>
+          <button
+            onClick={handleTriggerAnalysis}
+            disabled={analyzing}
+            className="px-5 py-3 rounded-2xl bg-white text-[#0965fa] text-[13px] font-bold shadow-lg hover:bg-slate-100 transition-all cursor-pointer shrink-0 disabled:opacity-50"
+          >
+            {analyzing ? 'Menganalisis AI...' : '⚡ Jalankan Analisis AI'}
+          </button>
         </div>
       </div>
 
+      {/* AI Summary */}
+      {analysis?.aiSummary && (
+        <div className="bg-white rounded-3xl border border-[#0965fa20] p-6 shadow-sm">
+          <h3 className="text-[14px] font-bold text-[#0965fa] mb-2">🤖 Catatan Analisis AI Engine</h3>
+          <p className="text-[13px] text-[#0f172a] leading-relaxed">{analysis.aiSummary}</p>
+        </div>
+      )}
+
       {/* Top Recommendations */}
-      <div className="space-y-3">
-        {recommendations.map(rec => (
-          <div key={rec.rank} className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-5 md:p-6">
-            <div className="flex items-start gap-4">
-              <span className="text-2xl">{rec.medal}</span>
-              <div className="flex-1">
-                <h3 className="text-[15px] font-bold text-[#0f172a]">{rec.jurusan}</h3>
-                <p className="text-[12px] text-[#64748b] mt-0.5">{rec.univ}</p>
-                <div className="flex items-center gap-3 mt-3">
-                  <div className="flex-1 h-2 bg-[#f1f5f9] rounded-full overflow-hidden">
-                    <div className="h-full rounded-full transition-all duration-700" style={{ width: `${rec.match}%`, background: 'linear-gradient(90deg, #0965fa, #00b2dd)' }} />
+      {loading ? (
+        <div className="flex justify-center py-12">
+          <div className="animate-spin w-8 h-8 border-4 border-[#0965fa] border-t-transparent rounded-full" />
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {parsedMajors.map((rec, idx) => (
+            <div key={idx} className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-5 md:p-6">
+              <div className="flex items-start gap-4">
+                <span className="text-2xl">{rec.medal || (idx === 0 ? '🥇' : idx === 1 ? '🥈' : '🥉')}</span>
+                <div className="flex-1">
+                  <h3 className="text-[15px] font-bold text-[#0f172a]">{rec.jurusan || rec.name || rec}</h3>
+                  <p className="text-[12px] text-[#64748b] mt-0.5">{rec.univ || rec.university || 'PTN Indonesia'}</p>
+                  <div className="flex items-center gap-3 mt-3">
+                    <div className="flex-1 h-2 bg-[#f1f5f9] rounded-full overflow-hidden">
+                      <div className="h-full rounded-full transition-all duration-700" style={{ width: `${rec.match || 90 - idx * 5}%`, background: 'linear-gradient(90deg, #0965fa, #00b2dd)' }} />
+                    </div>
+                    <span className="text-[13px] font-bold text-[#0965fa]">{rec.match || 90 - idx * 5}%</span>
                   </div>
-                  <span className="text-[13px] font-bold" style={{ color: rec.color }}>{rec.match}%</span>
                 </div>
               </div>
-              <button className="px-4 py-2 rounded-xl border border-[#0965fa30] text-[11px] font-bold text-[#0965fa] hover:bg-[#f0f6ff] transition-colors shrink-0 cursor-pointer">
-                Lihat Detail
-              </button>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Radar Chart */}
       <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6">
         <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Profil Kecocokan</h3>
-        <Radar values={[88, 82, 90, 76, 85]} labels={['Minat', 'Akademik', 'Potensi', 'Karir', 'Jalur Masuk']} />
+        <Radar values={[Math.round(analysis?.interestAlignmentPct || 92), Math.round(analysis?.competencyAlignmentPct || 85), Math.round(analysis?.confidenceScore || 88), 80, 85]} labels={['Minat', 'Akademik', 'Potensi', 'Karir', 'Jalur Masuk']} />
       </div>
 
       {/* Dimension Scores */}
       <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6">
         <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Skor per Dimensi</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {dimensions.map(d => (
             <div key={d.label} className="rounded-2xl border border-[rgba(0,0,0,0.06)] p-4" style={{ backgroundColor: d.bg }}>
               <p className="text-[11px] font-semibold" style={{ color: d.color }}>{d.label}</p>
@@ -103,16 +163,16 @@ export default function CompassPage() {
 
       {/* Career Paths */}
       <div className="bg-white rounded-3xl border border-[rgba(0,0,0,0.06)] shadow-sm p-6">
-        <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Prospek Karir</h3>
+        <h3 className="text-[15px] font-bold text-[#0f172a] mb-4">Prospek Karir Relevan</h3>
         <div className="space-y-3">
-          {careers.map((c, i) => (
+          {parsedCareers.map((c, i) => (
             <div key={i} className="rounded-2xl border border-[rgba(0,0,0,0.06)] p-4 flex items-center justify-between">
               <div>
-                <p className="text-[13px] font-bold text-[#0f172a]">{c.name}</p>
-                <p className="text-[11px] text-[#94a3b8]">{c.industry}</p>
+                <p className="text-[13px] font-bold text-[#0f172a]">{c.name || c}</p>
+                <p className="text-[11px] text-[#94a3b8]">{c.industry || 'Industri Teknologi'}</p>
               </div>
               <div className="text-right">
-                <p className="text-[12px] font-bold text-[#0965fa]">{c.salary}</p>
+                <p className="text-[12px] font-bold text-[#0965fa]">{c.salary || 'Kompetitif'}</p>
               </div>
             </div>
           ))}
