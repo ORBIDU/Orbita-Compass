@@ -77,11 +77,15 @@ export const updateBookingStatus = async (req: AuthRequest, res: Response) => {
     if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
 
     const { id } = req.params;
-    const { status } = req.body; // CONFIRMED, COMPLETED, CANCELLED
+    const { status, teacherNotes } = req.body; // CONFIRMED, COMPLETED, CANCELLED
+
+    const updateData: any = {};
+    if (status) updateData.status = status;
+    if (teacherNotes !== undefined) updateData.teacherNotes = teacherNotes;
 
     const updated = await prisma.bkBooking.update({
       where: { id },
-      data: { status }
+      data: updateData
     });
 
     return res.json({ message: 'Booking status updated successfully', booking: updated });

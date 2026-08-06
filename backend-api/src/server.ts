@@ -7,6 +7,8 @@ import compassRoutes from './routes/compassRoutes';
 import ptnRoutes from './routes/ptnRoutes';
 import bkRoutes from './routes/bkRoutes';
 import actionPlanRoutes from './routes/actionPlanRoutes';
+import feedbackRoutes from './routes/feedbackRoutes';
+import adminRoutes from './routes/adminRoutes';
 
 dotenv.config();
 
@@ -28,6 +30,8 @@ app.use('/api/v1/compass', compassRoutes);
 app.use('/api/v1/ptn', ptnRoutes);
 app.use('/api/v1/bk', bkRoutes);
 app.use('/api/v1/action-plans', actionPlanRoutes);
+app.use('/api/v1/feedback', feedbackRoutes);
+app.use('/api/v1/admin', adminRoutes);
 
 // 404 Handler for undefined API routes
 app.use((req: Request, res: Response) => {
