@@ -40,6 +40,7 @@ model User {
   profile          StudentProfile?
   studentBookings  BkBooking[]     @relation("StudentBookings")
   teacherBookings  BkBooking[]     @relation("TeacherBookings")
+  feedbacks        SystemFeedback[]
 }
 
 // 2. Student Profiles
@@ -104,7 +105,7 @@ model Reflection {
   updatedAt   DateTime       @updatedAt
 }
 
-// 6. Interest & Bakat Assessments
+// 6. Interest & Bakat Assessments (Gambaran Minat Bakat)
 model Assessment {
   id            String         @id @default(uuid())
   profileId     String         @unique
@@ -165,17 +166,18 @@ model Major {
 
 // 10. Guidance Counseling Bookings (Guru BK)
 model BkBooking {
-  id          String        @id @default(uuid())
-  studentId   String
-  student     User          @relation("StudentBookings", fields: [studentId], references: [id])
-  teacherId   String
-  teacher     User          @relation("TeacherBookings", fields: [teacherId], references: [id])
-  bookingDate DateTime
-  timeSlot    String        // e.g. "09:00 - 10:00"
-  topic       String
-  notes       String?
-  status      BookingStatus @default(PENDING)
-  createdAt   DateTime      @default(now())
+  id           String        @id @default(uuid())
+  studentId    String
+  student      User          @relation("StudentBookings", fields: [studentId], references: [id])
+  teacherId    String
+  teacher      User          @relation("TeacherBookings", fields: [teacherId], references: [id])
+  bookingDate  DateTime
+  timeSlot     String        // e.g. "09:00 - 10:00"
+  topic        String
+  notes        String?
+  teacherNotes String?       // Catatan dari Guru BK
+  status       BookingStatus @default(PENDING)
+  createdAt    DateTime      @default(now())
 }
 
 // 11. Practice & Tryout Sessions
@@ -189,7 +191,7 @@ model TryoutSession {
   completedAt DateTime       @default(now())
 }
 
-// 12. Action Plan Calendar Items & Reminders
+// 12. Action Plan Items & Daily Reminders
 model ActionPlanItem {
   id          String         @id @default(uuid())
   profileId   String
@@ -215,4 +217,15 @@ model QuestionBank {
   answerIndex      Int
   difficultyWeight Float    @default(1.0)
   createdAt        DateTime @default(now())
+}
+
+// 14. Feedback & Rating Ulasan Pengguna
+model SystemFeedback {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rating    Int      // 1 to 5
+  comment   String?
+  category  String   @default("General") // ActionPlan, Compass, Counseling, General
+  createdAt DateTime @default(now())
 }
