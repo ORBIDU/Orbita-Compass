@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "dev": "concurrently -n \"FE,BE,AI\" -c \"cyan,blue,magenta\" \"npm run dev --prefix frontend\" \"npm run dev --prefix backend-api\" \"python ai-engine/main.py\"",
     "dev:fe": "npm run dev --prefix frontend",
     "dev:be": "npm run dev --prefix backend-api",
     "dev:ai": "python ai-engine/main.py",
     "build:fe": "npm run build --prefix frontend",
     "build:be": "npm run build --prefix backend-api"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }
