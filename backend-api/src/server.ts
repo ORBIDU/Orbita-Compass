@@ -10,6 +10,9 @@ import actionPlanRoutes from './routes/actionPlanRoutes';
 import feedbackRoutes from './routes/feedbackRoutes';
 import adminRoutes from './routes/adminRoutes';
 
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swaggerConfig';
+
 dotenv.config();
 
 const app = express();
@@ -18,9 +21,12 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
+// OpenAPI Swagger UI Documentation Endpoint
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // Health check endpoint
 app.get('/health', (req: Request, res: Response) => {
-  res.json({ status: 'ok', service: 'Orbita Compass Backend API', timestamp: new Date().toISOString() });
+  res.json({ status: 'ok', service: 'Orbita Compass Backend API', docs: 'http://localhost:5000/api-docs', timestamp: new Date().toISOString() });
 });
 
 // API Routes (v1)

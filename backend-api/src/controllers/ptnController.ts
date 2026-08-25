@@ -120,13 +120,27 @@ export const getRationalization = async (req: AuthRequest, res: Response) => {
 
 export const getPracticeQuestions = async (req: Request, res: Response) => {
   try {
-    const { category } = req.query;
+    const { category, campus } = req.query;
     const catLower = String(category || 'utbk').toLowerCase();
+    const campusStr = campus ? String(campus).trim() : null;
 
-    const dbQuestions = await prisma.questionBank.findMany({
-      where: { category: catLower },
+    const whereCondition: any = { category: catLower };
+    if (catLower === 'mandiri' && campusStr) {
+      whereCondition.subtest = { contains: campusStr };
+    }
+
+    let dbQuestions = await prisma.questionBank.findMany({
+      where: whereCondition,
       orderBy: { createdAt: 'asc' }
     });
+
+    // Fallback if category is tka or mandiri and no specific db records match
+    if (dbQuestions.length === 0 && (catLower === 'tka' || catLower === 'mandiri')) {
+      dbQuestions = await prisma.questionBank.findMany({
+        where: { category: 'utbk' },
+        take: 5
+      });
+    }
 
     const formattedQuestions = dbQuestions.map(q => ({
       id: q.id,
@@ -138,7 +152,7 @@ export const getPracticeQuestions = async (req: Request, res: Response) => {
       difficultyWeight: q.difficultyWeight
     }));
 
-    return res.json({ category: catLower, questions: formattedQuestions });
+    return res.json({ category: catLower, campus: campusStr || 'Semua Kampus', questions: formattedQuestions });
   } catch (error) {
     console.error('getPracticeQuestions error:', error);
     return res.status(500).json({ error: 'Failed to fetch practice questions' });

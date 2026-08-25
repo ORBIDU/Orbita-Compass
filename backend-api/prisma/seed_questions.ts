@@ -1,4 +1,7 @@
 import { PrismaClient } from '@prisma/client';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const prisma = new PrismaClient();
 
@@ -99,6 +102,42 @@ const QUESTIONS_DATA = [
     ]),
     answerIndex: 0,
     difficultyWeight: 1.50
+  },
+
+  // TKA (Tes Kemampuan Akademik - SNBP Mapel Pendukung)
+  {
+    category: 'tka',
+    subtest: 'TKA Fisika',
+    question: 'Sebuah mobil bermassa 1000 kg bergerak dengan kecepatan 20 m/s. Energi kinetik mobil tersebut adalah...',
+    optionsJson: JSON.stringify(['200.000 Joule', '100.000 Joule', '400.000 Joule', '50.000 Joule']),
+    answerIndex: 0,
+    difficultyWeight: 1.35
+  },
+  {
+    category: 'tka',
+    subtest: 'TKA Ekonomi',
+    question: 'Jika harga barang X naik 10% menyebabkan jumlah penawaran naik 15%, maka elastisitas penawaran bersifat...',
+    optionsJson: JSON.stringify(['Elastis (E > 1)', 'Inelastis (E < 1)', 'Elastis Uniter (E = 1)', 'Inelastis Sempurna']),
+    answerIndex: 0,
+    difficultyWeight: 1.25
+  },
+
+  // Mandiri per-Kampus
+  {
+    category: 'mandiri',
+    subtest: 'Simak UI - Kemampuan Dasar',
+    question: '[SIMAK UI] Matriks A berordo 2x2 memenuhi A^2 - 3A + 2I = 0. Manakah determinan A yang mungkin?',
+    optionsJson: JSON.stringify(['1 atau 2', '0 atau 3', '1 atau 4', '-1 atau 2']),
+    answerIndex: 0,
+    difficultyWeight: 1.50
+  },
+  {
+    category: 'mandiri',
+    subtest: 'UM UGM - Utul UGM',
+    question: '[UM UGM] Persamaan reaksi redoks yang sudah setara menunjukkan koefisien KMnO4 sebesar...',
+    optionsJson: JSON.stringify(['2', '3', '5', '8']),
+    answerIndex: 0,
+    difficultyWeight: 1.45
   }
 ];
 
