@@ -8,7 +8,7 @@ Orbita Compass membantu siswa memahami potensi diri, merencanakan jalur studi (S
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-22.x-green)](https://nodejs.org)
 [![Python](https://img.shields.io/badge/Python-3.10+-blue)](https://python.org)
-[![Gemini AI](https://img.shields.io/badge/Gemini-2.0%20Flash-orange)](https://ai.google.dev)
+[![Gemini AI](https://img.shields.io/badge/Gemini-2.5%20Flash-orange)](https://ai.google.dev)
 
 ---
 
@@ -35,7 +35,7 @@ Orbita Compass membantu siswa memahami potensi diri, merencanakan jalur studi (S
 | Fitur | Deskripsi |
 |---|---|
 | 🎯 **Dashboard Siswa** | Ringkasan profil, target PTN, kuota SNBP/SNBT/Mandiri real-time, radar keselarasan AI |
-| 🧭 **Orbita Compass AI** | Analisis keselarasan minat × bakat × nilai rapor menggunakan Gemini 2.0 Flash |
+| 🧭 **Orbita Compass AI** | Analisis keselarasan minat × bakat × nilai rapor menggunakan Gemini 2.5 Flash |
 | 📊 **Potensi Diri** | Asesmen 5 dimensi (Teknologi, Riset, Kreativitas, Kepemimpinan, Komunikasi) |
 | 🏫 **Eksplor Jurusan & PTN** | 1.895 Prodi + 149 Kampus real dengan Lazy Load Pagination, filter rumpun, dan pencarian |
 | 📝 **Siap PTN — UTBK** | Simulator CBT UTBK SNBT dengan penilaian IRT (0–1000 poin), 7 subtes |
@@ -71,8 +71,8 @@ Orbita Compass dibangun menggunakan pola **Hybrid Monorepo** dengan tiga layanan
                      │     ┌──────────────────────────────────┐
                      │     │         AI ENGINE                │
                      │     │     http://localhost:8000        │
-                     │     │  Python FastAPI + Gemini 2.0 +   │
-                     │     │    Numpy Scoring Engine          │
+                     │     │  Python FastAPI + Gemini 2.5     │
+                     │     │    Flash + Numpy Scoring Engine  │
                      │     └──────────────────────────────────┘
                      │
               ┌──────┴──────┐
@@ -116,7 +116,7 @@ Orbita Compass dibangun menggunakan pola **Hybrid Monorepo** dengan tiga layanan
 | Uvicorn | 0.30+ | ASGI server |
 | Pydantic | 2.8+ | Validasi data model |
 | Numpy | 1.26+ | Komputasi numerik scoring |
-| google-genai | 0.1+ | Gemini 2.0 Flash API client |
+| google-genai | 0.1+ | Gemini 2.5 Flash API client |
 | python-dotenv | 1.0+ | Pembacaan environment variables |
 
 ---
@@ -182,7 +182,7 @@ Orbita-Compass/
 └── 🤖 ai-engine/
     ├── main.py                  ← FastAPI app, endpoint, CORS
     ├── scoring.py               ← Algoritma scoring multi-rumpun
-    ├── llm_pipeline.py          ← Gemini 2.0 Flash integration
+    ├── llm_pipeline.py          ← Gemini 2.5 Flash integration
     ├── requirements.txt         ← Dependensi Python
     └── .env.example             ← Template API key Gemini
 ```
@@ -230,10 +230,10 @@ AI_ENGINE_URL="http://localhost:8000"
 ```bash
 cp ai-engine/.env.example ai-engine/.env
 ```
-Buka file `ai-engine/.env` dan isi API key Gemini:
+Buka file `ai-engine/.env` dan isi API key Gemini 2.5 Flash:
 ```env
 PORT=8000
-GEMINI_API_KEY="isi_api_key_gemini_dari_aistudio.google.com"
+GEMINI_API_KEY="isi_api_key_gemini_2_5_flash_dari_aistudio.google.com"
 ```
 
 > 💡 API key Gemini bisa didapat gratis di [Google AI Studio](https://aistudio.google.com/app/apikey)
@@ -365,7 +365,7 @@ Authorization: Bearer <JWT_TOKEN>
 ### 🧭 Compass AI
 | Method | Endpoint | Auth | Deskripsi |
 |---|---|---|---|
-| `POST` | `/compass/analyze` | ✅ | Jalankan analisis keselarasan AI (Gemini) |
+| `POST` | `/compass/analyze` | ✅ | Jalankan analisis keselarasan AI (Gemini 2.5 Flash) |
 | `GET` | `/compass/result` | ✅ | Ambil hasil analisis AI terakhir |
 
 ### 📅 Action Plan
@@ -389,7 +389,7 @@ Authorization: Bearer <JWT_TOKEN>
 
 ## 🗄️ Data & Database
 
-### Database Schema (13 Model)
+### Database Schema (14 Model)
 
 ```
 User → StudentProfile → AcademicRecord   (Nilai Rapor Smt 1-5)
