@@ -14,10 +14,24 @@ from llm_pipeline import generate_llm_insights
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
 
+tags_metadata = [
+    {
+        "name": "System Health",
+        "description": "Endpoint status dan pemeriksaan konfigurasi API key Gemini",
+    },
+    {
+        "name": "Compass AI Analytics",
+        "description": "Microservice AI untuk kalkulasi skor numerik NumPy dan analisis rekomendasi Gemini 2.0 Flash",
+    },
+]
+
 app = FastAPI(
     title="Orbita Compass AI Engine API",
-    description="Microservice AI for Student Profiling, Mathematical Scoring, and Gemini LLM Guidance",
-    version="1.0.0"
+    description="Microservice AI & Scoring Engine berbasis Python FastAPI + NumPy + Gemini 2.0 Flash untuk Analisis Keselarasan Minat, Bakat, dan Rapor Siswa SMA/SMK/MA Indonesia.",
+    version="1.0.0",
+    openapi_tags=tags_metadata,
+    docs_url="/docs",
+    redoc_url="/redoc"
 )
 
 # Enable CORS for browser integration
@@ -38,50 +52,60 @@ async def global_exception_handler(request: Request, exc: Exception):
     )
 
 class AcademicRecordInput(BaseModel):
-    semester: int
-    subject: str
-    score: float
+    semester: int = Field(..., json_schema_extra={'example': 5}, description="Semester 1 hingga 5")
+    subject: str = Field(..., json_schema_extra={'example': "Matematika"}, description="Nama mata pelajaran")
+    score: float = Field(..., json_schema_extra={'example': 92.5}, description="Nilai rapor (0-100)")
 
 class AchievementInput(BaseModel):
-    title: str
-    category: str
-    level: str
-    year: int
+    title: str = Field(..., json_schema_extra={'example': "Juara 1 OSN Informatika"}, description="Judul prestasi/sertifikat")
+    category: str = Field(..., json_schema_extra={'example': "Akademik"}, description="Kategori: Akademik | Non-Akademik")
+    level: str = Field(..., json_schema_extra={'example': "Nasional"}, description="Tingkat: Kota | Provinsi | Nasional | Internasional")
+    year: int = Field(..., json_schema_extra={'example': 2025}, description="Tahun perolehan")
 
 class AssessmentInput(BaseModel):
-    technology: float = 70.0
-    research: float = 70.0
-    creativity: float = 70.0
-    leadership: float = 70.0
-    communication: float = 70.0
+    technology: float = Field(80.0, json_schema_extra={'example': 85.0}, description="Skor dimensi Teknologi (0-100)")
+    research: float = Field(75.0, json_schema_extra={'example': 78.0}, description="Skor dimensi Riset & Analisis (0-100)")
+    creativity: float = Field(70.0, json_schema_extra={'example': 72.0}, description="Skor dimensi Kreativitas (0-100)")
+    leadership: float = Field(85.0, json_schema_extra={'example': 88.0}, description="Skor dimensi Kepemimpinan (0-100)")
+    communication: float = Field(90.0, json_schema_extra={'example': 90.0}, description="Skor dimensi Komunikasi (0-100)")
 
 class ReflectionInput(BaseModel):
-    interests: List[str] = Field(default_factory=list)
-    careerGoals: List[str] = Field(default_factory=list)
-    motivation: Optional[str] = None
+    interests: List[str] = Field(default_factory=lambda: ["Pemrograman", "Kecerdasan Buatan"], json_schema_extra={'example': ["Pemrograman", "Kecerdasan Buatan"]})
+    careerGoals: List[str] = Field(default_factory=lambda: ["Software Engineer", "Data Scientist"], json_schema_extra={'example': ["Software Engineer", "Data Scientist"]})
+    motivation: Optional[str] = Field("Ingin memajukan teknologi digital Indonesia", json_schema_extra={'example': "Ingin memajukan teknologi digital Indonesia"})
 
 class StudentPayload(BaseModel):
-    student_id: str
-    name: Optional[str] = "Student"
-    grade: int = 12
-    major_track: str = "IPA"
-    target_ptn: str = "Universitas Indonesia"
-    target_major: str = "Teknik Informatika"
+    student_id: str = Field(..., json_schema_extra={'example': "std-12345"}, description="ID unik siswa")
+    name: Optional[str] = Field("Ahmad Rizki", json_schema_extra={'example': "Ahmad Rizki"})
+    grade: int = Field(12, json_schema_extra={'example': 12}, description="Kelas siswa (10, 11, atau 12)")
+    major_track: str = Field("IPA", json_schema_extra={'example': "IPA"}, description="Jurusan SMA: IPA | IPS | Bahasa | SMK")
+    target_ptn: str = Field("Universitas Indonesia", json_schema_extra={'example': "Universitas Indonesia"}, description="Target PTN impian")
+    target_major: str = Field("Teknik Informatika", json_schema_extra={'example': "Teknik Informatika"}, description="Target Program Studi")
     academic_records: List[AcademicRecordInput] = Field(default_factory=list)
     achievements: List[AchievementInput] = Field(default_factory=list)
     assessment: AssessmentInput = Field(default_factory=AssessmentInput)
     reflection: ReflectionInput = Field(default_factory=ReflectionInput)
 
-@app.get("/health")
+@app.get("/health", tags=["System Health"])
 def health_check():
+    """
+    Status kesehatan microservice AI Engine dan pemeriksaan validitas Gemini API Key.
+    """
     return {
         "status": "ok",
         "service": "Orbita Compass AI Engine",
-        "gemini_api_configured": bool(os.getenv("GEMINI_API_KEY"))
+        "gemini_api_configured": bool(os.getenv("GEMINI_API_KEY")),
+        "swagger_docs": "/docs",
+        "redoc_docs": "/redoc"
     }
 
-@app.post("/analyze-compass")
+@app.post("/analyze-compass", tags=["Compass AI Analytics"])
 def analyze_compass(payload: StudentPayload):
+    """
+    Menjalankan pipeline analisis Orbita Compass AI:
+    1. Perhitungan matematis NumPy (Confidence Score, Konsistensi Rapor, Alignment %).
+    2. Prompting Gemini 2.0 Flash LLM untuk ringkasan naratif, rekomendasi jurusan, PTN, dan jalur karir.
+    """
     try:
         logging.info(f"Processing Compass AI analysis for student: {payload.student_id} ({payload.target_major})")
         
