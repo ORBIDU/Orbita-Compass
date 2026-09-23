@@ -1,6 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import fs from 'fs';
 import authRoutes from './routes/authRoutes';
 import profileRoutes from './routes/profileRoutes';
 import compassRoutes from './routes/compassRoutes';
@@ -38,6 +40,18 @@ app.use('/api/v1/bk', bkRoutes);
 app.use('/api/v1/action-plans', actionPlanRoutes);
 app.use('/api/v1/feedback', feedbackRoutes);
 app.use('/api/v1/admin', adminRoutes);
+
+// Serve Frontend Static Files (for All-in-One Space / Production Deployment)
+const frontendDist = process.env.FRONTEND_DIST || path.join(__dirname, '../../frontend/dist');
+if (fs.existsSync(frontendDist)) {
+  app.use(express.static(frontendDist));
+  app.get('*', (req: Request, res: Response, next: NextFunction) => {
+    if (req.originalUrl.startsWith('/api') || req.originalUrl.startsWith('/api-docs') || req.originalUrl.startsWith('/health')) {
+      return next();
+    }
+    res.sendFile(path.join(frontendDist, 'index.html'));
+  });
+}
 
 // 404 Handler for undefined API routes
 app.use((req: Request, res: Response) => {
