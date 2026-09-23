@@ -1,3 +1,13 @@
+---
+title: Orbita Compass
+emoji: 🧭
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # 🧭 Orbita Compass
 
 > **Platform analitik & mentor akademik berbasis AI untuk siswa SMA/SMK/MA Indonesia yang mempersiapkan diri masuk Perguruan Tinggi Negeri (PTN) dan Sekolah Kedinasan.**
