@@ -1,1 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+/*
+ * Poppins (font utama) dimuat dari Google Fonts di index.html.
+ *
+ * Pecita (font aksen) di-host sendiri. Taruh file-nya di src/assets/fonts/
+ * dengan nama Pecita.woff2 dan/atau Pecita.otf. Selama file belum ada,
+ * kelas `font-accent` otomatis memakai Poppins sebagai cadangan.
+ */
+@font-face {
+  font-family: "Pecita";
+  src:
+    url("../assets/fonts/Pecita.woff2") format("woff2"),
+    url("../assets/fonts/Pecita.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

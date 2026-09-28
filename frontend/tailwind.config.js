@@ -1,72 +1,77 @@
 /** @type {import('tailwindcss').Config} */
+
+// ─── Design token ORBITA ─────────────────────────────────────────────────────
+// Satu-satunya tempat warna, gradient, dan font didefinisikan.
+// Di komponen, pakai kelas Tailwind-nya (mis. `bg-orbit-1`, `bg-gradient-orbit`,
+// `font-accent`), jangan tulis ulang kode hex atau `fontFamily` inline.
+
+const brand = {
+  // Navy: latar gelap (landing, auth, footer)
+  "space-1": "#15234D",
+  "space-2": "#101A33",
+  // Biru: aksi utama, tab aktif, progress, link
+  "orbit-1": "#0965FA",
+  "orbit-2": "#00B2DD",
+  // Oranye: CTA paling penting dan highlight (dipakai hemat)
+  "sun-1": "#FF7000",
+  "sun-2": "#F1AD00",
+  // Biru sangat muda: latar chip/badge biru
+  cloud: "#EFF6FF",
+};
+
+const gradient = (from, to) => `linear-gradient(135deg, ${from} 0%, ${to} 100%)`;
+
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  darkMode: "class",
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
-        'space-1': '#15234D',
-        'space-2': '#101A33',
-        'sun-1': '#FF7000',
-        'sun-2': '#F1AD00',
-        'orbit-1': '#0965FA',
-        'orbit-2': '#00B2DD',
-        'cloud': '#EFF6FF',
-        border: "var(--border)",
-        input: "var(--input)",
-        ring: "var(--ring)",
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        primary: {
-          DEFAULT: "var(--primary)",
-          foreground: "var(--primary-foreground)",
+        ...brand,
+        // Latar halaman portal (terang)
+        page: "#F5F6FB",
+        // Teks: utama → paling samar
+        ink: {
+          DEFAULT: "#1A1D2E",
+          soft: "#374151",
+          muted: "#6B7280",
+          faint: "#9CA3AF",
         },
-        secondary: {
-          DEFAULT: "var(--secondary)",
-          foreground: "var(--secondary-foreground)",
+        // Garis pembatas: DEFAULT untuk border kartu/input, soft untuk pemisah tipis
+        line: {
+          DEFAULT: "#E5E7EB",
+          soft: "rgba(0, 0, 0, 0.08)",
         },
-        destructive: {
-          DEFAULT: "var(--destructive)",
-          foreground: "var(--destructive-foreground)",
-        },
-        muted: {
-          DEFAULT: "var(--muted)",
-          foreground: "var(--muted-foreground)",
-        },
-        accent: {
-          DEFAULT: "var(--accent)",
-          foreground: "var(--accent-foreground)",
-        },
-        popover: {
-          DEFAULT: "var(--popover)",
-          foreground: "var(--popover-foreground)",
-        },
-        card: {
-          DEFAULT: "var(--card)",
-          foreground: "var(--card-foreground)",
-        },
-        sidebar: {
-          DEFAULT: "var(--sidebar)",
-          foreground: "var(--sidebar-foreground)",
-          primary: "var(--sidebar-primary)",
-          "primary-foreground": "var(--sidebar-primary-foreground)",
-          accent: "var(--sidebar-accent)",
-          "accent-foreground": "var(--sidebar-accent-foreground)",
-          border: "var(--sidebar-border)",
-          ring: "var(--sidebar-ring)",
-        },
+        // Warna status (kalender, badge, validasi)
+        success: "#22C55E",
+        warning: "#F1AD00",
+        danger: "#EF4444",
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+      backgroundImage: {
+        "gradient-navy": gradient(brand["space-1"], brand["space-2"]),
+        "gradient-orbit": gradient(brand["orbit-1"], brand["orbit-2"]),
+        "gradient-sun": gradient(brand["sun-1"], brand["sun-2"]),
       },
       fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
+        // Font utama untuk semua teks
+        sans: ["Poppins", "ui-sans-serif", "system-ui", "sans-serif"],
+        // Font aksen, hanya untuk 1–3 kata penekanan. Cadangannya Poppins
+        // supaya tampilan tetap rapi selama file Pecita belum ada.
+        accent: ["Pecita", "Poppins", "ui-sans-serif", "sans-serif"],
       },
+      borderRadius: {
+        sm: "6px",
+        md: "8px",
+        lg: "10px",
+        // Kartu utama (rentang 16–24px sesuai design system)
+        card: "20px",
+      },
+      boxShadow: {
+        card: "0 4px 24px rgba(15, 23, 42, 0.06)",
+        "card-hover": "0 8px 32px rgba(15, 23, 42, 0.10)",
+        cta: "0 8px 24px rgba(9, 101, 250, 0.30)",
+      },
+      // Animasi berikut belum dipakai halaman mana pun. Disimpan sebagai bahan
+      // AuthAnimationSlot (Fase 3); hapus jika ternyata tidak dipakai.
       keyframes: {
         launchFade: {
           '0%, 20%': { opacity: '1' },
