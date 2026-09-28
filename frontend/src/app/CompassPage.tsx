@@ -10,7 +10,7 @@ import {
   ArrowLeft,
   BookOpen,
 } from "lucide-react";
-import { triggerCompassAnalyzeApi, getCompassResultApi } from "../services/api";
+import { analyzeCompass, getCompassResult } from "../services/compassService";
 
 const PP = "Poppins, sans-serif";
 
@@ -956,9 +956,9 @@ export default function OrbitaCompassPage({
   const [, setAnalysis] = useState<any>(null);
 
   useEffect(() => {
-    getCompassResultApi()
-      .then(res => {
-        if (res?.analysis) setAnalysis(res.analysis);
+    getCompassResult()
+      .then(analysis => {
+        if (analysis) setAnalysis(analysis);
       })
       .catch(() => {});
   }, []);
@@ -966,8 +966,7 @@ export default function OrbitaCompassPage({
   async function handleTriggerAnalyze() {
     setCompassState("analyzing");
     try {
-      const res = await triggerCompassAnalyzeApi();
-      if (res?.analysis) setAnalysis(res.analysis);
+      setAnalysis(await analyzeCompass());
     } catch (err) {
       console.warn("Compass AI analyze completed with local fallback", err);
     }

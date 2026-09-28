@@ -17,45 +17,21 @@ import SiapSKDPage from "./SiapSKDPage";
 import SiapMandiriPage from "./SiapMandiriPage";
 import LandingPage from "./LandingPage";
 import KonsulasiPage, { type Booking } from "./KonsulasiPage";
-import { loginApi, getMeApi, setAuthToken, getAuthToken, removeAuthToken } from "../services/api";
+import { useAuth } from "../context/AuthContext";
+import { ApiError } from "../services/http";
+import { toDisplayUser, type DisplayUser } from "../lib/user";
+import DemoModePanel from "../components/dev/DemoModePanel";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // AUTH TYPES
 // ═══════════════════════════════════════════════════════════════════════════════
-interface OrbitaUser {
-  id: string;
-  email: string;
-  name: string;
-  initials: string;
-  kelas: string;
-  role: string;
-  avatarUrl?: string;
-}
-
-function mapUser(backendUser: any): OrbitaUser {
-  const names = (backendUser.name || "").split(" ");
-  const initials = names.length >= 2
-    ? (names[0][0] + names[1][0]).toUpperCase()
-    : (names[0] || "U").slice(0, 2).toUpperCase();
-  const profile = backendUser.profile;
-  const kelas = profile
-    ? `Kelas ${profile.grade || "XII"} ${profile.majorTrack || "IPA"}`
-    : backendUser.role === "BK_TEACHER" ? "Guru BK" : "Administrator";
-  return {
-    id: backendUser.id,
-    email: backendUser.email,
-    name: backendUser.name,
-    initials,
-    kelas,
-    role: backendUser.role,
-    avatarUrl: backendUser.avatarUrl,
-  };
-}
+type OrbitaUser = DisplayUser;
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // LOGIN MODAL
 // ═══════════════════════════════════════════════════════════════════════════════
-function LoginModal({ onSuccess, onClose }: { onSuccess: (user: OrbitaUser) => void; onClose: () => void }) {
+function LoginModal({ onSuccess, onClose }: { onSuccess: () => void; onClose: () => void }) {
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -67,24 +43,10 @@ function LoginModal({ onSuccess, onClose }: { onSuccess: (user: OrbitaUser) => v
     setError("");
     setLoading(true);
     try {
-      const data = await loginApi(email, password);
-      setAuthToken(data.token);
-      onSuccess(mapUser(data.user));
-    } catch (err: any) {
-      // Fallback demo mode jika backend offline
-      if (err.message?.includes("Failed to fetch") || err.name === "TypeError") {
-        setAuthToken("mock_demo_token");
-        onSuccess({
-          id: "demo-1",
-          email: email || "siswa@orbita.id",
-          name: "Ahmad Rizki",
-          initials: "AR",
-          kelas: "Kelas XII IPA 1",
-          role: "STUDENT",
-        });
-      } else {
-        setError(err.message || "Email atau password salah.");
-      }
+      await login(email, password);
+      onSuccess();
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Gagal masuk. Coba lagi.");
     } finally {
       setLoading(false);
     }
@@ -2473,9 +2435,9 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<ProfileTab>("minat-bakat");
   const [showInfoPribadi, setShowInfoPribadi] = useState(false);
   const [infoPribadiTab, setInfoPribadiTab] = useState<InfoPribadiTab>("data-diri");
-  const [currentUser, setCurrentUser] = useState<OrbitaUser | null>(null);
+  const { status: authStatus, user, logout } = useAuth();
+  const currentUser: OrbitaUser | null = user ? toDisplayUser(user) : null;
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [authLoading, setAuthLoading] = useState(true);
   const [bookings, setBookings] = useState<Booking[]>([
     {
       id: "1",
@@ -2515,35 +2477,19 @@ export default function App() {
     },
   ]);
 
-  // Restore session on mount
+  // Sesi dipulihkan oleh AuthProvider. Di sini cukup menyesuaikan halaman aktif.
   useEffect(() => {
-    const token = getAuthToken();
-    if (token) {
-      getMeApi()
-        .then(data => {
-          setCurrentUser(mapUser(data.user));
-          setActivePage("dashboard");
-        })
-        .catch(() => {
-          // token mungkin expired atau backend offline — clear saja
-          removeAuthToken();
-        })
-        .finally(() => setAuthLoading(false));
-    } else {
-      setAuthLoading(false);
-    }
-  }, []);
+    if (authStatus === "authenticated") setActivePage(p => (p === "landing" ? "dashboard" : p));
+    if (authStatus === "guest") setActivePage("landing");
+  }, [authStatus]);
 
-  function handleLoginSuccess(user: OrbitaUser) {
-    setCurrentUser(user);
+  function handleLoginSuccess() {
     setShowLoginModal(false);
     setActivePage("dashboard");
   }
 
   function handleLogout() {
-    removeAuthToken();
-    setCurrentUser(null);
-    setActivePage("landing");
+    logout();
   }
 
   function addBooking(b: Booking) {
@@ -2551,7 +2497,7 @@ export default function App() {
   }
 
   // Loading screen saat cek token
-  if (authLoading) {
+  if (authStatus === "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "linear-gradient(135deg, #0965fa 0%, #00b2dd 100%)" }}>
         <div className="flex flex-col items-center gap-4">
@@ -2624,6 +2570,7 @@ export default function App() {
         </main>
       </div>
       <MobileBottomNav activePage={activePage} setActivePage={setActivePage} />
+      <DemoModePanel />
     </div>
   );
 }
