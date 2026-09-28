@@ -5,6 +5,7 @@ import {
   ArrowLeft, Info, Zap, BookOpen, AlertTriangle, Plus, Trash2, Calendar, TrendingUp, TrendingDown, Download, Target, ChevronUp, Compass, User, Shield, MessageSquare,
   Eye, EyeOff, Loader2, X,
 } from "lucide-react";
+import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, Radar } from "recharts";
 import NilaiRaporPage from "./RaporPage";
 import OrbitaCompassPage from "./CompassPage";
 import JurusanPage from "./JurusanPage";
