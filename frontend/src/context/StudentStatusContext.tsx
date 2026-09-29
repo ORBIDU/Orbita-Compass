@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import type { MeUser } from "@/types/backend";
 import type { LockableFeature, StudentStatus } from "@/types/student";
 import * as studentService from "@/services/studentService";
 import { useAuth } from "./AuthContext";
@@ -7,6 +8,8 @@ interface StudentStatusContextValue {
   /** null = bukan siswa, belum login, atau masih dimuat. */
   status: StudentStatus | null;
   loading: boolean;
+  /** true setelah status untuk user saat ini selesai dimuat (berhasil atau gagal). */
+  ready: boolean;
   /** true jika bagian ini harus tampil dengan overlay gembok. */
   isLocked: (feature: LockableFeature) => boolean;
   /** Khusus Mode Demo (VITE_USE_MOCK=true). */
@@ -24,6 +27,8 @@ export function StudentStatusProvider({ children }: { children: ReactNode }) {
   const { user, refreshUser } = useAuth();
   const [status, setStatus] = useState<StudentStatus | null>(null);
   const [loading, setLoading] = useState(false);
+  // User yang statusnya sudah selesai dimuat, supaya "ready" tidak pernah benar untuk user yang lama.
+  const [loadedFor, setLoadedFor] = useState<MeUser | null>(null);
 
   useEffect(() => {
     if (!user) {
@@ -41,7 +46,9 @@ export function StudentStatusProvider({ children }: { children: ReactNode }) {
         if (!cancelled) setStatus(null);
       })
       .finally(() => {
-        if (!cancelled) setLoading(false);
+        if (cancelled) return;
+        setLoading(false);
+        setLoadedFor(user);
       });
     return () => {
       cancelled = true;
@@ -62,9 +69,11 @@ export function StudentStatusProvider({ children }: { children: ReactNode }) {
     [refreshUser],
   );
 
+  const ready = user !== null && loadedFor === user && !loading;
+
   const value = useMemo(
-    () => ({ status, loading, isLocked, setDemoStatus }),
-    [status, loading, isLocked, setDemoStatus],
+    () => ({ status, loading, ready, isLocked, setDemoStatus }),
+    [status, loading, ready, isLocked, setDemoStatus],
   );
 
   return <StudentStatusContext.Provider value={value}>{children}</StudentStatusContext.Provider>;

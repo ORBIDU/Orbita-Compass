@@ -10,6 +10,7 @@ Di luar cakupan tahap ini: Konsultasi Guru BK, feedback, portal guru BK, wali ke
 - Nilai TKA memakai skala 0–100 (perlu dicek ulang ke aturan resmi).
 - Rapor memakai format Kurikulum Merdeka: satu nilai akhir per mapel, semester 1–5.
 - Profil: golongan darah dihapus, riwayat penyakit diganti "buta warna" (opsional), kondisi sosial ekonomi opsional dengan penjelasan tujuan.
+- `/jurusan` memakai satu komponen halaman untuk semua pengunjung. Belum login → dibungkus layout publik; sudah login → dibungkus layout portal. URL tetap `/jurusan` (tidak ada `/portal/jurusan`). Menu portal "Explore Jurusan" mengarah ke `/jurusan`.
 
 ## Status siswa
 Status menentukan bagian yang terkunci:
@@ -152,8 +153,8 @@ Field bertanda 🔒 diisi admin dan hanya bisa dibaca, dengan catatan "Hubungi w
 - Data: backend baru menyimpan sekolah, kelas, jurusan, dan kota → field lainnya dicatat di API_CONTRACT.
 
 ## Fase pengerjaan
-- [ ] Fase 0 — Audit frontend (tanpa mengubah kode)
-- [ ] Fase 1 — Fondasi: design token, lapisan services + mocks + saklar dummy, status siswa + Mode Demo, routing, kerangka portal, API_CONTRACT.md awal
+- [x] Fase 0 — Audit frontend (tanpa mengubah kode)
+- [x] Fase 1 — Fondasi: design token, lapisan services + mocks + saklar dummy, status siswa + Mode Demo, routing, kerangka portal, API_CONTRACT.md awal
 - [ ] Fase 2 — Landing + Explore Jurusan
 - [ ] Fase 3 — Masuk & Daftar
 - [ ] Fase 4 — Dashboard + Analisis Potensi

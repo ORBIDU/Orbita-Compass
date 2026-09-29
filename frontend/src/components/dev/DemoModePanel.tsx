@@ -45,7 +45,7 @@ export default function DemoModePanel() {
   }
 
   return (
-    <div className="fixed left-4 bottom-20 md:bottom-5 z-[60] flex flex-col items-start gap-2">
+    <div className="fixed left-4 bottom-4 z-[60] flex flex-col items-start gap-2">
       {open && (
         <div
           role="dialog"
