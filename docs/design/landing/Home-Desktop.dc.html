@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>ORBIDU Beranda Desktop</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Poppins',system-ui,sans-serif;background:#FFFFFF}
+a{color:#0965FA}a:hover{color:#0747B8}
+input::placeholder{color:#6B7898}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #F1AD00;outline-offset:3px}
+.anim .float{animation:ob-float 6s ease-in-out infinite}
+.anim .blink{transform-box:fill-box;transform-origin:center;animation:ob-blink 5.5s infinite}
+.anim .flow{animation:ob-flow 18s linear infinite}
+.anim .tw{animation:ob-tw 4.2s ease-in-out infinite}
+.anim svg .tw{transform-box:fill-box;transform-origin:center}
+.anim .bob{animation:ob-bob 7s ease-in-out infinite}
+@keyframes ob-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes ob-blink{0%,92%,100%{transform:scaleY(1)}94%{transform:scaleY(0.08)}96%{transform:scaleY(1)}}
+@keyframes ob-flow{to{stroke-dashoffset:-480}}
+@keyframes ob-tw{0%,100%{opacity:.3;transform:scale(.7)}50%{opacity:1;transform:scale(1.15)}}
+@keyframes ob-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.anim .hop{animation:ob-hop 2.6s ease-in-out infinite}
+@keyframes ob-hop{0%,55%,100%{transform:translateY(0)}15%{transform:translateY(-18px)}30%{transform:translateY(0)}40%{transform:translateY(-7px)}}
+@media (prefers-reduced-motion: reduce){.anim .float,.anim .blink,.anim .flow,.anim .tw,.anim .bob,.anim .hop{animation:none}}
+</style>
+</helmet>
+<div class="{{rootClass}}" onPointerMove="{{onMove}}" onPointerLeave="{{onLeave}}" style="position: relative; width: 1440px; height: 7480px; overflow: hidden; display: flex; flex-direction: column; font-family: 'Poppins', system-ui, sans-serif; background: #FFFFFF; color: #101A33">
+
+<section style="position: relative; overflow: hidden; padding: 0 120px 80px; display: flex; flex-direction: column; background: radial-gradient(760px 600px at 74% 40%, rgba(9,101,250,0.11), rgba(9,101,250,0) 70%), radial-gradient(420px 320px at 94% 84%, rgba(255,112,0,0.10), rgba(255,112,0,0) 70%), linear-gradient(180deg, #F2F6FF 0%, #FFFFFF 100%)">
+
+<header style="position: relative; height: 96px; display: flex; align-items: center; justify-content: space-between">
+<a href="#" aria-label="ORBIDU, ke beranda" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+<svg width="36" height="36" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="9.5" fill="#0965FA"></circle><ellipse cx="17" cy="18" rx="15" ry="5" fill="none" stroke="#FF7000" stroke-width="2.6" transform="rotate(-18 17 18)"></ellipse></svg>
+<span style="font-size: 25px; font-weight: 700; letter-spacing: 0.3px; color: #101A33">ORBIDU</span>
+</a>
+<div style="display: flex; align-items: center; gap: 10px">
+<a href="#" style="height: 44px; padding: 0 24px; display: flex; align-items: center; border-radius: 12px; background: #0965FA; color: #FFFFFF; font-size: 15px; font-weight: 600; text-decoration: none">Daftar</a>
+<a href="#" style="height: 44px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; border-radius: 12px; border: 1.5px solid #0965FA; background: #FFFFFF; color: #0965FA; font-size: 15px; font-weight: 600; text-decoration: none">Masuk</a>
+</div>
+</header>
+
+<div style="position: relative; margin-top: 8px; display: grid; grid-template-columns: 600px 560px; gap: 40px; align-items: center">
+<div style="display: flex; flex-direction: column; gap: 22px">
+<p style="margin: 0; font-family: 'Caveat', 'Segoe Print', cursive; font-size: 36px; line-height: 1; font-weight: 700; color: #FF7000">Hi, Bifriends!</p>
+<h1 style="margin: 0; font-size: 62px; line-height: 1.06; font-weight: 700; letter-spacing: -1.6px; color: #101A33; text-wrap: balance">Setiap siswa punya orbitnya sendiri.</h1>
+<p style="margin: 0; max-width: 520px; font-size: 19px; line-height: 1.65; color: #4A5877">Kenali potensimu, temukan arah pendidikanmu, dan mulai langkahmu menuju tujuan yang ingin kamu capai.</p>
+<div style="display: flex; align-items: center; gap: 14px; margin-top: 10px">
+<a href="#" style="height: 58px; padding: 0 28px; display: flex; align-items: center; gap: 10px; border-radius: 999px; background: linear-gradient(90deg, #FF7000, #F1AD00); color: #101A33; font-size: 17px; font-weight: 600; text-decoration: none; box-shadow: 0 14px 30px rgba(255,112,0,0.25)">Mulai Perjalanan<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#101A33" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<a href="#masalah" style="height: 58px; padding: 0 24px; display: flex; align-items: center; gap: 10px; border-radius: 999px; border: 1.5px solid #C9D5EA; background: #FFFFFF; color: #15234D; font-size: 17px; font-weight: 500; text-decoration: none">Kenali ORBIDU<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15234D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"></path></svg></a>
+</div>
+</div>
+
+<div style="position: relative; width: 560px; height: 600px">
+<div aria-hidden="true" style="position: absolute; left: 75px; top: 75px; width: 450px; height: 450px; border-radius: 50%; overflow: hidden; background: radial-gradient(circle at 45% 40%, #22397A 0%, #15234D 55%, #0C1530 100%); box-shadow: 0 40px 90px rgba(21,35,77,0.30)">
+<sc-for list="{{stars}}" as="s" hint-placeholder-count="10">
+<div class="tw" style="position: absolute; left: {{s.x}}px; top: {{s.y}}px; width: {{s.z}}px; height: {{s.z}}px; border-radius: 50%; background: #FFFFFF; opacity: {{s.o}}; animation-delay: {{s.d}}s"></div>
+</sc-for>
+</div>
+<svg width="560" height="600" viewBox="0 0 560 600" aria-hidden="true" style="position: absolute; left: 0; top: 0; overflow: visible">
+<defs>
+<radialGradient id="hd-body" cx="0.38" cy="0.3" r="0.8"><stop offset="0" stop-color="#8CC8FF"></stop><stop offset="0.5" stop-color="#1F7BFF"></stop><stop offset="1" stop-color="#0445B8"></stop></radialGradient>
+<linearGradient id="hd-ring" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FF7000"></stop><stop offset="1" stop-color="#F1AD00"></stop></linearGradient>
+<radialGradient id="hd-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#3D8BFF" stop-opacity="0.45"></stop><stop offset="1" stop-color="#3D8BFF" stop-opacity="0"></stop></radialGradient>
+<clipPath id="hd-front"><rect x="100" y="285" width="440" height="140"></rect></clipPath>
+</defs>
+<path class="tw" d="M38 120 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" fill="#0965FA" fill-opacity="0.55"></path>
+<path class="tw" d="M520 470 l2.5 6.5 6.5 2.5 -6.5 2.5 -2.5 6.5 -2.5 -6.5 -6.5 -2.5 6.5 -2.5z" fill="#FF7000" fill-opacity="0.7" style="animation-delay: -1.5s"></path>
+<path class="tw" d="M505 70 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" fill="#F1AD00" style="animation-delay: -3s"></path>
+<path class="tw" d="M30 540 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" fill="#0965FA" fill-opacity="0.5" style="animation-delay: -2.2s"></path>
+<g transform="rotate(28 300 300)"><ellipse cx="300" cy="300" rx="205" ry="270" fill="none" stroke="#6E9BEA" stroke-opacity="0.3" stroke-width="1.4"></ellipse></g>
+<g transform="rotate(-14 300 300)">
+<ellipse cx="300" cy="300" rx="270" ry="96" fill="none" stroke="#6E9BEA" stroke-opacity="0.45" stroke-width="1.6"></ellipse>
+<ellipse class="flow" cx="300" cy="300" rx="270" ry="96" fill="none" stroke="#0965FA" stroke-opacity="0.8" stroke-width="2.4" stroke-dasharray="1 23" stroke-linecap="round"></ellipse>
+<circle cx="46" cy="333" r="7" fill="#FF7000" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<circle cx="126" cy="227" r="7" fill="#FF7000" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<circle cx="392" cy="210" r="7" fill="#FF7000" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<circle cx="561" cy="275" r="7" fill="#FF7000" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<circle cx="474" cy="374" r="7" fill="#FF7000" stroke="#FFFFFF" stroke-width="2.5"></circle>
+</g>
+<circle cx="300" cy="300" r="190" fill="url(#hd-glow)"></circle>
+<g transform="translate(-20 30)">
+<g class="float">
+<g transform="rotate({{tilt}} 320 270)">
+<g transform="rotate(-16 320 285)"><ellipse cx="320" cy="285" rx="172" ry="40" fill="none" stroke="url(#hd-ring)" stroke-width="16"></ellipse></g>
+<circle cx="320" cy="270" r="110" fill="url(#hd-body)"></circle>
+<circle cx="320" cy="270" r="109" fill="none" stroke="#B5DCFF" stroke-opacity="0.45" stroke-width="2"></circle>
+<ellipse cx="280" cy="208" rx="34" ry="16" fill="#FFFFFF" fill-opacity="0.28" transform="rotate(-30 280 208)"></ellipse>
+<path d="M262 180 L378 180 L374 210 Q320 226 266 210 Z" fill="#101A33"></path>
+<polygon points="236,172 320,144 404,172 320,200" fill="#1E2F62"></polygon>
+<circle cx="320" cy="172" r="5" fill="#FF7000"></circle>
+<path d="M320 172 Q370 178 386 192 L388 226" fill="none" stroke="#FF7000" stroke-width="4" stroke-linecap="round"></path>
+<rect x="382" y="222" width="12" height="18" rx="4" fill="#F1AD00"></rect>
+<g class="blink">
+<ellipse cx="286" cy="250" rx="22" ry="25" fill="#FFFFFF"></ellipse>
+<ellipse cx="354" cy="250" rx="22" ry="25" fill="#FFFFFF"></ellipse>
+<g transform="translate({{px}} {{py}})">
+<circle cx="286" cy="252" r="13" fill="#101A33"></circle>
+<circle cx="354" cy="252" r="13" fill="#101A33"></circle>
+<circle cx="281" cy="246" r="4.5" fill="#FFFFFF"></circle>
+<circle cx="349" cy="246" r="4.5" fill="#FFFFFF"></circle>
+</g>
+</g>
+<ellipse cx="262" cy="284" rx="14" ry="8" fill="#FF8FB1" fill-opacity="0.6"></ellipse>
+<ellipse cx="378" cy="284" rx="14" ry="8" fill="#FF8FB1" fill-opacity="0.6"></ellipse>
+<path d="M304 286 Q320 300 336 286" fill="none" stroke="#101A33" stroke-width="5" stroke-linecap="round"></path>
+<g transform="rotate(-16 320 285)"><ellipse cx="320" cy="285" rx="172" ry="40" fill="none" stroke="url(#hd-ring)" stroke-width="16" clip-path="url(#hd-front)"></ellipse></g>
+</g>
+</g>
+</g>
+</svg>
+<div class="bob" style="position: absolute; left: 6px; top: 410px; display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px 0 6px; border-radius: 999px; background: #FFFFFF; border: 1px solid #DCE4F2; box-shadow: 0 8px 20px rgba(16,26,51,0.08); font-size: 13px; font-weight: 600; color: #15234D"><span style="width: 22px; height: 22px; border-radius: 50%; background: #FF7000; color: #101A33; font-size: 12px; display: flex; align-items: center; justify-content: center">1</span>Potensi</div>
+<div class="bob" style="position: absolute; left: 22px; top: 222px; display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px 0 6px; border-radius: 999px; background: #FFFFFF; border: 1px solid #DCE4F2; box-shadow: 0 8px 20px rgba(16,26,51,0.08); font-size: 13px; font-weight: 600; color: #15234D; animation-delay: -1.4s"><span style="width: 22px; height: 22px; border-radius: 50%; background: #FF7000; color: #101A33; font-size: 12px; display: flex; align-items: center; justify-content: center">2</span>Arah</div>
+<div class="bob" style="position: absolute; left: 330px; top: 138px; display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px 0 6px; border-radius: 999px; background: #FFFFFF; border: 1px solid #DCE4F2; box-shadow: 0 8px 20px rgba(16,26,51,0.08); font-size: 13px; font-weight: 600; color: #15234D; animation-delay: -2.8s"><span style="width: 22px; height: 22px; border-radius: 50%; background: #FF7000; color: #101A33; font-size: 12px; display: flex; align-items: center; justify-content: center">3</span>Pilihan</div>
+<div class="bob" style="position: absolute; left: 474px; top: 160px; display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px 0 6px; border-radius: 999px; background: #FFFFFF; border: 1px solid #DCE4F2; box-shadow: 0 8px 20px rgba(16,26,51,0.08); font-size: 13px; font-weight: 600; color: #15234D; animation-delay: -4.2s"><span style="width: 22px; height: 22px; border-radius: 50%; background: #FF7000; color: #101A33; font-size: 12px; display: flex; align-items: center; justify-content: center">4</span>Persiapan</div>
+<div class="bob" style="position: absolute; left: 470px; top: 348px; display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px 0 6px; border-radius: 999px; background: #FFFFFF; border: 1px solid #DCE4F2; box-shadow: 0 8px 20px rgba(16,26,51,0.08); font-size: 13px; font-weight: 600; color: #15234D; animation-delay: -5.6s"><span style="width: 22px; height: 22px; border-radius: 50%; background: #FF7000; color: #101A33; font-size: 12px; display: flex; align-items: center; justify-content: center">5</span>Langkah</div>
+</div>
+</div>
+
+<div style="position: relative; margin-top: 48px; display: flex; flex-direction: column; gap: 16px">
+<span style="font-size: 14px; font-weight: 500; color: #4A5877">Jelajahi program studi dari berbagai kampus di dalam dan luar negeri</span>
+<div style="display: flex; gap: 16px">
+<div style="width: 168px; height: 64px; box-sizing: border-box; border-radius: 14px; border: 1.5px dashed #C2CFE6; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #6B7898">[Logo UNSRI]</div>
+<div style="width: 168px; height: 64px; box-sizing: border-box; border-radius: 14px; border: 1.5px dashed #C2CFE6; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #6B7898">[Logo PTN]</div>
+<div style="width: 168px; height: 64px; box-sizing: border-box; border-radius: 14px; border: 1.5px dashed #C2CFE6; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #6B7898">[Logo PTN]</div>
+<div style="width: 168px; height: 64px; box-sizing: border-box; border-radius: 14px; border: 1.5px dashed #C2CFE6; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #6B7898">[Logo PTN]</div>
+<div style="width: 168px; height: 64px; box-sizing: border-box; border-radius: 14px; border: 1.5px dashed #C2CFE6; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #6B7898">[Logo PTLN]</div>
+<div style="width: 168px; height: 64px; box-sizing: border-box; border-radius: 14px; border: 1.5px dashed #C2CFE6; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #6B7898">[Logo PTLN]</div>
+</div>
+</div>
+</section>
+
+<section id="masalah" style="padding: 120px; display: flex; flex-direction: column; align-items: center; gap: 56px; background: #FFFFFF">
+<h2 style="margin: 0; font-size: 44px; line-height: 1.15; font-weight: 700; letter-spacing: -0.8px; color: #101A33; text-align: center">Masih bingung harus mulai dari mana?</h2>
+<div style="position: relative; width: 1200px; height: 470px">
+<svg width="1200" height="470" viewBox="0 0 1200 470" aria-hidden="true" style="position: absolute; left: 0; top: 0">
+<path d="M220 70 Q400 300 600 440" fill="none" stroke="#9DB6E3" stroke-width="1.5" stroke-dasharray="4 8"></path>
+<path d="M930 50 Q800 300 600 440" fill="none" stroke="#9DB6E3" stroke-width="1.5" stroke-dasharray="4 8"></path>
+<path d="M600 200 Q600 330 600 440" fill="none" stroke="#9DB6E3" stroke-width="1.5" stroke-dasharray="4 8"></path>
+<path d="M230 330 Q420 420 600 440" fill="none" stroke="#9DB6E3" stroke-width="1.5" stroke-dasharray="4 8"></path>
+<path d="M960 300 Q780 420 600 440" fill="none" stroke="#9DB6E3" stroke-width="1.5" stroke-dasharray="4 8"></path>
+<circle cx="600" cy="440" r="24" fill="#FFFFFF" stroke="#DCE4F2" stroke-width="1.5"></circle>
+<circle cx="600" cy="440" r="8" fill="#0965FA"></circle>
+<ellipse cx="600" cy="441" rx="17" ry="6" fill="none" stroke="#FF7000" stroke-width="2.2" transform="rotate(-18 600 441)"></ellipse>
+</svg>
+<p style="position: absolute; left: 20px; top: 20px; max-width: 420px; margin: 0; padding: 18px 24px; border-radius: 24px 24px 24px 8px; background: #F0F5FE; font-size: 19px; line-height: 1.5; font-weight: 500; color: #15234D; transform: rotate(-1.5deg)">“Aku sebenernya gatau punya potensi di bidang apa…”</p>
+<p style="position: absolute; left: 740px; top: 0; max-width: 420px; margin: 0; padding: 18px 24px; border-radius: 24px 24px 8px 24px; background: #FFF4EA; font-size: 19px; line-height: 1.5; font-weight: 500; color: #15234D; transform: rotate(1.5deg)">“Kalau aku suka ini, berarti jurusannya apa?”</p>
+<p style="position: absolute; left: 390px; top: 150px; max-width: 420px; margin: 0; padding: 18px 24px; border-radius: 24px; background: #F0F5FE; font-size: 19px; line-height: 1.5; font-weight: 500; color: #15234D">“Kalau nanti ternyata nggak cocok gimana?”</p>
+<p style="position: absolute; left: 0; top: 270px; max-width: 470px; margin: 0; padding: 18px 24px; border-radius: 24px 24px 24px 8px; background: #FFF4EA; font-size: 19px; line-height: 1.5; font-weight: 500; color: #15234D; transform: rotate(1deg)">“PTN, PTS, Kedinasan, atau PTLN, ya? Kok pilihannya banyak banget...”</p>
+<p style="position: absolute; left: 790px; top: 250px; max-width: 400px; margin: 0; padding: 18px 24px; border-radius: 24px 24px 8px 24px; background: #F0F5FE; font-size: 19px; line-height: 1.5; font-weight: 500; color: #15234D; transform: rotate(-1deg)">“Terus, aku harus siapin apa dulu?”</p>
+<p style="position: absolute; left: 700px; top: 370px; margin: 0; padding: 14px 22px; border-radius: 22px; background: #FFFFFF; border: 1.5px solid #DCE4F2; font-size: 17px; line-height: 1.5; font-weight: 500; color: #4A5877; transform: rotate(2deg)">“Duh... mulai dari mana, ya? :(”</p>
+</div>
+<div style="max-width: 760px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center">
+<p style="margin: 0; font-family: 'Caveat', 'Segoe Print', cursive; font-size: 36px; line-height: 1.1; font-weight: 700; color: #0965FA">Tenang, Bifriends!</p>
+<h3 style="margin: 0; font-size: 30px; line-height: 1.25; font-weight: 700; color: #101A33; text-wrap: balance">Kamu nggak harus punya semua jawabannya sekarang.</h3>
+<p style="margin: 0; font-size: 18px; line-height: 1.65; color: #4A5877">ORBIDU membantumu mengenali diri, menemukan arah pendidikan, mengeksplorasi pilihan, dan mengambil langkah yang lebih terarah.</p>
+<a href="#kenali" aria-label="Lanjut ke bagian Kenali Dirimu" style="margin-top: 12px; width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid #C9D5EA; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15234D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"></path></svg></a>
+</div>
+</section>
+
+<section id="kenali" style="padding: 120px; display: grid; grid-template-columns: 480px 640px; gap: 80px; align-items: center; background: #F5F8FC">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<span style="align-self: flex-start; display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px 0 5px; border-radius: 999px; background: #FFFFFF; border: 1px solid #DCE4F2; font-size: 13px; font-weight: 600; color: #15234D"><span style="width: 22px; height: 22px; border-radius: 50%; background: #FF7000; color: #101A33; font-size: 12px; display: flex; align-items: center; justify-content: center">1</span>Potensi</span>
+<h2 style="margin: 0; font-size: 44px; line-height: 1.15; font-weight: 700; letter-spacing: -0.8px; color: #101A33; text-wrap: balance">Semuanya dimulai dari mengenal dirimu.</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.7; color: #4A5877">Setiap siswa punya minat, kemampuan, pengalaman, dan hal-hal yang membuatnya unik. Gambaran Minat Bakat membantu kamu mengenali potensi dan hal-hal yang paling menonjol dalam dirimu.</p>
+<a href="#" style="align-self: flex-start; margin-top: 8px; height: 52px; padding: 0 24px; display: flex; align-items: center; gap: 10px; border-radius: 999px; background: #0965FA; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none">Kenali Dirimu<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div style="position: relative; width: 640px; height: 540px">
+<svg width="640" height="540" viewBox="0 0 640 540" aria-hidden="true" style="position: absolute; left: 0; top: 0">
+<ellipse cx="320" cy="270" rx="300" ry="230" fill="none" stroke="#C9D8F2" stroke-width="1.5" stroke-dasharray="3 9"></ellipse>
+<path d="M240 190 L150 110" stroke="#9DB6E3" stroke-width="1.5" stroke-dasharray="4 6"></path>
+<path d="M400 190 L500 100" stroke="#9DB6E3" stroke-width="1.5" stroke-dasharray="4 6"></path>
+<path d="M250 300 L150 410" stroke="#9DB6E3" stroke-width="1.5" stroke-dasharray="4 6"></path>
+<path d="M390 300 L500 420" stroke="#9DB6E3" stroke-width="1.5" stroke-dasharray="4 6"></path>
+</svg>
+<div style="position: absolute; left: 170px; top: 172px; width: 300px; box-sizing: border-box; padding: 22px; display: flex; flex-direction: column; gap: 14px; border-radius: 24px; background: #FFFFFF; box-shadow: 0 24px 50px rgba(16,26,51,0.12)">
+<div style="display: flex; align-items: center; gap: 14px">
+<span style="width: 56px; height: 56px; flex-shrink: 0; border-radius: 50%; background: linear-gradient(135deg, #0965FA, #00B2DD); display: flex; align-items: center; justify-content: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1-4 4.4-6 8-6s7 2 8 6"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 18px; font-weight: 700; color: #101A33">Profil kamu</span><span style="font-size: 13px; color: #4A5877">Kelas 10 SMA</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #4A5877">Gambaran Minat Bakat</span><span style="font-weight: 600; color: #0965FA">5 dari 7 bagian</span></div>
+<div style="height: 8px; border-radius: 99px; background: #E6ECF7"><div style="width: 71%; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #0965FA, #00B2DD)"></div></div>
+</div>
+</div>
+<div style="position: absolute; left: 0; top: 18px; width: 250px; box-sizing: border-box; padding: 18px; display: flex; flex-direction: column; gap: 10px; border-radius: 20px; background: #FFFFFF; border: 1px solid #DCE4F2">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: #101A33"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF7000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"></path><path d="M12 3a6 6 0 00-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0012 3z"></path></svg>Minat</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="padding: 4px 10px; border-radius: 999px; background: #FFF1E6; color: #B34700; font-size: 12px; font-weight: 500">Teknologi</span><span style="padding: 4px 10px; border-radius: 999px; background: #FFF1E6; color: #B34700; font-size: 12px; font-weight: 500">Desain</span><span style="padding: 4px 10px; border-radius: 999px; background: #FFF1E6; color: #B34700; font-size: 12px; font-weight: 500">Bisnis</span></div>
+</div>
+<div style="position: absolute; left: 390px; top: 0; width: 250px; box-sizing: border-box; padding: 18px; display: flex; flex-direction: column; gap: 10px; border-radius: 20px; background: #FFFFFF; border: 1px solid #DCE4F2">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: #101A33"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"></path></svg>Potensi</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="padding: 4px 10px; border-radius: 999px; background: #E8F0FE; color: #0B3FA8; font-size: 12px; font-weight: 500">Analitis</span><span style="padding: 4px 10px; border-radius: 999px; background: #E8F0FE; color: #0B3FA8; font-size: 12px; font-weight: 500">Kreatif</span><span style="padding: 4px 10px; border-radius: 999px; background: #E8F0FE; color: #0B3FA8; font-size: 12px; font-weight: 500">Problem Solving</span></div>
+</div>
+<div style="position: absolute; left: 10px; top: 400px; width: 250px; box-sizing: border-box; padding: 18px; display: flex; flex-direction: column; gap: 10px; border-radius: 20px; background: #FFFFFF; border: 1px solid #DCE4F2">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: #101A33"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#006F8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h4a2 2 0 114 0h4v4a2 2 0 110 4v4H4z"></path></svg>Kemampuan</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="padding: 4px 10px; border-radius: 999px; background: #E3F6FB; color: #006F8C; font-size: 12px; font-weight: 500">Komunikasi</span><span style="padding: 4px 10px; border-radius: 999px; background: #E3F6FB; color: #006F8C; font-size: 12px; font-weight: 500">Digital</span><span style="padding: 4px 10px; border-radius: 999px; background: #E3F6FB; color: #006F8C; font-size: 12px; font-weight: 500">Data</span></div>
+</div>
+<div style="position: absolute; left: 380px; top: 410px; width: 260px; box-sizing: border-box; padding: 18px; display: flex; flex-direction: column; gap: 8px; border-radius: 20px; background: #FFFFFF; border: 1px solid #DCE4F2">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: #101A33"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15234D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8 8 0 01-11.8 7L4 20l1.5-4A8 8 0 1120 11.5z"></path></svg>Refleksi</span>
+<span style="font-family: 'Caveat', 'Segoe Print', cursive; font-size: 23px; line-height: 1.15; font-weight: 600; color: #15234D">Hal yang ingin aku kembangkan…</span>
+</div>
+</div>
+</section>
+
+<section id="compass" style="padding: 120px; display: flex; flex-direction: column; align-items: center; gap: 56px; background: #FFFFFF">
+<div style="max-width: 780px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center">
+<span style="display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px 0 5px; border-radius: 999px; background: #FFFFFF; border: 1px solid #DCE4F2; font-size: 13px; font-weight: 600; color: #15234D"><span style="width: 22px; height: 22px; border-radius: 50%; background: #FF7000; color: #101A33; font-size: 12px; display: flex; align-items: center; justify-content: center">2</span>Arah</span>
+<h2 style="margin: 0; font-size: 44px; line-height: 1.15; font-weight: 700; letter-spacing: -0.8px; color: #101A33; text-wrap: balance">Dari mengenal diri, lalu temukan arahmu.</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.7; color: #4A5877">Kamu punya banyak hal yang membentuk dirimu. ORBIDU Compass membantu melihat semuanya sebagai satu kesatuan untuk menemukan pilihan pendidikan yang sesuai untuk kamu eksplorasi. Mulai dari program studi hingga berbagai jalur pendidikan!</p>
+</div>
+<div style="width: 1200px; box-sizing: border-box; padding: 40px; display: grid; grid-template-columns: 300px 56px minmax(0, 1fr) 56px 300px; align-items: center; border-radius: 32px; background: #EEF4FF">
+<div style="padding: 22px; display: flex; flex-direction: column; gap: 14px; border-radius: 22px; background: #FFFFFF; box-shadow: 0 16px 36px rgba(16,26,51,0.08)">
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #0965FA, #00B2DD); display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1-4 4.4-6 8-6s7 2 8 6"></path></svg></span><span style="font-size: 16px; font-weight: 700; color: #101A33">Profil kamu</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; gap: 12px; font-size: 14px"><span style="color: #4A5877">Minat</span><span style="font-weight: 600; color: #101A33">Teknologi</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; font-size: 14px"><span style="color: #4A5877">Potensi</span><span style="font-weight: 600; color: #101A33">Analitis</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; font-size: 14px"><span style="color: #4A5877">Akademik</span><span style="font-weight: 600; color: #101A33">Matematika stabil</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; font-size: 14px"><span style="color: #4A5877">Prestasi</span><span style="font-weight: 600; color: #101A33">2 lomba</span></div>
+</div>
+</div>
+<div style="display: flex; justify-content: center"><span style="width: 40px; height: 40px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></div>
+<div style="padding: 22px; display: flex; flex-direction: column; gap: 14px; border-radius: 22px; background: #FFFFFF; box-shadow: 0 16px 36px rgba(16,26,51,0.08)">
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 16px; font-weight: 700; color: #101A33">Pilihan untuk dieksplorasi</span><span style="font-size: 12px; font-weight: 600; color: #B34700; background: #FFF1E6; padding: 4px 10px; border-radius: 999px">Contoh hasil</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 16px; background: #F5F8FC"><div style="display: flex; justify-content: space-between; align-items: center; gap: 12px"><span style="font-size: 16px; font-weight: 600; color: #101A33">Sistem Informasi</span><span style="font-size: 12px; font-weight: 600; color: #0A7A45; background: #E3F5EC; padding: 3px 10px; border-radius: 999px">Sangat sesuai</span></div><span style="font-size: 13px; line-height: 1.5; color: #4A5877">Karena minat teknologimu kuat dan nilai matematikamu stabil.</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 16px; background: #F5F8FC"><div style="display: flex; justify-content: space-between; align-items: center; gap: 12px"><span style="font-size: 16px; font-weight: 600; color: #101A33">Statistika</span><span style="font-size: 12px; font-weight: 600; color: #0B3FA8; background: #E8F0FE; padding: 3px 10px; border-radius: 999px">Sesuai</span></div><span style="font-size: 13px; line-height: 1.5; color: #4A5877">Karena potensi analitismu menonjol.</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 16px; background: #F5F8FC"><div style="display: flex; justify-content: space-between; align-items: center; gap: 12px"><span style="font-size: 16px; font-weight: 600; color: #101A33">Desain Komunikasi Visual</span><span style="font-size: 12px; font-weight: 600; color: #0B3FA8; background: #E8F0FE; padding: 3px 10px; border-radius: 999px">Sesuai</span></div><span style="font-size: 13px; line-height: 1.5; color: #4A5877">Karena minat desain dan kemampuan digitalmu.</span></div>
+</div>
+<div style="display: flex; justify-content: center"><span style="width: 40px; height: 40px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></div>
+<div style="padding: 22px; display: flex; flex-direction: column; gap: 12px; border-radius: 22px; background: #FFFFFF; box-shadow: 0 16px 36px rgba(16,26,51,0.08)">
+<span style="font-size: 16px; font-weight: 700; color: #101A33">Jalur yang bisa ditempuh</span>
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #E8F0FE; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6"></path><path d="M5 10v9M19 10v9M9 10v9M15 10v9M3 21h18"></path></svg></span><div style="display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600; color: #101A33">PTN</span><span style="font-size: 12px; color: #4A5877">SNBP, SNBT, dan Mandiri</span></div></div>
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #FFF1E6; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B34700" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2"></path></svg></span><div style="display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600; color: #101A33">PTS</span><span style="font-size: 12px; color: #4A5877">Seleksi masing-masing kampus</span></div></div>
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #E9ECF4; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15234D" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z"></path></svg></span><div style="display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600; color: #101A33">Kedinasan</span><span style="font-size: 12px; color: #4A5877">SKD dan tes lanjutan</span></div></div>
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #E3F6FB; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#006F8C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"></path></svg></span><div style="display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600; color: #101A33">PTLN</span><span style="font-size: 12px; color: #4A5877">Seleksi dan beasiswa luar negeri</span></div></div>
+</div>
+</div>
+</section>
+
+<section id="jurusan" style="padding: 120px; display: flex; flex-direction: column; gap: 40px; background: #F5F8FC">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 18px; max-width: 700px">
+<span style="align-self: flex-start; display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px 0 5px; border-radius: 999px; background: #FFFFFF; border: 1px solid #DCE4F2; font-size: 13px; font-weight: 600; color: #15234D"><span style="width: 22px; height: 22px; border-radius: 50%; background: #FF7000; color: #101A33; font-size: 12px; display: flex; align-items: center; justify-content: center">3</span>Pilihan</span>
+<h2 style="margin: 0; font-size: 44px; line-height: 1.15; font-weight: 700; letter-spacing: -0.8px; color: #101A33; text-wrap: balance">Lalu, jelajahi pilihanmu.</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.7; color: #4A5877">Kenali apa yang dipelajari di setiap program studi, mapel yang mendukung, dan jalur masuknya sebelum kamu memutuskan.</p>
+</div>
+<a href="#" style="height: 48px; padding: 0 22px; flex-shrink: 0; box-sizing: border-box; display: flex; align-items: center; border-radius: 12px; border: 1.5px solid #DCE4F2; background: #FFFFFF; color: #0965FA; font-size: 15px; font-weight: 600; text-decoration: none">Lihat Jurusan Lainnya</a>
+</div>
+<div style="position: relative">
+<div onPointerDown="{{swStart}}" onPointerUp="{{swEnd}}" style="overflow: hidden; touch-action: pan-y">
+<div style="display: flex; gap: 24px; transform: translateX(-{{offset}}px); transition: transform .45s ease">
+<sc-for list="{{jur}}" as="j" hint-placeholder-count="4">
+<a href="Jurusan-Detail.dc.html" style="width: 282px; flex-shrink: 0; display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; border: 1px solid #DCE4F2; background: #FFFFFF; text-decoration: none">
+<div style="position: relative; height: 180px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: {{j.bg}}">
+<svg width="282" height="180" viewBox="0 0 282 180" aria-hidden="true" style="position: absolute; left: 0; top: 0"><ellipse cx="141" cy="90" rx="130" ry="44" fill="none" stroke="{{j.ink}}" stroke-opacity="0.18" stroke-width="1.5" transform="rotate(-12 141 90)"></ellipse><circle cx="40" cy="36" r="3" fill="{{j.ink}}" fill-opacity="0.3"></circle><circle cx="244" cy="140" r="4" fill="#FF7000" fill-opacity="0.5"></circle></svg>
+<svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="{{j.ink}}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: relative"><path d="{{j.icon}}"></path></svg>
+<span style="position: absolute; right: 12px; top: 10px; font-size: 11px; font-weight: 500; color: {{j.ink}}">Foto jurusan</span>
+<span style="position: absolute; left: 12px; bottom: 12px; padding: 5px 10px; border-radius: 8px; background: #FF7000; color: #101A33; font-size: 12px; font-weight: 600">{{j.bidang}}</span>
+</div>
+<div style="padding: 18px 18px 22px; display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 19px; line-height: 1.3; font-weight: 600; color: #101A33">{{j.name}}</span>
+<span style="font-size: 14px; line-height: 1.6; color: #4A5877; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">{{j.desc}}</span>
+</div>
+</a>
+</sc-for>
+</div>
+</div>
+<button type="button" aria-label="Jurusan sebelumnya" disabled="{{atStart}}" onClick="{{prev}}" style="position: absolute; left: -22px; top: 68px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: #FFFFFF; box-shadow: 0 8px 22px rgba(16,26,51,0.18); display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: {{prevOp}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#101A33" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
+<button type="button" aria-label="Jurusan berikutnya" disabled="{{atEnd}}" onClick="{{next}}" style="position: absolute; right: -22px; top: 68px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: #FFFFFF; box-shadow: 0 8px 22px rgba(16,26,51,0.18); display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: {{nextOp}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#101A33" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+</section>
+
+<section id="action-plan" style="padding: 120px; display: grid; grid-template-columns: 640px 480px; gap: 80px; align-items: center; background: #FFFFFF">
+<div style="padding: 32px; border-radius: 32px; background: #FFF4EA">
+<div style="padding: 26px; display: flex; flex-direction: column; gap: 18px; border-radius: 24px; background: #FFFFFF; box-shadow: 0 20px 44px rgba(16,26,51,0.10)">
+<div style="display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: #4A5877">
+<span style="color: #0965FA">Goal</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9DB6E3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+<span style="color: #0965FA">Langkah</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9DB6E3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+<span style="color: #0965FA">Prioritas</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9DB6E3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+<span style="color: #0965FA">Progress</span>
+</div>
+<div style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 18px; background: #EEF4FF">
+<span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 14px; background: #0965FA; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4"></path><path d="M5 4h11l-2 4 2 4H5"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 12px; font-weight: 600; color: #0B3FA8">Goal</span><span style="font-size: 17px; font-weight: 700; color: #101A33">Lolos SNBT di Sistem Informasi</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 14px; border-radius: 14px; background: #F5F8FC"><span style="width: 22px; height: 22px; flex-shrink: 0; border-radius: 7px; background: #0A7A45; display: flex; align-items: center; justify-content: center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span><span style="flex-grow: 1; font-size: 15px; color: #6B7898; text-decoration: line-through">Pahami struktur soal SNBT</span><span style="font-size: 12px; font-weight: 600; color: #6B7898">Selesai</span></div>
+<div style="display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 14px; border-radius: 14px; background: #F5F8FC"><span style="width: 22px; height: 22px; flex-shrink: 0; border-radius: 7px; background: #0A7A45; display: flex; align-items: center; justify-content: center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span><span style="flex-grow: 1; font-size: 15px; color: #6B7898; text-decoration: line-through">Latihan 20 soal Penalaran Matematika</span><span style="font-size: 12px; font-weight: 600; color: #6B7898">Selesai</span></div>
+<div style="display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 14px; box-sizing: border-box; border-radius: 14px; background: #FFFFFF; border: 2px solid #FF7000"><span style="width: 22px; height: 22px; flex-shrink: 0; box-sizing: border-box; border-radius: 7px; border: 2px solid #FF7000"></span><span style="flex-grow: 1; font-size: 15px; font-weight: 600; color: #101A33">Ikut Tryout #1 dan bahas hasilnya</span><span style="font-size: 12px; font-weight: 600; color: #B34700; background: #FFF1E6; padding: 3px 10px; border-radius: 999px">Prioritas tinggi</span></div>
+<div style="display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 14px; border-radius: 14px; background: #F5F8FC"><span style="width: 22px; height: 22px; flex-shrink: 0; box-sizing: border-box; border-radius: 7px; border: 2px solid #B8C4DB"></span><span style="flex-grow: 1; font-size: 15px; font-weight: 500; color: #101A33">Perbaiki subtes yang paling lemah</span><span style="font-size: 12px; font-weight: 600; color: #0B3FA8; background: #E8F0FE; padding: 3px 10px; border-radius: 999px">Prioritas sedang</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #4A5877">Progress</span><span style="font-weight: 600; color: #101A33">2 dari 4 langkah selesai</span></div>
+<div style="height: 10px; border-radius: 99px; background: #E6ECF7"><div style="width: 50%; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #FF7000, #F1AD00)"></div></div>
+</div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 18px">
+<span style="align-self: flex-start; display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px 0 5px; border-radius: 999px; background: #FFFFFF; border: 1px solid #DCE4F2; font-size: 13px; font-weight: 600; color: #15234D"><span style="width: 22px; height: 22px; border-radius: 50%; background: #FF7000; color: #101A33; font-size: 12px; display: flex; align-items: center; justify-content: center">4</span>Persiapan</span>
+<h2 style="margin: 0; font-size: 44px; line-height: 1.15; font-weight: 700; letter-spacing: -0.8px; color: #101A33; text-wrap: balance">Dari menemukan arah, lalu mulai langkahmu.</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.7; color: #4A5877">Setelah menemukan pilihan pendidikan yang sesuai, ORBIDU membantu kamu menentukan apa yang perlu dipersiapkan dan langkah yang bisa dilakukan untuk mencapainya.</p>
+<a href="#" style="align-self: flex-start; margin-top: 8px; height: 52px; padding: 0 24px; display: flex; align-items: center; gap: 10px; border-radius: 999px; background: #0965FA; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none">Mulai Action Plan<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</section>
+
+<section id="faq" style="padding: 120px; display: grid; grid-template-columns: 400px 720px; gap: 80px; align-items: start; background: #F5F8FC">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0; font-size: 44px; line-height: 1.15; font-weight: 700; letter-spacing: -0.8px; color: #101A33; text-wrap: balance">Punya pertanyaan tentang ORBIDU?</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.7; color: #4A5877">Pilih kategori pertanyaanmu. Kalau jawabannya belum ada, ngobrol langsung sama tim ORBIDU lewat WhatsApp.</p>
+<a href="#" style="align-self: flex-start; margin-top: 8px; height: 48px; padding: 0 20px; display: flex; align-items: center; gap: 10px; border-radius: 12px; background: #FFFFFF; border: 1.5px solid #DCE4F2; color: #0B3FA8; font-size: 15px; font-weight: 600; text-decoration: none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1FAF5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8 8 0 01-11.8 7L4 20l1.5-4A8 8 0 1120 11.5z"></path></svg>Tanya lewat WhatsApp</a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{faqTabs}}" as="t" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{t.pressed}}" onClick="{{t.pick}}" style="height: 44px; padding: 0 18px; border-radius: 12px; border: 1.5px solid {{t.bd}}; background: {{t.bg}}; color: {{t.fg}}; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer">{{t.label}}</button>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; border-top: 1px solid #DCE4F2">
+<sc-for list="{{faqItems}}" as="q" hint-placeholder-count="4">
+<div style="border-bottom: 1px solid #DCE4F2">
+<button type="button" aria-expanded="{{q.expanded}}" onClick="{{q.toggle}}" style="width: 100%; min-height: 76px; padding: 22px 0; display: flex; justify-content: space-between; align-items: center; gap: 24px; border: 0; background: none; text-align: left; font-family: inherit; font-size: 18px; line-height: 1.4; font-weight: 600; color: #101A33; cursor: pointer"><span>{{q.q}}</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; transform: {{q.rot}}; transition: transform .2s"><path d="M6 9l6 6 6-6"></path></svg></button>
+<sc-if value="{{q.isOpen}}" hint-placeholder-val="{{ false }}"><p style="margin: 0; padding: 0 56px 24px 0; font-size: 16px; line-height: 1.7; color: #4A5877">{{q.a}}</p></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section style="position: relative; flex-grow: 1; overflow: hidden; padding: 110px 120px 56px; display: flex; flex-direction: column; gap: 110px; background: radial-gradient(760px 460px at 50% 12%, rgba(9,101,250,0.30), rgba(9,101,250,0) 70%), linear-gradient(180deg, #15234D 0%, #101A33 100%)">
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none">
+<sc-for list="{{stars2}}" as="s" hint-placeholder-count="8">
+<div class="tw" style="position: absolute; left: {{s.x}}px; top: {{s.y}}px; width: {{s.z}}px; height: {{s.z}}px; border-radius: 50%; background: #FFFFFF; opacity: {{s.o}}; animation-delay: {{s.d}}s"></div>
+</sc-for>
+</div>
+<div style="position: relative; align-self: center; max-width: 780px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center">
+<svg width="360" height="250" viewBox="0 0 360 250" aria-hidden="true">
+<defs>
+<radialGradient id="hd-body2" cx="0.38" cy="0.3" r="0.8"><stop offset="0" stop-color="#8CC8FF"></stop><stop offset="0.5" stop-color="#1F7BFF"></stop><stop offset="1" stop-color="#0445B8"></stop></radialGradient>
+<clipPath id="hd-front2"><rect x="100" y="285" width="440" height="140"></rect></clipPath>
+</defs>
+<g transform="rotate(-12 180 130)">
+<ellipse cx="180" cy="130" rx="168" ry="58" fill="none" stroke="#8FB8FF" stroke-opacity="0.5" stroke-width="1.6"></ellipse>
+<ellipse class="flow" cx="180" cy="130" rx="168" ry="58" fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="2" stroke-dasharray="1 23" stroke-linecap="round"></ellipse>
+<circle cx="14" cy="134" r="6.5" fill="#FF7000"></circle>
+<circle cx="70" cy="86" r="6.5" fill="#FF7000"></circle>
+<circle cx="220" cy="73" r="6.5" fill="#FF7000"></circle>
+<circle cx="340" cy="120" r="6.5" fill="#FF7000"></circle>
+<circle cx="260" cy="182" r="6.5" fill="#FF7000"></circle>
+</g>
+<g transform="translate(180 128) scale(0.52) translate(-320 -270)">
+<g class="float">
+<g transform="rotate(-16 320 285)"><ellipse cx="320" cy="285" rx="172" ry="40" fill="none" stroke="#FF7000" stroke-width="16"></ellipse></g>
+<circle cx="320" cy="270" r="110" fill="url(#hd-body2)"></circle>
+<ellipse cx="280" cy="208" rx="34" ry="16" fill="#FFFFFF" fill-opacity="0.28" transform="rotate(-30 280 208)"></ellipse>
+<path d="M262 180 L378 180 L374 210 Q320 226 266 210 Z" fill="#0C1530"></path>
+<polygon points="236,172 320,144 404,172 320,200" fill="#1E2F62"></polygon>
+<circle cx="320" cy="172" r="5" fill="#FF7000"></circle>
+<path d="M320 172 Q370 178 386 192 L388 226" fill="none" stroke="#FF7000" stroke-width="4" stroke-linecap="round"></path>
+<rect x="382" y="222" width="12" height="18" rx="4" fill="#F1AD00"></rect>
+<g class="blink">
+<ellipse cx="286" cy="250" rx="22" ry="25" fill="#FFFFFF"></ellipse>
+<ellipse cx="354" cy="250" rx="22" ry="25" fill="#FFFFFF"></ellipse>
+<circle cx="288" cy="246" r="13" fill="#101A33"></circle>
+<circle cx="356" cy="246" r="13" fill="#101A33"></circle>
+<circle cx="283" cy="240" r="4.5" fill="#FFFFFF"></circle>
+<circle cx="351" cy="240" r="4.5" fill="#FFFFFF"></circle>
+</g>
+<ellipse cx="262" cy="284" rx="14" ry="8" fill="#FF8FB1" fill-opacity="0.6"></ellipse>
+<ellipse cx="378" cy="284" rx="14" ry="8" fill="#FF8FB1" fill-opacity="0.6"></ellipse>
+<path d="M300 284 Q320 306 340 284" fill="none" stroke="#101A33" stroke-width="5" stroke-linecap="round"></path>
+<g transform="rotate(-16 320 285)"><ellipse cx="320" cy="285" rx="172" ry="40" fill="none" stroke="#F1AD00" stroke-width="16" clip-path="url(#hd-front2)"></ellipse></g>
+</g>
+</g>
+</svg>
+<h2 style="margin: 0; font-size: 52px; line-height: 1.12; font-weight: 700; letter-spacing: -1px; color: #F4F7FF; text-wrap: balance">Ready to find your orbit, Bifriends?</h2>
+<p style="margin: 0; font-size: 20px; line-height: 1.6; font-weight: 500; color: #C8D4EE">Kenali dirimu. Temukan arahmu. Mulai langkahmu.</p>
+<span style="font-size: 15px; font-weight: 600; color: #F1AD00">#TheSmartWaytoShapeYourFuture</span>
+<a href="#" style="margin-top: 14px; height: 58px; padding: 0 28px; display: flex; align-items: center; gap: 10px; border-radius: 999px; background: linear-gradient(90deg, #FF7000, #F1AD00); color: #101A33; font-size: 17px; font-weight: 600; text-decoration: none; box-shadow: 0 14px 34px rgba(255,112,0,0.28)">Hadirkan ORBIDU di Sekolahmu<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#101A33" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<footer style="position: relative; display: flex; flex-direction: column; gap: 40px; padding-top: 56px; border-top: 1px solid rgba(169,184,217,0.18)">
+<div style="display: grid; grid-template-columns: 400px repeat(3, minmax(0, 1fr)); gap: 48px">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<span style="display: flex; align-items: center; gap: 10px"><svg width="32" height="32" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="9.5" fill="#1F7BFF"></circle><ellipse cx="17" cy="18" rx="15" ry="5" fill="none" stroke="#FF8A1F" stroke-width="2.6" transform="rotate(-18 17 18)"></ellipse></svg><span style="font-size: 23px; font-weight: 700; letter-spacing: 0.3px; color: #F4F7FF">ORBIDU</span></span>
+<p style="margin: 0; max-width: 320px; font-size: 15px; line-height: 1.65; color: #A9B8D9">The Smart Way to Shape Your Future. Pendampingan perencanaan pendidikan untuk siswa SMA kelas 10 sampai 12.</p>
+</div>
+<nav aria-label="Jelajahi" style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 15px; font-weight: 600; color: #F4F7FF">Jelajahi</span>
+<a href="#" style="font-size: 15px; color: #A9B8D9; text-decoration: none">Beranda</a>
+<a href="#jurusan" style="font-size: 15px; color: #A9B8D9; text-decoration: none">Explore Jurusan</a>
+<a href="#" style="font-size: 15px; color: #A9B8D9; text-decoration: none">Untuk Sekolah</a>
+<a href="#" style="font-size: 15px; color: #A9B8D9; text-decoration: none">Tentang Kami</a>
+<a href="#" style="font-size: 15px; color: #A9B8D9; text-decoration: none">FAQ</a>
+</nav>
+<nav aria-label="Akun" style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 15px; font-weight: 600; color: #F4F7FF">Akun</span>
+<a href="#" style="font-size: 15px; color: #A9B8D9; text-decoration: none">Masuk</a>
+<a href="#" style="font-size: 15px; color: #A9B8D9; text-decoration: none">Mulai Perjalanan</a>
+</nav>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 15px; font-weight: 600; color: #F4F7FF">Hubungi kami</span>
+<a href="#" style="display: flex; align-items: center; gap: 10px; font-size: 15px; color: #A9B8D9; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"></rect><path d="M3.5 6.5L12 13l8.5-6.5"></path></svg>hello@orbidu.id</a>
+<a href="#" style="display: flex; align-items: center; gap: 10px; font-size: 15px; color: #A9B8D9; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.2" cy="6.8" r="0.8"></circle></svg>@orbidu.id</a>
+<a href="#" style="display: flex; align-items: center; gap: 10px; font-size: 15px; color: #A9B8D9; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"></rect><path d="M8 10v6M8 7.5v.01M12 16v-3.5a2 2 0 014 0V16M12 10v6"></path></svg>ORBIDU</a>
+<span style="display: flex; align-items: center; gap: 10px; font-size: 15px; color: #A9B8D9"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.4-6-11a6 6 0 1112 0c0 5.6-6 11-6 11z"></path><circle cx="12" cy="10" r="2.2"></circle></svg>Indonesia</span>
+</div>
+</div>
+<span style="font-size: 14px; color: #8394BC">© 2026 ORBIDU</span>
+</footer>
+</section>
+
+<a href="#" aria-label="Ayo konsultasi lewat WhatsApp" style="position: absolute; z-index: 6; right: 28px; top: 770px; display: flex; align-items: flex-end; gap: 4px; text-decoration: none">
+<span style="margin-bottom: 52px; padding: 10px 14px; display: flex; flex-direction: column; gap: 2px; border-radius: 16px 16px 4px 16px; background: #FFFFFF; box-shadow: 0 12px 30px rgba(16,26,51,0.16)"><span style="font-size: 14px; font-weight: 700; color: #101A33">Ayo konsultasi!</span><span style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #4A5877"><span style="width: 8px; height: 8px; border-radius: 50%; background: #1FAF5A"></span>Tanya lewat WhatsApp</span></span>
+<svg class="hop" width="88" height="96" viewBox="0 0 88 96" aria-hidden="true" style="filter: drop-shadow(0 10px 14px rgba(16,26,51,0.22))">
+<defs>
+<radialGradient id="hd-mini" cx="0.38" cy="0.3" r="0.8"><stop offset="0" stop-color="#8CC8FF"></stop><stop offset="0.5" stop-color="#1F7BFF"></stop><stop offset="1" stop-color="#0445B8"></stop></radialGradient>
+<clipPath id="hd-mini-front"><rect x="0" y="56" width="88" height="30"></rect></clipPath>
+</defs>
+<ellipse cx="44" cy="56" rx="40" ry="9" fill="none" stroke="#FF7000" stroke-width="5" transform="rotate(-16 44 56)"></ellipse>
+<circle cx="44" cy="52" r="26" fill="url(#hd-mini)"></circle>
+<path d="M34 32 L54 32 L53 40 Q44 44 35 40 Z" fill="#101A33"></path>
+<polygon points="24,31 44,23 64,31 44,39" fill="#1E2F62"></polygon>
+<path d="M44 31 Q56 33 60 37 L61 46" fill="none" stroke="#FF7000" stroke-width="1.8" stroke-linecap="round"></path>
+<g class="blink">
+<ellipse cx="36" cy="50" rx="5.5" ry="6.2" fill="#FFFFFF"></ellipse>
+<ellipse cx="52" cy="50" rx="5.5" ry="6.2" fill="#FFFFFF"></ellipse>
+<circle cx="37" cy="51" r="3.3" fill="#101A33"></circle>
+<circle cx="53" cy="51" r="3.3" fill="#101A33"></circle>
+</g>
+<ellipse cx="30" cy="58" rx="3.5" ry="2" fill="#FF8FB1" fill-opacity="0.7"></ellipse>
+<ellipse cx="58" cy="58" rx="3.5" ry="2" fill="#FF8FB1" fill-opacity="0.7"></ellipse>
+<path d="M40 59 Q44 63 48 59" fill="none" stroke="#101A33" stroke-width="1.8" stroke-linecap="round"></path>
+<ellipse cx="44" cy="56" rx="40" ry="9" fill="none" stroke="#F1AD00" stroke-width="5" transform="rotate(-16 44 56)" clip-path="url(#hd-mini-front)"></ellipse>
+<circle cx="70" cy="80" r="13" fill="#1FAF5A" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<rect x="63.5" y="74" width="13" height="10" rx="3" fill="#FFFFFF"></rect>
+<path d="M66 84 L64.5 87.5 L69.5 84 Z" fill="#FFFFFF"></path>
+</svg>
+</a>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"animasi":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":7480}}'>
+class Component extends DCLogic {
+  constructor(...args) {
+    super(...args);
+    this.state = { px: 0, py: 0, tilt: 0, page: 0, faqCat: 0, faqOpen: 0 };
+    this._raf = 0;
+    this._sx = null;
+  }
+  componentWillUnmount() {
+    if (this._raf) cancelAnimationFrame(this._raf);
+  }
+  makeStars(n, w, h, seed) {
+    let s = seed;
+    const rnd = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      out.push({
+        x: Math.round(rnd() * w),
+        y: Math.round(rnd() * h),
+        z: Math.round((1 + rnd() * 2) * 10) / 10,
+        o: Math.round((0.3 + rnd() * 0.6) * 100) / 100,
+        d: Math.round(rnd() * 40) / 10
+      });
+    }
+    return out;
+  }
+  look(e, W, cx, cy) {
+    const el = e.currentTarget;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const sc = rect.width / W || 1;
+    const x = (e.clientX - rect.left) / sc;
+    const y = (e.clientY - rect.top) / sc;
+    if (this._raf) cancelAnimationFrame(this._raf);
+    this._raf = requestAnimationFrame(() => {
+      this._raf = 0;
+      const dx = x - cx;
+      const dy = y - cy;
+      const d = Math.hypot(dx, dy) || 1;
+      const k = Math.min(1, d / 360);
+      this.setState({
+        px: Math.round((dx / d) * 7 * k * 10) / 10,
+        py: Math.round((dy / d) * 7 * k * 10) / 10,
+        tilt: Math.round(Math.max(-7, Math.min(7, dx / 90)) * 10) / 10
+      });
+    });
+  }
+  renderVals() {
+    const anim = this.props.animasi ?? true;
+    if (!this._stars) {
+      this._stars = this.makeStars(60, 450, 450, 7);
+      this._stars2 = this.makeStars(56, 1440, 1100, 29);
+    }
+    const T = {
+      blue: ['#E3EDFF', '#0B57D0'], orange: ['#FFE9D6', '#B34700'], teal: ['#D9F3F9', '#006F8C'], navy: ['#DDE3F2', '#15234D'], amber: ['#FFF1CC', '#8A5A00']
+    };
+    const JUR = [
+      { name: 'Informatika', bidang: 'Teknologi & Informatika', t: 'blue', icon: 'M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16', desc: 'Jurusan Informatika mempelajari cara merancang perangkat lunak, algoritma, dan sistem cerdas, mulai dari pemrograman dasar sampai kecerdasan buatan.' },
+      { name: 'Kedokteran', bidang: 'Kesehatan', t: 'orange', icon: 'M2 12h5l2.5-5 4 10 2.5-5H22', desc: 'Jurusan Kedokteran mempelajari tubuh manusia, penyakit, serta cara mendiagnosis, mengobati, dan mencegahnya, termasuk praktik klinis di rumah sakit.' },
+      { name: 'Psikologi', bidang: 'Sosial & Humaniora', t: 'teal', icon: 'M12 3a7 7 0 00-7 7c0 2.4 1.2 4.1 2.6 5.4V21h6.9v-3h2a2 2 0 002-2v-2.5l1.8-.6-1.8-3.4A7 7 0 0012 3z', desc: 'Jurusan Psikologi mempelajari cara manusia berpikir, merasa, dan berperilaku, serta bagaimana membantu orang lain menghadapi masalahnya.' },
+      { name: 'Ilmu Hukum', bidang: 'Hukum', t: 'navy', icon: 'M12 4v16M7 20h10M5 7h14M7 7l-3 7a3 3 0 006 0zM17 7l-3 7a3 3 0 006 0z', desc: 'Jurusan Ilmu Hukum mengkaji aturan, keadilan, dan cara hukum bekerja di tengah masyarakat, dari hukum pidana sampai hukum bisnis.' },
+      { name: 'Manajemen', bidang: 'Ekonomi & Bisnis', t: 'amber', icon: 'M4 20V10M10 20V4M16 20v-7M22 20H2', desc: 'Jurusan Manajemen mempelajari cara mengelola organisasi dan bisnis, mulai dari pemasaran, keuangan, sumber daya manusia, sampai strategi.' },
+      { name: 'Teknik Sipil', bidang: 'Teknik & Industri', t: 'blue', icon: 'M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6', desc: 'Jurusan Teknik Sipil mempelajari perancangan dan pembangunan infrastruktur seperti gedung, jembatan, jalan, dan sistem pengairan.' },
+      { name: 'Desain Komunikasi Visual', bidang: 'Desain & Seni', t: 'orange', icon: 'M12 19l7-7 3 3-7 7zM18 13l-1.5-7.5L2 2l3.6 14.5L13 18zM2 2l7.6 7.6', desc: 'Jurusan DKV mempelajari cara menyampaikan pesan lewat visual, seperti ilustrasi, tipografi, branding, fotografi, dan desain digital.' },
+      { name: 'Akuntansi Sektor Publik', bidang: 'Kedinasan', t: 'navy', icon: 'M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z', desc: 'Jurusan ini mempelajari pengelolaan keuangan negara dan pelaporannya, dengan ikatan dinas sebagai aparatur setelah lulus.' }
+    ].map((j) => ({ ...j, bg: T[j.t][0], ink: T[j.t][1] }));
+    const perPage = 4;
+    const maxPage = Math.ceil(JUR.length / perPage) - 1;
+    const page = Math.min(this.state.page, maxPage);
+    const go = (p) => this.setState({ page: Math.max(0, Math.min(maxPage, p)) });
+    const FAQ = [
+      { cat: 'Tentang ORBIDU', items: [
+        ['Apa itu ORBIDU?', 'ORBIDU adalah platform pendampingan perencanaan pendidikan bagi siswa SMA untuk membantu mengenali potensi, menemukan arah pendidikan, mengeksplorasi pilihan, dan menentukan langkah berikutnya.'],
+        ['Siapa yang bisa menggunakan ORBIDU?', 'ORBIDU ditujukan untuk siswa SMA kelas 10–12, serta mendukung Guru BK, Wali Kelas, dan sekolah dalam proses pendampingan pendidikan.'],
+        ['Bagaimana ORBIDU memberikan rekomendasi pendidikan?', 'Rekomendasi disusun berdasarkan informasi dalam profil siswa, seperti data akademik, prestasi, minat dan bakat, serta refleksi diri. Setiap rekomendasi dilengkapi alasan agar siswa memahami dasar pilihannya.'],
+        ['Apakah data siswa aman?', 'Data siswa dikelola dengan akses berbasis peran dan tujuan penggunaan yang jelas. Detail pengumpulan, penggunaan, penyimpanan, dan akses data dijelaskan dalam kebijakan privasi ORBIDU.']
+      ] },
+      { cat: 'Untuk Bifriends', items: [
+        ['Apakah ORBIDU menentukan satu jurusan terbaik untuk saya?', 'Tidak. ORBIDU membantu menemukan beberapa pilihan yang sesuai dengan profilmu untuk kemudian kamu eksplorasi dan pertimbangkan.'],
+        ['Pilihan pendidikan apa saja yang bisa dieksplorasi?', 'Berbagai program studi dan jalur pendidikan, seperti PTN, PTS, Kedinasan, dan PTLN, sesuai dengan pilihan dan kebutuhanmu.'],
+        ['Apakah ORBIDU juga membantu persiapan seleksi?', 'Ya. ORBIDU membantumu memahami apa yang perlu disiapkan untuk jalur seleksi yang relevan, seperti SNBP, SNBT, TKA, SKD, dan jalur lainnya sesuai ketentuan yang berlaku.'],
+        ['Apa itu Action Plan?', 'Action Plan membantu mengubah tujuan pendidikanmu menjadi langkah yang lebih konkret, mulai dari menentukan prioritas, membuat tugas, hingga memantau progres.']
+      ] },
+      { cat: 'Untuk Sekolah', items: [
+        ['Bagaimana sekolah bisa menggunakan ORBIDU?', 'Sekolah dapat menggunakan ORBIDU sebagai bagian dari pendampingan pendidikan siswa. Guru BK dan Wali Kelas memperoleh informasi yang lebih terarah untuk memahami dan mendampingi perjalanan siswa.'],
+        ['Bagaimana cara sekolah bergabung dengan ORBIDU?', 'Sekolah dapat menghubungi tim ORBIDU untuk mendapatkan informasi mengenai proses kerja sama, implementasi, dan penggunaan platform di sekolah.']
+      ] }
+    ];
+    const fc = this.state.faqCat;
+    const faqTabs = FAQ.map((g, i) => {
+      const on = i === fc;
+      return { label: g.cat, pressed: on ? 'true' : 'false', bg: on ? '#0965FA' : '#FFFFFF', fg: on ? '#FFFFFF' : '#15234D', bd: on ? '#0965FA' : '#DCE4F2', pick: () => this.setState({ faqCat: i, faqOpen: 0 }) };
+    });
+    const faqItems = FAQ[fc].items.map(([q, a], i) => {
+      const on = this.state.faqOpen === i;
+      return { q, a, isOpen: on, expanded: on ? 'true' : 'false', rot: on ? 'rotate(180deg)' : 'rotate(0deg)', toggle: () => this.setState({ faqOpen: on ? -1 : i }) };
+    });
+    return {
+      rootClass: anim ? 'anim' : 'still',
+      stars: this._stars,
+      stars2: this._stars2,
+      px: this.state.px,
+      py: this.state.py,
+      tilt: this.state.tilt,
+      onMove: (e) => this.look(e, 1440, 1060, 404),
+      onLeave: () => this.setState({ px: 0, py: 0, tilt: 0 }),
+      jur: JUR,
+      offset: page * perPage * (282 + 24),
+      atStart: page === 0,
+      atEnd: page === maxPage,
+      prevOp: page === 0 ? 0.4 : 1,
+      nextOp: page === maxPage ? 0.4 : 1,
+      prev: () => go(page - 1),
+      next: () => go(page + 1),
+      swStart: (e) => { this._sx = e.clientX; },
+      swEnd: (e) => {
+        if (this._sx === null) return;
+        const dx = e.clientX - this._sx;
+        this._sx = null;
+        if (dx < -40) go(page + 1);
+        else if (dx > 40) go(page - 1);
+      },
+      faqTabs,
+      faqItems
+    };
+  }
+}
+</script>
+</body>
+</html>
