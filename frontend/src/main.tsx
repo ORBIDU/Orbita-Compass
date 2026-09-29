@@ -1,13 +1,14 @@
 import { createRoot } from "react-dom/client";
-import App from "./app/App.tsx";
+import { RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { StudentStatusProvider } from "./context/StudentStatusContext";
+import { router } from "./router";
 import "./styles/index.css";
 
 createRoot(document.getElementById("root")!).render(
   <AuthProvider>
     <StudentStatusProvider>
-      <App />
+      <RouterProvider router={router} />
     </StudentStatusProvider>
   </AuthProvider>,
 );

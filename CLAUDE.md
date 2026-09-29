@@ -9,6 +9,8 @@ Struktur repo:
 - `ai-engine/` → FastAPI + Gemini. JANGAN diubah.
 - `BACKEND_MAP.md` → kondisi backend saat ini.
 - `docs/SPEK_SISWA.md` → spesifikasi lengkap sisi siswa. Baca bagian yang relevan sebelum mengerjakan halaman.
+- `docs/API_CONTRACT.md` → kebutuhan frontend ke backend yang belum ada atau belum aman.
+- `docs/AUDIT_FRONTEND.md` → hasil audit Fase 0 dan rencana Fase 1.
 
 Pemilik frontend: Maulana (vibe coder). Jelaskan setiap perubahan dengan bahasa Indonesia yang sederhana.
 
@@ -23,11 +25,11 @@ Pemilik frontend: Maulana (vibe coder). Jelaskan setiap perubahan dengan bahasa 
 ## Aturan data
 1. Komponen tidak boleh berisi data hardcode. Semua data lewat `frontend/src/services/`.
 2. Data dummy ada di `frontend/src/mocks/`. Saklar `VITE_USE_MOCK=true` di `.env` membuat semua service memakai dummy, termasuk login, sehingga frontend bisa jalan tanpa backend.
-3. Kalau endpoint sudah ada (lihat BACKEND_MAP.md), bentuk data dummy harus sama dengan respons API aslinya. Kalau belum ada, tentukan bentuknya lalu catat di `API_CONTRACT.md` (method, URL, request, response, alasan dibutuhkan).
+3. Kalau endpoint sudah ada (lihat BACKEND_MAP.md), bentuk data dummy harus sama dengan respons API aslinya. Kalau belum ada, tentukan bentuknya lalu catat di `docs/API_CONTRACT.md` (method, URL, request, response, alasan dibutuhkan).
 4. Fitur AI (Compass, rasionalisasi SNBP, penyusun Action Plan, rekomendasi latihan) disimulasikan di `mocks/` dengan aturan sederhana dan jeda 2–3 detik.
 5. Data kosong tampil sebagai empty state yang jujur dengan ajakan bertindak. Jangan pernah mengganti nilai kosong dengan angka palsu.
 6. Frontend tidak pernah mengirim field `role` saat register, dan tidak menampilkan kunci jawaban sebelum soal disubmit.
-7. Masalah keamanan backend (BACKEND_MAP.md bagian 6) tidak diperbaiki dari frontend. Cukup catat kebutuhannya di API_CONTRACT.md.
+7. Masalah keamanan backend (BACKEND_MAP.md bagian 6) tidak diperbaiki dari frontend. Cukup catat kebutuhannya di `docs/API_CONTRACT.md`.
 
 ## Design system
 Semua token warna, gradient, dan font didefinisikan di satu tempat (konfigurasi Tailwind), tidak ditulis ulang per komponen.

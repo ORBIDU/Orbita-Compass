@@ -19,10 +19,12 @@ function LandingNav({
   tab,
   setTab,
   onMasuk,
+  onDaftar,
 }: {
   tab: LandingTab;
   setTab: (t: LandingTab) => void;
   onMasuk: () => void;
+  onDaftar: () => void;
 }) {
   const isDark = tab === "home";
 
@@ -108,7 +110,7 @@ function LandingNav({
             Masuk
           </button>
           <button
-            onClick={onMasuk}
+            onClick={onDaftar}
             className="text-[14px] font-bold px-6 py-2 rounded-full transition-opacity hover:opacity-90"
             style={{
               fontFamily: PP,
@@ -151,7 +153,7 @@ function LandingNav({
   );
 }
 
-export default function LandingPage({ onMasuk }: { onMasuk: () => void }) {
+export default function LandingPage({ onMasuk, onDaftar }: { onMasuk: () => void; onDaftar: () => void }) {
   const [tab, setTab] = useState<LandingTab>("home");
 
   const NAV_H = 65;
@@ -159,7 +161,7 @@ export default function LandingPage({ onMasuk }: { onMasuk: () => void }) {
   return (
     <div className="relative h-screen overflow-hidden" style={{ fontFamily: PP }}>
       {/* Functional nav — fixed, z-[1000] covers the imports' own nav which is z-[4] */}
-      <LandingNav tab={tab} setTab={setTab} onMasuk={onMasuk} />
+      <LandingNav tab={tab} setTab={setTab} onMasuk={onMasuk} onDaftar={onDaftar} />
 
       {/* Scrollable content — starts at top-0, import's own nav scrolls under ours */}
       <div className="absolute inset-0 overflow-y-auto overflow-x-hidden">
