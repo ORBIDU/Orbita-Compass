@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Bell, ChevronDown, LogOut, Menu, UserRound } from "lucide-react";
+import { Bell, ChevronDown, LogOut, Search, UserRound } from "lucide-react";
 import { ROUTES } from "@/config/navigation";
 import type { DisplayUser } from "@/lib/user";
 import { useDismiss } from "@/lib/useDismiss";
+import { BRAND } from "@/config/brand";
 import Logo from "@/components/ui/Logo";
 import EmptyState from "@/components/ui/EmptyState";
-import MobileDrawer from "./MobileDrawer";
-import { BRAND } from "@/config/brand";
+import PortalNav from "./PortalNav";
 
 interface PortalHeaderProps {
   user: DisplayUser;
@@ -15,7 +15,7 @@ interface PortalHeaderProps {
 }
 
 const iconButton =
-  "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-line bg-white text-ink-soft transition-colors hover:bg-page";
+  "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-rim-soft bg-white text-space-1 transition-colors hover:bg-surface-soft";
 
 /** Dropdown kecil yang menutup sendiri saat klik di luar, Escape, atau pindah halaman. */
 function useDropdown() {
@@ -32,19 +32,21 @@ function NotificationMenu() {
   const { open, setOpen, ref } = useDropdown();
   return (
     <div ref={ref} className="relative">
+      {/* Belum ada data notifikasi, jadi tanpa titik "belum dibaca" (API_CONTRACT bagian 7.4). */}
       <button type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-label="Notifikasi" className={iconButton}>
-        <Bell size={18} />
+        <Bell size={20} aria-hidden="true" />
       </button>
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-[min(320px,calc(100vw-2rem))] rounded-2xl bg-white shadow-card-hover ring-1 ring-line">
-          <p className="border-b border-line-soft px-4 py-3 text-sm font-semibold text-ink">Notifikasi</p>
-          {/* Backend belum punya notifikasi: tampilkan apa adanya, tanpa contoh palsu. */}
+        <div className="absolute right-0 top-full z-50 mt-2 w-[min(320px,calc(100vw-2rem))] rounded-2xl bg-white shadow-card-hover ring-1 ring-rim-soft">
+          <p className="border-b border-rim-soft px-4 py-3 text-sm font-semibold text-space-2">Notifikasi</p>
           <EmptyState icon={Bell} title="Belum ada notifikasi" description="Pengingat Action Plan dan hasil tryout akan muncul di sini." className="py-8" />
         </div>
       )}
     </div>
   );
 }
+
+const menuItem = "flex min-h-11 w-full items-center gap-3 rounded-xl px-3 text-sm font-semibold transition-colors hover:bg-surface-soft";
 
 function AccountMenu({ user, onLogout }: PortalHeaderProps) {
   const { open, setOpen, ref } = useDropdown();
@@ -54,61 +56,59 @@ function AccountMenu({ user, onLogout }: PortalHeaderProps) {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        aria-label="Menu akun"
-        className="flex items-center gap-2 rounded-xl py-1 pl-1 pr-1 transition-colors hover:bg-page sm:pr-2"
+        aria-haspopup="menu"
+        aria-label={`Menu akun ${user.name}`}
+        className="flex items-center gap-2.5 rounded-full transition-colors hover:bg-surface-soft nav:h-12 nav:rounded-[14px] nav:border nav:border-rim-soft nav:bg-white nav:pl-1.5 nav:pr-2.5"
       >
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-orbit text-xs font-bold text-white">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-orbit text-[13px] font-semibold text-white nav:h-9 nav:w-9">
           {user.initials}
         </span>
-        <span className="hidden text-left md:block">
-          <span className="block max-w-[160px] truncate text-sm font-semibold text-ink">{user.name}</span>
-          <span className="block text-xs text-ink-muted">{user.kelas}</span>
+        <span className="hidden text-left leading-tight nav:block">
+          <span className="block max-w-[160px] truncate text-sm font-semibold text-space-2">{user.name}</span>
+          <span className="block text-xs text-prose">{user.kelas}</span>
         </span>
-        <ChevronDown size={14} className="hidden text-ink-faint sm:block" />
+        <ChevronDown size={16} aria-hidden="true" className="hidden text-prose nav:block" />
       </button>
       {open && (
-        <div role="menu" className="absolute right-0 top-full z-50 mt-2 w-60 rounded-2xl bg-white p-2 shadow-card-hover ring-1 ring-line">
-          <div className="border-b border-line-soft px-3 pb-3 pt-2">
-            <p className="truncate text-sm font-semibold text-ink">{user.name}</p>
-            <p className="text-xs text-ink-muted">{user.kelas}</p>
-            <p className="truncate text-xs text-ink-faint">{user.email}</p>
+        <div role="menu" className="absolute right-0 top-full z-50 mt-2 w-64 rounded-2xl bg-white p-2 shadow-card-hover ring-1 ring-rim-soft">
+          <div className="border-b border-rim-soft px-3 pb-3 pt-2">
+            <p className="truncate text-sm font-semibold text-space-2">{user.name}</p>
+            {user.kelas && <p className="text-xs text-prose">{user.kelas}</p>}
+            <p className="truncate text-xs text-prose-dim">{user.email}</p>
           </div>
-          <Link to={ROUTES.profil} role="menuitem" className="mt-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-ink-soft hover:bg-page">
-            <UserRound size={16} /> Profil
-          </Link>
-          <button type="button" role="menuitem" onClick={onLogout} className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-danger hover:bg-page">
-            <LogOut size={16} /> Keluar
-          </button>
+          <div className="mt-1 flex flex-col">
+            <Link to={ROUTES.profil} role="menuitem" className={`${menuItem} text-space-1`}>
+              <UserRound size={18} aria-hidden="true" /> Profil
+            </Link>
+            <Link to={ROUTES.jurusan} role="menuitem" className={`${menuItem} text-space-1`}>
+              <Search size={18} aria-hidden="true" /> Explore Jurusan
+            </Link>
+            <button type="button" role="menuitem" onClick={onLogout} className={`${menuItem} text-alert-fg`}>
+              <LogOut size={18} aria-hidden="true" /> Keluar
+            </button>
+          </div>
         </div>
       )}
     </div>
   );
 }
 
-/** Header portal: logo + "Student Portal", notifikasi, dan menu akun. */
+/**
+ * Header portal (docs/design/portal/PortalHeader.dc.html).
+ * Desktop: logo, menu dengan garis bawah untuk menu aktif, notifikasi, akun.
+ * HP/tablet: logo, notifikasi, avatar. Menu pindah ke BottomNav.
+ */
 export default function PortalHeader({ user, onLogout }: PortalHeaderProps) {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const closeDrawer = useCallback(() => setDrawerOpen(false), []);
-
   return (
-    <>
-      <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-2 px-4 py-2.5 sm:px-6">
-        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
-          <button type="button" onClick={() => setDrawerOpen(true)} aria-label="Buka menu" className={`${iconButton} lg:hidden`}>
-            <Menu size={18} />
-          </button>
-          <Link to={ROUTES.portal} aria-label={`${BRAND.name}, ke Dashboard`} className="shrink-0">
-            <Logo size="sm" />
-          </Link>
-          <span className="hidden h-6 w-px bg-line sm:block" />
-          <span className="hidden text-[11px] font-semibold uppercase tracking-widest text-ink-faint sm:block">Student Portal</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <NotificationMenu />
-          <AccountMenu user={user} onLogout={onLogout} />
-        </div>
+    <div className="flex h-[60px] items-center gap-6 px-4 sm:px-6 lg:h-[72px] xl:gap-9 xl:px-10">
+      <Link to={ROUTES.landing} aria-label={`${BRAND.name}, ke beranda`} className="shrink-0 rounded-lg">
+        <Logo size="sm" />
+      </Link>
+      <PortalNav />
+      <div className="ml-auto flex items-center gap-2 xl:gap-3">
+        <NotificationMenu />
+        <AccountMenu user={user} onLogout={onLogout} />
       </div>
-      <MobileDrawer open={drawerOpen} onClose={closeDrawer} user={user} onLogout={onLogout} />
-    </>
+    </div>
   );
 }

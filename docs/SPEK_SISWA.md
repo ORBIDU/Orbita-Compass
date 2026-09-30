@@ -73,25 +73,31 @@ Acuan desain: `docs/design/auth/Auth-Desktop.dc.html` (1440px) dan `Auth-Mobile.
 - Data: backend belum menyimpan persetujuan orang tua/wali dan belum punya reset password → dicatat di `docs/API_CONTRACT.md` bagian 2.4 dan 2.5.
 
 ## 4. Kerangka portal
-- Header: logo + "Student Portal", notifikasi, menu akun (nama, kelas, Profil, Keluar).
-- Menu: Dashboard, Analisis Potensi, ORBIDU Compass, Action Plan, Persiapan, Explore Jurusan.
-- Dropdown Persiapan: Siap SNBP, Siap TKA, Siap SNBT, Siap SKD, dan Siap Mandiri berlabel "Segera hadir" yang tidak bisa diklik.
-- Menu aktif harus sesuai halaman.
-- HP: menu menjadi drawer.
-- Bagian yang terkunci karena status tampil dengan overlay gembok dan satu tombol ajakan yang jelas.
+Acuan desain: `docs/design/portal/PortalHeader.dc.html` (desktop) dan menu bawah di `Portal-Dashboard-HP.dc.html`.
+- **Desktop (≥1024px)**: satu baris header 72px berisi logo (ke beranda), menu Dashboard, Analisis Potensi, ORBIDU Compass, Action Plan, Persiapan ▾, Explore Jurusan, lalu notifikasi dan menu akun. Menu aktif ditandai garis bawah biru (`aria-current="page"`). Ikon menu dan nama akun baru tampil mulai 1400px supaya menu tetap satu baris di layar 1024–1399px.
+- **Dropdown Persiapan**: Siap SNBP, Siap TKA, Siap SNBT, Siap SKD, dan Siap Mandiri berlabel "Segera hadir" yang tidak bisa diklik.
+- **HP dan tablet (<1024px)**: header 60px (logo, notifikasi, avatar) dan menu bawah 5 item: Dashboard, Analisis, Compass, Rencana, Persiapan. "Persiapan" membuka bottom sheet berisi pilihan yang sama dengan dropdown desktop. Tidak ada drawer.
+- **Menu akun**: nama, kelas, email, Profil, Explore Jurusan, Keluar. Di HP, Explore Jurusan dibuka lewat menu akun dan kartu di Dashboard.
+- **Format kelas** sama di semua halaman: "Kelas XII" (fungsi `formatKelas()`), tanpa jurusan SMA karena nilai "IPA" dari backend masih bawaan palsu.
+- **Notifikasi**: daftar kosong yang jujur, tanpa titik "belum dibaca", sampai endpoint-nya ada (API_CONTRACT 7.4).
+- Bagian yang terkunci karena status tampil dengan gembok dan penjelasan singkat. Satu tombol ajakan yang jelas ada di hero Dashboard.
+- Panel Mode Demo yang sudah ada dipakai apa adanya (tidak dibuat ulang); di HP letaknya dinaikkan di atas menu bawah.
 
 ## 5. Dashboard (`/portal`)
-- Sapaan memakai nama panggilan akun yang login, menyesuaikan waktu: pagi (04.00–10.59), siang (11.00–14.59), sore (15.00–17.59), malam (18.00–03.59). Tanggal otomatis.
-- Kartu:
-  - Ringkasan harian + Today's Action Plan (dari Action Plan).
-  - Performa: radar 7 subtes SNBT (PU, PPU, PBM, PK, LBI, LBE, PM) dan hasil terakhir Siap SNBT, TKA, dan SKD.
-  - Timeline seleksi (selalu tampil).
-  - ORBIDU Compass: 3 jurusan teratas.
-  - Eksplor Jurusan → `/jurusan`.
-- Per status:
-  - `baru`: Kompas, Performa, dan Action Plan terkunci, dengan satu CTA besar "Isi Gambaran Minat Bakat".
-  - `sudah_asesmen`: Kompas terbuka. Performa kosong dengan ajakan ke Persiapan. Action Plan mengajak memilih fokus kalau belum diatur.
-  - `aktif`: semua terisi.
+Acuan desain: `docs/design/portal/Portal-Dashboard.dc.html` (1440px) dan `Portal-Dashboard-HP.dc.html` (390px). Teks di `frontend/src/content/dashboard.ts`, data lewat `dashboardService` dan `jurusanService.getCompassHighlights()`.
+- **Hero navy**: tanggal otomatis ("Kamis, 1 Oktober 2026") dan sapaan sesuai jam: pagi (04.00–10.59), siang (11.00–14.59), sore (15.00–17.59), malam (18.00–03.59). Nama yang dipakai: **nama panggilan** dari profil; kalau kosong, kata pertama nama lengkap.
+- **Kartu dan urutannya** (HP satu kolom dengan urutan yang sama):
+  - Rencana hari ini: cincin progres, jumlah tugas selesai, perkiraan menit tersisa, dan daftar tugas (desktop 4, HP 3, sisanya "+N tugas lainnya").
+  - Performa latihan: radar 7 subtes SNBT (PU, PPU, PBM, PK, LBI, LBE, PM) dari tryout terakhir dengan subtes terlemah ditandai oranye, skor terakhir dan selisihnya, lalu hasil terakhir Siap SNBT, TKA, dan SKD ("Mulai" jika belum ada). "Lihat performa" membuka halaman Siap SNBT (tab Performance belum bisa dibuka lewat URL).
+  - ORBIDU Compass: bidang yang paling selaras dan 3 jurusan teratas dengan label "Sangat sesuai"/"Sesuai" (tanpa persentase), menuju `/jurusan/:slug`.
+  - Timeline seleksi (selalu tampil): 5 agenda mulai bulan ini, dengan catatan "Jadwal perkiraan. Jadwal resmi mengikuti SNPMB dan instansi terkait."
+  - Explore Jurusan → `/jurusan`.
+- **Per status**:
+  - `baru`: Rencana, Performa, dan Compass terkunci (kerangka abu-abu buram, tanpa angka contoh). Hero berisi satu CTA besar "Isi Gambaran Minat Bakat".
+  - `sudah_asesmen`: Compass terbuka. Rencana mengajak "Atur fokus belajar" kalau fokus belum diatur. Performa kosong dengan ajakan "Mulai latihan pertama".
+  - `aktif`: semua terisi. Hero menampilkan progres tugas hari ini, chip kelas, dan fokus belajar.
+- Semua kartu punya kondisi memuat, gagal (dengan "Coba lagi"), dan kosong yang jujur.
+- Data: fokus belajar, durasi tugas, riwayat latihan, timeline, notifikasi, dan nama panggilan belum ada di backend → API_CONTRACT bagian 7. Dengan backend asli, status `aktif` belum bisa muncul.
 
 ## 6. Analisis Potensi (`/portal/analisis-potensi`)
 - Header dengan indikator Kelengkapan Profil (%) beserta keterangan apa yang masih kurang.

@@ -9,7 +9,6 @@ import {
   ActionPlanRoute,
   AnalisisPotensiRoute,
   CompassRoute,
-  DashboardRoute,
   LandingRoute,
   PersiapanRoute,
   ProfilRoute,
@@ -17,6 +16,7 @@ import {
 } from "@/routes/legacyRoutes";
 
 const AuthPage = lazy(() => import("@/app/AuthPage"));
+const DashboardPage = lazy(() => import("@/app/DashboardPage"));
 const BeasiswaPage = lazy(() => import("@/app/BeasiswaPage"));
 const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
 const JurusanListPage = lazy(() => import("@/app/JurusanListPage"));
@@ -60,7 +60,7 @@ export const router = createBrowserRouter([
         path: "/portal",
         element: <PortalLayout />,
         children: [
-          { index: true, element: <DashboardRoute /> },
+          { index: true, element: <DashboardPage /> },
           { path: "analisis-potensi", element: <AnalisisPotensiRoute /> },
           { path: "compass", element: <CompassRoute /> },
           { path: "beasiswa", element: <BeasiswaPage /> },

@@ -167,7 +167,7 @@ Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
 | Prestasi: ubah, field peringkat/penyelenggara, upload sertifikat | 4 | 🔴 |
 | Hasil Compass sungguhan (sekarang selalu jawaban cadangan, lihat `BACKEND_MAP.md` poin 10) | 5 | 🟡 |
 | Data beasiswa (daftar, filter, detail) | 5 | 🔴 |
-| Action Plan: fokus, hari belajar, penyusun tugas otomatis, geser tugas terlewat | 6 | 🔴 |
+| Action Plan: fokus, hari belajar, penyusun tugas otomatis, geser tugas terlewat (ringkasan harian Dashboard: bagian 7.1) | 6 | 🔴 |
 | Rasionalisasi SNBP dengan input TKA, prestasi terpilih, dan 2 target | 7 | 🟡 |
 | Bank soal lengkap, soal tanpa kunci, paket tryout berurutan, riwayat tryout | 7 | 🔴 |
 
@@ -261,3 +261,71 @@ GET /jurusan/:slug/kampus?type=PTN&city=Bandung
 Kartu jurusan menampilkan "Sangat sesuai" / "Sesuai" dari hasil Compass (tanpa persentase). Sementara frontend mencocokkan `recommendedMajors[].name` (nama prodi backend) ke katalog lewat nama, lalu memakai `match_pct ≥ 80` sebagai "Sangat sesuai".
 
 - **Usulan:** `recommendedMajors` menyertakan `jurusanSlug` dan label yang sudah jadi, mis. `{ "jurusanSlug": "informatika", "fit": "Sangat sesuai" }`, supaya aturan labelnya ada di backend.
+
+---
+
+## 7. Dashboard (Fase 4)
+
+Dipakai `/portal` (SPEK bagian 5). Service: `frontend/src/services/dashboardService.ts`, bentuk data: `frontend/src/types/dashboard.ts`.
+
+### 7.1 Rencana hari ini dan fokus belajar 🟡
+Sekarang frontend memakai `GET /action-plans` lalu menyaring tugas yang tenggatnya hari ini. Yang belum ada: **fokus belajar** siswa dan **perkiraan durasi** tugas, jadi di mode backend kartu tidak bisa menampilkan "Sekitar 65 menit lagi" dan hero tidak tahu fokusnya.
+
+```
+GET /dashboard/today
+→ {
+    "focus": ["SNBT", "TKA"],          // null = siswa belum pernah mengatur fokus
+    "tasks": [
+      { "id": "…", "title": "20 soal Penalaran Matematika", "minutes": 25, "category": "SNBT", "done": true }
+    ]
+  }
+```
+
+- `category` memakai `SNBT` | `TKA` | `SKD` (kategori lama seperti `Rapor`/`BK` boleh tetap ada).
+- `ActionPlanItem` perlu kolom `minutes`. Fokus disimpan per siswa (dirinci di Fase 6).
+- Tanggal "hari ini" mengikuti zona waktu siswa (WIB/WITA/WIT), bukan UTC server.
+
+### 7.2 Hasil latihan terakhir per ujian 🔴
+Belum ada endpoint untuk membaca riwayat latihan/tryout (`TryoutSession` hanya ditulis lewat `POST /ptn/practice/submit`). Di mode backend kartu Performa selalu tampil sebagai empty state, dan status siswa `aktif` tidak bisa muncul.
+
+```
+GET /practice/summary
+→ {
+    "snbt": { "label": "Tryout #3", "completedAt": "2026-09-26T09:00:00Z", "score": 624, "previousScore": 606,
+              "subtests": { "PU": 690, "PPU": 650, "PBM": 610, "PK": 640, "LBI": 600, "LBE": 520, "PM": 660 } },
+    "tka":  { "label": "Latihan Matematika", "completedAt": "2026-09-28T09:00:00Z", "correct": 16, "total": 20 },
+    "skd":  null                        // null = belum pernah latihan
+  }
+```
+
+- Skor subtes SNBT pada skala 0–1000 (sama dengan radar). `previousScore` null jika baru sekali tryout.
+- `TryoutSession.type` perlu dibedakan `SNBT`/`TKA`/`SKD` dan menyimpan skor per subtes, bukan hanya `totalScore`.
+
+### 7.3 Timeline seleksi 🔴
+Jadwal sekarang disimpan di `frontend/src/mocks/data/timeline.ts` sebagai **perkiraan** dan harus diedit manual tiap tahun.
+
+```
+GET /timeline?from=2026-10
+→ { "events": [ { "id": "tka-2026", "month": "2026-11", "title": "Tes Kemampuan Akademik (TKA)",
+                  "note": "Perkiraan, untuk siswa kelas XII", "tone": "orange", "isOfficial": false } ] }
+```
+
+- `isOfficial: true` setelah jadwal resmi SNPMB/instansi diumumkan, supaya catatan "Perkiraan" bisa dihapus.
+- Dikelola admin, tidak perlu login untuk membaca.
+
+### 7.4 Notifikasi 🔴
+Tombol notifikasi di header sekarang hanya menampilkan "Belum ada notifikasi" dan tanpa titik "belum dibaca".
+
+```
+GET /notifications            → { "items": [ { "id": "…", "title": "…", "body": "…", "link": "/portal/action-plan", "readAt": null, "createdAt": "…" } ], "unreadCount": 1 }
+PATCH /notifications/:id/read → { "message": "…" }
+```
+
+- Sumber: pengingat Action Plan (`notifyEmail`/`notifyWa` sudah ada di `ActionPlanItem`) dan hasil tryout.
+
+### 7.5 Nama panggilan 🔴
+Sapaan Dashboard ("Selamat pagi, Rizki!") memakai `profile.nickname`, yang sudah diusulkan di bagian 2.3 tetapi belum ada di backend.
+
+- `GET /auth/me` dan `GET /profile` mengirim `profile.nickname` (string atau `null`); `PUT /profile` menerimanya.
+- Selama kosong, frontend memakai kata pertama nama lengkap (dengan backend asli: "Selamat malam, Ahmad!"). Mode dummy sudah mengisi `"Rizki"` dan `"Budi"`.
+

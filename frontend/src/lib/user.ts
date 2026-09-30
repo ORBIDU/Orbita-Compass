@@ -2,18 +2,28 @@ import type { MeUser } from "@/types/backend";
 
 const GRADE_ROMAN: Record<number, string> = { 10: "X", 11: "XI", 12: "XII" };
 
+/**
+ * Satu format kelas untuk semua halaman: "Kelas XII". Jurusan SMA (IPA/IPS)
+ * sengaja tidak ditampilkan karena backend mengisi "IPA" untuk semua siswa
+ * baru (docs/API_CONTRACT.md bagian 2.2).
+ */
+export function formatKelas(grade: number | null | undefined): string {
+  if (!grade) return "";
+  return `Kelas ${GRADE_ROMAN[grade] ?? grade}`;
+}
+
 /** Data user yang siap ditampilkan (header, menu akun, sapaan). */
 export interface DisplayUser {
   id: string;
   email: string;
   name: string;
   /**
-   * Nama sapaan. Backend belum punya field nama panggilan
-   * (docs/API_CONTRACT.md), jadi sementara memakai kata pertama nama lengkap.
+   * Nama sapaan: nama panggilan dari profil. Kalau kosong (backend belum punya
+   * field-nya, docs/API_CONTRACT.md bagian 2.3), memakai kata pertama nama lengkap.
    */
   nickname: string;
   initials: string;
-  /** Contoh: "Kelas XII IPA", "Guru BK" */
+  /** Contoh: "Kelas XII", "Guru BK" (lihat formatKelas) */
   kelas: string;
   role: MeUser["role"];
   avatarUrl: string | null;
@@ -26,8 +36,7 @@ export function toDisplayUser(user: MeUser): DisplayUser {
 
   let kelas: string;
   if (user.profile) {
-    const grade = GRADE_ROMAN[user.profile.grade] ?? String(user.profile.grade);
-    kelas = `Kelas ${grade} ${user.profile.majorTrack}`.trim();
+    kelas = formatKelas(user.profile.grade);
   } else {
     kelas = user.role === "BK_TEACHER" ? "Guru BK" : user.role === "ADMIN" ? "Administrator" : "";
   }
@@ -36,7 +45,7 @@ export function toDisplayUser(user: MeUser): DisplayUser {
     id: user.id,
     email: user.email,
     name: user.name,
-    nickname: words[0] ?? user.name,
+    nickname: user.profile?.nickname?.trim() || words[0] || user.name,
     initials: initials.toUpperCase(),
     kelas,
     role: user.role,

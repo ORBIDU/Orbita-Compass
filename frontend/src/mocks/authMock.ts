@@ -1,7 +1,7 @@
 import type { LoginResponse, LoginUser, MeResponse, RegisterResponse } from "@/types/backend";
 import type { RegisterPayload } from "@/services/authService";
 import { ApiError } from "@/services/http";
-import { findAccountByEmail, insertAccount, mockTokenFor, type MockAccount } from "./db";
+import { EMPTY_PRACTICE, findAccountByEmail, insertAccount, mockTokenFor, type MockAccount } from "./db";
 import { buildProfileDetail, requireAccount } from "./studentMock";
 import { delay } from "./delay";
 
@@ -52,6 +52,8 @@ export async function mockRegister(payload: RegisterPayload): Promise<RegisterRe
       // Sama seperti backend: jurusan SMA tidak ditanya saat daftar, jadi
       // backend mengisi "IPA". Dicatat di docs/API_CONTRACT.md.
       majorTrack: payload.majorTrack ?? "IPA",
+      // Form Daftar tidak menanyakan nama panggilan; sapaan memakai kata pertama nama.
+      nickname: null,
       city: payload.city,
       targetPtnId: null,
       targetMajorId: null,
@@ -64,6 +66,8 @@ export async function mockRegister(payload: RegisterPayload): Promise<RegisterRe
     reflection: null,
     assessment: null,
     compassAnalysis: null,
+    studyPlan: null,
+    practice: EMPTY_PRACTICE,
     // Waktu dicatat server, bukan dikirim browser (lihat docs/API_CONTRACT.md bagian 2.4).
     parentConsentAt: payload.parentConsent ? now : null,
   };

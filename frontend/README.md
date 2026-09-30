@@ -61,7 +61,9 @@ src/
 │   ├── landing/        ← header, section beranda, carousel, footer, tombol konsultasi
 │   ├── mascot/         ← MascotFigure (SVG) dan MascotSlot (maskot hero interaktif)
 │   ├── jurusan/        ← kartu dan sampul jurusan
-│   ├── portal/         ← header, menu desktop, dropdown Persiapan, drawer HP
+│   ├── auth/           ← form Masuk & Daftar, AuthVideoSlot
+│   ├── dashboard/      ← hero dan kartu Dashboard (rencana, performa, Compass, timeline)
+│   ├── portal/         ← header, menu desktop, dropdown Persiapan, menu bawah HP
 │   └── dev/            ← panel Mode Demo
 ├── context/            ← AuthContext (login) dan StudentStatusContext (status siswa)
 ├── services/           ← SATU-SATUNYA pintu data; memilih mock atau backend

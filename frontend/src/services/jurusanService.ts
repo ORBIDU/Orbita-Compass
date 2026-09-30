@@ -1,5 +1,6 @@
 import type { BidangKey, CampusGroup, CampusOffering, FitLabel, JurusanDetail, JurusanSummary } from "@/types/jurusan";
-import type { MajorWithUniversity } from "@/types/backend";
+import type { CompassAnalysis, MajorWithUniversity } from "@/types/backend";
+import type { CompassHighlights } from "@/types/dashboard";
 import { FEATURED_SLUGS, JURUSAN_CATALOG } from "@/mocks/data/jurusan";
 import { delay } from "@/mocks/delay";
 import { BIDANG } from "@/config/bidang";
@@ -139,26 +140,53 @@ function parseRecommended(json: string): RecommendedMajor[] {
 }
 
 /**
- * Label kecocokan per slug jurusan, dari hasil Compass terakhir.
+ * Rekomendasi Compass yang cocok dengan katalog, berurutan sesuai Compass.
  * Nama jurusan di Compass (nama prodi backend, mis. "Teknik Informatika /
- * Ilmu Komputer") dicocokkan ke katalog lewat nama dan `ptn.names`.
+ * Ilmu Komputer") dicocokkan ke katalog lewat nama dan `ptn.names`. Kalau satu
+ * jurusan muncul dua kali, dipakai label yang lebih kuat.
+ */
+function matchRecommended(analysis: CompassAnalysis): { jurusan: JurusanDetail; fit: FitLabel }[] {
+  const found = new Map<string, { jurusan: JurusanDetail; fit: FitLabel }>();
+  for (const rec of parseRecommended(analysis.recommendedMajors)) {
+    if (!rec.name) continue;
+    const recName = normalize(rec.name);
+    const fit: FitLabel = (rec.match_pct ?? 0) >= STRONG_FIT_MIN ? "Sangat sesuai" : "Sesuai";
+    for (const j of JURUSAN_CATALOG) {
+      const aliases = [j.name, ...(j.ptn.names ?? [])].map(normalize);
+      if (!aliases.includes(recName)) continue;
+      const prev = found.get(j.slug);
+      if (!prev) found.set(j.slug, { jurusan: j, fit });
+      else if (fit === "Sangat sesuai") prev.fit = fit;
+    }
+  }
+  return [...found.values()];
+}
+
+/**
+ * Label kecocokan per slug jurusan, dari hasil Compass terakhir.
  * Belum pernah analisis → objek kosong (tidak ada label, tidak ada angka palsu).
  */
 export async function getFitLabels(): Promise<Record<string, FitLabel>> {
   const analysis = await getCompassResult();
   if (!analysis) return {};
+  return Object.fromEntries(matchRecommended(analysis).map(({ jurusan, fit }) => [jurusan.slug, fit]));
+}
 
-  const labels: Record<string, FitLabel> = {};
-  for (const rec of parseRecommended(analysis.recommendedMajors)) {
-    if (!rec.name) continue;
-    const recName = normalize(rec.name);
-    const label: FitLabel = (rec.match_pct ?? 0) >= STRONG_FIT_MIN ? "Sangat sesuai" : "Sesuai";
-    for (const j of JURUSAN_CATALOG) {
-      const aliases = [j.name, ...(j.ptn.names ?? [])].map(normalize);
-      if (!aliases.includes(recName)) continue;
-      // Kalau satu jurusan muncul dua kali, pakai label yang lebih kuat.
-      if (labels[j.slug] !== "Sangat sesuai") labels[j.slug] = label;
-    }
-  }
-  return labels;
+/**
+ * Ringkasan Compass untuk kartu Dashboard: bidang yang paling selaras (bidang
+ * jurusan rekomendasi teratas) dan `limit` jurusan teratas.
+ * Belum pernah analisis atau tidak ada yang cocok dengan katalog → null.
+ */
+export async function getCompassHighlights(limit = 3): Promise<CompassHighlights | null> {
+  const analysis = await getCompassResult();
+  if (!analysis) return null;
+  const matches = matchRecommended(analysis);
+  if (matches.length === 0) return null;
+  const top = matches[0];
+  return {
+    analyzedAt: analysis.analyzedAt,
+    bidang: top.jurusan.bidang,
+    bidangFit: top.fit,
+    jurusan: matches.slice(0, limit).map(({ jurusan, fit }) => ({ slug: jurusan.slug, name: jurusan.name, bidang: jurusan.bidang, fit })),
+  };
 }

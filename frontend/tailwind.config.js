@@ -41,6 +41,11 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      screens: {
+        // Header portal lengkap (ikon menu + nama akun) butuh ±1372px.
+        // Di bawah ini ikon dan nama disembunyikan supaya menu tetap satu baris.
+        nav: "1400px",
+      },
       colors: {
         ...brand,
         // Latar halaman portal (terang)
@@ -64,9 +69,9 @@ export default {
 
         // ── Landing & halaman publik (desain docs/design/landing) ──
         // Teks isi dan teks redup di latar terang
-        prose: { DEFAULT: "#4A5877", dim: "#6B7898" },
+        prose: { DEFAULT: "#4A5877", dim: "#6B7898", faint: "#9AA6C0" },
         // Garis dan border
-        rim: { DEFAULT: "#DCE4F2", strong: "#C9D5EA", dash: "#9DB6E3" },
+        rim: { DEFAULT: "#DCE4F2", strong: "#C9D5EA", dash: "#9DB6E3", soft: "#E3E9F3", faint: "#EEF2F8", box: "#B8C4DB" },
         // Latar section dan permukaan
         surface: {
           soft: "#F5F8FC",
@@ -94,7 +99,7 @@ export default {
           "amber-bg": "#FFF1CC", "amber-ink": "#8A5A00",
         },
         // Teks di latar navy (Final CTA dan footer)
-        night: { light: "#F4F7FF", sub: "#C8D4EE", text: "#A9B8D9", dim: "#8394BC", line: "rgba(169, 184, 217, 0.18)" },
+        night: { light: "#F4F7FF", sub: "#C8D4EE", text: "#A9B8D9", dim: "#8394BC", chip: "#DCE6FF", line: "rgba(169, 184, 217, 0.18)" },
         whatsapp: "#1FAF5A",
         mascot,
 
@@ -124,6 +129,13 @@ export default {
           "radial-gradient(620px 520px at 50% 46%, rgba(9,101,250,0.34), rgba(9,101,250,0) 70%), radial-gradient(360px 300px at 82% 82%, rgba(255,112,0,0.12), rgba(255,112,0,0) 70%), linear-gradient(180deg, #15234D 0%, #101A33 100%)",
         "auth-glow-sm":
           "radial-gradient(260px 200px at 50% 58%, rgba(9,101,250,0.38), rgba(9,101,250,0) 70%), linear-gradient(180deg, #15234D 0%, #101A33 100%)",
+        // Hero Dashboard portal: desktop dan HP (docs/design/portal)
+        "portal-hero":
+          "radial-gradient(520px 260px at 82% 50%, rgba(9,101,250,0.38), rgba(9,101,250,0) 70%), linear-gradient(120deg, #15234D 0%, #101A33 100%)",
+        "portal-hero-sm":
+          "radial-gradient(260px 200px at 90% 20%, rgba(9,101,250,0.4), rgba(9,101,250,0) 70%), linear-gradient(140deg, #15234D 0%, #101A33 100%)",
+        // Sorotan bidang di kartu ORBIDU Compass
+        "compass-soft": "linear-gradient(120deg, #EEF4FF, #E4F6FB)",
         // Piringan planet di belakang maskot
         planet: "radial-gradient(circle at 45% 40%, #22397A 0%, #15234D 55%, #0C1530 100%)",
       },
@@ -157,6 +169,8 @@ export default {
         planet: "0 40px 90px rgba(21, 35, 77, 0.30)",
         // Tombol mode aktif (Masuk/Daftar)
         tab: "0 4px 12px rgba(16, 26, 51, 0.10)",
+        // Menu bawah portal di HP
+        "nav-up": "0 -8px 24px rgba(16, 26, 51, 0.06)",
       },
       dropShadow: {
         // Bayangan maskot kecil (tombol konsultasi)

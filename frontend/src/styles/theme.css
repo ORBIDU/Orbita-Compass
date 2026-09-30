@@ -73,10 +73,11 @@
 }
 
 /*
- * Halaman publik (landing, /jurusan): cincin fokus kuning agar jelas terlihat
- * saat navigasi dengan keyboard, sesuai desain docs/design/landing.
+ * Halaman publik (landing, /jurusan, auth) dan portal: cincin fokus kuning
+ * agar jelas terlihat saat navigasi dengan keyboard, sesuai desain
+ * docs/design/landing dan docs/design/portal.
  */
-.public-site :is(a, button, input, [tabindex]):focus-visible {
+:is(.public-site, .portal-site) :is(a, button, input, [tabindex]):focus-visible {
   outline: 3px solid theme("colors.sun-2");
   outline-offset: 3px;
 }
