@@ -41,6 +41,7 @@ export const WHATSAPP_MESSAGES = {
   konsultasi: `Halo tim ${BRAND.name}, aku mau konsultasi soal jurusan dan persiapan kuliah.`,
   faq: `Halo tim ${BRAND.name}, aku punya pertanyaan tentang ${BRAND.name}.`,
   sekolah: `Halo tim ${BRAND.name}, saya ingin tahu cara menghadirkan ${BRAND.name} di sekolah kami.`,
+  lupaPassword: `Halo tim ${BRAND.name}, aku lupa password akunku. Boleh dibantu reset? Email akunku: `,
 } as const;
 
 export type WhatsAppTopic = keyof typeof WHATSAPP_MESSAGES;

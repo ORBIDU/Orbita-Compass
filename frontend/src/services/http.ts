@@ -57,7 +57,7 @@ const MESSAGE_ID: Record<string, string> = {
   "Invalid credentials": "Email atau password salah.",
   "Email and password are required": "Email dan password wajib diisi.",
   "Email, password, and name are required": "Nama, email, dan password wajib diisi.",
-  "User with this email already exists": "Email ini sudah terdaftar. Coba masuk.",
+  "User with this email already exists": "Email ini sudah terdaftar.",
   "Access token required": "Sesi kamu sudah berakhir. Silakan masuk lagi.",
   "Invalid or expired token": "Sesi kamu sudah berakhir. Silakan masuk lagi.",
   "Profile not found": "Profil siswa belum ada.",

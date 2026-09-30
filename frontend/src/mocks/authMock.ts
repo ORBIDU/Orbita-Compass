@@ -31,7 +31,7 @@ export async function mockRegister(payload: RegisterPayload): Promise<RegisterRe
   if (!payload.email || !payload.password || !payload.name) {
     throw new ApiError(400, "Nama, email, dan password wajib diisi.");
   }
-  if (findAccountByEmail(payload.email)) throw new ApiError(409, "Email ini sudah terdaftar. Coba masuk.");
+  if (findAccountByEmail(payload.email)) throw new ApiError(409, "Email ini sudah terdaftar.");
 
   const now = new Date().toISOString();
   const id = `user-${Date.now().toString(36)}`;
@@ -64,6 +64,8 @@ export async function mockRegister(payload: RegisterPayload): Promise<RegisterRe
     reflection: null,
     assessment: null,
     compassAnalysis: null,
+    // Waktu dicatat server, bukan dikirim browser (lihat docs/API_CONTRACT.md bagian 2.4).
+    parentConsentAt: payload.parentConsent ? now : null,
   };
   insertAccount(account);
   return { message: "Registration successful", token: mockTokenFor(id), user: toLoginUser(account) };

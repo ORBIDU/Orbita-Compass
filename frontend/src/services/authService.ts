@@ -17,6 +17,13 @@ export interface RegisterPayload {
   grade: number;
   city: string;
   majorTrack?: string;
+  /**
+   * Siswa dan orang tua/wali menyetujui Syarat & Ketentuan dan Kebijakan
+   * Privasi. Backend belum menyimpannya (field tak dikenal diabaikan), tetapi
+   * tetap dikirim supaya langsung tersimpan begitu backend mendukungnya.
+   * Lihat docs/API_CONTRACT.md bagian 2.4.
+   */
+  parentConsent: boolean;
 }
 
 export async function login(email: string, password: string): Promise<LoginResponse> {
@@ -36,6 +43,7 @@ export async function register(payload: RegisterPayload): Promise<RegisterRespon
     schoolName: payload.schoolName,
     grade: payload.grade,
     city: payload.city,
+    parentConsent: payload.parentConsent,
     ...(payload.majorTrack ? { majorTrack: payload.majorTrack } : {}),
   };
   const data = USE_MOCK

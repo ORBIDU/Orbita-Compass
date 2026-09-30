@@ -59,12 +59,18 @@ Acuan desain detail: `docs/design/landing/Jurusan-Detail.dc.html` (desktop).
 - Data: backend belum punya katalog per nama jurusan beserta deskripsi, mapel pendukung, dan prospek karier, juga belum punya data PTS dan PTLN → dummy + catat di `docs/API_CONTRACT.md`.
 
 ## 3. Masuk & Daftar (`/masuk`, `/daftar`)
-- Desktop: kiri 65% berisi komponen `AuthAnimationSlot` (tempat animasi buatan tim, sementara placeholder bertema navy), kanan 35% berisi form. Berpindah Masuk ↔ Daftar tanpa reload.
-- HP: animasi menjadi banner pendek di atas form.
-- Masuk: email, password, lupa password (tampilan saja dulu).
-- Daftar: nama lengkap, email, password, nama sekolah, kelas (10–12), kota. Jangan kirim field role.
-- Setelah berhasil → `/portal`. Kalau status `baru`, arahkan ke Analisis Potensi dengan sambutan singkat.
-- Validasi form dan pesan error berbahasa Indonesia.
+Acuan desain: `docs/design/auth/Auth-Desktop.dc.html` (1440px) dan `Auth-Mobile.dc.html` (390px). `Brief-Animasi.dc.html` hanya untuk tim animasi. Teks disimpan di `frontend/src/content/auth.ts`.
+- Satu halaman (`AuthPage`) untuk dua route. Tombol **Masuk | Daftar** di atas form dan link di bawah form mengganti URL antara `/masuk` dan `/daftar` tanpa reload. Halaman asal (dari `RequireAuth`) ikut terbawa, jadi setelah login siswa kembali ke halaman yang tadi dibuka.
+- **Desktop (≥1024px)**: kiri 65% berisi `AuthVideoSlot` setinggi layar (logo ke beranda di kiri atas, "Hi, Bifriends! / Setiap siswa punya orbitnya sendiri." di kiri bawah), kanan 35% berisi form.
+- **HP dan tablet**: `AuthVideoSlot` menjadi banner 240px di atas form, dengan tombol kembali ke beranda dan logo. Lebar form dibatasi 440px.
+- **`AuthVideoSlot`**: video autoplay, muted, loop, playsInline, object-fit cover, dengan poster. Path video dan poster (versi desktop dan HP) diatur di `frontend/src/config/authMedia.ts`. Selama file belum ada, tampil ilustrasi maskot, orbit, dan bintang dari desain. Jika `prefers-reduced-motion`, video tidak diputar: yang tampil poster (atau ilustrasi diam). Video gagal dimuat → poster/ilustrasi. Hanya satu versi video yang dipasang sesuai lebar layar.
+- **Masuk**: email dan password (bisa ditampilkan/disembunyikan). "Lupa password?" membuka info bahwa reset password sementara dilakukan lewat WhatsApp ORBIDU (link dari `brand.ts`).
+- **Daftar**: nama lengkap, email, password (minimal 8 karakter), nama sekolah, kelas (tombol 10/11/12), kota, dan kotak persetujuan orang tua/wali yang wajib dicentang. Body sama dengan `POST /auth/register` (`name, email, password, schoolName, grade, city`) ditambah `parentConsent`. Field `role` tidak pernah dikirim.
+- **Validasi**: pesan per field di bawah input dan fokus pindah ke field salah paling atas. Error dari server tampil di banner merah `role="alert"` ("Email atau password salah.", "Email ini sudah terdaftar.") dan input email diberi border merah. Tombol kirim menampilkan status loading dan tidak bisa diklik dua kali.
+- **Aksesibilitas**: label di setiap input, autocomplete (`name`, `email`, `current-password`, `new-password`), `aria-pressed` di tombol mode dan tombol kelas, cincin fokus kuning.
+- Setelah berhasil → `/portal` (atau halaman asal). Kalau status `baru` (termasuk akun yang baru daftar), langsung ke Analisis Potensi.
+- Tombol konsultasi tidak tampil di halaman ini.
+- Data: backend belum menyimpan persetujuan orang tua/wali dan belum punya reset password → dicatat di `docs/API_CONTRACT.md` bagian 2.4 dan 2.5.
 
 ## 4. Kerangka portal
 - Header: logo + "Student Portal", notifikasi, menu akun (nama, kelas, Profil, Keluar).
@@ -163,10 +169,16 @@ Field bertanda 🔒 diisi admin dan hanya bisa dibaca, dengan catatan "Hubungi w
 - [x] Fase 0 — Audit frontend (tanpa mengubah kode)
 - [x] Fase 1 — Fondasi: design token, lapisan services + mocks + saklar dummy, status siswa + Mode Demo, routing, kerangka portal, API_CONTRACT.md awal
 - [x] Fase 2 — Landing + Explore Jurusan
-- [ ] Fase 3 — Masuk & Daftar
+- [x] Fase 3 — Masuk & Daftar
 - [ ] Fase 4 — Dashboard + Analisis Potensi
 - [ ] Fase 5 — ORBIDU Compass + Explore Beasiswa
 - [ ] Fase 6 — Action Plan
 - [ ] Fase 7 — Persiapan
 - [ ] Fase 8 — Profil
 - [ ] Fase 9 — Finishing: cek tampilan HP, empty state, konsistensi angka antarhalaman, rapikan API_CONTRACT.md
+
+## Sebelum rilis
+Hal yang sengaja ditunda dan wajib dibereskan sebelum ORBIDU dipakai siswa:
+- Halaman **Syarat & Ketentuan** dan **Kebijakan Privasi** wajib dibuat. Setelah itu, teks keduanya di kotak persetujuan form Daftar (`AUTH_FIELDS.consent` di `frontend/src/content/auth.ts`, sekarang teks tebal biasa) diubah menjadi link.
+- Nomor WhatsApp, email, Instagram, dan LinkedIn bertanda "BELUM DIPASTIKAN" di `frontend/src/config/brand.ts` wajib dicek (dipakai juga oleh "Lupa password?").
+- Backend menyimpan persetujuan orang tua/wali beserta waktunya (`docs/API_CONTRACT.md` bagian 2.4).

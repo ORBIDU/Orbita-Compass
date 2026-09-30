@@ -105,6 +105,27 @@ Dibutuhkan oleh `/portal/profil` (SPEK bagian 11) dan sapaan Dashboard.
 - Field 🔒 hanya boleh diubah admin. `PUT /profile` dari siswa harus mengabaikannya.
 - **Alasan:** SPEK memisahkan data yang diisi sekolah (terkunci) dan data yang diisi siswa.
 
+### 2.4 Persetujuan orang tua/wali saat daftar 🔴
+Form Daftar (Fase 3) mewajibkan kotak "Aku dan orang tua/wali setuju dengan Syarat & Ketentuan serta Kebijakan Privasi ORBIDU." Pengguna ORBIDU siswa SMA yang sebagian besar belum dewasa, jadi persetujuan ini perlu bisa dibuktikan.
+
+- Frontend **sudah mengirim** `parentConsent: true` di body `POST /auth/register`. Backend saat ini mengabaikannya (tidak disimpan, tidak divalidasi).
+- **Dibutuhkan:**
+  - `POST /auth/register` menolak pendaftaran siswa jika `parentConsent` bukan `true` → `400 { "error": "Parent consent is required", "code": "PARENT_CONSENT_REQUIRED" }`.
+  - Simpan di tabel `User` atau `StudentProfile`:
+    ```jsonc
+    {
+      "parentConsent": true,
+      "parentConsentAt": "2026-09-30T07:36:06.154Z",  // diisi SERVER saat register, bukan dikirim browser
+      "termsVersion": "2026-09"                       // opsional: versi S&K yang disetujui
+    }
+    ```
+  - `GET /auth/me` ikut mengirim `parentConsent` dan `parentConsentAt`.
+- **Mode dummy** mencatat `parentConsentAt` (waktu daftar) di akun dummy.
+
+### 2.5 Reset password 🔴
+- Belum ada endpoint lupa/reset password. Sementara, "Lupa password?" di halaman Masuk mengarahkan ke WhatsApp ORBIDU dan tim mereset manual.
+- **Usulan:** `POST /auth/forgot-password` `{ "email": "..." }` → selalu `200` (tidak membocorkan email terdaftar atau tidak), lalu `POST /auth/reset-password` `{ "token": "...", "password": "..." }` dengan token sekali pakai yang kedaluwarsa.
+
 ---
 
 ## 3. Status siswa dan riwayat asesmen

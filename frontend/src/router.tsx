@@ -16,8 +16,7 @@ import {
   SiapSnbpRoute,
 } from "@/routes/legacyRoutes";
 
-const MasukPage = lazy(() => import("@/app/MasukPage"));
-const DaftarPage = lazy(() => import("@/app/DaftarPage"));
+const AuthPage = lazy(() => import("@/app/AuthPage"));
 const BeasiswaPage = lazy(() => import("@/app/BeasiswaPage"));
 const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
 const JurusanListPage = lazy(() => import("@/app/JurusanListPage"));
@@ -45,8 +44,9 @@ export const router = createBrowserRouter([
       {
         element: <AuthLayout />,
         children: [
-          { path: "/masuk", element: <MasukPage /> },
-          { path: "/daftar", element: <DaftarPage /> },
+          // Satu komponen untuk dua mode: berpindah Masuk ↔ Daftar tanpa reload.
+          { path: "/masuk", element: <AuthPage mode="masuk" /> },
+          { path: "/daftar", element: <AuthPage mode="daftar" /> },
         ],
       },
     ],
