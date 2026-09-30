@@ -16,6 +16,10 @@ export const MOCK_UNIVERSITIES: University[] = [
   { id: "univ-909", code: "909", name: "UIN Syarif Hidayatullah Jakarta", city: "Tangerang Selatan", type: "PTKIN", accreditation: "Unggul", logoUrl: null },
   { id: "univ-ptk-01", code: "PTK-01", name: "PKN STAN (Politeknik Keuangan Negara STAN)", city: "Tangerang Selatan", type: "PTK Kedinasan", accreditation: "Unggul", logoUrl: null },
   { id: "univ-ptk-03", code: "PTK-03", name: "Politeknik Statistika STIS (BPS)", city: "Jakarta Timur", type: "PTK Kedinasan", accreditation: "Unggul", logoUrl: null },
+  // PTS: backend belum punya datanya (hanya tipe "PTS" di skema). Contoh untuk filter jenis kampus.
+  { id: "univ-pts-01", code: "PTS-01", name: "BINUS University", city: "Jakarta Barat", type: "PTS", accreditation: "Unggul", logoUrl: null },
+  { id: "univ-pts-02", code: "PTS-02", name: "Universitas Telkom", city: "Bandung", type: "PTS", accreditation: "Unggul", logoUrl: null },
+  { id: "univ-pts-03", code: "PTS-03", name: "Universitas Ciputra", city: "Surabaya", type: "PTS", accreditation: "Unggul", logoUrl: null },
 ];
 
 interface ProgramTemplate {
@@ -55,8 +59,8 @@ const KEDINASAN_PROGRAMS: Record<string, ProgramTemplate[]> = {
 const TOP_TIER = ["311", "332", "361", "382"];
 
 function buildMajor(univ: University, prog: ProgramTemplate): Major {
-  if (prog.category === "Kedinasan") {
-    // Kedinasan tidak lewat SNBP/SNBT, seluruh kuota masuk jalur sekolah.
+  // Kedinasan dan PTS tidak lewat SNBP/SNBT, seluruh kuota masuk jalur mandiri.
+  if (prog.category === "Kedinasan" || univ.type === "PTS") {
     return {
       id: `major-${univ.code}-${prog.slug}`,
       universityId: univ.id,
@@ -90,6 +94,7 @@ function buildMajor(univ: University, prog: ProgramTemplate): Major {
 
 function programsFor(univ: University): ProgramTemplate[] {
   if (univ.type === "PTK Kedinasan") return KEDINASAN_PROGRAMS[univ.code] ?? [];
+  if (univ.type === "PTS") return PROGRAMS.filter((p) => p.slug !== "kedokteran");
   // Sama seperti seed backend: politeknik hanya membuka prodi teknik & manajemen.
   if (univ.type === "PTN Vokasi") {
     return PROGRAMS.filter((p) => p.name.includes("Teknik") || p.name.includes("Manajemen"));

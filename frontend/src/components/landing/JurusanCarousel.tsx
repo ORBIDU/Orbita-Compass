@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import type { JurusanSummary } from "@/types/jurusan";
+import type { FitLabel, JurusanSummary } from "@/types/jurusan";
 import { JURUSAN_SECTION } from "@/content/landing";
 import JurusanCard from "@/components/jurusan/JurusanCard";
 
@@ -35,7 +35,7 @@ function layoutFor(width: number): Layout {
   return { cardWidth: Math.min(290, width * 0.78), gap, step: 1 };
 }
 
-export default function JurusanCarousel({ items }: { items: JurusanSummary[] }) {
+export default function JurusanCarousel({ items, fit = {} }: { items: JurusanSummary[]; fit?: Record<string, FitLabel> }) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [index, setIndex] = useState(0);
@@ -111,6 +111,7 @@ export default function JurusanCarousel({ items }: { items: JurusanSummary[] }) 
               <JurusanCard
                 jurusan={j}
                 photoPlaceholder={JURUSAN_SECTION.photoPlaceholder}
+                fit={fit[j.slug]}
                 draggable={false}
                 className="w-full"
                 // Kartu yang difokus lewat keyboard digeser ke dalam tampilan.

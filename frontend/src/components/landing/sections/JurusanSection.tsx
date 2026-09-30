@@ -5,6 +5,7 @@ import { ROUTES } from "@/config/navigation";
 import { getFeaturedJurusan } from "@/services/jurusanService";
 import type { JurusanSummary } from "@/types/jurusan";
 import JurusanCarousel from "../JurusanCarousel";
+import { useJurusanFit } from "@/components/jurusan/useJurusanFit";
 import { CONTAINER, H2, Lead, SECTION_Y, StepChip } from "../primitives";
 
 const MORE_BTN =
@@ -13,6 +14,7 @@ const MORE_BTN =
 export default function JurusanSection() {
   const [items, setItems] = useState<JurusanSummary[] | null>(null);
   const [failed, setFailed] = useState(false);
+  const fit = useJurusanFit();
 
   useEffect(() => {
     let active = true;
@@ -41,7 +43,7 @@ export default function JurusanSection() {
         {/* Di HP, carousel melebar sampai tepi kanan layar supaya kartu berikutnya mengintip. */}
         <div className="-mr-5 sm:-mr-8 lg:mr-0">
           {items && items.length > 0 ? (
-            <JurusanCarousel items={items} />
+            <JurusanCarousel items={items} fit={fit} />
           ) : failed ? (
             <p className="py-10 text-center text-sm text-prose">{JURUSAN_SECTION.empty}</p>
           ) : (

@@ -23,7 +23,6 @@ const InformasiPribadiPage = lazy(() =>
   import("@/app/StudentProfiling").then((m) => ({ default: m.InformasiPribadiPage })),
 );
 const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
-export const JurusanPage = lazy(() => import("@/app/JurusanPage"));
 
 /** Beranda baru (Fase 2) tidak butuh prop apa pun. */
 export function LandingRoute() {

@@ -8,6 +8,7 @@ import type {
   StudentProfile,
 } from "@/types/backend";
 import type { StudentStatus } from "@/types/student";
+import { simulateCompass } from "./compassEngine";
 
 // "Database" dummy untuk mode VITE_USE_MOCK=true. Disimpan di localStorage
 // supaya login dan perubahan data tetap ada setelah halaman di-refresh.
@@ -41,7 +42,8 @@ interface MockDb {
 
 const STORAGE_KEY = "orbita_mock_db";
 // Naikkan angka ini jika bentuk data dummy berubah, supaya data lama diganti.
-const DB_VERSION = 1;
+// v2 (Tahap 2B): akun demo langsung punya hasil Compass + kampus PTS contoh.
+const DB_VERSION = 2;
 
 const SEED_DATE = "2026-07-01T08:00:00.000Z";
 
@@ -154,6 +156,19 @@ function seed(): MockDb {
     },
     compassAnalysis: null,
   };
+
+  // Akun demo yang sudah asesmen dianggap sudah pernah membuka Compass,
+  // supaya label kecocokan di kartu jurusan bisa langsung dicoba.
+  for (const account of [siswa, budi]) {
+    if (account.assessment && account.profile) {
+      account.compassAnalysis = simulateCompass(
+        account.assessment,
+        account.academicRecords.map((r) => r.score),
+        account.achievements.length,
+        account.profile.id,
+      );
+    }
+  }
 
   return { version: DB_VERSION, accounts: [siswa, budi] };
 }
