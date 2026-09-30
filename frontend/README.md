@@ -1,6 +1,6 @@
-# ORBITA Frontend
+# ORBIDU Frontend
 
-Aplikasi web siswa ORBITA: React 19 + Vite + Tailwind CSS + React Router.
+Aplikasi web siswa ORBIDU: React 19 + Vite + Tailwind CSS + React Router.
 Spesifikasi halaman ada di `../docs/SPEK_SISWA.md`, panduan kerja di `../CLAUDE.md`.
 
 ## Menjalankan
@@ -52,11 +52,15 @@ Akun demo (sama di mode dummy dan di seed backend), password `password123`:
 src/
 ├── main.tsx            ← titik awal: provider login/status + router
 ├── router.tsx          ← peta semua URL
-├── config/navigation.ts← daftar URL dan menu portal
+├── config/            ← brand.ts (nama, tagline, kontak), navigation.ts (URL & menu), bidang.ts
+├── content/           ← teks halaman statis (beranda, FAQ)
 ├── layouts/            ← kerangka halaman (portal, publik, auth)
 ├── routes/             ← penjaga halaman (wajib login, gembok status) + pembungkus halaman lama
 ├── components/
 │   ├── ui/             ← komponen dasar: Button, Card, EmptyState, LockedOverlay, FormField, Logo
+│   ├── landing/        ← header, section beranda, carousel, footer, tombol konsultasi
+│   ├── mascot/         ← MascotFigure (SVG) dan MascotSlot (maskot hero interaktif)
+│   ├── jurusan/        ← kartu dan sampul jurusan
 │   ├── portal/         ← header, menu desktop, dropdown Persiapan, drawer HP
 │   └── dev/            ← panel Mode Demo
 ├── context/            ← AuthContext (login) dan StudentStatusContext (status siswa)

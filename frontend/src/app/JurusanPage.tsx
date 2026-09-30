@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ArrowLeft, Heart, Search, Sparkles, ChevronRight, Check, X } from "lucide-react";
+import { BRAND } from "@/config/brand";
 
 const PP = "Poppins, sans-serif";
 const BLUE = "#0965fa";
@@ -1134,7 +1135,7 @@ export default function JurusanPage() {
             {!ptnSearch && activeKat === "Semua" && (
               <div>
                 <div className="flex items-center gap-2 mb-1"><Sparkles size={15} className="text-[#0965fa]"/><p className="text-[16px] font-black text-[#1a1d2e]" style={{fontFamily:PP}}>Rekomendasi Untukmu</p></div>
-                <p className="text-[11px] text-[#9ca3af] mb-4" style={{fontFamily:PP}}>Berdasarkan Orbita Compass, Data Akademik, dan Student Profiling.</p>
+                <p className="text-[11px] text-[#9ca3af] mb-4" style={{fontFamily:PP}}>Berdasarkan {BRAND.compassName}, Data Akademik, dan Student Profiling.</p>
                 <div className="flex gap-4 overflow-x-auto pb-2">
                   {AI_RECS_PTN.map((j,idx) => (
                     <div key={j.key} onClick={() => openPtnDetail(j)}

@@ -25,15 +25,9 @@ const InformasiPribadiPage = lazy(() =>
 const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
 export const JurusanPage = lazy(() => import("@/app/JurusanPage"));
 
+/** Beranda baru (Fase 2) tidak butuh prop apa pun. */
 export function LandingRoute() {
-  const navigate = useNavigate();
-  const { status } = useAuth();
-  return (
-    <LandingPage
-      onMasuk={() => navigate(status === "authenticated" ? ROUTES.portal : ROUTES.masuk)}
-      onDaftar={() => navigate(ROUTES.daftar)}
-    />
-  );
+  return <LandingPage />;
 }
 
 export function DashboardRoute() {

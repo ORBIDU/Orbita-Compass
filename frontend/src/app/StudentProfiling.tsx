@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, Radar } from "recharts";
 import NilaiRaporPage from "./RaporPage";
+import { BRAND } from "@/config/brand";
 
 // Halaman Analisis Potensi (tab Minat Bakat, Prestasi, Nilai Rapor) dan
 // Informasi Pribadi, dipindahkan apa adanya dari App.tsx lama di Fase 1.
@@ -486,7 +487,7 @@ function AIProcessingView({ onComplete }: { onComplete: () => void }) {
         <p className="text-[14px] text-[#6b7280]" style={{ fontFamily: PP }}>{stepMsg}</p>
       </div>
       <div className="bg-[#1a1d2e] rounded-2xl px-8 py-5 w-full max-w-md">
-        <p className="text-[#00b2dd] text-[13px] font-mono mb-3 tracking-wide">ORBITA AI · NLP Analysis</p>
+        <p className="text-[#00b2dd] text-[13px] font-mono mb-3 tracking-wide">{BRAND.name} AI · NLP Analysis</p>
         <p className="text-[#f0f2f8] text-[18px] font-mono tracking-wider mb-2">{bar} {progress}%</p>
         <p className="text-[#6b7280] text-[11px] font-mono">{stepMsg}</p>
       </div>
@@ -843,7 +844,7 @@ function ConfidenceScoreCard({ state, onStateChange }: { state: ConfidenceState;
 // HOW AI KNOWS YOU
 // ═══════════════════════════════════════════════════════════════════════════════
 const HOW_NODES = [
-  { id: "orbita", emoji: "🧠", label: "ORBITA AI", sub: "Core Analysis Engine", color: "#0965fa", explanation: null },
+  { id: "orbita", emoji: "🧠", label: `${BRAND.name} AI`, sub: "Core Analysis Engine", color: "#0965fa", explanation: null },
   { id: "tes", emoji: "🎯", label: "Tes Minat Bakat", sub: "78% kontribusi", color: "#00b2dd", explanation: "78% dari rekomendasi ini dipengaruhi oleh hasil Tes Minat Bakat. Data psikometri objektif dari lembaga mitra mengonfirmasi kecenderungan minat pada bidang Technology dan Research secara terstruktur." },
   { id: "refleksi", emoji: "📝", label: "Refleksi Diri", sub: "22% kontribusi", color: "#8b5cf6", explanation: "22% dari rekomendasi ini dipengaruhi oleh hasil refleksi diri. Jawabanmu menunjukkan motivasi kuat pada problem solving, eksplorasi teknologi, dan tujuan masa depan yang spesifik." },
   { id: "analysis", emoji: "⚙️", label: "AI Analysis", sub: "NLP + Similarity", color: "#f1ad00", explanation: "AI memproses kedua sumber data menggunakan NLP analysis dan menghitung similarity score antar dimensi untuk menghasilkan rekomendasi yang objektif dan personal." },

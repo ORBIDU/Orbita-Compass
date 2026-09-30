@@ -3,6 +3,7 @@ import { ROUTES } from "@/config/navigation";
 import { ButtonLink } from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import EmptyState from "@/components/ui/EmptyState";
+import { BRAND } from "@/config/brand";
 
 /** Kerangka sementara. Halaman lengkap dikerjakan di Fase 5. */
 export default function BeasiswaPage() {
@@ -15,10 +16,10 @@ export default function BeasiswaPage() {
           <EmptyState
             icon={GraduationCap}
             title="Daftar beasiswa sedang disiapkan"
-            description="Sementara itu, lihat dulu rekomendasi jurusan dan jalurmu di Orbita Compass."
+            description={`Sementara itu, lihat dulu rekomendasi jurusan dan jalurmu di ${BRAND.compassName}.`}
             action={
               <ButtonLink to={ROUTES.compass} variant="primary">
-                Buka Orbita Compass
+                Buka {BRAND.compassName}
               </ButtonLink>
             }
           />

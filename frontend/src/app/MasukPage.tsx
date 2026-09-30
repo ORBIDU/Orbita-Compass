@@ -8,6 +8,7 @@ import { ROUTES } from "@/config/navigation";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { TextField } from "@/components/ui/FormField";
+import { BRAND } from "@/config/brand";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -46,7 +47,7 @@ export default function MasukPage() {
 
   return (
     <Card padding="lg">
-      <h1 className="text-xl font-bold text-ink">Masuk ke ORBITA</h1>
+      <h1 className="text-xl font-bold text-ink">Masuk ke {BRAND.name}</h1>
       <p className="mt-1 text-sm text-ink-muted">Lanjutkan perjalanan menuju jurusan impianmu.</p>
 
       {sessionError && !formError && (

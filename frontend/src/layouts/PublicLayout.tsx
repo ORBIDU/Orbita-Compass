@@ -1,37 +1,28 @@
 import { Suspense } from "react";
-import { Link, Outlet } from "react-router-dom";
-import { ROUTES } from "@/config/navigation";
-import Logo from "@/components/ui/Logo";
-import { ButtonLink } from "@/components/ui/Button";
+import { Outlet } from "react-router-dom";
+import LandingHeader from "@/components/landing/LandingHeader";
+import ConsultButton from "@/components/landing/ConsultButton";
+import { CONTAINER } from "@/components/landing/primitives";
 import PageLoader from "@/components/ui/PageLoader";
 
 /**
- * Kerangka halaman publik selain landing (mis. /jurusan saat belum login):
- * logo di kiri, tombol Masuk dan Daftar di kanan.
+ * Kerangka halaman publik selain beranda (mis. /jurusan saat belum login):
+ * header yang sama dengan beranda (logo, Daftar, Masuk) dan tombol konsultasi.
  */
 export default function PublicLayout() {
   return (
-    <div className="flex h-dvh flex-col overflow-hidden bg-page">
-      <header className="z-40 shrink-0 bg-white shadow-card">
-        <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-3 px-4 py-3 sm:px-6">
-          <Link to={ROUTES.landing} aria-label="ORBITA, ke beranda">
-            <Logo size="sm" />
-          </Link>
-          <div className="flex items-center gap-2">
-            <ButtonLink to={ROUTES.masuk} variant="ghost" size="sm">
-              Masuk
-            </ButtonLink>
-            <ButtonLink to={ROUTES.daftar} variant="cta" size="sm">
-              Daftar
-            </ButtonLink>
-          </div>
+    <div className="public-site flex h-dvh flex-col overflow-hidden bg-page">
+      <div className="z-30 shrink-0 border-b border-rim bg-white">
+        <div className={CONTAINER}>
+          <LandingHeader />
         </div>
-      </header>
+      </div>
       <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
         <Suspense fallback={<PageLoader />}>
           <Outlet />
         </Suspense>
       </main>
+      <ConsultButton />
     </div>
   );
 }

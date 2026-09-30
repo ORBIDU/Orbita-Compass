@@ -142,7 +142,7 @@ Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
 
 | Kebutuhan | Fase | Status |
 |---|---|---|
-| Deskripsi prodi, mapel pendukung, prospek karier | 2 | 🔴 |
+| Katalog jurusan per **nama jurusan** (bukan per kampus) dengan `slug`, bidang, deskripsi, `imageUrl`, mapel pendukung, prospek karier. Sementara frontend memakai `mocks/data/jurusan.ts` di mode dummy maupun backend (`services/jurusanService.ts`). Bentuk final ditulis di Tahap 2B. | 2 | 🔴 |
 | Prestasi: ubah, field peringkat/penyelenggara, upload sertifikat | 4 | 🔴 |
 | Hasil Compass sungguhan (sekarang selalu jawaban cadangan, lihat `BACKEND_MAP.md` poin 10) | 5 | 🟡 |
 | Data beasiswa (daftar, filter, detail) | 5 | 🔴 |
