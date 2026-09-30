@@ -97,6 +97,14 @@ export default {
         night: { light: "#F4F7FF", sub: "#C8D4EE", text: "#A9B8D9", dim: "#8394BC", line: "rgba(169, 184, 217, 0.18)" },
         whatsapp: "#1FAF5A",
         mascot,
+
+        // ── Masuk & Daftar (desain docs/design/auth) ──
+        // Input form: latar, border, placeholder, dan latar tombol pilih mode
+        field: { bg: "#F8FAFD", rim: "#D5DEEE", hint: "#8A96B2", track: "#F0F4FA" },
+        // Banner error dan border input yang salah
+        alert: { bg: "#FDECEC", fg: "#B42318", rim: "#D92D20" },
+        // Sapaan font aksen di panel navy auth
+        "night-accent": "#FF8A1F",
       },
       backgroundImage: {
         "gradient-navy": gradient(brand["space-1"], brand["space-2"]),
@@ -111,6 +119,11 @@ export default {
         // Latar Final CTA + footer
         "night-glow":
           "radial-gradient(760px 460px at 50% 12%, rgba(9,101,250,0.30), rgba(9,101,250,0) 70%), linear-gradient(180deg, #15234D 0%, #101A33 100%)",
+        // Panel video auth: desktop (kiri 65%) dan banner HP
+        "auth-glow":
+          "radial-gradient(620px 520px at 50% 46%, rgba(9,101,250,0.34), rgba(9,101,250,0) 70%), radial-gradient(360px 300px at 82% 82%, rgba(255,112,0,0.12), rgba(255,112,0,0) 70%), linear-gradient(180deg, #15234D 0%, #101A33 100%)",
+        "auth-glow-sm":
+          "radial-gradient(260px 200px at 50% 58%, rgba(9,101,250,0.38), rgba(9,101,250,0) 70%), linear-gradient(180deg, #15234D 0%, #101A33 100%)",
         // Piringan planet di belakang maskot
         planet: "radial-gradient(circle at 45% 40%, #22397A 0%, #15234D 55%, #0C1530 100%)",
       },
@@ -142,15 +155,15 @@ export default {
         bubble: "0 12px 30px rgba(16, 26, 51, 0.16)",
         sun: "0 14px 30px rgba(255, 112, 0, 0.25)",
         planet: "0 40px 90px rgba(21, 35, 77, 0.30)",
+        // Tombol mode aktif (Masuk/Daftar)
+        tab: "0 4px 12px rgba(16, 26, 51, 0.10)",
       },
       dropShadow: {
         // Bayangan maskot kecil (tombol konsultasi)
         mascot: "0 10px 14px rgba(16, 26, 51, 0.22)",
       },
-      // Animasi berikut belum dipakai halaman mana pun. Disimpan sebagai bahan
-      // AuthAnimationSlot (Fase 3); hapus jika ternyata tidak dipakai.
       keyframes: {
-        // Animasi landing (mati otomatis lewat motion-safe / prefers-reduced-motion)
+        // Animasi landing dan auth (mati otomatis lewat motion-safe / prefers-reduced-motion)
         "ob-float": { "0%, 100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-12px)" } },
         "ob-blink": { "0%, 92%, 100%": { transform: "scaleY(1)" }, "94%": { transform: "scaleY(0.08)" }, "96%": { transform: "scaleY(1)" } },
         "ob-flow": { to: { strokeDashoffset: "-480" } },
@@ -162,57 +175,6 @@ export default {
           "30%": { transform: "translateY(0)" },
           "40%": { transform: "translateY(-7px)" },
         },
-        launchFade: {
-          '0%, 20%': { opacity: '1' },
-          '28%': { opacity: '0' },
-          '96%, 100%': { opacity: '0' },
-        },
-        portalGrow: {
-          '0%, 16%': { width: '10px', height: '10px', opacity: '0' },
-          '24%': { width: '180px', height: '180px', opacity: '1' },
-          '32%, 100%': { width: '10px', height: '10px', opacity: '0' },
-        },
-        lidTop: {
-          '0%, 26%': { transform: 'translateY(-100%)' },
-          '29%': { transform: 'translateY(0%)' },
-          '42%, 100%': { transform: 'translateY(-100%)' },
-        },
-        lidBottom: {
-          '0%, 26%': { transform: 'translateY(100%)' },
-          '29%': { transform: 'translateY(0%)' },
-          '42%, 100%': { transform: 'translateY(100%)' },
-        },
-        galaxyFade: {
-          '0%, 27%': { opacity: '0' },
-          '32%, 90%': { opacity: '1' },
-          '100%': { opacity: '0' },
-        },
-        windFade: {
-          '0%, 44%': { opacity: '0' },
-          '48%, 60%': { opacity: '1' },
-          '64%, 100%': { opacity: '0' },
-        },
-        logoFade: {
-          '0%, 56%': { opacity: '0', transform: 'scale(0.85)' },
-          '62%, 84%': { opacity: '1', transform: 'scale(1)' },
-          '90%, 100%': { opacity: '0', transform: 'scale(1.05)' },
-        },
-        wipeAcross: {
-          '0%, 88%': { transform: 'translateX(-100%)' },
-          '98%, 100%': { transform: 'translateX(0%)' },
-        },
-        flamePulse: {
-          '0%': { transform: 'scale(0.8)', opacity: '0.7' },
-          '100%': { transform: 'scale(1.2)', opacity: '1' },
-        },
-        streakUp: {
-          '0%': { transform: 'translateY(0)' },
-          '100%': { transform: 'translateY(-160vh)' },
-        },
-        ringSpin: {
-          '0%': { transform: 'translate(-50%, -50%) rotate(0deg)' },
-          '100%': { transform: 'translate(-50%, -50%) rotate(360deg)' },
-        },
       },
       animation: {
         "ob-float": "ob-float 6s ease-in-out infinite",
@@ -221,17 +183,6 @@ export default {
         "ob-twinkle": "ob-twinkle 4.2s ease-in-out infinite",
         "ob-bob": "ob-bob 7s ease-in-out infinite",
         "ob-hop": "ob-hop 2.6s ease-in-out infinite",
-        launchFade: 'launchFade 20s linear infinite',
-        portalGrow: 'portalGrow 20s ease-in-out infinite',
-        lidTop: 'lidTop 20s ease-in-out infinite',
-        lidBottom: 'lidBottom 20s ease-in-out infinite',
-        galaxyFade: 'galaxyFade 20s ease-in-out infinite',
-        windFade: 'windFade 20s ease-in-out infinite',
-        logoFade: 'logoFade 20s ease-in-out infinite',
-        wipeAcross: 'wipeAcross 20s ease-in-out infinite',
-        flamePulse: 'flamePulse 0.5s ease-in-out infinite alternate',
-        streakUp: 'streakUp 0.6s linear infinite',
-        ringSpin: 'ringSpin 20s linear infinite',
       },
     },
   },

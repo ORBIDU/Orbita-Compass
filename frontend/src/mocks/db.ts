@@ -33,6 +33,8 @@ export interface MockAccount {
   /** Hasil tes yang tersimpan. Hanya tampil jika status bukan "baru". */
   assessment: Assessment | null;
   compassAnalysis: CompassAnalysis | null;
+  /** Waktu persetujuan orang tua/wali saat daftar (belum ada di backend, lihat docs/API_CONTRACT.md). */
+  parentConsentAt?: string | null;
 }
 
 interface MockDb {
