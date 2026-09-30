@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Brief animasi Masuk dan Daftar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Poppins',system-ui,sans-serif;background:#F5F8FC}
+</style>
+</helmet>
+<div style="width: 1440px; height: 1900px; overflow: hidden; box-sizing: border-box; padding: 80px 120px; display: flex; flex-direction: column; gap: 52px; font-family: 'Poppins', system-ui, sans-serif; background: #F5F8FC; color: #101A33">
+
+<svg width="0" height="0" aria-hidden="true" style="position: absolute">
+<defs>
+<radialGradient id="br-body" cx="0.38" cy="0.3" r="0.8"><stop offset="0" stop-color="#8CC8FF"></stop><stop offset="0.5" stop-color="#1F7BFF"></stop><stop offset="1" stop-color="#0445B8"></stop></radialGradient>
+<linearGradient id="br-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#15234D"></stop><stop offset="1" stop-color="#101A33"></stop></linearGradient>
+<clipPath id="br-front"><rect x="0" y="56" width="88" height="30"></rect></clipPath>
+</defs>
+</svg>
+
+<header style="display: flex; flex-direction: column; gap: 10px; max-width: 900px">
+<p style="margin: 0; font-family: 'Caveat', 'Segoe Print', cursive; font-size: 30px; line-height: 1; font-weight: 700; color: #FF7000">Untuk tim animasi</p>
+<h1 style="margin: 0; font-size: 44px; line-height: 1.15; font-weight: 700; letter-spacing: -0.8px">Brief animasi panel Masuk &amp; Daftar</h1>
+<p style="margin: 0; font-size: 18px; line-height: 1.65; color: #4A5877">Video ini tampil di panel kiri halaman Masuk dan Daftar (65% lebar layar di desktop) dan sebagai banner di atas form di HP. Tugasnya membuat halaman terasa hidup dan memperkenalkan konsep orbit, tanpa mengalihkan perhatian dari form.</p>
+</header>
+
+<div style="display: grid; grid-template-columns: 500px minmax(0, 1fr); gap: 32px">
+<div style="padding: 32px; display: flex; flex-direction: column; gap: 16px; border-radius: 24px; background: #FFFFFF; border: 1px solid #DCE4F2">
+<h2 style="margin: 0; font-size: 22px; font-weight: 700">Spesifikasi file</h2>
+<div style="display: flex; flex-direction: column">
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-top: 1px solid #E6ECF5; font-size: 15px"><span style="color: #4A5877">Format</span><span style="font-weight: 600">MP4 (H.264), tanpa suara</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-top: 1px solid #E6ECF5; font-size: 15px"><span style="color: #4A5877">Versi desktop</span><span style="font-weight: 600">1200 × 1200 px (persegi)</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-top: 1px solid #E6ECF5; font-size: 15px"><span style="color: #4A5877">Versi HP</span><span style="font-weight: 600">1280 × 720 px (16:9)</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-top: 1px solid #E6ECF5; font-size: 15px"><span style="color: #4A5877">Durasi</span><span style="font-weight: 600">12–15 detik, berulang tanpa jeda</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-top: 1px solid #E6ECF5; font-size: 15px"><span style="color: #4A5877">Frame rate</span><span style="font-weight: 600">30 fps</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-top: 1px solid #E6ECF5; font-size: 15px"><span style="color: #4A5877">Ukuran file</span><span style="font-weight: 600">Maks. 3 MB (desktop), 1,5 MB (HP)</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-top: 1px solid #E6ECF5; font-size: 15px"><span style="color: #4A5877">Poster</span><span style="font-weight: 600">1 gambar diam (JPG) dari frame pertama, untuk tiap versi</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-top: 1px solid #E6ECF5; border-bottom: 1px solid #E6ECF5; font-size: 15px"><span style="color: #4A5877">Teks</span><span style="font-weight: 600">Tidak ada teks atau logo di dalam video</span></div>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A5877">Poster dipakai saat video masih dimuat dan untuk pengguna yang mematikan animasi di perangkatnya. Teks ditulis di halaman, bukan di video, supaya bisa dibaca pembaca layar dan mudah diubah.</p>
+</div>
+
+<div style="padding: 32px; display: flex; flex-direction: column; gap: 20px; border-radius: 24px; background: #FFFFFF; border: 1px solid #DCE4F2">
+<h2 style="margin: 0; font-size: 22px; font-weight: 700">Area aman</h2>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: end">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 12px">
+<svg width="280" height="280" viewBox="0 0 280 280" role="img" aria-label="Diagram area aman versi desktop">
+<rect x="0" y="0" width="280" height="280" rx="12" fill="url(#br-bg)"></rect>
+<rect x="46.5" y="46.5" width="187" height="187" rx="8" fill="none" stroke="#FF8A1F" stroke-width="2" stroke-dasharray="6 5"></rect>
+<rect x="1" y="20" width="278" height="240" fill="none" stroke="#8FB8FF" stroke-width="1.5" stroke-dasharray="2 4"></rect>
+<text x="140" y="146" text-anchor="middle" font-family="Poppins" font-size="13" font-weight="600" fill="#F4F7FF">Area aman 800 × 800</text>
+<text x="140" y="14" text-anchor="middle" font-family="Poppins" font-size="10" fill="#A9B8D9">bisa terpotong di layar lebar</text>
+</svg>
+<span style="font-size: 14px; font-weight: 600">Desktop, 1200 × 1200</span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 12px">
+<svg width="280" height="158" viewBox="0 0 280 158" role="img" aria-label="Diagram area aman versi HP">
+<rect x="0" y="0" width="280" height="158" rx="12" fill="url(#br-bg)"></rect>
+<rect x="30.5" y="11" width="219" height="136" rx="8" fill="none" stroke="#FF8A1F" stroke-width="2" stroke-dasharray="6 5"></rect>
+<rect x="12" y="1" width="256" height="156" fill="none" stroke="#8FB8FF" stroke-width="1.5" stroke-dasharray="2 4"></rect>
+<text x="140" y="84" text-anchor="middle" font-family="Poppins" font-size="12" font-weight="600" fill="#F4F7FF">Area aman 1000 × 620</text>
+</svg>
+<span style="font-size: 14px; font-weight: 600">HP, 1280 × 720</span>
+</div>
+</div>
+<div style="display: flex; gap: 24px; font-size: 13px; color: #4A5877">
+<span style="display: flex; align-items: center; gap: 8px"><span style="width: 22px; height: 0; border-top: 2px dashed #FF7000"></span>Area aman: maskot dan orbit utama di sini</span>
+<span style="display: flex; align-items: center; gap: 8px"><span style="width: 22px; height: 0; border-top: 2px dotted #0965FA"></span>Bagian yang terlihat di layar umum</span>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A5877">Video akan diperbesar untuk memenuhi panel, jadi pinggirannya bisa terpotong tergantung ukuran layar. Isi bagian pinggir cukup dengan langit berbintang.</p>
+</div>
+</div>
+
+<section style="display: flex; flex-direction: column; gap: 20px">
+<h2 style="margin: 0; font-size: 28px; font-weight: 700">Alur adegan</h2>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px">
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<svg width="224" height="224" viewBox="0 0 224 224" role="img" aria-label="Adegan 1: langit berbintang dan orbit muncul">
+<rect width="224" height="224" rx="16" fill="url(#br-bg)"></rect>
+<circle cx="30" cy="40" r="1.6" fill="#FFFFFF"></circle><circle cx="190" cy="30" r="1.2" fill="#FFFFFF"></circle><circle cx="60" cy="180" r="1.4" fill="#FFFFFF"></circle><circle cx="170" cy="190" r="1.8" fill="#FFFFFF"></circle><circle cx="120" cy="60" r="1" fill="#FFFFFF"></circle><circle cx="200" cy="120" r="1.3" fill="#FFFFFF"></circle>
+<ellipse cx="112" cy="118" rx="96" ry="32" fill="none" stroke="#8FB8FF" stroke-opacity="0.6" stroke-width="1.5" stroke-dasharray="4 6" transform="rotate(-12 112 118)"></ellipse>
+</svg>
+<span style="font-size: 14px; font-weight: 700; color: #0965FA">0–2 detik</span>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A5877">Langit gelap, bintang mulai berkelip, garis orbit muncul pelan.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<svg width="224" height="224" viewBox="0 0 224 224" role="img" aria-label="Adegan 2: maskot melayang masuk">
+<rect width="224" height="224" rx="16" fill="url(#br-bg)"></rect>
+<circle cx="30" cy="40" r="1.6" fill="#FFFFFF"></circle><circle cx="190" cy="30" r="1.2" fill="#FFFFFF"></circle><circle cx="170" cy="190" r="1.8" fill="#FFFFFF"></circle>
+<ellipse cx="112" cy="118" rx="96" ry="32" fill="none" stroke="#8FB8FF" stroke-opacity="0.6" stroke-width="1.5" transform="rotate(-12 112 118)"></ellipse>
+<path d="M112 206 L112 176 M104 184 L112 176 L120 184" fill="none" stroke="#F1AD00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+<g transform="translate(68 56)">
+<ellipse cx="44" cy="56" rx="40" ry="9" fill="none" stroke="#FF7000" stroke-width="5" transform="rotate(-16 44 56)"></ellipse>
+<circle cx="44" cy="52" r="26" fill="url(#br-body)"></circle>
+<path d="M34 32 L54 32 L53 40 Q44 44 35 40 Z" fill="#0C1530"></path><polygon points="24,31 44,23 64,31 44,39" fill="#1E2F62"></polygon>
+<ellipse cx="36" cy="50" rx="5.5" ry="1.4" fill="#FFFFFF"></ellipse><ellipse cx="52" cy="50" rx="5.5" ry="1.4" fill="#FFFFFF"></ellipse>
+<path d="M40 59 Q44 63 48 59" fill="none" stroke="#101A33" stroke-width="1.8" stroke-linecap="round"></path>
+<ellipse cx="44" cy="56" rx="40" ry="9" fill="none" stroke="#F1AD00" stroke-width="5" transform="rotate(-16 44 56)" clip-path="url(#br-front)"></ellipse>
+</g>
+</svg>
+<span style="font-size: 14px; font-weight: 700; color: #0965FA">2–5 detik</span>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A5877">Maskot ORBIDU melayang naik ke tengah, berkedip, topi wisudanya sedikit bergoyang.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<svg width="224" height="224" viewBox="0 0 224 224" role="img" aria-label="Adegan 3: lima titik di orbit menyala bergantian">
+<rect width="224" height="224" rx="16" fill="url(#br-bg)"></rect>
+<circle cx="30" cy="40" r="1.6" fill="#FFFFFF"></circle><circle cx="190" cy="30" r="1.2" fill="#FFFFFF"></circle><circle cx="170" cy="190" r="1.8" fill="#FFFFFF"></circle>
+<g transform="rotate(-12 112 118)">
+<ellipse cx="112" cy="118" rx="96" ry="32" fill="none" stroke="#8FB8FF" stroke-opacity="0.6" stroke-width="1.5"></ellipse>
+<circle cx="22" cy="129" r="5" fill="#FF7000"></circle><circle cx="50" cy="94" r="5" fill="#FF7000"></circle><circle cx="145" cy="88" r="5" fill="#FF7000"></circle><circle cx="205" cy="110" r="5" fill="#FF7000" fill-opacity="0.25"></circle><circle cx="174" cy="143" r="5" fill="#FF7000" fill-opacity="0.25"></circle>
+</g>
+<g transform="translate(68 56)">
+<ellipse cx="44" cy="56" rx="40" ry="9" fill="none" stroke="#FF7000" stroke-width="5" transform="rotate(-16 44 56)"></ellipse>
+<circle cx="44" cy="52" r="26" fill="url(#br-body)"></circle>
+<path d="M34 32 L54 32 L53 40 Q44 44 35 40 Z" fill="#0C1530"></path><polygon points="24,31 44,23 64,31 44,39" fill="#1E2F62"></polygon>
+<ellipse cx="36" cy="50" rx="5.5" ry="6.2" fill="#FFFFFF"></ellipse><ellipse cx="52" cy="50" rx="5.5" ry="6.2" fill="#FFFFFF"></ellipse>
+<circle cx="37" cy="51" r="3.3" fill="#101A33"></circle><circle cx="53" cy="51" r="3.3" fill="#101A33"></circle>
+<path d="M40 59 Q44 63 48 59" fill="none" stroke="#101A33" stroke-width="1.8" stroke-linecap="round"></path>
+<ellipse cx="44" cy="56" rx="40" ry="9" fill="none" stroke="#F1AD00" stroke-width="5" transform="rotate(-16 44 56)" clip-path="url(#br-front)"></ellipse>
+</g>
+</svg>
+<span style="font-size: 14px; font-weight: 700; color: #0965FA">5–9 detik</span>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A5877">Lima titik di orbit menyala bergantian: Potensi, Arah, Pilihan, Persiapan, Langkah.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<svg width="224" height="224" viewBox="0 0 224 224" role="img" aria-label="Adegan 4: maskot menoleh ke arah form">
+<rect width="224" height="224" rx="16" fill="url(#br-bg)"></rect>
+<circle cx="30" cy="40" r="1.6" fill="#FFFFFF"></circle><circle cx="170" cy="190" r="1.8" fill="#FFFFFF"></circle>
+<g transform="rotate(-12 112 118)">
+<ellipse cx="112" cy="118" rx="96" ry="32" fill="none" stroke="#8FB8FF" stroke-opacity="0.6" stroke-width="1.5"></ellipse>
+<circle cx="22" cy="129" r="5" fill="#FF7000"></circle><circle cx="50" cy="94" r="5" fill="#FF7000"></circle><circle cx="145" cy="88" r="5" fill="#FF7000"></circle><circle cx="205" cy="110" r="5" fill="#FF7000"></circle><circle cx="174" cy="143" r="5" fill="#FF7000"></circle>
+</g>
+<path d="M184 70 L206 70 M198 62 L206 70 L198 78" fill="none" stroke="#F1AD00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+<g transform="translate(68 56) rotate(8 44 52)">
+<ellipse cx="44" cy="56" rx="40" ry="9" fill="none" stroke="#FF7000" stroke-width="5" transform="rotate(-24 44 56)"></ellipse>
+<circle cx="44" cy="52" r="26" fill="url(#br-body)"></circle>
+<path d="M34 32 L54 32 L53 40 Q44 44 35 40 Z" fill="#0C1530"></path><polygon points="24,31 44,23 64,31 44,39" fill="#1E2F62"></polygon>
+<ellipse cx="36" cy="50" rx="5.5" ry="6.2" fill="#FFFFFF"></ellipse><ellipse cx="52" cy="50" rx="5.5" ry="6.2" fill="#FFFFFF"></ellipse>
+<circle cx="39" cy="50" r="3.3" fill="#101A33"></circle><circle cx="55" cy="50" r="3.3" fill="#101A33"></circle>
+<path d="M39 58 Q44 64 49 58" fill="none" stroke="#101A33" stroke-width="1.8" stroke-linecap="round"></path>
+</g>
+</svg>
+<span style="font-size: 14px; font-weight: 700; color: #0965FA">9–12 detik</span>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A5877">Maskot menoleh ke kanan dan cincinnya bergoyang seperti menyapa, mengarahkan mata ke form.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<svg width="224" height="224" viewBox="0 0 224 224" role="img" aria-label="Adegan 5: kembali tenang dan menyambung ke awal">
+<rect width="224" height="224" rx="16" fill="url(#br-bg)"></rect>
+<circle cx="30" cy="40" r="1.6" fill="#FFFFFF"></circle><circle cx="190" cy="30" r="1.2" fill="#FFFFFF"></circle><circle cx="60" cy="180" r="1.4" fill="#FFFFFF"></circle><circle cx="170" cy="190" r="1.8" fill="#FFFFFF"></circle>
+<g transform="rotate(-12 112 118)">
+<ellipse cx="112" cy="118" rx="96" ry="32" fill="none" stroke="#8FB8FF" stroke-opacity="0.6" stroke-width="1.5"></ellipse>
+<circle cx="22" cy="129" r="5" fill="#FF7000" fill-opacity="0.3"></circle><circle cx="50" cy="94" r="5" fill="#FF7000" fill-opacity="0.3"></circle><circle cx="145" cy="88" r="5" fill="#FF7000" fill-opacity="0.3"></circle><circle cx="205" cy="110" r="5" fill="#FF7000" fill-opacity="0.3"></circle><circle cx="174" cy="143" r="5" fill="#FF7000" fill-opacity="0.3"></circle>
+</g>
+<path d="M190 196 a14 14 0 1 1 10 -4 M200 186 L200 194 L192 194" fill="none" stroke="#F1AD00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+<g transform="translate(68 56)">
+<ellipse cx="44" cy="56" rx="40" ry="9" fill="none" stroke="#FF7000" stroke-width="5" transform="rotate(-16 44 56)"></ellipse>
+<circle cx="44" cy="52" r="26" fill="url(#br-body)"></circle>
+<path d="M34 32 L54 32 L53 40 Q44 44 35 40 Z" fill="#0C1530"></path><polygon points="24,31 44,23 64,31 44,39" fill="#1E2F62"></polygon>
+<ellipse cx="36" cy="50" rx="5.5" ry="6.2" fill="#FFFFFF"></ellipse><ellipse cx="52" cy="50" rx="5.5" ry="6.2" fill="#FFFFFF"></ellipse>
+<circle cx="37" cy="51" r="3.3" fill="#101A33"></circle><circle cx="53" cy="51" r="3.3" fill="#101A33"></circle>
+<path d="M40 59 Q44 63 48 59" fill="none" stroke="#101A33" stroke-width="1.8" stroke-linecap="round"></path>
+<ellipse cx="44" cy="56" rx="40" ry="9" fill="none" stroke="#F1AD00" stroke-width="5" transform="rotate(-16 44 56)" clip-path="url(#br-front)"></ellipse>
+</g>
+</svg>
+<span style="font-size: 14px; font-weight: 700; color: #0965FA">12–15 detik</span>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A5877">Kembali tenang: orbit berputar pelan, titik meredup, lalu menyambung mulus ke adegan pertama.</p>
+</div>
+
+</div>
+</section>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr 380px; gap: 24px">
+<div style="padding: 28px; display: flex; flex-direction: column; gap: 12px; border-radius: 20px; background: #FFFFFF; border: 1px solid #DCE4F2">
+<h3 style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 700; color: #0A7A45"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0A7A45" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Lakukan</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A5877">Gerakan pelan dan lembut, seperti melayang.</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A5877">Pakai maskot yang sama dengan beranda: planet biru, cincin oranye, topi wisuda.</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A5877">Pastikan frame terakhir menyambung ke frame pertama.</p>
+</div>
+<div style="padding: 28px; display: flex; flex-direction: column; gap: 12px; border-radius: 20px; background: #FFFFFF; border: 1px solid #DCE4F2">
+<h3 style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 700; color: #B42318"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B42318" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>Hindari</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A5877">Kilatan cepat atau cahaya berkedip keras, maksimal 3 kilatan per detik supaya aman untuk pengguna yang sensitif cahaya.</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A5877">Zoom cepat atau kamera berputar yang bikin pusing.</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A5877">Latar putih atau terang, karena form di sebelahnya sudah putih.</p>
+</div>
+<div style="padding: 28px; display: flex; flex-direction: column; gap: 14px; border-radius: 20px; background: #FFFFFF; border: 1px solid #DCE4F2">
+<h3 style="margin: 0; font-size: 18px; font-weight: 700">Palet warna</h3>
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 56px; height: 36px; flex-shrink: 0; border-radius: 10px; background: linear-gradient(90deg, #15234D, #101A33)"></span><span style="font-size: 14px; color: #4A5877">Navy #15234D → #101A33, latar</span></div>
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 56px; height: 36px; flex-shrink: 0; border-radius: 10px; background: linear-gradient(90deg, #0965FA, #00B2DD)"></span><span style="font-size: 14px; color: #4A5877">Biru #0965FA → #00B2DD, maskot dan cahaya</span></div>
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 56px; height: 36px; flex-shrink: 0; border-radius: 10px; background: linear-gradient(90deg, #FF7000, #F1AD00)"></span><span style="font-size: 14px; color: #4A5877">Oranye #FF7000 → #F1AD00, cincin dan titik</span></div>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
