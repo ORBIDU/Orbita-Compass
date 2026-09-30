@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Analisis Potensi siswa ORBIDU</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Poppins',system-ui,sans-serif;background:#F5F8FC}
+a{color:#0965FA}a:hover{color:#0747B8}
+input::placeholder{color:#8A96B2}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #F1AD00;outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 1640px; overflow: hidden; display: flex; flex-direction: column; font-family: 'Poppins', system-ui, sans-serif; background: #F5F8FC; color: #101A33">
+<dc-import name="PortalHeader" aktif="analisis" hint-size="1440px,72px"></dc-import>
+
+<main style="padding: 28px 120px 48px; display: flex; flex-direction: column; gap: 24px">
+
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 640px">
+<nav aria-label="Breadcrumb" style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #6B7898"><a href="Portal-Dashboard.dc.html" style="color: #6B7898; text-decoration: none">Dashboard</a><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9AA6C0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg><span aria-current="page" style="font-weight: 600; color: #101A33">Analisis Potensi</span></nav>
+<h1 style="margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spacing: -0.5px">Analisis Potensi</h1>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A5877">Tiga hal ini membentuk rekomendasi ORBIDU Compass: gambaran minat bakatmu, prestasi yang kamu raih, dan nilai rapor dari sekolah.</p>
+</div>
+<div style="width: 380px; box-sizing: border-box; padding: 18px 20px; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; align-items: center; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Kelengkapan profil {{pct}} persen"><circle cx="32" cy="32" r="26" fill="none" stroke="#E3E9F3" stroke-width="7"></circle><circle cx="32" cy="32" r="26" fill="none" stroke="#0965FA" stroke-width="7" stroke-linecap="round" stroke-dasharray="{{dash}}" transform="rotate(-90 32 32)"></circle><text x="32" y="37" text-anchor="middle" font-family="Poppins" font-size="14" font-weight="700" fill="#101A33">{{pct}}%</text></svg>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 15px; font-weight: 700">Kelengkapan profil</span>
+<sc-for list="{{checklist}}" as="c" hint-placeholder-count="3">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: {{c.fg}}"><span style="width: 16px; height: 16px; flex-shrink: 0; box-sizing: border-box; border-radius: 50%; border: 1.5px solid {{c.bd}}; background: {{c.bg}}; display: flex; align-items: center; justify-content: center"><sc-if value="{{c.done}}" hint-placeholder-val="{{ true }}"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></sc-if></span>{{c.text}}</span>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div role="tablist" aria-label="Bagian Analisis Potensi" style="display: flex; gap: 4px; border-bottom: 1px solid #DCE4F2">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+<button type="button" role="tab" aria-selected="{{t.selected}}" onClick="{{t.pick}}" style="height: 52px; padding: 0 16px; display: flex; align-items: center; gap: 10px; border: 0; border-bottom: 2px solid {{t.line}}; margin-bottom: -1px; background: none; font-family: inherit; font-size: 15px; font-weight: {{t.weight}}; color: {{t.fg}}; cursor: pointer">{{t.label}}<span style="font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: {{t.chipBg}}; color: {{t.chipFg}}">{{t.chip}}</span></button>
+</sc-for>
+</div>
+
+<sc-if value="{{showTesIsi}}" hint-placeholder-val="{{ true }}">
+<div style="display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 24px; align-items: start">
+<aside style="padding: 20px; display: flex; flex-direction: column; gap: 14px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 15px; font-weight: 700">Bagian tes</span><div style="height: 8px; border-radius: 99px; background: #E6ECF7"><div style="width: 57%; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #0965FA, #00B2DD)"></div></div><span style="font-size: 13px; color: #4A5877">4 dari 7 bagian selesai</span></div>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 2px">
+<sc-for list="{{sections}}" as="b" hint-placeholder-count="7">
+<li style="min-height: 52px; padding: 6px 10px; box-sizing: border-box; display: flex; align-items: center; gap: 12px; border-radius: 12px; background: {{b.rowBg}}">
+<span style="width: 28px; height: 28px; flex-shrink: 0; box-sizing: border-box; border-radius: 50%; border: 2px solid {{b.bd}}; background: {{b.bg}}; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: {{b.numFg}}"><sc-if value="{{b.done}}" hint-placeholder-val="{{ false }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></sc-if><sc-if value="{{b.notDone}}" hint-placeholder-val="{{ true }}">{{b.no}}</sc-if></span>
+<span style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: {{b.weight}}; color: #101A33">{{b.name}}</span><span style="font-size: 12px; color: {{b.stFg}}">{{b.status}}</span></span>
+</li>
+</sc-for>
+</ol>
+</aside>
+
+<section aria-labelledby="pa-bagian" style="border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3; overflow: hidden">
+<div style="padding: 24px 28px 20px; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; border-bottom: 1px solid #E3E9F3">
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 600; color: #0965FA">Bagian 5 dari 7</span><h2 id="pa-bagian" style="margin: 0; font-size: 22px; font-weight: 700">Keyakinan diri</h2><p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A5877">Seberapa yakin kamu dengan kemampuanmu menghadapi tantangan belajar. Tidak ada jawaban benar atau salah.</p></div>
+<span style="flex-shrink: 0; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 999px; background: #F0F4FA; color: #15234D">{{answered}} dari 6 terjawab</span>
+</div>
+<div style="padding: 8px 28px">
+<sc-for list="{{questions}}" as="q" hint-placeholder-count="6">
+<fieldset style="margin: 0; padding: 20px 0; border: 0; border-bottom: 1px solid #EEF2F8; display: flex; flex-direction: column; gap: 12px">
+<legend style="float: left; width: 100%; padding: 0; display: flex; gap: 12px; font-size: 15px; line-height: 1.5; font-weight: 500; color: #101A33"><span style="flex-shrink: 0; font-weight: 700; color: #6B7898">{{q.no}}</span>{{q.text}}</legend>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; max-width: 560px">
+<sc-for list="{{q.opts}}" as="o" hint-placeholder-count="5">
+<button type="button" aria-pressed="{{o.pressed}}" aria-label="{{o.aria}}" onClick="{{o.pick}}" style="height: 44px; border-radius: 12px; border: 1.5px solid {{o.bd}}; background: {{o.bg}}; color: {{o.fg}}; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer">{{o.v}}</button>
+</sc-for>
+</div>
+<div style="display: flex; justify-content: space-between; max-width: 560px; font-size: 12px; color: #6B7898"><span>Sangat tidak setuju</span><span>Sangat setuju</span></div>
+</fieldset>
+</sc-for>
+</div>
+<div style="padding: 16px 28px; display: flex; justify-content: space-between; align-items: center; background: #F8FAFD; border-top: 1px solid #E3E9F3">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #0A7A45"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A7A45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21a9 9 0 100-18 9 9 0 000 18zM8 12.5l3 3 5-6"></path></svg>Tersimpan otomatis pukul 10.24</span>
+<div style="display: flex; gap: 10px"><button type="button" style="height: 46px; padding: 0 18px; border-radius: 12px; border: 1.5px solid #DCE4F2; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #15234D; cursor: pointer">Bagian sebelumnya</button><button type="button" style="height: 46px; padding: 0 20px; display: flex; align-items: center; gap: 8px; border-radius: 12px; border: 0; background: #0965FA; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer">Lanjut ke Bagian 6<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button></div>
+</div>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{showTesSelesai}}" hint-placeholder-val="{{ false }}">
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 24px; align-items: start">
+<section style="padding: 32px; display: flex; flex-direction: column; gap: 16px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<span style="width: 56px; height: 56px; border-radius: 16px; background: #E3F5EC; display: flex; align-items: center; justify-content: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A7A45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21a9 9 0 100-18 9 9 0 000 18zM8 12.5l3 3 5-6"></path></svg></span>
+<h2 style="margin: 0; font-size: 24px; font-weight: 700">Gambaran Minat Bakat selesai</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.65; color: #4A5877">Diisi pada 12 September 2026 saat kelas XII. Hasilnya sudah dipakai ORBIDU Compass untuk menyusun arah pendidikan dan rekomendasi jurusanmu.</p>
+<div style="display: flex; gap: 10px; margin-top: 4px"><a href="#" style="height: 48px; padding: 0 20px; display: flex; align-items: center; gap: 8px; border-radius: 12px; background: #0965FA; color: #FFFFFF; font-size: 15px; font-weight: 600; text-decoration: none">Lihat hasil di ORBIDU Compass<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a><a href="#" style="height: 48px; padding: 0 18px; display: flex; align-items: center; border-radius: 12px; border: 1.5px solid #DCE4F2; color: #15234D; font-size: 15px; font-weight: 600; text-decoration: none">Lihat jawabanku</a></div>
+</section>
+<section style="padding: 24px; display: flex; flex-direction: column; gap: 12px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<h3 style="margin: 0; font-size: 16px; font-weight: 700">Riwayat per kelas</h3>
+<div style="display: flex; flex-direction: column">
+<div style="display: flex; justify-content: space-between; align-items: center; min-height: 56px; border-bottom: 1px solid #EEF2F8"><span style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Kelas XII</span><span style="font-size: 12px; color: #6B7898">12 September 2026</span></span><span style="font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: #E8F0FE; color: #0B3FA8">Terbaru</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; min-height: 56px; border-bottom: 1px solid #EEF2F8"><span style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Kelas XI</span><span style="font-size: 12px; color: #6B7898">8 Agustus 2025</span></span><a href="#" style="min-height: 32px; display: flex; align-items: center; font-size: 14px; font-weight: 600">Lihat</a></div>
+<div style="display: flex; justify-content: space-between; align-items: center; min-height: 56px"><span style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Kelas X</span><span style="font-size: 12px; color: #6B7898">14 Agustus 2024</span></span><a href="#" style="min-height: 32px; display: flex; align-items: center; font-size: 14px; font-weight: 600">Lihat</a></div>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.55; color: #6B7898">Kamu bisa mengisi ulang saat naik kelas, supaya perkembanganmu tetap terpantau.</p>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{showPrestasi}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<div role="group" aria-label="Jenis prestasi" style="display: flex; padding: 4px; border-radius: 14px; background: #E9EEF6">
+<sc-for list="{{pCats}}" as="c" hint-placeholder-count="2">
+<button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="height: 40px; padding: 0 16px; border: 0; border-radius: 11px; background: {{c.bg}}; box-shadow: {{c.shadow}}; font-family: inherit; font-size: 14px; font-weight: 600; color: {{c.fg}}; cursor: pointer">{{c.label}}</button>
+</sc-for>
+</div>
+<button type="button" onClick="{{openModal}}" style="height: 46px; padding: 0 18px; display: flex; align-items: center; gap: 8px; border: 0; border-radius: 12px; background: #0965FA; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Tambah prestasi</button>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 14px; background: #EEF4FF; font-size: 14px; color: #15234D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5M12 8v.01"></path></svg>Prestasi dipakai untuk rekomendasi ORBIDU Compass dan bisa kamu pilih saat rasionalisasi SNBP.</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{prestasi}}" as="p" hint-placeholder-count="2">
+<article style="padding: 20px; display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; gap: 16px; align-items: start; border-radius: 18px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<span style="width: 48px; height: 48px; border-radius: 14px; background: #FFF1E6; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B34700" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5a4 4 0 01-8 0zM8 6H5a3 3 0 003 4M16 6h3a3 3 0 01-3 4M12 13v4M9 20h6M10 17h4"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-size: 16px; line-height: 1.35; font-weight: 700">{{p.title}}</h3>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: #E8F0FE; color: #0B3FA8">{{p.tingkat}}</span><span style="font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: #FFF1E6; color: #B34700">{{p.capaian}}</span></div>
+<span style="font-size: 13px; color: #4A5877">{{p.org}}, {{p.tahun}}</span>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: {{p.fileFg}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{p.fileIcon}}"></path></svg>{{p.fileText}}</span>
+</div>
+<div style="display: flex; gap: 4px"><button type="button" aria-label="Ubah {{p.title}}" style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid #E3E9F3; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15234D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4l10-10-4-4L4 16zM13.5 6.5l4 4"></path></svg></button><button type="button" aria-label="Hapus {{p.title}}" style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid #E3E9F3; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B42318" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l1 13h8l1-13"></path></svg></button></div>
+</article>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showRapor}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 14px; background: #EEF4FF; font-size: 14px; color: #15234D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5M12 8v.01"></path></svg><span style="flex-grow: 1">Nilai diinput sekolah dengan format Kurikulum Merdeka. Kalau ada yang tidak sesuai, hubungi wali kelasmu.</span><span style="font-size: 12px; color: #4A5877">Sumber: e-Rapor, diperbarui 5 Juli 2026</span></div>
+<section aria-labelledby="pa-tren" style="padding: 24px; display: flex; flex-direction: column; gap: 16px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 24px">
+<h2 id="pa-tren" style="margin: 0; font-size: 18px; font-weight: 700">Tren nilai per semester</h2>
+<div role="group" aria-label="Pilih mata pelajaran" style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{mapelChips}}" as="m" hint-placeholder-count="5">
+<button type="button" aria-pressed="{{m.pressed}}" onClick="{{m.pick}}" style="height: 36px; padding: 0 12px; border-radius: 10px; border: 1.5px solid {{m.bd}}; background: {{m.bg}}; color: {{m.fg}}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer">{{m.label}}</button>
+</sc-for>
+</div>
+</div>
+<svg width="1152" height="250" viewBox="0 0 1152 250" role="img" aria-label="Grafik nilai {{mapelName}} dan rata-rata semester 1 sampai 4">
+<g font-family="Poppins" font-size="11" fill="#6B7898">
+<line x1="60" y1="20" x2="1110" y2="20" stroke="#EEF2F8"></line><text x="44" y="24" text-anchor="end">100</text>
+<line x1="60" y1="60" x2="1110" y2="60" stroke="#EEF2F8"></line><text x="44" y="64" text-anchor="end">95</text>
+<line x1="60" y1="100" x2="1110" y2="100" stroke="#EEF2F8"></line><text x="44" y="104" text-anchor="end">90</text>
+<line x1="60" y1="140" x2="1110" y2="140" stroke="#EEF2F8"></line><text x="44" y="144" text-anchor="end">85</text>
+<line x1="60" y1="180" x2="1110" y2="180" stroke="#EEF2F8"></line><text x="44" y="184" text-anchor="end">80</text>
+<line x1="60" y1="220" x2="1110" y2="220" stroke="#DCE4F2"></line>
+<text x="60" y="242" text-anchor="middle">Sem 1</text><text x="322.5" y="242" text-anchor="middle">Sem 2</text><text x="585" y="242" text-anchor="middle">Sem 3</text><text x="847.5" y="242" text-anchor="middle">Sem 4</text><text x="1110" y="242" text-anchor="middle">Sem 5 (berjalan)</text>
+</g>
+<rect x="990" y="20" width="120" height="200" fill="#F5F8FC"></rect>
+<text x="1050" y="124" text-anchor="middle" font-family="Poppins" font-size="12" fill="#8A96B2">Belum tersedia</text>
+<polyline points="{{avgPts}}" fill="none" stroke="#B8C4DB" stroke-width="2" stroke-dasharray="6 5"></polyline>
+<polyline points="{{mapelPts}}" fill="none" stroke="#0965FA" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"></polyline>
+<circle cx="{{d0.x}}" cy="{{d0.y}}" r="5" fill="#FFFFFF" stroke="#0965FA" stroke-width="2.5"></circle><text x="{{d0.x}}" y="{{d0.ty}}" text-anchor="middle" font-family="Poppins" font-size="12" font-weight="700" fill="#0B3FA8">{{d0.v}}</text>
+<circle cx="{{d1.x}}" cy="{{d1.y}}" r="5" fill="#FFFFFF" stroke="#0965FA" stroke-width="2.5"></circle><text x="{{d1.x}}" y="{{d1.ty}}" text-anchor="middle" font-family="Poppins" font-size="12" font-weight="700" fill="#0B3FA8">{{d1.v}}</text>
+<circle cx="{{d2.x}}" cy="{{d2.y}}" r="5" fill="#FFFFFF" stroke="#0965FA" stroke-width="2.5"></circle><text x="{{d2.x}}" y="{{d2.ty}}" text-anchor="middle" font-family="Poppins" font-size="12" font-weight="700" fill="#0B3FA8">{{d2.v}}</text>
+<circle cx="{{d3.x}}" cy="{{d3.y}}" r="5" fill="#FFFFFF" stroke="#0965FA" stroke-width="2.5"></circle><text x="{{d3.x}}" y="{{d3.ty}}" text-anchor="middle" font-family="Poppins" font-size="12" font-weight="700" fill="#0B3FA8">{{d3.v}}</text>
+</svg>
+<div style="display: flex; gap: 20px; font-size: 13px; color: #4A5877"><span style="display: flex; align-items: center; gap: 8px"><span style="width: 22px; height: 3px; border-radius: 2px; background: #0965FA"></span>{{mapelName}}</span><span style="display: flex; align-items: center; gap: 8px"><span style="width: 22px; height: 0; border-top: 2px dashed #B8C4DB"></span>Rata-rata semua mapel</span></div>
+</section>
+<section aria-labelledby="pa-tabel" style="border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3; overflow: hidden">
+<h2 id="pa-tabel" style="margin: 0; padding: 20px 24px; font-size: 18px; font-weight: 700; border-bottom: 1px solid #E3E9F3">Rapor per semester</h2>
+<div style="display: grid; grid-template-columns: 1.2fr 0.8fr 1fr 0.8fr 1.2fr 0.9fr; padding: 12px 24px; background: #F8FAFD; border-bottom: 1px solid #E3E9F3; font-size: 12px; font-weight: 600; color: #6B7898"><span>Semester</span><span>Kelas</span><span>Tahun ajaran</span><span>Mapel</span><span>Rata-rata nilai akhir</span><span></span></div>
+<sc-for list="{{semesters}}" as="r" hint-placeholder-count="5">
+<div style="border-bottom: 1px solid #EEF2F8">
+<div style="display: grid; grid-template-columns: 1.2fr 0.8fr 1fr 0.8fr 1.2fr 0.9fr; align-items: center; min-height: 60px; padding: 0 24px; font-size: 14px">
+<span style="display: flex; flex-direction: column"><span style="font-weight: 600">{{r.sem}}</span><span style="font-size: 12px; color: #6B7898">{{r.jenis}}</span></span>
+<span>{{r.kelas}}</span><span>{{r.tahun}}</span><span>{{r.jml}}</span>
+<span style="font-weight: 700; color: {{r.avgFg}}">{{r.avg}}</span>
+<sc-if value="{{r.available}}" hint-placeholder-val="{{ true }}"><button type="button" aria-expanded="{{r.expanded}}" onClick="{{r.toggle}}" style="justify-self: end; height: 36px; padding: 0 12px; display: flex; align-items: center; gap: 6px; border-radius: 10px; border: 1px solid #DCE4F2; background: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 600; color: #0965FA; cursor: pointer">{{r.btn}}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: {{r.rot}}"><path d="M6 9l6 6 6-6"></path></svg></button></sc-if>
+</div>
+<sc-if value="{{r.open}}" hint-placeholder-val="{{ false }}">
+<div style="margin: 0 24px 20px; padding: 16px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; border-radius: 14px; background: #F5F8FC">
+<sc-for list="{{detail}}" as="m" hint-placeholder-count="8">
+<div style="padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; border-radius: 10px; background: #FFFFFF; font-size: 13px"><span style="color: #15234D">{{m.n}}</span><span style="font-weight: 700">{{m.v}}</span></div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</sc-for>
+<p style="margin: 0; padding: 14px 24px; font-size: 13px; color: #6B7898">Nilai semester 1 sampai 5 dipakai untuk SNBP. Nilai semester 5 muncul setelah rapor dibagikan.</p>
+</section>
+</div>
+</sc-if>
+</main>
+
+<sc-if value="{{modalOpen}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; z-index: 10; background: rgba(16,26,51,0.45); display: flex; justify-content: center; align-items: flex-start; padding-top: 96px">
+<div role="dialog" aria-modal="true" aria-labelledby="pa-modal" style="width: 560px; box-sizing: border-box; padding: 28px; display: flex; flex-direction: column; gap: 16px; border-radius: 24px; background: #FFFFFF; box-shadow: 0 30px 80px rgba(16,26,51,0.3)">
+<div style="display: flex; justify-content: space-between; align-items: center"><h2 id="pa-modal" style="margin: 0; font-size: 20px; font-weight: 700">Tambah prestasi</h2><button type="button" aria-label="Tutup" onClick="{{closeModal}}" style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid #E3E9F3; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15234D" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="pa-judul" style="font-size: 14px; font-weight: 600; color: #15234D">Nama prestasi</label><input id="pa-judul" type="text" placeholder="Contoh: Olimpiade Sains Nasional bidang Kimia" style="height: 48px; box-sizing: border-box; padding: 0 14px; border-radius: 12px; border: 1.5px solid #D5DEEE; background: #F8FAFD; font-family: inherit; font-size: 15px"></div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="pa-tingkat" style="font-size: 14px; font-weight: 600; color: #15234D">Tingkat</label><select id="pa-tingkat" style="height: 48px; box-sizing: border-box; padding: 0 12px; border-radius: 12px; border: 1.5px solid #D5DEEE; background: #F8FAFD; font-family: inherit; font-size: 15px; color: #101A33"><option>Pilih tingkat</option><option>Sekolah</option><option>Kota/Kabupaten</option><option>Provinsi</option><option>Nasional</option><option>Internasional</option></select></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="pa-capaian" style="font-size: 14px; font-weight: 600; color: #15234D">Capaian</label><input id="pa-capaian" type="text" placeholder="Juara 1, Finalis, dsb." style="height: 48px; box-sizing: border-box; padding: 0 14px; border-radius: 12px; border: 1.5px solid #D5DEEE; background: #F8FAFD; font-family: inherit; font-size: 15px"></div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 140px; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="pa-org" style="font-size: 14px; font-weight: 600; color: #15234D">Penyelenggara</label><input id="pa-org" type="text" placeholder="Nama penyelenggara" style="height: 48px; box-sizing: border-box; padding: 0 14px; border-radius: 12px; border: 1.5px solid #D5DEEE; background: #F8FAFD; font-family: inherit; font-size: 15px"></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="pa-tahun" style="font-size: 14px; font-weight: 600; color: #15234D">Tahun</label><select id="pa-tahun" style="height: 48px; box-sizing: border-box; padding: 0 12px; border-radius: 12px; border: 1.5px solid #D5DEEE; background: #F8FAFD; font-family: inherit; font-size: 15px; color: #101A33"><option>2026</option><option>2025</option><option>2024</option></select></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 14px; font-weight: 600; color: #15234D">Sertifikat (opsional)</span><label style="min-height: 104px; box-sizing: border-box; padding: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; border-radius: 14px; border: 1.5px dashed #C2CFE6; background: #F8FAFD; text-align: center; cursor: pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V5M7 10l5-5 5 5M5 19h14"></path></svg><span style="font-size: 14px; font-weight: 600; color: #0965FA">Pilih file atau seret ke sini</span><span style="font-size: 12px; color: #6B7898">PDF, JPG, atau PNG, maksimal 2 MB</span><input type="file" style="position: absolute; width: 1px; height: 1px; opacity: 0"></label></div>
+<div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px"><button type="button" onClick="{{closeModal}}" style="height: 46px; padding: 0 18px; border-radius: 12px; border: 1.5px solid #DCE4F2; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #15234D; cursor: pointer">Batal</button><button type="button" onClick="{{closeModal}}" style="height: 46px; padding: 0 22px; border-radius: 12px; border: 0; background: #0965FA; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer">Simpan prestasi</button></div>
+</div>
+</div>
+</sc-if>
+
+<div role="group" aria-label="Mode Demo" style="position: absolute; left: 20px; top: 820px; z-index: 5; padding: 8px; display: flex; align-items: center; gap: 6px; border-radius: 14px; background: #101A33; box-shadow: 0 14px 30px rgba(16,26,51,0.3)">
+<span style="padding: 0 8px; font-size: 12px; font-weight: 600; color: #A9B8D9">Tes</span>
+<sc-for list="{{demo}}" as="d" hint-placeholder-count="2">
+<button type="button" aria-pressed="{{d.pressed}}" onClick="{{d.pick}}" style="height: 34px; padding: 0 12px; border: 0; border-radius: 9px; background: {{d.bg}}; color: {{d.fg}}; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer">{{d.label}}</button>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tab":{"editor":"enum","options":["minat","prestasi","rapor"],"default":"minat"},"$preview":{"width":1440,"height":1640}}'>
+class Component extends DCLogic {
+  constructor(...args) {
+    super(...args);
+    this.state = { tab: null, tes: 'isi', answers: { 25: 4, 26: 5 }, pCat: 'akademik', modal: false, mapel: 'Matematika', openSem: 4 };
+  }
+  renderVals() {
+    const tab = this.state.tab || this.props.tab || 'minat';
+    const tesDone = this.state.tes === 'selesai';
+    const pct = tesDone ? 93 : 78;
+    const C = 2 * Math.PI * 26;
+    const TABS = [['minat', 'Gambaran Minat Bakat', tesDone ? 'Selesai' : '4/7'], ['prestasi', 'Prestasi', '4'], ['rapor', 'Nilai Rapor', 'Sem 1–4']];
+    const tabs = TABS.map(([id, label, chip]) => {
+      const on = id === tab;
+      return { label, chip, selected: on ? 'true' : 'false', line: on ? '#0965FA' : 'transparent', weight: on ? 600 : 500, fg: on ? '#0965FA' : '#4A5877', chipBg: on ? '#E8F0FE' : '#EEF2F8', chipFg: on ? '#0B3FA8' : '#4A5877', pick: () => this.setState({ tab: id }) };
+    });
+    const ck = (done, text) => ({ done, text, bg: done ? '#0A7A45' : '#FFFFFF', bd: done ? '#0A7A45' : '#B8C4DB', fg: done ? '#15234D' : '#4A5877' });
+    const checklist = [ck(true, 'Nilai rapor dari sekolah'), ck(true, '4 prestasi tercatat'), ck(tesDone, tesDone ? 'Gambaran Minat Bakat selesai' : 'Gambaran Minat Bakat, 4 dari 7 bagian'), ck(false, '1 prestasi belum ada sertifikat')];
+    const SEC = ['Minat dan aktivitas favorit', 'Rasa ingin tahu karier', 'Kepedulian pada masa depan', 'Kendali diri', 'Keyakinan diri', 'Motivasi belajar', 'Kompetensi masa depan'];
+    const sections = SEC.map((name, i) => {
+      const done = i < 4, cur = i === 4;
+      return { name, no: i + 1, done, notDone: !done, status: done ? 'Selesai' : cur ? 'Sedang diisi' : 'Belum diisi', stFg: done ? '#0A7A45' : cur ? '#0965FA' : '#6B7898', bg: done ? '#0A7A45' : '#FFFFFF', bd: done ? '#0A7A45' : cur ? '#0965FA' : '#D5DEEE', numFg: cur ? '#0965FA' : '#6B7898', rowBg: cur ? '#EEF4FF' : 'transparent', weight: cur ? 600 : 500 };
+    });
+    const Q = ['Saat menghadapi soal yang sulit, aku yakin bisa menemukan cara menyelesaikannya.', 'Aku percaya diri mempelajari hal baru, walaupun awalnya terasa asing.', 'Kalau rencanaku gagal, aku bisa menyusun rencana cadangan.', 'Aku yakin bisa menyelesaikan tugas tepat waktu.', 'Aku berani mencoba kegiatan di luar kebiasaanku.', 'Aku yakin kemampuanku bisa berkembang kalau terus berlatih.'];
+    const LBL = ['Sangat tidak setuju', 'Tidak setuju', 'Netral', 'Setuju', 'Sangat setuju'];
+    const ans = this.state.answers;
+    const questions = Q.map((text, i) => {
+      const no = 25 + i;
+      return { no, text, opts: [1, 2, 3, 4, 5].map((v) => {
+        const on = ans[no] === v;
+        return { v, aria: v + ', ' + LBL[v - 1], pressed: on ? 'true' : 'false', bg: on ? '#0965FA' : '#FFFFFF', fg: on ? '#FFFFFF' : '#15234D', bd: on ? '#0965FA' : '#D5DEEE', pick: () => this.setState({ answers: { ...ans, [no]: v } }) };
+      }) };
+    });
+    const answered = Object.keys(ans).length;
+    const pc = this.state.pCat;
+    const pCats = [['akademik', 'Akademik (2)'], ['non', 'Non-akademik (2)']].map(([id, label]) => {
+      const on = id === pc;
+      return { label, pressed: on ? 'true' : 'false', bg: on ? '#FFFFFF' : 'transparent', shadow: on ? '0 3px 10px rgba(16,26,51,0.08)' : 'none', fg: on ? '#101A33' : '#4A5877', pick: () => this.setState({ pCat: id }) };
+    });
+    const FILE_OK = 'M7 3h7l5 5v13H7zM14 3v5h5';
+    const FILE_WARN = 'M12 4l9 16H3zM12 10v4M12 17v.01';
+    const P = {
+      akademik: [
+        { title: 'Olimpiade Sains Nasional bidang Matematika', tingkat: 'Nasional', capaian: 'Medali Perunggu', org: 'Puspresnas', tahun: '2025', file: 'sertifikat-osn.pdf' },
+        { title: 'Lomba Karya Tulis Ilmiah Remaja', tingkat: 'Provinsi', capaian: 'Juara 2', org: 'Universitas Sriwijaya', tahun: '2025', file: null }
+      ],
+      non: [
+        { title: 'Ketua OSIS', tingkat: 'Sekolah', capaian: 'Periode 2025/2026', org: 'SMA Negeri 1 Palembang', tahun: '2025', file: 'sk-osis.pdf' },
+        { title: 'Turnamen Futsal Pelajar', tingkat: 'Kota', capaian: 'Juara 3', org: 'Pemerintah Kota Palembang', tahun: '2024', file: 'piagam-futsal.jpg' }
+      ]
+    };
+    const prestasi = P[pc].map((p) => ({ ...p, fileText: p.file || 'Sertifikat belum diunggah', fileFg: p.file ? '#0B3FA8' : '#B34700', fileIcon: p.file ? FILE_OK : FILE_WARN }));
+    const X = [60, 322.5, 585, 847.5];
+    const y = (v) => Math.round((20 + (100 - v) * 8) * 10) / 10;
+    const MAPEL = { 'Matematika': [86, 88, 89, 91], 'Fisika': [82, 83, 85, 86], 'Bahasa Indonesia': [85, 86, 86, 87], 'Bahasa Inggris': [80, 81, 83, 84], 'Informatika': [88, 90, 91, 93] };
+    const AVG = [84.2, 85.1, 86.0, 87.1];
+    const mp = this.state.mapel;
+    const mapelChips = Object.keys(MAPEL).map((m) => {
+      const on = m === mp;
+      return { label: m, pressed: on ? 'true' : 'false', bg: on ? '#0965FA' : '#FFFFFF', fg: on ? '#FFFFFF' : '#15234D', bd: on ? '#0965FA' : '#D5DEEE', pick: () => this.setState({ mapel: m }) };
+    });
+    const mapelPts = MAPEL[mp].map((v, i) => X[i] + ',' + y(v)).join(' ');
+    const avgPts = AVG.map((v, i) => X[i] + ',' + y(v)).join(' ');
+    const mapelDots = MAPEL[mp].map((v, i) => ({ x: X[i], y: y(v), ty: y(v) - 12, v }));
+    const SEMS = [
+      { id: 1, sem: 'Semester 1', jenis: 'Ganjil', kelas: 'X', tahun: '2024/2025', jml: 13, avg: '84,2' },
+      { id: 2, sem: 'Semester 2', jenis: 'Genap', kelas: 'X', tahun: '2024/2025', jml: 13, avg: '85,1' },
+      { id: 3, sem: 'Semester 3', jenis: 'Ganjil', kelas: 'XI', tahun: '2025/2026', jml: 14, avg: '86,0' },
+      { id: 4, sem: 'Semester 4', jenis: 'Genap', kelas: 'XI', tahun: '2025/2026', jml: 14, avg: '87,1' },
+      { id: 5, sem: 'Semester 5', jenis: 'Ganjil', kelas: 'XII', tahun: '2026/2027', jml: '–', avg: 'Belum tersedia', na: true }
+    ];
+    const os = this.state.openSem;
+    const semesters = SEMS.map((s) => {
+      const open = s.id === os;
+      return { ...s, available: !s.na, open, expanded: open ? 'true' : 'false', btn: open ? 'Tutup' : 'Lihat detail', rot: open ? 'rotate(180deg)' : 'none', avgFg: s.na ? '#8A96B2' : '#101A33', toggle: () => this.setState({ openSem: open ? null : s.id }) };
+    });
+    const detail = [['Pendidikan Agama', 88], ['Pendidikan Pancasila', 87], ['Bahasa Indonesia', 87], ['Matematika', 91], ['Bahasa Inggris', 84], ['Sejarah', 85], ['PJOK', 88], ['Seni Budaya', 86], ['Matematika Tingkat Lanjut', 90], ['Fisika', 86], ['Kimia', 85], ['Informatika', 93], ['Bahasa Inggris Tingkat Lanjut', 83], ['Muatan Lokal', 87]].map(([n, v]) => ({ n, v }));
+    const demo = [['isi', 'Sedang diisi'], ['selesai', 'Selesai']].map(([id, label]) => {
+      const on = id === this.state.tes;
+      return { label, pressed: on ? 'true' : 'false', bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#101A33' : '#DCE6FF', pick: () => this.setState({ tes: id, tab: 'minat' }) };
+    });
+    return {
+      pct, dash: (C * pct / 100).toFixed(1) + ' ' + C.toFixed(1),
+      checklist, tabs,
+      showTesIsi: tab === 'minat' && !tesDone,
+      showTesSelesai: tab === 'minat' && tesDone,
+      showPrestasi: tab === 'prestasi',
+      showRapor: tab === 'rapor',
+      sections, questions, answered,
+      pCats, prestasi,
+      openModal: () => this.setState({ modal: true, tab: 'prestasi' }),
+      closeModal: () => this.setState({ modal: false }),
+      modalOpen: this.state.modal,
+      mapelChips, mapelName: mp, mapelPts, avgPts,
+      d0: mapelDots[0], d1: mapelDots[1], d2: mapelDots[2], d3: mapelDots[3],
+      semesters, detail, demo
+    };
+  }
+}
+</script>
+</body>
+</html>
