@@ -10,7 +10,6 @@ import {
   AnalisisPotensiRoute,
   CompassRoute,
   DashboardRoute,
-  JurusanPage,
   LandingRoute,
   PersiapanRoute,
   ProfilRoute,
@@ -21,6 +20,8 @@ const MasukPage = lazy(() => import("@/app/MasukPage"));
 const DaftarPage = lazy(() => import("@/app/DaftarPage"));
 const BeasiswaPage = lazy(() => import("@/app/BeasiswaPage"));
 const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
+const JurusanListPage = lazy(() => import("@/app/JurusanListPage"));
+const JurusanDetailPage = lazy(() => import("@/app/JurusanDetailPage"));
 
 /** Landing tidak memakai layout, jadi butuh Suspense sendiri. */
 const withSuspense = (node: ReactNode) => <Suspense fallback={<PageLoader fullscreen />}>{node}</Suspense>;
@@ -34,9 +35,8 @@ export const router = createBrowserRouter([
     path: "/jurusan",
     element: <AdaptiveLayout />,
     children: [
-      { index: true, element: <JurusanPage /> },
-      // Halaman detail dikerjakan di Tahap 2B; sementara membuka halaman yang sama.
-      { path: ":slug", element: <JurusanPage /> },
+      { index: true, element: <JurusanListPage /> },
+      { path: ":slug", element: <JurusanDetailPage /> },
     ],
   },
   {

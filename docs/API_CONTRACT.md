@@ -142,7 +142,7 @@ Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
 
 | Kebutuhan | Fase | Status |
 |---|---|---|
-| Katalog jurusan per **nama jurusan** (bukan per kampus) dengan `slug`, bidang, deskripsi, `imageUrl`, mapel pendukung, prospek karier. Sementara frontend memakai `mocks/data/jurusan.ts` di mode dummy maupun backend (`services/jurusanService.ts`). Bentuk final ditulis di Tahap 2B. | 2 | 🔴 |
+| Katalog jurusan per nama jurusan, data PTS dan PTLN, label kecocokan per jurusan (lihat bagian 6) | 2 | 🔴 |
 | Prestasi: ubah, field peringkat/penyelenggara, upload sertifikat | 4 | 🔴 |
 | Hasil Compass sungguhan (sekarang selalu jawaban cadangan, lihat `BACKEND_MAP.md` poin 10) | 5 | 🟡 |
 | Data beasiswa (daftar, filter, detail) | 5 | 🔴 |
@@ -177,3 +177,66 @@ Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
 ### 5.3 Target kampus dan prodi tidak saling cocok (data seed)
 - Di seed backend, akun `siswa@orbita.id` punya `targetPtn` Universitas Indonesia, tetapi `targetMajor`-nya milik kampus lain (`targetMajor.universityId` ≠ `targetPtnId`). Penyebabnya, `seed.ts` mencari prodi dengan `findFirst({ name: { contains: "Komputer" } })` tanpa menyaring kampus.
 - **Dibutuhkan:** `PUT /profile` memastikan `targetMajorId` milik `targetPtnId`, dan seed memilih prodi dari kampus yang sama.
+
+## 6. Katalog jurusan (Fase 2)
+
+Frontend menampilkan jurusan **per nama jurusan** (mis. "Informatika"), bukan per kampus seperti `GET /ptn/majors`. Sementara katalognya ada di `frontend/src/mocks/data/jurusan.ts` dan dipakai di mode dummy maupun backend (`services/jurusanService.ts`). Tipe lengkapnya: `frontend/src/types/jurusan.ts`.
+
+### 6.1 Daftar jurusan 🔴
+
+```
+GET /jurusan?search=informatika&bidang=teknologi&page=1&limit=24
+→ {
+    "items": [
+      { "slug": "informatika", "name": "Informatika", "bidang": "teknologi",
+        "description": "…", "imageUrl": null }
+    ],
+    "counts": { "teknologi": 6, "kesehatan": 5 },   // jumlah per bidang, untuk chip filter
+    "pagination": { "page": 1, "limit": 24, "totalCount": 44, "totalPages": 2, "hasMore": true }
+  }
+```
+
+- `bidang`: `teknologi | sains | kesehatan | teknik | ekonomi | hukum | sosial | pendidikan | desain | pertanian | kedinasan`.
+- **Alasan:** halaman `/jurusan` (pencarian + filter bidang) dan carousel beranda.
+
+### 6.2 Detail jurusan 🔴
+
+```
+GET /jurusan/:slug
+→ {
+    "slug": "informatika", "name": "Informatika", "bidang": "teknologi",
+    "description": "…", "imageUrl": null,
+    "degree": "S1", "rumpun": "Saintek", "jalur": ["SNBP", "SNBT", "Mandiri"],
+    "about": ["paragraf 1", "paragraf 2"],
+    "topics": ["Algoritma dan Pemrograman", "Struktur Data"],
+    "careers": [{ "title": "Software Engineer", "description": "Membangun aplikasi web dan mobile" }],
+    "supportingSubjects": ["Matematika", "Informatika", "Bahasa Inggris"],
+    "similar": ["sistem-informasi", "ilmu-komputer", "statistika"]
+  }
+```
+
+- Slug tidak dikenal → `404`.
+- **Alasan:** halaman `/jurusan/:slug`.
+
+### 6.3 Kampus yang membuka jurusan 🔴
+
+Sementara frontend mencari lewat `GET /ptn/majors?search=` lalu mencocokkan nama prodi (daftar nama per jurusan ada di field `ptn` di data katalog). Cara ini rapuh karena bergantung pada nama prodi.
+
+```
+GET /jurusan/:slug/kampus?type=PTN&city=Bandung
+→ { "campuses": [
+      { "majorId": "…", "majorName": "Teknik Informatika", "university":
+        { "id": "…", "name": "Institut Teknologi Bandung", "city": "Bandung", "type": "PTN", "logoUrl": null } }
+    ] }
+```
+
+- `Major` perlu relasi ke katalog jurusan (mis. kolom `jurusanSlug`).
+- `University.type` perlu nilai yang konsisten untuk filter: `PTN`, `PTS`, `Kedinasan`, `PTLN`. Saat ini ada `PTN Akademik`, `PTN Vokasi`, `PTKIN`, dan `PTK Kedinasan`; frontend mengelompokkannya sendiri (`campusGroupOf`).
+- **Data PTS dan PTLN belum ada** di backend. Mode dummy memakai 3 PTS contoh; PTLN tampil sebagai empty state.
+- `logoUrl` kampus semuanya masih `null`.
+
+### 6.4 Label kecocokan per jurusan 🟡
+
+Kartu jurusan menampilkan "Sangat sesuai" / "Sesuai" dari hasil Compass (tanpa persentase). Sementara frontend mencocokkan `recommendedMajors[].name` (nama prodi backend) ke katalog lewat nama, lalu memakai `match_pct ≥ 80` sebagai "Sangat sesuai".
+
+- **Usulan:** `recommendedMajors` menyertakan `jurusanSlug` dan label yang sudah jadi, mis. `{ "jurusanSlug": "informatika", "fit": "Sangat sesuai" }`, supaya aturan labelnya ada di backend.

@@ -4,6 +4,7 @@ import { ApiError } from "@/services/http";
 import { accountFromToken, updateAccount, type MockAccount } from "./db";
 import { findMajor, findUniversity } from "./data/ptn";
 import { delay } from "./delay";
+import { simulateCompass } from "./compassEngine";
 
 /**
  * Profil lengkap seperti respons GET /profile, disesuaikan dengan status:
@@ -61,6 +62,10 @@ export async function mockSetStatus(token: string | null, status: StudentStatus)
         communication: 76,
         updatedAt: new Date().toISOString(),
       };
+    }
+    // Siswa yang sudah asesmen di Mode Demo dianggap sudah membuka Compass.
+    if (status !== "baru" && !a.compassAnalysis && a.assessment && a.profile) {
+      a.compassAnalysis = simulateCompass(a.assessment, a.academicRecords.map((r) => r.score), a.achievements.length, a.profile.id);
     }
   });
   return status;

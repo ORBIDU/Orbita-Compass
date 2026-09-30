@@ -49,11 +49,14 @@ Acuan desain: `docs/design/landing/Home-Desktop.dc.html` (1440px) dan `Home-Mobi
 
 ## 2. Explore Jurusan (`/jurusan`, publik) dan Detail Jurusan (`/jurusan/:slug`)
 Acuan desain detail: `docs/design/landing/Jurusan-Detail.dc.html` (desktop).
-- Katalog jurusan dikelompokkan **per nama jurusan** (bukan per kampus), masing-masing punya `slug`. Konten dari `JurusanPage` lama dipindah ke `frontend/src/mocks/`.
-- `/jurusan`: grid kartu jurusan yang sama dengan carousel beranda, ditambah pencarian. Tanpa scroll horizontal.
-- `/jurusan/:slug`: sesuai desain detail. Daftar kampus yang membuka jurusan diambil dari `ptnService` (`GET /ptn/majors`, `GET /ptn/universities`). Harus responsif walaupun desain HP-nya belum ada.
+- Katalog jurusan dikelompokkan **per nama jurusan** (bukan per kampus), masing-masing punya `slug`. Konten dari `JurusanPage` lama dipindah ke `frontend/src/mocks/` (tanpa persentase "match", perkiraan gaji, dan daftar alumni karena tidak bisa dipertanggungjawabkan).
+- `/jurusan`: grid kartu jurusan yang sama dengan carousel beranda, dengan **pencarian** dan **filter bidang**. Chip filter turun ke baris baru kalau tidak muat (tidak digeser). Tanpa filter kota atau jenis kampus. Tanpa scroll horizontal.
+- `/jurusan/:slug`: sesuai desain detail (tentang jurusan, apa yang dipelajari, prospek karier, kampus yang membuka, mapel pendukung, jalur masuk, ajakan "Cocok nggak sih buatku?", jurusan lain yang mirip). Harus responsif walaupun desain HP-nya belum ada.
+- Daftar **"Kampus yang membuka jurusan ini"** diambil dari `ptnService`, dengan **filter jenis kampus** (PTN, PTS, Kedinasan, PTLN) dan **filter kota**.
+- Kalau siswa sudah login dan sudah asesmen, kartu jurusan menampilkan **label kecocokan dari Compass** ("Sangat sesuai" atau "Sesuai"), bukan persentase.
 - Foto jurusan belum ada: tampil sampul berwarna dengan ikon per bidang. Field `imageUrl` sudah disiapkan untuk foto asli.
-- Data: backend belum punya katalog per nama jurusan beserta deskripsi, mapel pendukung, dan prospek karier → dummy + catat di `docs/API_CONTRACT.md`.
+- Tombol konsultasi di HP: gelembung teks tampil beberapa detik saat halaman dibuka, lalu mengecil jadi maskot saja supaya tidak menutupi konten. Di desktop gelembung selalu tampil.
+- Data: backend belum punya katalog per nama jurusan beserta deskripsi, mapel pendukung, dan prospek karier, juga belum punya data PTS dan PTLN → dummy + catat di `docs/API_CONTRACT.md`.
 
 ## 3. Masuk & Daftar (`/masuk`, `/daftar`)
 - Desktop: kiri 65% berisi komponen `AuthAnimationSlot` (tempat animasi buatan tim, sementara placeholder bertema navy), kanan 35% berisi form. Berpindah Masuk ↔ Daftar tanpa reload.
@@ -159,7 +162,7 @@ Field bertanda 🔒 diisi admin dan hanya bisa dibaca, dengan catatan "Hubungi w
 ## Fase pengerjaan
 - [x] Fase 0 — Audit frontend (tanpa mengubah kode)
 - [x] Fase 1 — Fondasi: design token, lapisan services + mocks + saklar dummy, status siswa + Mode Demo, routing, kerangka portal, API_CONTRACT.md awal
-- [ ] Fase 2 — Landing + Explore Jurusan
+- [x] Fase 2 — Landing + Explore Jurusan
 - [ ] Fase 3 — Masuk & Daftar
 - [ ] Fase 4 — Dashboard + Analisis Potensi
 - [ ] Fase 5 — ORBIDU Compass + Explore Beasiswa

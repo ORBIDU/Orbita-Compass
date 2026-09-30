@@ -3,10 +3,13 @@ import {
   BarChart3,
   Brain,
   Code2,
+  GraduationCap,
   Landmark,
   PenTool,
   Scale,
   Shield,
+  Sigma,
+  Sprout,
   type LucideIcon,
 } from "lucide-react";
 import type { BidangKey } from "@/types/jurusan";
@@ -20,17 +23,22 @@ interface BidangInfo {
   icon: LucideIcon;
 }
 
-/** Label, warna sampul, dan ikon untuk setiap bidang jurusan. */
+/** Label, warna sampul, dan ikon untuk setiap bidang jurusan (urutan = urutan chip filter). */
 export const BIDANG: Record<BidangKey, BidangInfo> = {
   teknologi: { label: "Teknologi & Informatika", theme: "blue", icon: Code2 },
+  sains: { label: "Matematika & Sains Data", theme: "teal", icon: Sigma },
   kesehatan: { label: "Kesehatan", theme: "orange", icon: Activity },
-  sosial: { label: "Sosial & Humaniora", theme: "teal", icon: Brain },
-  hukum: { label: "Hukum", theme: "navy", icon: Scale },
-  ekonomi: { label: "Ekonomi & Bisnis", theme: "amber", icon: BarChart3 },
   teknik: { label: "Teknik & Industri", theme: "blue", icon: Landmark },
+  ekonomi: { label: "Ekonomi & Bisnis", theme: "amber", icon: BarChart3 },
+  hukum: { label: "Hukum", theme: "navy", icon: Scale },
+  sosial: { label: "Sosial & Humaniora", theme: "teal", icon: Brain },
+  pendidikan: { label: "Pendidikan", theme: "teal", icon: GraduationCap },
   desain: { label: "Desain & Seni", theme: "orange", icon: PenTool },
+  pertanian: { label: "Pertanian", theme: "amber", icon: Sprout },
   kedinasan: { label: "Kedinasan", theme: "navy", icon: Shield },
 };
+
+export const BIDANG_KEYS = Object.keys(BIDANG) as BidangKey[];
 
 /**
  * Kelas Tailwind per tema. Ditulis lengkap (bukan disusun dari string)
