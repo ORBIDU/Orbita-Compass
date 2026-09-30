@@ -35,8 +35,8 @@ export const router = createBrowserRouter([
     element: <AdaptiveLayout />,
     children: [
       { index: true, element: <JurusanPage /> },
-      // Detail per id dikerjakan di Fase 2; sementara membuka halaman yang sama.
-      { path: ":id", element: <JurusanPage /> },
+      // Halaman detail dikerjakan di Tahap 2B; sementara membuka halaman yang sama.
+      { path: ":slug", element: <JurusanPage /> },
     ],
   },
   {

@@ -7,6 +7,7 @@ import { useDismiss } from "@/lib/useDismiss";
 import Logo from "@/components/ui/Logo";
 import EmptyState from "@/components/ui/EmptyState";
 import MobileDrawer from "./MobileDrawer";
+import { BRAND } from "@/config/brand";
 
 interface PortalHeaderProps {
   user: DisplayUser;
@@ -96,7 +97,7 @@ export default function PortalHeader({ user, onLogout }: PortalHeaderProps) {
           <button type="button" onClick={() => setDrawerOpen(true)} aria-label="Buka menu" className={`${iconButton} lg:hidden`}>
             <Menu size={18} />
           </button>
-          <Link to={ROUTES.portal} aria-label="ORBITA, ke Dashboard" className="shrink-0">
+          <Link to={ROUTES.portal} aria-label={`${BRAND.name}, ke Dashboard`} className="shrink-0">
             <Logo size="sm" />
           </Link>
           <span className="hidden h-6 w-px bg-line sm:block" />

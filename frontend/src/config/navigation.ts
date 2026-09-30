@@ -12,6 +12,7 @@ import {
   Target,
   type LucideIcon,
 } from "lucide-react";
+import { BRAND } from "@/config/brand";
 
 /** Semua URL aplikasi di satu tempat (sesuai peta halaman docs/SPEK_SISWA.md). */
 export const ROUTES = {
@@ -55,7 +56,7 @@ export interface PersiapanItem {
 export const PORTAL_NAV_BEFORE: NavItem[] = [
   { label: "Dashboard", to: ROUTES.portal, icon: LayoutDashboard, end: true },
   { label: "Analisis Potensi", to: ROUTES.analisisPotensi, icon: Brain },
-  { label: "Orbita Compass", to: ROUTES.compass, icon: Compass },
+  { label: BRAND.compassName, to: ROUTES.compass, icon: Compass },
   { label: "Action Plan", to: ROUTES.actionPlan, icon: CalendarCheck },
 ];
 

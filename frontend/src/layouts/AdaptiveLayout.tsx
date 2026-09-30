@@ -2,6 +2,7 @@ import { useAuth } from "@/context/AuthContext";
 import PageLoader from "@/components/ui/PageLoader";
 import PortalLayout from "./PortalLayout";
 import PublicLayout from "./PublicLayout";
+import { BRAND } from "@/config/brand";
 
 /**
  * Layout yang mengikuti status login: belum login → layout publik,
@@ -10,6 +11,6 @@ import PublicLayout from "./PublicLayout";
  */
 export default function AdaptiveLayout() {
   const { status } = useAuth();
-  if (status === "loading") return <PageLoader fullscreen label="Memuat ORBITA..." />;
+  if (status === "loading") return <PageLoader fullscreen label={`Memuat ${BRAND.name}...`} />;
   return status === "authenticated" ? <PortalLayout /> : <PublicLayout />;
 }

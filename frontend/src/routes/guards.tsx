@@ -6,12 +6,13 @@ import { ROUTES } from "@/config/navigation";
 import type { LockableFeature } from "@/types/student";
 import PageLoader from "@/components/ui/PageLoader";
 import LockedOverlay from "@/components/ui/LockedOverlay";
+import { BRAND } from "@/config/brand";
 
 /** Halaman portal: wajib login. Belum login → ke /masuk, lalu kembali ke halaman asal. */
 export function RequireAuth() {
   const { status } = useAuth();
   const location = useLocation();
-  if (status === "loading") return <PageLoader fullscreen label="Memuat ORBITA..." />;
+  if (status === "loading") return <PageLoader fullscreen label={`Memuat ${BRAND.name}...`} />;
   if (status === "guest") return <Navigate to={ROUTES.masuk} replace state={{ from: location.pathname }} />;
   return <Outlet />;
 }
@@ -27,7 +28,7 @@ export function GuestOnly() {
   const { status: studentStatus, ready } = useStudentStatus();
   const location = useLocation();
 
-  if (status === "loading") return <PageLoader fullscreen label="Memuat ORBITA..." />;
+  if (status === "loading") return <PageLoader fullscreen label={`Memuat ${BRAND.name}...`} />;
   if (status === "authenticated") {
     if (user?.role === "STUDENT" && !ready) return <PageLoader fullscreen label="Menyiapkan portal..." />;
     const from = (location.state as { from?: string } | null)?.from;
@@ -39,8 +40,8 @@ export function GuestOnly() {
 
 const LOCK_COPY: Record<LockableFeature, { title: string; description: string }> = {
   compass: {
-    title: "Orbita Compass masih terkunci",
-    description: "Isi Gambaran Minat Bakat dulu supaya ORBITA bisa merekomendasikan jurusan yang cocok untukmu.",
+    title: `${BRAND.compassName} masih terkunci`,
+    description: `Isi Gambaran Minat Bakat dulu supaya ${BRAND.name} bisa merekomendasikan jurusan yang cocok untukmu.`,
   },
   actionPlan: {
     title: "Action Plan masih terkunci",

@@ -3,6 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 import { ROUTES } from "@/config/navigation";
 import Logo from "@/components/ui/Logo";
 import PageLoader from "@/components/ui/PageLoader";
+import { BRAND } from "@/config/brand";
 
 /**
  * Kerangka sementara halaman Masuk dan Daftar (tema navy).
@@ -12,8 +13,8 @@ export default function AuthLayout() {
   return (
     <div className="min-h-dvh bg-gradient-navy px-4 py-6 sm:py-10">
       <div className="mx-auto flex w-full max-w-md flex-col gap-6">
-        <Link to={ROUTES.landing} aria-label="ORBITA, ke beranda" className="self-start">
-          <Logo size="sm" />
+        <Link to={ROUTES.landing} aria-label={`${BRAND.name}, ke beranda`} className="self-start">
+          <Logo size="sm" tone="dark" />
         </Link>
         <Suspense fallback={<PageLoader />}>
           <Outlet />

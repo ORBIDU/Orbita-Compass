@@ -7,6 +7,7 @@ import { ROUTES } from "@/config/navigation";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { SelectField, TextField } from "@/components/ui/FormField";
+import { BRAND } from "@/config/brand";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MIN_PASSWORD = 8;
@@ -84,7 +85,7 @@ export default function DaftarPage() {
 
   return (
     <Card padding="lg">
-      <h1 className="text-xl font-bold text-ink">Buat akun ORBITA</h1>
+      <h1 className="text-xl font-bold text-ink">Buat akun {BRAND.name}</h1>
       <p className="mt-1 text-sm text-ink-muted">Mulai petakan jurusanmu sejak sekarang.</p>
 
       <form onSubmit={handleSubmit} noValidate className="mt-6 flex flex-col gap-4">

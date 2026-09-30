@@ -1,5 +1,6 @@
 import React from "react";
 import { TrendingUp, Calendar } from "lucide-react";
+import { BRAND } from "@/config/brand";
 
 const PP = "Poppins, sans-serif";
 const BLUE = "#0965fa";
@@ -83,7 +84,7 @@ export default function DashboardPage({ onNavigate, currentUser }: Props) {
             <div className="col-span-12 md:col-span-5 flex flex-col justify-center py-4">
               <p className="text-[13px] font-semibold text-white/70 mb-1" style={{ fontFamily: PP }}>Sabtu, 19 Juli 2026</p>
               <h1 className="text-[28px] font-bold text-white leading-tight mb-1.5" style={{ fontFamily: PP }}>Selamat pagi, {studentName}!</h1>
-              <p className="text-[13px] text-white/80 mb-6" style={{ fontFamily: PP }}>Mari mulai perjalanan target kampusmu bersama Orbita!</p>
+              <p className="text-[13px] text-white/80 mb-6" style={{ fontFamily: PP }}>Mari mulai perjalanan target kampusmu bersama {BRAND.name}!</p>
               <p className="text-[11px] font-semibold text-white/60 uppercase tracking-widest mb-3" style={{ fontFamily: PP }}>RINGKASAN HARIAN</p>
               <div className="flex flex-col gap-2.5">
                 <div className="flex items-center gap-2.5">
@@ -233,7 +234,7 @@ export default function DashboardPage({ onNavigate, currentUser }: Props) {
 
           {/* Orbita Kompas */}
           <div className="col-span-12 md:col-span-7 bg-white rounded-3xl p-6 border border-slate-100" style={{ boxShadow: "0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)" }}>
-            <h2 className="text-[17px] font-bold text-slate-800" style={{ fontFamily: PP }}>Orbita kompas</h2>
+            <h2 className="text-[17px] font-bold text-slate-800" style={{ fontFamily: PP }}>{BRAND.compassName}</h2>
             <p className="text-[13px] text-slate-400 mb-4" style={{ fontFamily: PP }}>Jurusan yang sangat direkomendasikan</p>
 
             {/* #1 Match card */}

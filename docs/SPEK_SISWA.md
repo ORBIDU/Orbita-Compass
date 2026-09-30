@@ -1,8 +1,9 @@
-# Spesifikasi Frontend ORBITA — Sisi Siswa
+# Spesifikasi Frontend ORBIDU — Sisi Siswa
 
 Di luar cakupan tahap ini: Konsultasi Guru BK, feedback, portal guru BK, wali kelas, dan admin.
 
 ## Keputusan sementara (bisa diubah)
+- Nama brand resmi **ORBIDU** (sebelumnya ORBITA). Semua teks yang terlihat pengguna memakai `frontend/src/config/brand.ts`. Nama file, variabel, route, dan email akun demo (`siswa@orbita.id`, dll., harus sama dengan seed backend) tidak diubah.
 - Menu "Tryout" berganti nama menjadi **Persiapan**.
 - Halaman Daftar tetap ada untuk siswa (memakai `/auth/register`). Bisa berubah kalau nanti akun siswa dibuat sekolah.
 - Tes gambaran minat bakat: 42 soal dalam 7 bagian, skala 1–5. Soal yang sudah ada di kode dipindah ke `frontend/src/data/asesmen.json`; soal final dari Bu Putri menyusul. Hasil diolah jadi 5 skor sesuai backend: technology, research, creativity, leadership, communication.
@@ -22,34 +23,37 @@ Saat naik kelas, status kembali ke `baru` dan hasil tes lama disimpan sebagai ri
 Buat panel kecil "Mode Demo" yang hanya muncul saat `VITE_USE_MOCK=true`, untuk berpindah status dan melihat semua kondisi halaman.
 
 ## Peta halaman
-Publik: `/` Landing, `/jurusan` Explore Jurusan, `/jurusan/:id` Detail Jurusan, `/masuk`, `/daftar`.
+Publik: `/` Landing, `/jurusan` Explore Jurusan, `/jurusan/:slug` Detail Jurusan, `/masuk`, `/daftar`.
 Portal (wajib login): `/portal` Dashboard, `/portal/analisis-potensi`, `/portal/compass`, `/portal/beasiswa`, `/portal/action-plan`, `/portal/persiapan/snbp`, `/portal/persiapan/:ujian` (tka, snbt, skd), `/portal/profil`.
 Kalau route yang sudah ada berbeda, usulkan penyesuaiannya di Fase 0.
 
 ## 1. Landing (`/`)
-- Tanpa navbar. Logo di kiri atas, tombol Masuk dan Daftar di kanan atas. Hapus tombol melayang "Masuk ke Portal".
-- Hero:
-  - Headline: "Mulai petakan jurusanmu sejak kelas 10, bukan H-1 pendaftaran."
-  - Subheadline: "ORBITA membaca minat, prestasi, dan nilai rapormu untuk merekomendasikan jurusan dan kampus yang paling cocok, lalu menyusun langkah persiapannya."
-  - CTA utama oranye "Mulai Sekarang" → /daftar. CTA kedua outline "Eksplor Jurusan" → /jurusan.
-  - Maskot di kanan dengan gelembung sapaan dan chip pilihan sebagai pengganti navigasi: "Lihat jurusan", "Gimana ORBITA bekerja?", "Untuk sekolah", "Tanya-tanya".
-  - Maskot sementara berupa gambar statis di komponen `MascotSlot`. Nanti diganti model 3D (.glb) yang mengikuti kursor di desktop. Di HP: animasi idle, menoleh ke titik sentuhan, dan bereaksi saat di-tap. Model dimuat setelah halaman tampil, punya gambar cadangan, dan menghormati `prefers-reduced-motion`.
-- Section setelah hero, berurutan:
-  1. Cara Kerja: Kenali → Eksplorasi → Persiapkan, tiap langkah dengan cuplikan tampilan fitur.
-  2. Preview Explore Jurusan: search bar, chip rumpun ilmu, 6 kartu jurusan, tombol "Lihat semua jurusan".
-  3. Untuk Sekolah: manfaat untuk guru BK dan wali kelas.
-  4. Dasar Ilmiah: asesmen berbasis Career Adaptability, SDT, Self-Efficacy, dan OECD Learning Compass, divalidasi psikolog.
-  5. FAQ (accordion).
-  6. CTA penutup.
-  7. Footer: Instagram, WhatsApp, email, dan © tahun berjalan (otomatis).
-- Perbaiki kontras kartu yang abu-abu di atas putih, dan hilangkan ruang kosong berlebih sebelum footer.
+Acuan desain: `docs/design/landing/Home-Desktop.dc.html` (1440px) dan `Home-Mobile.dc.html` (390px). Teks mengikuti desain persis dan disimpan di `frontend/src/content/landing.ts`, bukan di komponen. Nama, tagline, dan kontak diambil dari `frontend/src/config/brand.ts`.
+- Nama brand **ORBIDU**, tagline "The Smart Way to Shape Your Future". Nomor WhatsApp, email, Instagram, dan LinkedIn masih ditandai "BELUM DIPASTIKAN" di `brand.ts` dan wajib dicek sebelum rilis.
+- Header tanpa navbar: logo di kiri, tombol Daftar dan Masuk di kanan. Kalau sudah login, keduanya diganti satu tombol "Buka Portal".
+- Urutan section:
+  1. **Hero**: "Hi, Bifriends!" (font aksen), judul, subjudul, CTA "Mulai Perjalanan" (tamu → `/daftar`, sudah login → `/portal`) dan "Kenali ORBIDU" (scroll ke section Masalah). Visual planet berbintang, orbit, lima chip langkah, dan maskot. Di bawahnya deretan logo kampus (masih placeholder).
+  2. **Masalah**: "Masih bingung harus mulai dari mana?" dengan enam gelembung pertanyaan, lalu "Tenang, Bifriends!".
+  3. **Kenali Dirimu** (1 Potensi): CTA "Kenali Dirimu" (tamu → `/daftar`, sudah login → `/portal/analisis-potensi`).
+  4. **ORBIDU Compass** (2 Arah): Profil → Pilihan untuk dieksplorasi → Jalur yang bisa ditempuh.
+  5. **Eksplorasi Pilihan** (3 Pilihan): carousel kartu jurusan dan tombol "Lihat Jurusan Lainnya" → `/jurusan`.
+  6. **Action Plan** (4 Persiapan): CTA "Mulai Action Plan" (tamu → `/daftar`, sudah login → `/portal/action-plan`).
+  7. **FAQ**: tiga kategori (Tentang ORBIDU, Untuk Bifriends, Untuk Sekolah) + tombol "Tanya lewat WhatsApp".
+  8. **Final CTA** "Ready to find your orbit, Bifriends?" + tombol "Hadirkan ORBIDU di Sekolahmu" (WhatsApp), lalu **footer**.
+- Footer: Jelajahi (Beranda, Explore Jurusan, FAQ), Akun (Masuk, Mulai Perjalanan), Hubungi kami (email, Instagram, LinkedIn, lokasi), © tahun berjalan (otomatis). Link "Untuk Sekolah" dan "Tentang Kami" disembunyikan sampai halamannya dibuat.
+- Tombol **"Ayo konsultasi!"** dengan maskot melompat menempel di pojok kanan bawah layar (`position: fixed`) di semua halaman publik (beranda, `/jurusan`, `/jurusan/:slug`) dan membuka WhatsApp. Tidak tampil di halaman Masuk/Daftar dan portal.
+- **Carousel jurusan** digeser dengan tombol panah dan swipe, tanpa scrollbar horizontal maupun vertikal yang terlihat. Desktop: 4 kartu per halaman. HP: 1 kartu dengan sebagian kartu berikutnya terlihat. Kartu membuka `/jurusan/:slug`.
+- **MascotSlot**: maskot hero versi SVG dari desain. Desktop: mata mengikuti kursor. HP: menoleh ke titik sentuhan. Semua animasi mati jika `prefers-reduced-motion`. Nanti diganti model 3D tanpa mengubah halaman.
+- Font aksen Pecita, dengan Caveat sebagai cadangan sampai file Pecita tersedia.
+- Tidak boleh ada scroll horizontal. Dicek di lebar 360px, 768px, dan 1440px.
 
-## 2. Explore Jurusan (`/jurusan`, publik)
-- Search, filter rumpun (Saintek, Soshum, Vokasi, Kedinasan), filter kota dan jenis kampus, pagination.
-- Kartu prodi: nama, kampus, kota, rumpun.
-- Detail prodi: deskripsi, mapel pendukung, prospek karier, kampus yang membuka, daya tampung (berlabel "estimasi").
-- Kalau siswa sudah login dan sudah asesmen, tampilkan persentase kecocokan di kartu.
-- Data: `GET /ptn/majors` dan `GET /ptn/universities` sudah ada. Deskripsi, mapel pendukung, dan prospek karier belum ada → dummy + catat di API_CONTRACT.
+## 2. Explore Jurusan (`/jurusan`, publik) dan Detail Jurusan (`/jurusan/:slug`)
+Acuan desain detail: `docs/design/landing/Jurusan-Detail.dc.html` (desktop).
+- Katalog jurusan dikelompokkan **per nama jurusan** (bukan per kampus), masing-masing punya `slug`. Konten dari `JurusanPage` lama dipindah ke `frontend/src/mocks/`.
+- `/jurusan`: grid kartu jurusan yang sama dengan carousel beranda, ditambah pencarian. Tanpa scroll horizontal.
+- `/jurusan/:slug`: sesuai desain detail. Daftar kampus yang membuka jurusan diambil dari `ptnService` (`GET /ptn/majors`, `GET /ptn/universities`). Harus responsif walaupun desain HP-nya belum ada.
+- Foto jurusan belum ada: tampil sampul berwarna dengan ikon per bidang. Field `imageUrl` sudah disiapkan untuk foto asli.
+- Data: backend belum punya katalog per nama jurusan beserta deskripsi, mapel pendukung, dan prospek karier → dummy + catat di `docs/API_CONTRACT.md`.
 
 ## 3. Masuk & Daftar (`/masuk`, `/daftar`)
 - Desktop: kiri 65% berisi komponen `AuthAnimationSlot` (tempat animasi buatan tim, sementara placeholder bertema navy), kanan 35% berisi form. Berpindah Masuk ↔ Daftar tanpa reload.
@@ -61,7 +65,7 @@ Kalau route yang sudah ada berbeda, usulkan penyesuaiannya di Fase 0.
 
 ## 4. Kerangka portal
 - Header: logo + "Student Portal", notifikasi, menu akun (nama, kelas, Profil, Keluar).
-- Menu: Dashboard, Analisis Potensi, Orbita Compass, Action Plan, Persiapan, Explore Jurusan.
+- Menu: Dashboard, Analisis Potensi, ORBIDU Compass, Action Plan, Persiapan, Explore Jurusan.
 - Dropdown Persiapan: Siap SNBP, Siap TKA, Siap SNBT, Siap SKD, dan Siap Mandiri berlabel "Segera hadir" yang tidak bisa diklik.
 - Menu aktif harus sesuai halaman.
 - HP: menu menjadi drawer.
@@ -73,7 +77,7 @@ Kalau route yang sudah ada berbeda, usulkan penyesuaiannya di Fase 0.
   - Ringkasan harian + Today's Action Plan (dari Action Plan).
   - Performa: radar 7 subtes SNBT (PU, PPU, PBM, PK, LBI, LBE, PM) dan hasil terakhir Siap SNBT, TKA, dan SKD.
   - Timeline seleksi (selalu tampil).
-  - Orbita Kompas: 3 jurusan teratas.
+  - ORBIDU Compass: 3 jurusan teratas.
   - Eksplor Jurusan → `/jurusan`.
 - Per status:
   - `baru`: Kompas, Performa, dan Action Plan terkunci, dengan satu CTA besar "Isi Gambaran Minat Bakat".
@@ -89,12 +93,12 @@ Kalau route yang sudah ada berbeda, usulkan penyesuaiannya di Fase 0.
 - Tab Prestasi: sub-tab Akademik dan Non-Akademik. Bisa tambah, ubah, dan hapus. Field: judul, tingkat (Sekolah s.d. Internasional), peringkat, penyelenggara, tahun, file sertifikat. Endpoint ubah dan upload sertifikat belum ada → catat di API_CONTRACT.
 - Tab Nilai Rapor: hanya baca (diinput sekolah). Berisi tren nilai per mapel, tabel per semester, dan detail rapor tiap semester. Sumber ditulis "e-Rapor Kemendikdasmen". Empty state: "Nilai rapormu belum diinput sekolah."
 
-## 7. Orbita Compass (`/portal/compass`)
+## 7. ORBIDU Compass (`/portal/compass`)
 Terkunci jika status `baru`. Isinya berurutan:
 1. Arah Pendidikan: bidang utama dengan satu skor kesesuaian. Minat, kompetensi, dan akademik dijelaskan dengan label (misalnya "Sangat selaras"), bukan persentase tambahan.
 2. Rekomendasi jurusan: 3–5 jurusan, masing-masing satu skor. Angkanya harus sama dengan yang tampil di Dashboard.
 3. Rekomendasi jalur: S1 PTN, D4/Vokasi, PTS, PTLN, dan Kedinasan. Jalur yang tidak relevan disembunyikan di semua halaman. Tombol "Lihat pilihan" menampilkan daftar jurusan dan kampus.
-4. Justifikasi: catatan ORBITA, detail minat/kompetensi/akademik, dan radar 5 dimensi.
+4. Justifikasi: catatan ORBIDU, detail minat/kompetensi/akademik, dan radar 5 dimensi.
 5. Beasiswa yang bisa dicoba: tanpa persentase eligibility. Tampilkan label kecocokan dengan jalur dan syarat utamanya, plus tombol ke `/portal/beasiswa`.
 6. Langkah Selanjutnya: ke Siap SNBP, Siap SNBT, dan Siap SKD (yang terakhir hanya jika Kedinasan relevan).
 
@@ -109,7 +113,7 @@ Data: `POST /compass/analyze` dan `GET /compass/result` sudah ada, tapi hasilnya
 - Fokus Minggu Ini: pilih maksimal 2 dari SNBT, TKA, dan Kedinasan, dengan progress masing-masing. Ringkasan hari belajar, jumlah aktivitas, dan progress minggu ini.
 - Kalender bulanan: warna kotak menunjukkan status hari (hijau selesai, merah terlewat, biru hari ini, kuning ada jadwal). Titik kecil menunjukkan kategori (SNBT, TKA, Kedinasan, Personal).
 - Daftar tugas berupa kartu seperti Englishnesia (judul, kategori, progress, jumlah soal, estimasi waktu), dengan filter Minggu Ini, Terlewat, Belum Selesai, dan Selesai beserta jumlahnya.
-- Panel Hari Ini: target hari ini + rekomendasi ORBITA.
+- Panel Hari Ini: target hari ini + rekomendasi ORBIDU.
 - Modal Re-plan: pilih hari belajar (frekuensi dihitung otomatis dari jumlah hari), fokus (maks. 2), dan durasi rencana (jumlah minggu atau sampai tanggal ujian).
 - Penyusun tugas (simulasi AI): SNBT → 7 subtes SNBT; TKA → mapel wajib dan pilihan; SKD → TWK, TIU, TKP. Prioritaskan subtes dengan skor terendah; kalau belum ada data, bagi rata.
 - Tugas terlewat ditawarkan untuk digeser ke hari belajar berikutnya.
@@ -158,7 +162,7 @@ Field bertanda 🔒 diisi admin dan hanya bisa dibaca, dengan catatan "Hubungi w
 - [ ] Fase 2 — Landing + Explore Jurusan
 - [ ] Fase 3 — Masuk & Daftar
 - [ ] Fase 4 — Dashboard + Analisis Potensi
-- [ ] Fase 5 — Orbita Compass + Explore Beasiswa
+- [ ] Fase 5 — ORBIDU Compass + Explore Beasiswa
 - [ ] Fase 6 — Action Plan
 - [ ] Fase 7 — Persiapan
 - [ ] Fase 8 — Profil
