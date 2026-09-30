@@ -1,7 +1,5 @@
 import { lazy, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
-import { toDisplayUser } from "@/lib/user";
 import { useLegacyNavigate } from "@/lib/legacyNav";
 import { ROUTES, UJIAN_KEYS, type UjianKey } from "@/config/navigation";
 import type { ProfileTab } from "@/app/StudentProfiling";
@@ -12,7 +10,6 @@ import { FeatureGate } from "./guards";
 // Setiap halaman dimuat terpisah (lazy) supaya landing lebih cepat terbuka.
 
 const LandingPage = lazy(() => import("@/app/LandingPage"));
-const DashboardPage = lazy(() => import("@/app/DashboardPage"));
 const CompassPage = lazy(() => import("@/app/CompassPage"));
 const ActionPlanPage = lazy(() => import("@/app/ActionPlanPage"));
 const SiapPTNPage = lazy(() => import("@/app/SiapPTNPage"));
@@ -27,12 +24,6 @@ const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
 /** Beranda baru (Fase 2) tidak butuh prop apa pun. */
 export function LandingRoute() {
   return <LandingPage />;
-}
-
-export function DashboardRoute() {
-  const onNavigate = useLegacyNavigate();
-  const { user } = useAuth();
-  return <DashboardPage onNavigate={onNavigate} currentUser={user ? toDisplayUser(user) : null} />;
 }
 
 export function AnalisisPotensiRoute() {

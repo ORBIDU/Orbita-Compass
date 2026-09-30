@@ -15,6 +15,11 @@ export interface StudentProfile {
   city: string;
   targetPtnId: string | null;
   targetMajorId: string | null;
+  /**
+   * Nama panggilan untuk sapaan. BELUM ADA di backend (docs/API_CONTRACT.md
+   * bagian 2.3), jadi dari backend asli selalu kosong. Mode dummy sudah mengisinya.
+   */
+  nickname?: string | null;
   createdAt: string;
   updatedAt: string;
 }
