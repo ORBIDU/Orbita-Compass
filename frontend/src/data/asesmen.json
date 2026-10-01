@@ -1,0 +1,245 @@
+{
+  "status": "placeholder",
+  "version": "placeholder-2026-10",
+  "_catatan": "PLACEHOLDER: soal lama dari halaman Analisis Potensi versi awal, dipakai sampai 42 soal final dari Bu Putri siap. Ganti isi 'sections' dengan soal final lalu ubah 'status' menjadi 'final'. Bobot 'dims' di tiap pilihan adalah aturan SEMENTARA untuk simulasi skor 5 dimensi (lib/asesmenScoring.ts), belum disetujui Bu Putri; penilaian final harus dipindah ke backend (docs/API_CONTRACT.md bagian 3.4).",
+  "sections": [
+    {
+      "id": "s1",
+      "title": "Kepedulian pada masa depan",
+      "description": "Seberapa jauh kamu memikirkan dan merencanakan masa depanmu. Tidak ada jawaban benar atau salah.",
+      "questions": [
+        { "id": "s1q1", "type": "likert", "labels": ["Tidak pernah", "Sangat sering"], "text": "Seberapa sering kamu memikirkan tujuan pendidikan atau karier yang ingin kamu capai setelah lulus SMA?" },
+        { "id": "s1q2", "type": "likert", "labels": ["Tidak pernah", "Sangat sering"], "text": "Seberapa sering kamu mencari informasi tentang jurusan kuliah, profesi, atau peluang karier yang sesuai dengan minatmu?" },
+        { "id": "s1q3", "type": "likert", "labels": ["Tidak pernah", "Sangat sering"], "text": "Seberapa sering kamu mempertimbangkan langkah-langkah yang perlu dilakukan untuk mencapai tujuan masa depanmu?" }
+      ]
+    },
+    {
+      "id": "s2",
+      "title": "Rasa ingin tahu karier",
+      "description": "Cara kamu menjelajah dunia kuliah dan karier.",
+      "questions": [
+        {
+          "id": "s2q1", "type": "single", "text": "Ketika menemukan profesi atau bidang studi yang menarik, apa yang biasanya kamu lakukan?",
+          "options": [
+            { "label": "Mencari informasi lewat internet" },
+            { "label": "Menonton video atau webinar terkait" },
+            { "label": "Berdiskusi dengan guru atau Guru BK" },
+            { "label": "Bertanya ke orang yang bekerja di bidang itu" },
+            { "label": "Belum melakukan apa pun" }
+          ]
+        },
+        {
+          "id": "s2q2", "type": "multi", "max": 2, "text": "Pilih maksimal 2 sumber informasi yang paling sering kamu gunakan.",
+          "options": [
+            { "label": "Website universitas" },
+            { "label": "Media sosial" },
+            { "label": "YouTube atau podcast" },
+            { "label": "Guru atau Guru BK" },
+            { "label": "Orang tua" },
+            { "label": "Alumni atau profesional" },
+            { "label": "Teman" },
+            { "label": "Belum pernah mencari" }
+          ]
+        },
+        { "id": "s2q3", "type": "likert", "labels": ["Sangat tidak tertarik", "Sangat tertarik"], "text": "Seberapa tertarik kamu mencoba pengalaman baru untuk mengenal berbagai bidang karier?" }
+      ]
+    },
+    {
+      "id": "s3",
+      "title": "Keyakinan diri",
+      "description": "Seberapa yakin kamu dengan kemampuanmu meraih tujuan. Tidak ada jawaban benar atau salah.",
+      "questions": [
+        { "id": "s3q1", "type": "likert", "labels": ["Sangat tidak yakin", "Sangat yakin"], "text": "Seberapa yakin kamu bisa mencapai jurusan atau pekerjaan yang kamu inginkan kalau terus berusaha?" },
+        { "id": "s3q2", "type": "likert", "labels": ["Sangat tidak yakin", "Sangat yakin"], "text": "Seberapa yakin kamu bisa mengatasi kesulitan yang mungkin muncul saat mengejar tujuanmu?" },
+        { "id": "s3q3", "type": "likert", "labels": ["Sangat tidak yakin", "Sangat yakin"], "text": "Seberapa yakin kamu mampu mempelajari keterampilan baru untuk mencapai cita-citamu?" }
+      ]
+    },
+    {
+      "id": "s4",
+      "title": "Kendali diri",
+      "description": "Cara kamu mengambil keputusan tentang arah masa depanmu.",
+      "questions": [
+        {
+          "id": "s4q1", "type": "single", "text": "Ketika harus memilih antara dua pilihan karier yang sama-sama menarik, apa yang biasanya kamu lakukan?",
+          "options": [
+            { "label": "Memutuskan sendiri setelah mencari banyak informasi", "dims": { "leadership": 1 } },
+            { "label": "Berdiskusi dengan orang tua dulu" },
+            { "label": "Berkonsultasi dengan guru atau Guru BK" },
+            { "label": "Mengikuti pilihan teman atau lingkungan" },
+            { "label": "Masih bingung menentukan pilihan" }
+          ]
+        },
+        {
+          "id": "s4q2", "type": "single", "text": "Ketika menerima banyak saran tentang pilihan jurusan, bagaimana kamu mengambil keputusan?",
+          "options": [
+            { "label": "Menimbang semua informasi sebelum memutuskan", "dims": { "research": 1 } },
+            { "label": "Lebih mempertimbangkan pendapat orang tua" },
+            { "label": "Lebih percaya pada saran guru atau Guru BK" },
+            { "label": "Mengikuti pilihan teman atau lingkungan" },
+            { "label": "Sering menunda karena sulit memilih" }
+          ]
+        },
+        { "id": "s4q3", "type": "likert", "labels": ["Tidak pernah", "Sangat sering"], "text": "Seberapa sering kamu menetapkan target belajar untuk mendukung tujuan masa depanmu?" }
+      ]
+    },
+    {
+      "id": "s5",
+      "title": "Motivasi dari dalam diri",
+      "description": "Aktivitas yang kamu nikmati walaupun tanpa nilai atau hadiah.",
+      "questions": [
+        {
+          "id": "s5q1", "type": "multi", "max": 3, "text": "Pilih maksimal 3 aktivitas yang tetap ingin kamu lakukan walaupun tanpa nilai atau hadiah.",
+          "options": [
+            { "label": "Membuat karya atau desain", "dims": { "creativity": 2 } },
+            { "label": "Membantu orang lain", "dims": { "communication": 2 } },
+            { "label": "Memecahkan soal atau tantangan logika", "dims": { "research": 2 } },
+            { "label": "Membaca atau mencari informasi baru", "dims": { "research": 1 } },
+            { "label": "Membuat program atau teknologi", "dims": { "technology": 2 } },
+            { "label": "Berorganisasi atau memimpin tim", "dims": { "leadership": 2 } },
+            { "label": "Melakukan eksperimen", "dims": { "research": 2 } },
+            { "label": "Berolahraga" },
+            { "label": "Membuat konten", "dims": { "creativity": 1, "communication": 1 } },
+            { "label": "Mengajar atau menjelaskan sesuatu", "dims": { "communication": 2 } }
+          ]
+        },
+        {
+          "id": "s5q2", "type": "single", "text": "Alasan utama kamu memilih aktivitas tersebut adalah...",
+          "options": [
+            { "label": "Aku memang menikmatinya" },
+            { "label": "Aku ingin terus berkembang" },
+            { "label": "Aktivitas itu bermanfaat bagi orang lain", "dims": { "communication": 1 } },
+            { "label": "Aku tertantang menjadi lebih baik" },
+            { "label": "Aktivitas itu membuatku percaya diri" }
+          ]
+        },
+        {
+          "id": "s5q3", "type": "ranking", "text": "Urutkan aktivitas yang paling ingin kamu lakukan saat punya waktu luang seharian.",
+          "options": [
+            { "label": "Ikut workshop atau kelas online", "dims": { "research": 1 } },
+            { "label": "Membuat proyek pribadi", "dims": { "technology": 1, "creativity": 1 } },
+            { "label": "Membaca buku", "dims": { "research": 1 } },
+            { "label": "Ikut kegiatan sosial", "dims": { "communication": 1 } },
+            { "label": "Bermain game", "dims": { "technology": 1 } },
+            { "label": "Membuat konten", "dims": { "creativity": 1 } },
+            { "label": "Berolahraga" },
+            { "label": "Berkumpul dengan teman", "dims": { "communication": 1 } }
+          ]
+        },
+        {
+          "id": "s5q4", "type": "single", "text": "Hal apa yang paling membuatmu puas setelah menyelesaikan suatu aktivitas?",
+          "options": [
+            { "label": "Berhasil memecahkan masalah", "dims": { "research": 1 } },
+            { "label": "Mendapat pengetahuan baru", "dims": { "research": 1 } },
+            { "label": "Membantu orang lain", "dims": { "communication": 1 } },
+            { "label": "Menghasilkan karya yang bisa dibanggakan", "dims": { "creativity": 1 } },
+            { "label": "Mendapat apresiasi dari orang lain", "dims": { "communication": 1 } },
+            { "label": "Mencapai target yang kutetapkan sendiri", "dims": { "leadership": 1 } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "title": "Cara belajar favorit",
+      "description": "Metode belajar yang paling membantumu memahami materi.",
+      "questions": [
+        {
+          "id": "s6q1", "type": "multi", "max": 2, "text": "Pilih maksimal 2 metode belajar yang paling membantumu memahami materi baru.",
+          "options": [
+            { "label": "Menonton video pembelajaran" },
+            { "label": "Membaca buku atau artikel", "dims": { "research": 1 } },
+            { "label": "Praktik langsung atau eksperimen", "dims": { "research": 1, "technology": 1 } },
+            { "label": "Diskusi dengan guru atau teman", "dims": { "communication": 1 } },
+            { "label": "Mengerjakan latihan soal" },
+            { "label": "Mengerjakan proyek atau studi kasus", "dims": { "creativity": 1 } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "title": "Refleksi diri",
+      "description": "Pengalaman, nilai, dan harapanmu untuk masa depan. Ini bagian terakhir.",
+      "questions": [
+        {
+          "id": "s7q1", "type": "single", "text": "Pengalaman mana yang paling membuatmu bangga?",
+          "options": [
+            { "label": "Menjadi juara lomba" },
+            { "label": "Menjadi pengurus organisasi", "dims": { "leadership": 2 } },
+            { "label": "Membantu orang lain", "dims": { "communication": 2 } },
+            { "label": "Menyelesaikan proyek pribadi", "dims": { "technology": 1, "creativity": 1 } },
+            { "label": "Berhasil meningkatkan nilai", "dims": { "research": 1 } },
+            { "label": "Ikut kegiatan relawan", "dims": { "communication": 1 } },
+            { "label": "Membuat karya", "dims": { "creativity": 2 } },
+            { "label": "Mengembangkan usaha kecil", "dims": { "leadership": 2 } },
+            { "label": "Lainnya" }
+          ]
+        },
+        {
+          "id": "s7q2", "type": "multi", "max": 2, "text": "Pilih maksimal 2 hal yang membuat pengalaman itu berkesan.",
+          "options": [
+            { "label": "Berhasil mengatasi tantangan" },
+            { "label": "Belajar hal baru", "dims": { "research": 1 } },
+            { "label": "Membantu orang lain", "dims": { "communication": 1 } },
+            { "label": "Bekerja sama dalam tim", "dims": { "communication": 1, "leadership": 1 } },
+            { "label": "Menjadi lebih percaya diri" },
+            { "label": "Menemukan minat baru" }
+          ]
+        },
+        {
+          "id": "s7q3", "type": "multi", "max": 3, "text": "Pilih maksimal 3 hal yang paling penting bagimu saat memilih pekerjaan nanti.",
+          "options": [
+            { "label": "Membantu banyak orang", "dims": { "communication": 1 } },
+            { "label": "Gaji tinggi" },
+            { "label": "Kesempatan belajar", "dims": { "research": 1 } },
+            { "label": "Jam kerja fleksibel" },
+            { "label": "Kreativitas", "dims": { "creativity": 1 } },
+            { "label": "Stabilitas" },
+            { "label": "Kepemimpinan", "dims": { "leadership": 1 } },
+            { "label": "Inovasi", "dims": { "technology": 1 } },
+            { "label": "Dampak sosial", "dims": { "communication": 1 } },
+            { "label": "Keseimbangan kerja dan hidup" }
+          ]
+        },
+        {
+          "id": "s7q4", "type": "single", "text": "Bayangkan dirimu 10 tahun lagi. Kegiatan apa yang paling ingin kamu lakukan setiap hari?",
+          "options": [
+            { "label": "Memimpin sebuah tim", "dims": { "leadership": 2 } },
+            { "label": "Mengembangkan teknologi", "dims": { "technology": 2 } },
+            { "label": "Mengajar", "dims": { "communication": 2 } },
+            { "label": "Melakukan penelitian", "dims": { "research": 2 } },
+            { "label": "Mendesain sesuatu", "dims": { "creativity": 2 } },
+            { "label": "Menjalankan bisnis", "dims": { "leadership": 2 } },
+            { "label": "Membantu masyarakat", "dims": { "communication": 2 } },
+            { "label": "Membuat karya kreatif", "dims": { "creativity": 2 } }
+          ]
+        },
+        {
+          "id": "s7q5", "type": "multi", "max": 8, "text": "Tantangan apa yang saat ini paling menghambat perkembanganmu? Pilih semua yang sesuai.",
+          "options": [
+            { "label": "Sulit mengatur waktu" },
+            { "label": "Kurang percaya diri" },
+            { "label": "Bingung menentukan tujuan" },
+            { "label": "Kurang memahami materi" },
+            { "label": "Kurang motivasi belajar" },
+            { "label": "Tidak punya teman belajar" },
+            { "label": "Tidak tahu langkah selanjutnya" },
+            { "label": "Lainnya" }
+          ]
+        },
+        {
+          "id": "s7q6", "type": "single", "text": "Kalau kesulitan menentukan masa depan, bantuan apa yang paling ingin kamu dapatkan?",
+          "options": [
+            { "label": "Rekomendasi jurusan" },
+            { "label": "Rekomendasi profesi" },
+            { "label": "Roadmap belajar" },
+            { "label": "Konsultasi dengan Guru BK" },
+            { "label": "Tryout" },
+            { "label": "Mentor" },
+            { "label": "Cerita dari alumni" }
+          ]
+        }
+      ]
+    }
+  ]
+}

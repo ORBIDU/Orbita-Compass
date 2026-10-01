@@ -7,7 +7,6 @@ import PageLoader from "@/components/ui/PageLoader";
 import { GuestOnly, RequireAuth } from "@/routes/guards";
 import {
   ActionPlanRoute,
-  AnalisisPotensiRoute,
   CompassRoute,
   LandingRoute,
   PersiapanRoute,
@@ -17,6 +16,7 @@ import {
 
 const AuthPage = lazy(() => import("@/app/AuthPage"));
 const DashboardPage = lazy(() => import("@/app/DashboardPage"));
+const AnalisisPotensiPage = lazy(() => import("@/app/AnalisisPotensiPage"));
 const BeasiswaPage = lazy(() => import("@/app/BeasiswaPage"));
 const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
 const JurusanListPage = lazy(() => import("@/app/JurusanListPage"));
@@ -61,7 +61,7 @@ export const router = createBrowserRouter([
         element: <PortalLayout />,
         children: [
           { index: true, element: <DashboardPage /> },
-          { path: "analisis-potensi", element: <AnalisisPotensiRoute /> },
+          { path: "analisis-potensi", element: <AnalisisPotensiPage /> },
           { path: "compass", element: <CompassRoute /> },
           { path: "beasiswa", element: <BeasiswaPage /> },
           { path: "action-plan", element: <ActionPlanRoute /> },

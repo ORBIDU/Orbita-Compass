@@ -100,13 +100,19 @@ Acuan desain: `docs/design/portal/Portal-Dashboard.dc.html` (1440px) dan `Portal
 - Data: fokus belajar, durasi tugas, riwayat latihan, timeline, notifikasi, dan nama panggilan belum ada di backend → API_CONTRACT bagian 7. Dengan backend asli, status `aktif` belum bisa muncul.
 
 ## 6. Analisis Potensi (`/portal/analisis-potensi`)
-- Header dengan indikator Kelengkapan Profil (%) beserta keterangan apa yang masih kurang.
-- Tab Gambaran Minat Bakat:
-  - Belum diisi: pengantar singkat, lalu tes per bagian dengan progress bar, simpan otomatis tiap bagian, tombol Simpan dan Simpan & Analisis.
-  - Setelah submit: loading "AI sedang memahami profilmu" (simulasi) → arahkan ke Compass.
-  - Sudah diisi: kartu "Sudah diisi pada [tanggal] · Kelas [X]", tombol lihat hasil di Compass, dan riwayat per kelas.
-- Tab Prestasi: sub-tab Akademik dan Non-Akademik. Bisa tambah, ubah, dan hapus. Field: judul, tingkat (Sekolah s.d. Internasional), peringkat, penyelenggara, tahun, file sertifikat. Endpoint ubah dan upload sertifikat belum ada → catat di API_CONTRACT.
-- Tab Nilai Rapor: hanya baca (diinput sekolah). Berisi tren nilai per mapel, tabel per semester, dan detail rapor tiap semester. Sumber ditulis "e-Rapor Kemendikdasmen". Empty state: "Nilai rapormu belum diinput sekolah."
+Acuan desain: `docs/design/portal/Portal-Analisis.dc.html` (desktop) dan `Portal-Analisis-HP.dc.html` (390px). Teks di `frontend/src/content/analisis.ts`.
+- **Header**: breadcrumb (desktop), judul, deskripsi, dan kartu **Kelengkapan profil** (%) dengan daftar yang menjelaskan apa yang masih kurang. Rumus: tes 40 × bagian selesai ÷ 7, nilai rapor 30, minimal satu prestasi 20, sertifikat 10 × proporsi prestasi bersertifikat. Nilai rapor yang belum ada ditulis "menunggu input dari sekolah" (bukan tugas siswa). Dengan backend asli, sertifikat belum bisa diunggah sehingga persentase dihitung dari 90 poin.
+- **Tab** tersimpan di URL: `?tab=minat` (bawaan), `?tab=prestasi`, `?tab=rapor`, dengan chip status ("4/7" atau "Selesai", jumlah prestasi, "Sem 1–4" atau "Belum ada"). Panah kiri/kanan berpindah tab.
+- **Gambaran Minat Bakat**:
+  - Soal dari `frontend/src/data/asesmen.json` (sekarang **placeholder**: 23 soal lama dalam 7 bagian). Jenis soal: skala 1–5, pilihan tunggal, pilihan ganda dengan batas (pilihan lain nonaktif saat batas tercapai), dan urutan dengan tombol naik/turun.
+  - Desktop: panel kiri berisi progres dan daftar bagian; HP: kartu progres dengan daftar bagian yang bisa dibuka-tutup. Nomor soal berlanjut antarbagian.
+  - Jawaban tersimpan otomatis setiap berubah ("Tersimpan otomatis pukul …"); tombol Simpan dan **Simpan & Analisis** di bagian terakhir, aktif setelah semua bagian lengkap.
+  - Simpan & Analisis → layar "AI sedang memahami profilmu" dengan tiga langkah → `POST /assessment` + `POST /compass/analyze` → status `sudah_asesmen` → pindah ke Compass.
+  - Skor 5 dimensi dihitung dengan aturan **sementara** (bobot di `asesmen.json`, kode di `frontend/src/lib/asesmen.ts`).
+  - Setelah selesai: kartu "Diisi pada [tanggal] saat kelas [X]", tombol ke Compass, "Lihat jawabanku" (hanya untuk tes terbaru, jika jawabannya tersimpan), dan **Riwayat per kelas** (kelas, tanggal, bidang paling selaras; tanpa tombol "Lihat").
+- **Prestasi**: pilihan Akademik | Non-akademik dengan jumlah, tombol Tambah prestasi, jendela tambah/ubah (nama, tingkat Sekolah s.d. Internasional, capaian, penyelenggara, tahun, sertifikat PDF/JPG/PNG maks. 2 MB; di mode dummy hanya nama file), dan konfirmasi hapus. Prestasi tanpa sertifikat ditandai oranye. Dengan backend asli: tombol Ubah, capaian, penyelenggara, dan unggah sertifikat disembunyikan dengan catatan.
+- **Nilai Rapor** (hanya baca, diinput sekolah, format Kurikulum Merdeka): info + sumber "e-Rapor Kemendikdasmen" dan tanggal diperbarui, grafik tren per mapel (Recharts) dengan garis rata-rata semua mapel dan semester berjalan "Belum tersedia", lalu rapor per semester (tabel di desktop, kartu di HP) dengan detail nilai tiap mapel. Kosong → "Nilai rapormu belum diinput sekolah".
+- Data: draft dan jawaban tes, riwayat per kelas, penilaian di backend, prestasi lengkap, dan kelas/tahun ajaran rapor belum ada di backend → API_CONTRACT bagian 3 dan 8.
 
 ## 7. ORBIDU Compass (`/portal/compass`)
 Terkunci jika status `baru`. Isinya berurutan:
@@ -176,7 +182,7 @@ Field bertanda 🔒 diisi admin dan hanya bisa dibaca, dengan catatan "Hubungi w
 - [x] Fase 1 — Fondasi: design token, lapisan services + mocks + saklar dummy, status siswa + Mode Demo, routing, kerangka portal, API_CONTRACT.md awal
 - [x] Fase 2 — Landing + Explore Jurusan
 - [x] Fase 3 — Masuk & Daftar
-- [ ] Fase 4 — Dashboard + Analisis Potensi
+- [x] Fase 4 — Dashboard + Analisis Potensi
 - [ ] Fase 5 — ORBIDU Compass + Explore Beasiswa
 - [ ] Fase 6 — Action Plan
 - [ ] Fase 7 — Persiapan
@@ -188,3 +194,5 @@ Hal yang sengaja ditunda dan wajib dibereskan sebelum ORBIDU dipakai siswa:
 - Halaman **Syarat & Ketentuan** dan **Kebijakan Privasi** wajib dibuat. Setelah itu, teks keduanya di kotak persetujuan form Daftar (`AUTH_FIELDS.consent` di `frontend/src/content/auth.ts`, sekarang teks tebal biasa) diubah menjadi link.
 - Nomor WhatsApp, email, Instagram, dan LinkedIn bertanda "BELUM DIPASTIKAN" di `frontend/src/config/brand.ts` wajib dicek (dipakai juga oleh "Lupa password?").
 - Backend menyimpan persetujuan orang tua/wali beserta waktunya (`docs/API_CONTRACT.md` bagian 2.4).
+- Ganti soal placeholder di `frontend/src/data/asesmen.json` dengan 42 soal final dari Bu Putri (ubah `status` menjadi `"final"`), lalu pastikan jumlah bagian/soal yang disebut di beranda (`frontend/src/content/landing.ts`), FAQ, dan Dashboard ("7 bagian, bisa dicicil") sesuai.
+- Penilaian skor 5 dimensi dipindah ke backend dan disetujui Bu Putri (`docs/API_CONTRACT.md` bagian 3.4). Sebelum itu, rekomendasi Compass dari tes hanya untuk demo.

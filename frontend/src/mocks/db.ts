@@ -9,6 +9,7 @@ import type {
 } from "@/types/backend";
 import type { StudentStatus } from "@/types/student";
 import type { ExamKey, PlanTask, PracticeSummary } from "@/types/dashboard";
+import type { AsesmenAnswers, AsesmenDraft, AssessmentHistoryEntry } from "@/types/analisis";
 import { simulateCompass } from "./compassEngine";
 
 // "Database" dummy untuk mode VITE_USE_MOCK=true. Disimpan di localStorage
@@ -29,7 +30,7 @@ export interface MockAccount {
   /** Status siswa (belum ada di backend, lihat docs/API_CONTRACT.md). */
   status: StudentStatus;
   academicRecords: AcademicRecord[];
-  achievements: Achievement[];
+  achievements: MockAchievement[];
   reflection: Reflection | null;
   /** Hasil tes yang tersimpan. Hanya tampil jika status bukan "baru". */
   assessment: Assessment | null;
@@ -41,9 +42,27 @@ export interface MockAccount {
   studyPlan: { focus: ExamKey[]; tasks: PlanTask[] } | null;
   /** Hasil latihan/tryout terakhir per ujian (docs/API_CONTRACT.md bagian 7.2). */
   practice: PracticeSummary;
+  /** Jawaban tes yang belum dikirim, disimpan per bagian (API_CONTRACT 3.3). */
+  assessmentDraft: AsesmenDraft | null;
+  /** Jawaban tes terbaru yang sudah dikirim, untuk "Lihat jawabanku". */
+  assessmentAnswers: AsesmenAnswers | null;
+  /** Kelas saat tes terbaru diisi. */
+  assessmentGrade: number | null;
+  /** Riwayat tes kelas sebelumnya (API_CONTRACT 3.2). */
+  assessmentHistory: AssessmentHistoryEntry[];
   /** Waktu persetujuan orang tua/wali saat daftar (belum ada di backend, lihat docs/API_CONTRACT.md). */
   parentConsentAt?: string | null;
 }
+
+/**
+ * Prestasi dummy: bentuk backend + field yang belum ada di backend
+ * (capaian, penyelenggara, sertifikat; API_CONTRACT bagian 8.1).
+ */
+export type MockAchievement = Achievement & {
+  rank?: string | null;
+  organizer?: string | null;
+  certificateName?: string | null;
+};
 
 interface MockDb {
   version: number;
@@ -54,7 +73,8 @@ const STORAGE_KEY = "orbita_mock_db";
 // Naikkan angka ini jika bentuk data dummy berubah, supaya data lama diganti.
 // v2 (Tahap 2B): akun demo langsung punya hasil Compass + kampus PTS contoh.
 // v3 (Tahap 4A): nama panggilan, rencana belajar, dan riwayat latihan.
-const DB_VERSION = 3;
+// v4 (Tahap 4B): rapor Kurikulum Merdeka lengkap, prestasi + sertifikat, riwayat tes.
+const DB_VERSION = 4;
 
 const SEED_DATE = "2026-07-01T08:00:00.000Z";
 
@@ -69,6 +89,42 @@ function academic(profileId: string, semester: number, subject: string, score: n
     createdAt: SEED_DATE,
   };
 }
+
+// Rapor dummy format Kurikulum Merdeka: satu nilai akhir per mapel.
+// Kelas X: 13 mapel umum. Kelas XI: Biologi diganti 2 mapel pilihan tingkat lanjut.
+const RAPOR_X = ["Pendidikan Agama dan Budi Pekerti", "Pendidikan Pancasila", "Bahasa Indonesia", "Matematika", "Bahasa Inggris", "Sejarah", "PJOK", "Seni Budaya", "Fisika", "Kimia", "Biologi", "Informatika", "Muatan Lokal"];
+const RAPOR_XI = ["Pendidikan Agama dan Budi Pekerti", "Pendidikan Pancasila", "Bahasa Indonesia", "Matematika", "Bahasa Inggris", "Sejarah", "PJOK", "Seni Budaya", "Matematika Tingkat Lanjut", "Fisika", "Kimia", "Informatika", "Bahasa Inggris Tingkat Lanjut", "Muatan Lokal"];
+/** Nilai akhir semester 1–4 per mapel (sesuai contoh di docs/design/portal/Portal-Analisis.dc.html). */
+const RAPOR_SISWA: Record<string, number[]> = {
+  "Pendidikan Agama dan Budi Pekerti": [86, 87, 88, 88],
+  "Pendidikan Pancasila": [85, 86, 86, 87],
+  "Bahasa Indonesia": [85, 86, 86, 87],
+  Matematika: [86, 88, 89, 91],
+  "Bahasa Inggris": [80, 81, 83, 84],
+  Sejarah: [83, 84, 85, 85],
+  PJOK: [86, 87, 87, 88],
+  "Seni Budaya": [84, 85, 86, 86],
+  Fisika: [82, 83, 85, 86],
+  Kimia: [81, 82, 84, 85],
+  Biologi: [83, 84],
+  Informatika: [88, 90, 91, 93],
+  "Muatan Lokal": [85, 86, 86, 87],
+  "Matematika Tingkat Lanjut": [0, 0, 88, 90],
+  "Bahasa Inggris Tingkat Lanjut": [0, 0, 82, 83],
+};
+
+function raporSeed(profileId: string): AcademicRecord[] {
+  const records: AcademicRecord[] = [];
+  for (let semester = 1; semester <= 4; semester++) {
+    for (const subject of semester <= 2 ? RAPOR_X : RAPOR_XI) {
+      records.push({ ...academic(profileId, semester, subject, RAPOR_SISWA[subject][semester - 1]), createdAt: RAPOR_UPDATED });
+    }
+  }
+  return records;
+}
+
+/** Tanggal rapor semester 4 diunggah sekolah (dummy). */
+const RAPOR_UPDATED = "2026-07-05T08:00:00.000Z";
 
 function profileOf(
   userId: string,
@@ -110,22 +166,12 @@ function seed(): MockDb {
     updatedAt: SEED_DATE,
     profile: siswaProfile,
     status: "aktif",
-    academicRecords: [
-      academic(siswaProfile.id, 1, "Matematika Wajib", 88),
-      academic(siswaProfile.id, 1, "Fisika", 85),
-      academic(siswaProfile.id, 1, "Bahasa Indonesia", 90),
-      academic(siswaProfile.id, 2, "Matematika Wajib", 90),
-      academic(siswaProfile.id, 2, "Fisika", 89),
-      academic(siswaProfile.id, 3, "Matematika Wajib", 92),
-      academic(siswaProfile.id, 3, "Fisika", 91),
-      academic(siswaProfile.id, 4, "Matematika Wajib", 94),
-      academic(siswaProfile.id, 4, "Fisika", 93),
-      academic(siswaProfile.id, 5, "Matematika Wajib", 95),
-      academic(siswaProfile.id, 5, "Fisika", 94),
-    ],
+    academicRecords: raporSeed(siswaProfile.id),
     achievements: [
-      { id: "ach-siswa-1", profileId: siswaProfile.id, title: "Juara 1 Olimpiade Sains Nasional (OSN) Komputer", category: "Academic", level: "National", year: 2025, createdAt: SEED_DATE },
-      { id: "ach-siswa-2", profileId: siswaProfile.id, title: "Juara 2 Hackathon Pelajar SMA Se-DKI Jakarta", category: "Academic", level: "Province", year: 2025, createdAt: SEED_DATE },
+      { id: "ach-siswa-1", profileId: siswaProfile.id, title: "Olimpiade Sains Nasional bidang Informatika", category: "Academic", level: "National", year: 2025, createdAt: SEED_DATE, rank: "Medali Perunggu", organizer: "Puspresnas", certificateName: "sertifikat-osn.pdf" },
+      { id: "ach-siswa-2", profileId: siswaProfile.id, title: "Hackathon Pelajar SMA se-DKI Jakarta", category: "Academic", level: "Province", year: 2025, createdAt: SEED_DATE, rank: "Juara 2", organizer: "Dinas Pendidikan DKI Jakarta", certificateName: null },
+      { id: "ach-siswa-3", profileId: siswaProfile.id, title: "Ketua OSIS", category: "Non-Academic", level: "School", year: 2025, createdAt: SEED_DATE, rank: "Periode 2025/2026", organizer: "SMA Negeri 1 Jakarta", certificateName: "sk-osis.pdf" },
+      { id: "ach-siswa-4", profileId: siswaProfile.id, title: "Turnamen Futsal Pelajar", category: "Non-Academic", level: "City", year: 2024, createdAt: SEED_DATE, rank: "Juara 3", organizer: "Pemerintah Kota Jakarta Pusat", certificateName: "piagam-futsal.jpg" },
     ],
     reflection: {
       id: "refl-siswa",
@@ -143,9 +189,17 @@ function seed(): MockDb {
       creativity: 75,
       leadership: 70,
       communication: 78,
-      updatedAt: SEED_DATE,
+      updatedAt: "2026-09-12T08:00:00.000Z",
     },
     compassAnalysis: null,
+    assessmentDraft: null,
+    // Akun demo mengisi tes sebelum fitur simpan jawaban ada, jadi jawabannya tidak tersimpan.
+    assessmentAnswers: null,
+    assessmentGrade: 12,
+    assessmentHistory: [
+      { grade: 11, completedAt: "2025-08-08T08:00:00.000Z", topBidang: "teknologi" },
+      { grade: 10, completedAt: "2024-08-14T08:00:00.000Z", topBidang: "sains" },
+    ],
     studyPlan: {
       focus: ["SNBT", "TKA"],
       tasks: [
@@ -196,6 +250,10 @@ function seed(): MockDb {
     compassAnalysis: null,
     studyPlan: null,
     practice: EMPTY_PRACTICE,
+    assessmentDraft: null,
+    assessmentAnswers: null,
+    assessmentGrade: 12,
+    assessmentHistory: [],
   };
 
   // Akun demo yang sudah asesmen dianggap sudah pernah membuka Compass,

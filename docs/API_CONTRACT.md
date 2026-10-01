@@ -142,18 +142,38 @@ Form Daftar (Fase 3) mewajibkan kotak "Aku dan orang tua/wali setuju dengan Syar
 Atau cukup kirim jumlah sesi latihan/tryout (`tryoutCount`), lalu frontend yang menurunkan status.
 
 ### 3.2 Riwayat asesmen per kelas 🔴
-- Saat naik kelas, status kembali `baru` dan hasil tes lama disimpan sebagai riwayat.
-- Tabel `Assessment` saat ini unik per profil (hanya 1 hasil), jadi riwayat tidak bisa disimpan.
+- Saat naik kelas, status kembali `baru` dan hasil tes lama disimpan sebagai riwayat. Tab Gambaran Minat Bakat menampilkan "Riwayat per kelas": kelas, tanggal, dan bidang paling selaras (tanpa jawaban lama).
+- Tabel `Assessment` saat ini unik per profil (hanya 1 hasil) dan tidak menyimpan kelas, jadi riwayat tidak bisa disimpan. Dengan backend asli, riwayat hanya berisi tes terbaru.
 - **Usulan:** tambah kolom `grade` dan `completedAt`, hapus batasan unik, lalu tambah endpoint:
 
 ```
 GET /assessment/history
-→ { "history": [ { "grade": 10, "completedAt": "…", "technology": 80, "research": 70, "creativity": 75, "leadership": 60, "communication": 72 } ] }
+→ { "latest": { "grade": 12, "completedAt": "2026-09-12T08:00:00Z" },
+    "previous": [ { "grade": 11, "completedAt": "2025-08-08T08:00:00Z", "topBidang": "teknologi" } ] }
 ```
 
-### 3.3 Menyimpan jawaban tes per bagian 🔴
-- SPEK meminta simpan otomatis tiap bagian (42 soal, 7 bagian). `POST /assessment` hanya menerima 5 skor akhir.
-- **Usulan:** `PUT /assessment/answers` dengan body `{ "section": 1, "answers": { "q1": 4, "q2": 5 } }`, dan `GET /assessment/answers` untuk melanjutkan tes. Detailnya ditentukan di Fase 4.
+- `topBidang` = bidang jurusan rekomendasi teratas Compass saat tes itu (kunci bidang, lihat `frontend/src/config/bidang.ts`).
+
+### 3.3 Menyimpan jawaban tes 🔴
+- Tes disimpan otomatis setiap jawaban berubah, dan siswa bisa melanjutkan dari bagian terakhir. Setelah selesai, "Lihat jawabanku" menampilkan jawaban tes terbaru. `POST /assessment` hanya menerima 5 skor akhir.
+- **Sementara:** mode dummy menyimpan draft dan jawaban di data dummy; mode backend menyimpannya di browser (`localStorage`, per akun), jadi hilang jika pindah perangkat.
+- **Usulan:**
+
+```
+GET /assessment/draft  → { "draft": { "answers": { "s1q1": 4, "s2q1": "Mencari informasi lewat internet", "s2q2": ["Teman"], "s5q3": ["…", "…"] }, "sectionIndex": 4, "savedAt": "…" } | null }
+PUT /assessment/draft  ← { "answers": { … }, "sectionIndex": 4 }   → { "draft": { … } }
+POST /assessment/submit ← { "answers": { … }, "questionSetVersion": "placeholder-2026-10" }
+                       → { "assessment": { …5 skor… }, "grade": 12, "completedAt": "…" }
+GET /assessment/answers → { "answers": { … } | null }        // jawaban tes terbaru
+```
+
+- Bentuk jawaban: angka 1–5 (skala), teks pilihan (pilihan tunggal), daftar pilihan (pilihan ganda), urutan lengkap (urutan). Id soal mengikuti `frontend/src/data/asesmen.json`.
+
+### 3.4 Penilaian skor 5 dimensi 🔴
+- Soal masih **placeholder** (23 soal lama, 7 bagian) sampai 42 soal final dari Bu Putri siap.
+- Skor 5 dimensi sekarang dihitung di frontend (`frontend/src/lib/asesmen.ts`, `scoreAnswers`) dengan bobot **sementara** di `asesmen.json`. Aturan ini belum disetujui Bu Putri, jadi rekomendasi Compass dari skor ini hanya untuk demo.
+- **Dibutuhkan:** penilaian dipindah ke backend (`POST /assessment/submit` di atas menerima jawaban mentah lalu menghitung skor), dengan aturan yang disetujui Bu Putri.
+- `POST /assessment` saat ini mengganti skor `0` dengan `70` (`Number(x || 70)`), sehingga skor nol berubah jadi angka palsu. Frontend sementara memberi skor minimal 20. Backend sebaiknya memvalidasi rentang 0–100 tanpa mengganti nilai.
 
 ---
 
@@ -164,7 +184,7 @@ Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
 | Kebutuhan | Fase | Status |
 |---|---|---|
 | Katalog jurusan per nama jurusan, data PTS dan PTLN, label kecocokan per jurusan (lihat bagian 6) | 2 | 🔴 |
-| Prestasi: ubah, field peringkat/penyelenggara, upload sertifikat | 4 | 🔴 |
+| Prestasi: ubah, field capaian/penyelenggara, upload sertifikat (lihat bagian 8.1) | 4 | 🔴 |
 | Hasil Compass sungguhan (sekarang selalu jawaban cadangan, lihat `BACKEND_MAP.md` poin 10) | 5 | 🟡 |
 | Data beasiswa (daftar, filter, detail) | 5 | 🔴 |
 | Action Plan: fokus, hari belajar, penyusun tugas otomatis, geser tugas terlewat (ringkasan harian Dashboard: bagian 7.1) | 6 | 🔴 |
@@ -328,4 +348,29 @@ Sapaan Dashboard ("Selamat pagi, Rizki!") memakai `profile.nickname`, yang sudah
 
 - `GET /auth/me` dan `GET /profile` mengirim `profile.nickname` (string atau `null`); `PUT /profile` menerimanya.
 - Selama kosong, frontend memakai kata pertama nama lengkap (dengan backend asli: "Selamat malam, Ahmad!"). Mode dummy sudah mengisi `"Rizki"` dan `"Budi"`.
+
+---
+
+## 8. Analisis Potensi (Fase 4)
+
+Dipakai `/portal/analisis-potensi` (SPEK bagian 6). Service: `assessmentService`, `achievementService`, `raporService`; bentuk data: `frontend/src/types/analisis.ts`.
+
+### 8.1 Prestasi lengkap 🟡
+Sudah ada `POST /achievements` (`title, category, level, year`) dan `DELETE /achievements/:id`. Yang belum ada:
+
+- **Field** `rank` (capaian, mis. "Juara 2"), `organizer` (penyelenggara), dan `certificateUrl` / `certificateName`.
+- **Ubah:** `PUT /achievements/:id` dengan body yang sama seperti tambah.
+- **Unggah sertifikat:** `POST /achievements/:id/certificate` (multipart, PDF/JPG/PNG maks. 2 MB) → `{ "certificateUrl": "…", "certificateName": "piagam.pdf" }`.
+- **Daftar:** `GET /achievements` (sekarang hanya lewat `GET /profile`).
+- **Nilai tetap:** `category` = `Academic` | `Non-Academic`; `level` = `School` | `City` | `Province` | `National` | `International` (frontend menampilkan Sekolah s.d. Internasional).
+- `DELETE /achievements/:id` belum memeriksa pemilik prestasi (bagian 1.4).
+- **Sementara:** dengan backend asli, tombol Ubah, isian capaian/penyelenggara, dan unggah sertifikat disembunyikan, dengan catatan "Mengubah prestasi dan mengunggah sertifikat belum tersedia saat ini. Untuk mengoreksi, hapus lalu tambahkan ulang." Item sertifikat tidak dihitung di Kelengkapan profil (persentase dari 90 poin).
+
+### 8.2 Nilai rapor per semester 🟡
+`GET /rapor` sudah mengirim `{ semester, subject, score }`. Yang belum ada:
+
+- **Kelas dan tahun ajaran** per semester. Sementara dihitung frontend dari kelas siswa sekarang (`frontend/src/lib/rapor.ts`; tahun ajaran mulai Juli).
+- **Tanggal diperbarui** dan sumber (e-Rapor). Sementara memakai `createdAt` terbaru dari nilai rapor.
+- **Usulan:** `GET /rapor` → `{ "semesters": [ { "semester": 1, "grade": 10, "schoolYear": "2024/2025", "updatedAt": "…", "source": "e-Rapor", "subjects": [ { "subject": "Matematika", "score": 86 } ] } ] }`.
+- Data seed backend baru berisi 2–3 mapel; format Kurikulum Merdeka berisi ±13–14 mapel per semester. Rapor hanya dibaca siswa; input dari sekolah (import e-Rapor).
 
