@@ -6,7 +6,8 @@ Bangun ulang di React + Tailwind dengan mengikuti isi teks, warna, ukuran huruf,
 - PortalHeader.dc.html         : header portal desktop (logo, menu dengan garis bawah untuk menu aktif, dropdown Persiapan, notifikasi, menu akun). Dipakai di semua halaman portal.
 - Portal-Dashboard.dc.html     : dashboard desktop (lebar 1440) dengan tiga kondisi siswa: baru, sudah_asesmen, aktif.
 - Portal-Dashboard-HP.dc.html  : dashboard HP (lebar 390) dengan menu bawah 5 item.
-- Portal-Analisis.dc.html      : Analisis Potensi desktop, tiga tab: Gambaran Minat Bakat, Prestasi, Nilai Rapor.
+- Portal-Analisis.dc.html      : Analisis Potensi desktop, tiga tab: Gambaran Minat Bakat, Prestasi, Nilai Rapor. Panel 'Contoh tes' menampilkan Bagian 1 (pilihan tunggal, pilihan ganda, urutan), Bagian 5 (skala), Bagian 7 (Simpan & Analisis), layar Menganalisis, dan Selesai. Tweaks: raporKosong, modeBackend.
+- Portal-Analisis-HP.dc.html   : Analisis Potensi versi HP (lebar 390).
 
 Cara membaca format:
 - <dc-import name="PortalHeader" ...> artinya komponen PortalHeader dipasang di situ.
