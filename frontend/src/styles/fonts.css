@@ -1,9 +1,9 @@
 /*
- * Poppins (font utama) dimuat dari Google Fonts di index.html.
+ * Poppins (font utama) dan Caveat dimuat dari Google Fonts di index.html.
  *
  * Pecita (font aksen) di-host sendiri. Taruh file-nya di src/assets/fonts/
  * dengan nama Pecita.woff2 dan/atau Pecita.otf. Selama file belum ada,
- * kelas `font-accent` otomatis memakai Poppins sebagai cadangan.
+ * kelas `font-accent` otomatis memakai Caveat (Google Fonts) sebagai cadangan.
  */
 @font-face {
   font-family: "Pecita";

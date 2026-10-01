@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Dashboard siswa ORBIDU versi HP</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Poppins',system-ui,sans-serif;background:#F5F8FC}
+a{color:#0965FA}a:hover{color:#0747B8}
+a:focus-visible,button:focus-visible{outline:3px solid #F1AD00;outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 2660px; overflow: hidden; display: flex; flex-direction: column; font-family: 'Poppins', system-ui, sans-serif; background: #F5F8FC; color: #101A33">
+
+<header style="height: 60px; flex-shrink: 0; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; border-bottom: 1px solid #E3E9F3">
+<a href="Home-Mobile.dc.html" aria-label="ORBIDU, ke beranda" style="display: flex; align-items: center; gap: 8px; text-decoration: none"><svg width="28" height="28" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="9.5" fill="#0965FA"></circle><ellipse cx="17" cy="18" rx="15" ry="5" fill="none" stroke="#FF7000" stroke-width="2.6" transform="rotate(-18 17 18)"></ellipse></svg><span style="font-size: 19px; font-weight: 700; color: #101A33">ORBIDU</span></a>
+<div style="display: flex; align-items: center; gap: 8px">
+<button type="button" aria-label="Notifikasi, 1 belum dibaca" style="position: relative; width: 44px; height: 44px; border-radius: 12px; border: 1px solid #E3E9F3; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15234D" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 1112 0v5l1.5 2h-15zM10 20a2 2 0 004 0"></path></svg><span style="position: absolute; top: 10px; right: 11px; width: 8px; height: 8px; border-radius: 50%; background: #FF7000; border: 2px solid #FFFFFF"></span></button>
+<button type="button" aria-label="Menu akun Ahmad Rizki" style="width: 44px; height: 44px; border-radius: 50%; border: 0; background: linear-gradient(135deg, #0965FA, #00B2DD); color: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 600">AR</button>
+</div>
+</header>
+
+<main style="padding: 16px 16px 100px; display: flex; flex-direction: column; gap: 16px">
+
+<section style="position: relative; overflow: hidden; padding: 22px 20px; display: flex; flex-direction: column; gap: 8px; border-radius: 22px; background: radial-gradient(260px 200px at 90% 20%, rgba(9,101,250,0.4), rgba(9,101,250,0) 70%), linear-gradient(140deg, #15234D 0%, #101A33 100%)">
+<svg width="96" height="96" viewBox="0 0 88 96" aria-hidden="true" style="position: absolute; right: 8px; top: 8px">
+<defs><radialGradient id="dh-body" cx="0.38" cy="0.3" r="0.8"><stop offset="0" stop-color="#8CC8FF"></stop><stop offset="0.5" stop-color="#1F7BFF"></stop><stop offset="1" stop-color="#0445B8"></stop></radialGradient><clipPath id="dh-front"><rect x="0" y="56" width="88" height="30"></rect></clipPath></defs>
+<ellipse cx="44" cy="56" rx="40" ry="9" fill="none" stroke="#FF7000" stroke-width="5" transform="rotate(-16 44 56)"></ellipse>
+<circle cx="44" cy="52" r="26" fill="url(#dh-body)"></circle>
+<path d="M34 32 L54 32 L53 40 Q44 44 35 40 Z" fill="#0C1530"></path><polygon points="24,31 44,23 64,31 44,39" fill="#1E2F62"></polygon>
+<ellipse cx="36" cy="50" rx="5.5" ry="6.2" fill="#FFFFFF"></ellipse><ellipse cx="52" cy="50" rx="5.5" ry="6.2" fill="#FFFFFF"></ellipse>
+<circle cx="35" cy="52" r="3.3" fill="#101A33"></circle><circle cx="51" cy="52" r="3.3" fill="#101A33"></circle>
+<path d="M40 59 Q44 63 48 59" fill="none" stroke="#101A33" stroke-width="1.8" stroke-linecap="round"></path>
+<ellipse cx="44" cy="56" rx="40" ry="9" fill="none" stroke="#F1AD00" stroke-width="5" transform="rotate(-16 44 56)" clip-path="url(#dh-front)"></ellipse>
+</svg>
+<span style="position: relative; font-size: 13px; color: #A9B8D9">Rabu, 30 September 2026</span>
+<h1 style="position: relative; margin: 0; max-width: 230px; font-size: 24px; line-height: 1.2; font-weight: 700; color: #F4F7FF">Selamat pagi, Rizki!</h1>
+<p style="position: relative; margin: 0; font-size: 14px; line-height: 1.6; color: #C8D4EE">2 dari 5 tugas hari ini sudah selesai. Tinggal sedikit lagi.</p>
+<div style="position: relative; margin-top: 4px; display: flex; flex-wrap: wrap; gap: 6px"><span style="height: 28px; padding: 0 10px; display: flex; align-items: center; border-radius: 999px; background: rgba(255,255,255,0.1); border: 1px solid rgba(220,230,255,0.2); font-size: 12px; color: #DCE6FF">Kelas XII</span><span style="height: 28px; padding: 0 10px; display: flex; align-items: center; border-radius: 999px; background: rgba(255,255,255,0.1); border: 1px solid rgba(220,230,255,0.2); font-size: 12px; color: #DCE6FF">Fokus: SNBT dan TKA</span></div>
+</section>
+
+<section aria-labelledby="dh-hari" style="padding: 20px; display: flex; flex-direction: column; gap: 14px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<div style="display: flex; justify-content: space-between; align-items: center"><h2 id="dh-hari" style="margin: 0; font-size: 17px; font-weight: 700">Rencana hari ini</h2><a href="#" style="min-height: 36px; display: flex; align-items: center; font-size: 13px; font-weight: 600">Lihat semua</a></div>
+<div style="display: flex; align-items: center; gap: 14px; padding: 12px 14px; border-radius: 16px; background: #F5F8FC">
+<svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="26" fill="none" stroke="#E3E9F3" stroke-width="8"></circle><circle cx="32" cy="32" r="26" fill="none" stroke="#FF7000" stroke-width="8" stroke-linecap="round" stroke-dasharray="65.3 163.4" transform="rotate(-90 32 32)"></circle><text x="32" y="37" text-anchor="middle" font-family="Poppins" font-size="15" font-weight="700" fill="#101A33">40%</text></svg>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 700">2 dari 5 tugas selesai</span><span style="font-size: 12px; color: #4A5877">Sekitar 65 menit lagi</span></div>
+</div>
+<sc-for list="{{tasks}}" as="t" hint-placeholder-count="3">
+<div style="display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 12px; border-radius: 14px; border: 1px solid #E3E9F3">
+<span style="width: 22px; height: 22px; flex-shrink: 0; box-sizing: border-box; border-radius: 7px; border: 2px solid {{t.boxBd}}; background: {{t.boxBg}}; display: flex; align-items: center; justify-content: center"><sc-if value="{{t.done}}" hint-placeholder-val="{{ false }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></sc-if></span>
+<span style="flex-grow: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 500; color: {{t.fg}}; text-decoration: {{t.deco}}">{{t.title}}</span><span style="font-size: 12px; color: #6B7898">{{t.cat}}, {{t.meta}}</span></span>
+</div>
+</sc-for>
+<a href="#" style="min-height: 36px; display: flex; align-items: center; font-size: 13px; font-weight: 500">+2 tugas lainnya</a>
+</section>
+
+<section aria-labelledby="dh-perf" style="padding: 20px; display: flex; flex-direction: column; gap: 14px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<div style="display: flex; justify-content: space-between; align-items: center"><h2 id="dh-perf" style="margin: 0; font-size: 17px; font-weight: 700">Performa latihan</h2><a href="#" style="min-height: 36px; display: flex; align-items: center; font-size: 13px; font-weight: 600">Detail</a></div>
+<svg width="236" height="232" viewBox="0 0 260 256" role="img" aria-label="Radar skor 7 subtes SNBT dari tryout terakhir" style="align-self: center">
+<polygon points="130,30 208.2,67.7 227.5,152.3 173.4,220.1 86.6,220.1 32.5,152.3 51.8,67.7" fill="#F5F8FC" stroke="#DCE4F2" stroke-width="1"></polygon>
+<polygon points="130,64 181.6,88.8 194.3,144.7 158.6,189.5 101.4,189.5 65.7,144.7 78.4,88.8" fill="none" stroke="#DCE4F2" stroke-width="1"></polygon>
+<polygon points="130,97 155.8,109.4 162.2,137.3 144.3,159.7 115.7,159.7 97.8,137.3 104.2,109.4" fill="none" stroke="#DCE4F2" stroke-width="1"></polygon>
+<polygon points="130,58 180,90.1 186.5,142.9 160.4,193.1 101.4,189.5 79.3,141.6 69,81.4" fill="#0965FA" fill-opacity="0.16" stroke="#0965FA" stroke-width="2" stroke-linejoin="round"></polygon>
+<circle cx="79.3" cy="141.6" r="4" fill="#FF7000"></circle>
+<g font-family="Poppins" font-size="12" font-weight="600" fill="#4A5877"><text x="130" y="18" text-anchor="middle">PU</text><text x="214" y="60" text-anchor="start">PPU</text><text x="232" y="158" text-anchor="start">PBM</text><text x="178" y="244" text-anchor="middle">PK</text><text x="82" y="244" text-anchor="middle">LBI</text><text x="28" y="158" text-anchor="end" fill="#B34700">LBE</text><text x="46" y="60" text-anchor="end">PM</text></g>
+</svg>
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px"><div style="display: flex; flex-direction: column"><span style="font-size: 12px; color: #4A5877">Skor tryout SNBT terakhir</span><span style="font-size: 32px; line-height: 1.1; font-weight: 700">624</span></div><span style="margin-bottom: 4px; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: #E3F5EC; color: #0A7A45">+18 dari sebelumnya</span></div>
+<div style="display: flex; align-items: flex-start; gap: 10px; padding: 12px; border-radius: 14px; background: #FFF4EA"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B34700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M12 21a9 9 0 100-18 9 9 0 000 18zM12 16a4 4 0 100-8 4 4 0 000 8zM12 12h.01"></path></svg><span style="font-size: 13px; line-height: 1.5; color: #15234D"><strong style="font-weight: 600">Paling perlu dilatih:</strong> Literasi Bahasa Inggris (LBE).</span></div>
+<div style="display: flex; flex-direction: column; border-top: 1px solid #E3E9F3">
+<div style="display: flex; justify-content: space-between; align-items: center; min-height: 56px; border-bottom: 1px solid #E3E9F3; font-size: 14px"><span style="display: flex; flex-direction: column"><span style="font-weight: 600">Siap SNBT</span><span style="font-size: 12px; color: #6B7898">Tryout #3, 26 Sep</span></span><span style="font-weight: 700">624</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; min-height: 56px; border-bottom: 1px solid #E3E9F3; font-size: 14px"><span style="display: flex; flex-direction: column"><span style="font-weight: 600">Siap TKA</span><span style="font-size: 12px; color: #6B7898">Latihan Matematika, 28 Sep</span></span><span style="font-weight: 700">16/20 benar</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; min-height: 56px; font-size: 14px"><span style="display: flex; flex-direction: column"><span style="font-weight: 600">Siap SKD</span><span style="font-size: 12px; color: #6B7898">Belum ada latihan</span></span><a href="#" style="min-height: 44px; display: flex; align-items: center; font-weight: 600">Mulai</a></div>
+</div>
+</section>
+
+<section aria-labelledby="dh-compass" style="padding: 20px; display: flex; flex-direction: column; gap: 14px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<div style="display: flex; justify-content: space-between; align-items: center"><h2 id="dh-compass" style="margin: 0; font-size: 17px; font-weight: 700">ORBIDU Compass</h2><span style="font-size: 12px; color: #6B7898">12 Sep 2026</span></div>
+<div style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 16px; background: linear-gradient(120deg, #EEF4FF, #E4F6FB)">
+<span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 14px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21a9 9 0 100-18 9 9 0 000 18zM15.5 8.5l-2 5-5 2 2-5z"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 16px; font-weight: 700">Teknologi &amp; Komputasi</span><span style="align-self: flex-start; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: #E3F5EC; color: #0A7A45">Sangat selaras</span></div>
+</div>
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{jurusan}}" as="j" hint-placeholder-count="3">
+<a href="Jurusan-Detail.dc.html" style="min-height: 56px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #E3E9F3; text-decoration: none"><span style="flex-grow: 1; font-size: 14px; font-weight: 600; color: #101A33">{{j.name}}</span><span style="font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: {{j.bg}}; color: {{j.fg}}">{{j.label}}</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA6C0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></a>
+</sc-for>
+</div>
+<a href="#" style="height: 46px; display: flex; align-items: center; justify-content: center; border-radius: 12px; border: 1.5px solid #DCE4F2; color: #0965FA; font-size: 14px; font-weight: 600; text-decoration: none">Buka ORBIDU Compass</a>
+</section>
+
+<section aria-labelledby="dh-timeline" style="padding: 20px; display: flex; flex-direction: column; gap: 10px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<div style="display: flex; flex-direction: column; gap: 2px"><h2 id="dh-timeline" style="margin: 0; font-size: 17px; font-weight: 700">Timeline seleksi</h2><span style="font-size: 12px; color: #6B7898">Jadwal pasti mengikuti pengumuman resmi.</span></div>
+<sc-for list="{{timeline}}" as="e" hint-placeholder-count="5">
+<div style="display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 12px; padding: 8px 0; border-bottom: 1px solid #EEF2F8">
+<span style="height: 50px; border-radius: 12px; background: {{e.bg}}; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.1"><span style="font-size: 13px; font-weight: 700; color: {{e.fg}}">{{e.mon}}</span><span style="font-size: 10px; color: {{e.fg}}">{{e.year}}</span></span>
+<span style="display: flex; flex-direction: column; justify-content: center; gap: 2px"><span style="font-size: 14px; font-weight: 600">{{e.title}}</span><span style="font-size: 12px; color: #6B7898">{{e.note}}</span></span>
+</div>
+</sc-for>
+</section>
+
+<section style="padding: 20px; display: flex; flex-direction: column; gap: 12px; border-radius: 20px; background: #EEF4FF; border: 1px solid #DCE6F8">
+<span style="font-size: 16px; font-weight: 700">Masih penasaran dengan jurusan lain?</span>
+<span style="font-size: 13px; line-height: 1.55; color: #4A5877">Lihat isi kuliah, mapel pendukung, dan kampus yang membukanya.</span>
+<a href="Home-Mobile.dc.html" style="height: 46px; display: flex; align-items: center; justify-content: center; border-radius: 12px; background: #0965FA; color: #FFFFFF; font-size: 14px; font-weight: 600; text-decoration: none">Explore Jurusan</a>
+</section>
+</main>
+
+<nav aria-label="Menu portal" style="position: absolute; left: 0; right: 0; top: 776px; z-index: 5; height: 68px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); background: #FFFFFF; border-top: 1px solid #E3E9F3; box-shadow: 0 -8px 24px rgba(16,26,51,0.06)">
+<sc-for list="{{nav}}" as="n" hint-placeholder-count="5">
+<a href="{{n.href}}" aria-current="{{n.current}}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: {{n.fg}}; font-size: 11px; font-weight: {{n.weight}}; text-decoration: none"><span style="width: 44px; height: 28px; border-radius: 999px; background: {{n.pill}}; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{n.icon}}"></path></svg></span>{{n.label}}</a>
+</sc-for>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2660}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const tasks = [
+      { title: '20 soal Penalaran Matematika', meta: '25 menit', cat: 'SNBT', done: true },
+      { title: '10 soal Matematika', meta: '15 menit', cat: 'TKA', done: false },
+      { title: 'Bahas ulang Tryout #3', meta: '30 menit', cat: 'SNBT', done: false }
+    ].map((t) => ({ ...t, boxBg: t.done ? '#0A7A45' : '#FFFFFF', boxBd: t.done ? '#0A7A45' : '#B8C4DB', fg: t.done ? '#6B7898' : '#101A33', deco: t.done ? 'line-through' : 'none' }));
+    const jurusan = [
+      { name: 'Sistem Informasi', label: 'Sangat sesuai', bg: '#E3F5EC', fg: '#0A7A45' },
+      { name: 'Teknik Informatika', label: 'Sangat sesuai', bg: '#E3F5EC', fg: '#0A7A45' },
+      { name: 'Ilmu Komputer', label: 'Sesuai', bg: '#E8F0FE', fg: '#0B3FA8' }
+    ];
+    const timeline = [
+      { mon: 'Nov', year: '2026', title: 'Tes Kemampuan Akademik (TKA)', note: 'Perkiraan', bg: '#FFF1E6', fg: '#B34700' },
+      { mon: 'Des', year: '2026', title: 'Pengumuman siswa eligible SNBP', note: 'Perkiraan, ditentukan sekolah', bg: '#E8F0FE', fg: '#0B3FA8' },
+      { mon: 'Jan', year: '2027', title: 'Registrasi akun SNPMB', note: 'Perkiraan', bg: '#E8F0FE', fg: '#0B3FA8' },
+      { mon: 'Feb', year: '2027', title: 'Pendaftaran SNBP', note: 'Perkiraan', bg: '#E8F0FE', fg: '#0B3FA8' },
+      { mon: 'Apr', year: '2027', title: 'Pelaksanaan UTBK-SNBT', note: 'Perkiraan', bg: '#E8F0FE', fg: '#0B3FA8' }
+    ];
+    const NAV = [
+      { label: 'Dashboard', href: 'Portal-Dashboard-HP.dc.html', icon: 'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z', on: true },
+      { label: 'Analisis', href: 'Portal-Analisis-HP.dc.html', icon: 'M10 12a4 4 0 100-8 4 4 0 000 8zM3 20c.8-3.5 3.6-5.5 7-5.5M17.5 19.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM21 21l-1.5-1.5' },
+      { label: 'Compass', href: '#', icon: 'M12 21a9 9 0 100-18 9 9 0 000 18zM15.5 8.5l-2 5-5 2 2-5z' },
+      { label: 'Rencana', href: '#', icon: 'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4M9 15l2 2 4-4' },
+      { label: 'Persiapan', href: '#', icon: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 16a4 4 0 100-8 4 4 0 000 8zM12 12h.01' }
+    ];
+    const nav = NAV.map((n) => ({ ...n, current: n.on ? 'page' : 'false', fg: n.on ? '#0965FA' : '#4A5877', weight: n.on ? 600 : 500, pill: n.on ? '#E8F0FE' : 'transparent' }));
+    return { tasks, jurusan, timeline, nav };
+  }
+}
+</script>
+</body>
+</html>

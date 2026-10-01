@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>ORBIDU Masuk dan Daftar Desktop</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Poppins',system-ui,sans-serif;background:#FFFFFF}
+a{color:#0965FA}a:hover{color:#0747B8}
+input::placeholder{color:#8A96B2}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #F1AD00;outline-offset:2px}
+.anim .float{animation:ob-float 6s ease-in-out infinite}
+.anim .blink{transform-box:fill-box;transform-origin:center;animation:ob-blink 5.5s infinite}
+.anim .flow{animation:ob-flow 18s linear infinite}
+.anim .tw{animation:ob-tw 4.2s ease-in-out infinite}
+@keyframes ob-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes ob-blink{0%,92%,100%{transform:scaleY(1)}94%{transform:scaleY(0.08)}96%{transform:scaleY(1)}}
+@keyframes ob-flow{to{stroke-dashoffset:-480}}
+@keyframes ob-tw{0%,100%{opacity:.3;transform:scale(.7)}50%{opacity:1;transform:scale(1.15)}}
+@media (prefers-reduced-motion: reduce){.anim .float,.anim .blink,.anim .flow,.anim .tw{animation:none}}
+</style>
+</helmet>
+<div class="{{rootClass}}" style="width: 1440px; height: 900px; overflow: hidden; display: grid; grid-template-columns: 936px 504px; font-family: 'Poppins', system-ui, sans-serif; background: #FFFFFF; color: #101A33">
+
+<section aria-label="Animasi ORBIDU" style="position: relative; overflow: hidden; background: radial-gradient(620px 520px at 50% 46%, rgba(9,101,250,0.34), rgba(9,101,250,0) 70%), radial-gradient(360px 300px at 82% 82%, rgba(255,112,0,0.12), rgba(255,112,0,0) 70%), linear-gradient(180deg, #15234D 0%, #101A33 100%)">
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none">
+<sc-for list="{{stars}}" as="s" hint-placeholder-count="10">
+<div class="tw" style="position: absolute; left: {{s.x}}px; top: {{s.y}}px; width: {{s.z}}px; height: {{s.z}}px; border-radius: 50%; background: #FFFFFF; opacity: {{s.o}}; animation-delay: {{s.d}}s"></div>
+</sc-for>
+</div>
+
+<div style="position: absolute; left: 48px; right: 40px; top: 36px; display: flex; justify-content: space-between; align-items: center">
+<a href="Home-Desktop.dc.html" aria-label="ORBIDU, kembali ke beranda" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+<svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="9.5" fill="#1F7BFF"></circle><ellipse cx="17" cy="18" rx="15" ry="5" fill="none" stroke="#FF8A1F" stroke-width="2.6" transform="rotate(-18 17 18)"></ellipse></svg>
+<span style="font-size: 24px; font-weight: 700; letter-spacing: 0.3px; color: #F4F7FF">ORBIDU</span>
+</a>
+<span style="display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px 0 10px; border-radius: 999px; background: rgba(255,255,255,0.1); border: 1px solid rgba(220,230,255,0.28); font-size: 13px; font-weight: 500; color: #DCE6FF"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DCE6FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M10 8.5l5 3.5-5 3.5z"></path></svg>Slot video MP4, animasi dari tim</span>
+</div>
+
+<svg width="620" height="520" viewBox="0 0 620 520" aria-hidden="true" style="position: absolute; left: 158px; top: 150px; overflow: visible">
+<defs>
+<radialGradient id="ad-body" cx="0.38" cy="0.3" r="0.8"><stop offset="0" stop-color="#8CC8FF"></stop><stop offset="0.5" stop-color="#1F7BFF"></stop><stop offset="1" stop-color="#0445B8"></stop></radialGradient>
+<linearGradient id="ad-ring" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FF7000"></stop><stop offset="1" stop-color="#F1AD00"></stop></linearGradient>
+<radialGradient id="ad-glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#3D8BFF" stop-opacity="0.5"></stop><stop offset="1" stop-color="#3D8BFF" stop-opacity="0"></stop></radialGradient>
+<clipPath id="ad-front"><rect x="100" y="285" width="440" height="140"></rect></clipPath>
+</defs>
+<g transform="rotate(28 310 260)"><ellipse cx="310" cy="260" rx="210" ry="250" fill="none" stroke="#8FB8FF" stroke-opacity="0.22" stroke-width="1.4"></ellipse></g>
+<g transform="rotate(-14 310 260)">
+<ellipse cx="310" cy="260" rx="290" ry="100" fill="none" stroke="#8FB8FF" stroke-opacity="0.35" stroke-width="1.6"></ellipse>
+<ellipse class="flow" cx="310" cy="260" rx="290" ry="100" fill="none" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="2.4" stroke-dasharray="1 23" stroke-linecap="round"></ellipse>
+<circle cx="38" cy="294" r="7" fill="#FF7000"></circle>
+<circle cx="124" cy="183" r="7" fill="#FF7000"></circle>
+<circle cx="409" cy="166" r="7" fill="#FF7000"></circle>
+<circle cx="590" cy="234" r="7" fill="#FF7000"></circle>
+<circle cx="496" cy="337" r="7" fill="#FF7000"></circle>
+</g>
+<circle cx="310" cy="260" r="200" fill="url(#ad-glow)"></circle>
+<g transform="translate(-10 -10)">
+<g class="float">
+<g transform="rotate(-16 320 285)"><ellipse cx="320" cy="285" rx="172" ry="40" fill="none" stroke="url(#ad-ring)" stroke-width="16"></ellipse></g>
+<circle cx="320" cy="270" r="110" fill="url(#ad-body)"></circle>
+<circle cx="320" cy="270" r="109" fill="none" stroke="#B5DCFF" stroke-opacity="0.45" stroke-width="2"></circle>
+<ellipse cx="280" cy="208" rx="34" ry="16" fill="#FFFFFF" fill-opacity="0.28" transform="rotate(-30 280 208)"></ellipse>
+<path d="M262 180 L378 180 L374 210 Q320 226 266 210 Z" fill="#0C1530"></path>
+<polygon points="236,172 320,144 404,172 320,200" fill="#1E2F62"></polygon>
+<circle cx="320" cy="172" r="5" fill="#FF7000"></circle>
+<path d="M320 172 Q370 178 386 192 L388 226" fill="none" stroke="#FF7000" stroke-width="4" stroke-linecap="round"></path>
+<rect x="382" y="222" width="12" height="18" rx="4" fill="#F1AD00"></rect>
+<g class="blink">
+<ellipse cx="286" cy="250" rx="22" ry="25" fill="#FFFFFF"></ellipse>
+<ellipse cx="354" cy="250" rx="22" ry="25" fill="#FFFFFF"></ellipse>
+<circle cx="292" cy="251" r="13" fill="#101A33"></circle>
+<circle cx="360" cy="251" r="13" fill="#101A33"></circle>
+<circle cx="287" cy="245" r="4.5" fill="#FFFFFF"></circle>
+<circle cx="355" cy="245" r="4.5" fill="#FFFFFF"></circle>
+</g>
+<ellipse cx="262" cy="284" rx="14" ry="8" fill="#FF8FB1" fill-opacity="0.6"></ellipse>
+<ellipse cx="378" cy="284" rx="14" ry="8" fill="#FF8FB1" fill-opacity="0.6"></ellipse>
+<path d="M304 286 Q320 300 336 286" fill="none" stroke="#101A33" stroke-width="5" stroke-linecap="round"></path>
+<g transform="rotate(-16 320 285)"><ellipse cx="320" cy="285" rx="172" ry="40" fill="none" stroke="url(#ad-ring)" stroke-width="16" clip-path="url(#ad-front)"></ellipse></g>
+</g>
+</g>
+</svg>
+
+<div style="position: absolute; left: 48px; bottom: 44px; max-width: 560px; display: flex; flex-direction: column; gap: 6px">
+<p style="margin: 0; font-family: 'Caveat', 'Segoe Print', cursive; font-size: 30px; line-height: 1; font-weight: 700; color: #FF8A1F">Hi, Bifriends!</p>
+<p style="margin: 0; font-size: 26px; line-height: 1.25; font-weight: 700; color: #F4F7FF">Setiap siswa punya orbitnya sendiri.</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #A9B8D9">Kenali dirimu. Temukan arahmu. Mulai langkahmu.</p>
+</div>
+</section>
+
+<section style="padding: 36px 48px; display: flex; flex-direction: column; justify-content: center; gap: 16px; background: #FFFFFF">
+<div role="group" aria-label="Pilih Masuk atau Daftar" style="display: grid; grid-template-columns: 1fr 1fr; padding: 4px; border-radius: 14px; background: #F0F4FA">
+<button type="button" aria-pressed="{{masukPressed}}" onClick="{{toMasuk}}" style="height: 44px; border: 0; border-radius: 11px; background: {{masukBg}}; box-shadow: {{masukShadow}}; color: {{masukFg}}; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer">Masuk</button>
+<button type="button" aria-pressed="{{daftarPressed}}" onClick="{{toDaftar}}" style="height: 44px; border: 0; border-radius: 11px; background: {{daftarBg}}; box-shadow: {{daftarShadow}}; color: {{daftarFg}}; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer">Daftar</button>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 4px">
+<p style="margin: 0; font-family: 'Caveat', 'Segoe Print', cursive; font-size: 28px; line-height: 1; font-weight: 700; color: #FF7000">Hi, Bifriends!</p>
+<h1 style="margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spacing: -0.5px; color: #101A33">{{title}}</h1>
+<p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A5877">{{subtitle}}</p>
+</div>
+
+<sc-if value="{{showError}}" hint-placeholder-val="{{ false }}">
+<div role="alert" style="display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 12px; background: #FDECEC; color: #B42318; font-size: 14px; line-height: 1.5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B42318" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5M12 16v.01"></path></svg><span>{{errorText}}</span></div>
+</sc-if>
+
+<sc-if value="{{isMasuk}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ad-email" style="font-size: 14px; font-weight: 600; color: #15234D">Email</label>
+<input id="ad-email" type="email" placeholder="nama@email.com" style="height: 50px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; border: 1.5px solid {{emailBorder}}; background: #F8FAFD; font-family: inherit; font-size: 15px; color: #101A33">
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ad-pass" style="font-size: 14px; font-weight: 600; color: #15234D">Password</label>
+<div style="position: relative">
+<input id="ad-pass" type="{{pwType}}" placeholder="Masukkan password" style="width: 100%; height: 50px; box-sizing: border-box; padding: 0 52px 0 16px; border-radius: 12px; border: 1.5px solid #D5DEEE; background: #F8FAFD; font-family: inherit; font-size: 15px; color: #101A33">
+<button type="button" aria-label="{{pwLabel}}" onClick="{{togglePw}}" style="position: absolute; right: 4px; top: 3px; width: 44px; height: 44px; border: 0; background: none; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A5877" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+</div>
+</div>
+<a href="#" style="align-self: flex-end; min-height: 32px; display: flex; align-items: center; font-size: 14px; font-weight: 500; color: #0965FA">Lupa password?</a>
+<button type="button" style="height: 52px; border: 0; border-radius: 12px; background: #0965FA; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer">Masuk</button>
+</div>
+</sc-if>
+
+<sc-if value="{{isDaftar}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ad-nama" style="font-size: 14px; font-weight: 600; color: #15234D">Nama lengkap</label>
+<input id="ad-nama" type="text" placeholder="Nama sesuai data sekolah" style="height: 48px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; border: 1.5px solid #D5DEEE; background: #F8FAFD; font-family: inherit; font-size: 15px; color: #101A33">
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ad-email2" style="font-size: 14px; font-weight: 600; color: #15234D">Email</label>
+<input id="ad-email2" type="email" placeholder="nama@email.com" style="height: 48px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; border: 1.5px solid {{emailBorder}}; background: #F8FAFD; font-family: inherit; font-size: 15px; color: #101A33">
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ad-pass2" style="font-size: 14px; font-weight: 600; color: #15234D">Password</label>
+<div style="position: relative">
+<input id="ad-pass2" type="{{pwType}}" placeholder="Minimal 8 karakter" style="width: 100%; height: 48px; box-sizing: border-box; padding: 0 52px 0 16px; border-radius: 12px; border: 1.5px solid #D5DEEE; background: #F8FAFD; font-family: inherit; font-size: 15px; color: #101A33">
+<button type="button" aria-label="{{pwLabel}}" onClick="{{togglePw}}" style="position: absolute; right: 4px; top: 2px; width: 44px; height: 44px; border: 0; background: none; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A5877" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ad-sekolah" style="font-size: 14px; font-weight: 600; color: #15234D">Nama sekolah</label>
+<input id="ad-sekolah" type="text" placeholder="Contoh: SMA Negeri 1 Palembang" style="height: 48px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; border: 1.5px solid #D5DEEE; background: #F8FAFD; font-family: inherit; font-size: 15px; color: #101A33">
+</div>
+<div style="display: grid; grid-template-columns: 196px minmax(0, 1fr); gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span id="ad-kelas" style="font-size: 14px; font-weight: 600; color: #15234D">Kelas</span>
+<div role="group" aria-labelledby="ad-kelas" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{kelas}}" as="k" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{k.pressed}}" onClick="{{k.pick}}" style="height: 48px; border-radius: 12px; border: 1.5px solid {{k.bd}}; background: {{k.bg}}; color: {{k.fg}}; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer">{{k.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ad-kota" style="font-size: 14px; font-weight: 600; color: #15234D">Kota</label>
+<input id="ad-kota" type="text" placeholder="Palembang" style="width: 100%; height: 48px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; border: 1.5px solid #D5DEEE; background: #F8FAFD; font-family: inherit; font-size: 15px; color: #101A33">
+</div>
+</div>
+<label style="margin-top: 2px; display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.55; color: #4A5877; cursor: pointer"><input type="checkbox" style="width: 20px; height: 20px; flex-shrink: 0; margin: 1px 0 0; accent-color: #0965FA"><span>Aku dan orang tua/wali setuju dengan <a href="#" style="font-weight: 600">Syarat &amp; Ketentuan</a> serta <a href="#" style="font-weight: 600">Kebijakan Privasi</a> ORBIDU.</span></label>
+<button type="button" style="margin-top: 2px; height: 52px; border: 0; border-radius: 12px; background: #0965FA; color: #FFFFFF; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer">Daftar</button>
+</div>
+</sc-if>
+
+<p style="margin: 0; display: flex; justify-content: center; align-items: center; gap: 4px; font-size: 14px; color: #4A5877">{{switchText}}<button type="button" onClick="{{switchAction}}" style="min-height: 36px; padding: 0 4px; border: 0; background: none; font-family: inherit; font-size: 14px; font-weight: 600; color: #0965FA; cursor: pointer">{{switchCta}}</button></p>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"animasi":{"editor":"boolean","default":true},"mulaiDiDaftar":{"editor":"boolean","default":false},"contohError":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(...args) {
+    super(...args);
+    this.state = { mode: null, showPw: false, kelas: '11' };
+  }
+  makeStars(n, w, h, seed) {
+    let s = seed;
+    const rnd = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      out.push({ x: Math.round(rnd() * w), y: Math.round(rnd() * h), z: Math.round((1 + rnd() * 2) * 10) / 10, o: Math.round((0.3 + rnd() * 0.6) * 100) / 100, d: Math.round(rnd() * 40) / 10 });
+    }
+    return out;
+  }
+  renderVals() {
+    const anim = this.props.animasi ?? true;
+    if (!this._stars) this._stars = this.makeStars(70, 936, 900, 17);
+    const mode = this.state.mode || (this.props.mulaiDiDaftar ? 'daftar' : 'masuk');
+    const masuk = mode === 'masuk';
+    const err = !!this.props.contohError;
+    const tab = (on) => ({ bg: on ? '#FFFFFF' : 'transparent', shadow: on ? '0 4px 12px rgba(16,26,51,0.10)' : 'none', fg: on ? '#101A33' : '#4A5877', pressed: on ? 'true' : 'false' });
+    const tm = tab(masuk);
+    const td = tab(!masuk);
+    const kelas = ['10', '11', '12'].map((k) => {
+      const on = this.state.kelas === k;
+      return { label: k, pressed: on ? 'true' : 'false', bg: on ? '#0965FA' : '#F8FAFD', fg: on ? '#FFFFFF' : '#15234D', bd: on ? '#0965FA' : '#D5DEEE', pick: () => this.setState({ kelas: k }) };
+    });
+    const go = (m) => () => this.setState({ mode: m });
+    return {
+      rootClass: anim ? 'anim' : 'still',
+      stars: this._stars,
+      masukPressed: tm.pressed, masukBg: tm.bg, masukShadow: tm.shadow, masukFg: tm.fg,
+      daftarPressed: td.pressed, daftarBg: td.bg, daftarShadow: td.shadow, daftarFg: td.fg,
+      toMasuk: go('masuk'),
+      toDaftar: go('daftar'),
+      isMasuk: masuk,
+      isDaftar: !masuk,
+      title: masuk ? 'Selamat datang kembali' : 'Mulai perjalananmu',
+      subtitle: masuk ? 'Masuk untuk melanjutkan rencana dan latihanmu.' : 'Buat akun dan mulai kenali potensimu.',
+      showError: err,
+      errorText: masuk ? 'Email atau password salah.' : 'Email ini sudah terdaftar.',
+      emailBorder: err ? '#D92D20' : '#D5DEEE',
+      pwType: this.state.showPw ? 'text' : 'password',
+      pwLabel: this.state.showPw ? 'Sembunyikan password' : 'Tampilkan password',
+      togglePw: () => this.setState({ showPw: !this.state.showPw }),
+      kelas,
+      switchText: masuk ? 'Belum punya akun?' : 'Sudah punya akun?',
+      switchCta: masuk ? 'Daftar' : 'Masuk',
+      switchAction: go(masuk ? 'daftar' : 'masuk')
+    };
+  }
+}
+</script>
+</body>
+</html>

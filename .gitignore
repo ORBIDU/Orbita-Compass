@@ -48,3 +48,6 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Konfigurasi lokal Claude Code
+.claude/
