@@ -83,8 +83,10 @@ export interface TimelineEvent {
 /** Ringkasan ORBIDU Compass untuk kartu Dashboard. */
 export interface CompassHighlights {
   analyzedAt: string;
-  bidang: BidangKey;
+  /** null jika tidak ada rekomendasi yang cocok dengan katalog. */
+  bidang: BidangKey | null;
   /** Label keselarasan bidang, tanpa persentase. */
   bidangFit: FitLabel;
-  jurusan: { slug: string; name: string; bidang: BidangKey; fit: FitLabel }[];
+  /** `slug`/`bidang` null = nama dari Compass tidak ada di katalog (tanpa link). */
+  jurusan: { slug: string | null; name: string; bidang: BidangKey | null; fit: FitLabel }[];
 }

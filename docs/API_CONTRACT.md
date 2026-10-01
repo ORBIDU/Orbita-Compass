@@ -185,7 +185,7 @@ Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
 |---|---|---|
 | Katalog jurusan per nama jurusan, data PTS dan PTLN, label kecocokan per jurusan (lihat bagian 6) | 2 | 🔴 |
 | Prestasi: ubah, field capaian/penyelenggara, upload sertifikat (lihat bagian 8.1) | 4 | 🔴 |
-| Hasil Compass sungguhan (sekarang selalu jawaban cadangan, lihat `BACKEND_MAP.md` poin 10) | 5 | 🟡 |
+| Hasil Compass sungguhan (sekarang selalu jawaban cadangan, lihat `BACKEND_MAP.md` poin 10; rincian di bagian 9) | 5 | 🟡 |
 | Data beasiswa (daftar, filter, detail) | 5 | 🔴 |
 | Action Plan: fokus, hari belajar, penyusun tugas otomatis, geser tugas terlewat (ringkasan harian Dashboard: bagian 7.1) | 6 | 🔴 |
 | Rasionalisasi SNBP dengan input TKA, prestasi terpilih, dan 2 target | 7 | 🟡 |
@@ -373,4 +373,48 @@ Sudah ada `POST /achievements` (`title, category, level, year`) dan `DELETE /ach
 - **Tanggal diperbarui** dan sumber (e-Rapor). Sementara memakai `createdAt` terbaru dari nilai rapor.
 - **Usulan:** `GET /rapor` → `{ "semesters": [ { "semester": 1, "grade": 10, "schoolYear": "2024/2025", "updatedAt": "…", "source": "e-Rapor", "subjects": [ { "subject": "Matematika", "score": 86 } ] } ] }`.
 - Data seed backend baru berisi 2–3 mapel; format Kurikulum Merdeka berisi ±13–14 mapel per semester. Rapor hanya dibaca siswa; input dari sekolah (import e-Rapor).
+
+---
+
+## 9. ORBIDU Compass (Fase 5)
+
+Dipakai `/portal/compass` (SPEK bagian 7). Service: `compassService`, `jurusanService.getCompassRecommendations` / `getEducationPaths`; bentuk data: `frontend/src/types/compass.ts`.
+
+### 9.1 Target jurusan 🔴
+Ada **dua tingkat target** yang berbeda, jangan dicampur:
+
+| Target | Dipilih di | Contoh | Disimpan di |
+|---|---|---|---|
+| Target **jurusan** (jurusan katalog) | ORBIDU Compass | Sistem Informasi | **Belum ada** (usulan di bawah) |
+| Target **prodi di kampus tertentu** | Siap SNBP (Fase 7) | Sistem Informasi Universitas Sriwijaya | `StudentProfile.targetMajorId` + `targetPtnId` (sudah ada) |
+
+Target jurusan dipakai untuk mengarahkan rencana belajar, Siap SNBP (memilih prodi di kampus untuk jurusan itu), dan Performance.
+
+```
+GET /compass/target → { "target": { "jurusanSlug": "sistem-informasi", "name": "Sistem Informasi", "setAt": "…" } | null }
+PUT /compass/target ← { "jurusanSlug": "sistem-informasi", "name": "Sistem Informasi" }   // null = hapus
+                    → { "target": { … } }
+```
+
+- `jurusanSlug` boleh `null` jika jurusan dari Compass tidak ada di katalog (disimpan dengan `name` saja).
+- **Sementara:** mode dummy menyimpan di data dummy; mode backend menyimpan di browser (`localStorage`, per akun).
+
+### 9.2 Kapan perlu analisis ulang 🔴
+Tombol "Perbarui analisis" hanya aktif jika data masukan (tes, prestasi, rapor) berubah setelah `analyzedAt`, karena setiap analisis AI memakai kuota.
+
+- **Usulan:** `GET /compass/result` ikut mengirim `inputsUpdatedAt` (waktu terakhir tes, prestasi, atau rapor berubah, termasuk penghapusan), atau langsung `needsRefresh: true|false`.
+- **Sementara:** frontend menghitung dari tanggal di `GET /profile` (`assessment.updatedAt`, `achievements[].createdAt`, `academicRecords[].createdAt`). Prestasi yang **dihapus** belum terdeteksi di mode backend.
+- Sebaiknya backend juga menolak `POST /compass/analyze` jika tidak ada data baru (mis. `409 { "code": "ANALYSIS_UP_TO_DATE" }`), supaya kuota tidak terbuang karena klik berulang.
+
+### 9.3 Rekomendasi jurusan yang bisa dicocokkan 🟡
+`recommendedMajors` berisi nama prodi bebas (`{ name, match_pct, rationale }`). Jawaban cadangan backend memakai `target_major` atau "Teknik Informatika", yang tidak ada di katalog jurusan, sehingga tampil tanpa link detail dan bidangnya tidak diketahui ("Bidang belum bisa ditentukan").
+
+- **Usulan:** setiap item menyertakan `jurusanSlug` dan label jadi (`"fit": "Sangat sesuai" | "Sesuai"`), lihat juga bagian 6.4.
+- Sebaiknya juga `topField` (kunci bidang, mis. `"teknologi"`) supaya "Bidang paling selaras" tidak perlu ditebak dari jurusan pertama.
+- Galat AI Engine jangan ditelan diam-diam (`BACKEND_MAP.md` poin 10): kirim penanda `"source": "ai" | "fallback"` supaya frontend bisa memberi tahu siswa.
+
+### 9.4 Aspek keselarasan dan jalur pendidikan 🟡
+- Aspek **Akademik** dan **Prestasi** di hero sekarang disimpulkan frontend dari rapor dan prestasi (`frontend/src/lib/compassInsights.ts`, aturan sederhana). Usulan: `GET /compass/result` mengirim `aspects: [{ "key": "minat" | "akademik" | "prestasi", "level": 1–5 }]` hasil analisis.
+- **Jalur pendidikan** dikelompokkan dari `University.type` lewat `GET /ptn/majors` (bisa sampai 15 permintaan untuk 3 jurusan). Usulan: `GET /compass/paths` → `{ "groups": [ { "key": "s1ptn" | "vokasi" | "pts" | "ptln" | "kedinasan", "fit": "…", "options": [ { "prodi", "kampus", "kota" } ] } ], "hidden": [ { "key", "reason" } ] }`.
+- Data PTS dan PTLN belum ada di backend (bagian 6.3), jadi jalur itu selalu disembunyikan di mode backend.
 

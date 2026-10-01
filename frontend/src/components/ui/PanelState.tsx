@@ -1,5 +1,5 @@
 import { RotateCcw } from "lucide-react";
-import { LOAD_ERROR, RETRY } from "@/content/analisis";
+import { LOAD_ERROR, RETRY } from "@/content/common";
 
 /** Kerangka saat isi tab sedang dimuat. */
 export function PanelSkeleton() {

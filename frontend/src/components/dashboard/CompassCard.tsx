@@ -14,47 +14,58 @@ const FIELD_FIT_STYLE = {
   Sesuai: "bg-tint-blue-bg text-tint-blue-fg",
 } as const;
 
+const rowClass = "flex min-h-14 items-center gap-3 border-b border-rim-soft lg:gap-3.5";
+
 function CompassBody({ data }: { data: CompassHighlights }) {
-  const field = BIDANG[data.bidang];
+  const field = data.bidang ? BIDANG[data.bidang] : null;
   return (
     <div className="flex flex-col gap-3.5 lg:gap-4">
-      <div className="flex items-center gap-3 rounded-2xl bg-compass-soft p-3.5 lg:gap-4 lg:p-[18px]">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[14px] bg-white text-orbit-1 lg:h-[52px] lg:w-[52px] lg:rounded-2xl">
-          <Compass size={24} aria-hidden="true" />
-        </span>
-        <div className="flex min-w-0 flex-1 flex-col gap-1 lg:gap-0.5">
-          <span className="hidden text-[13px] text-prose lg:block">{COMPASS.topField}</span>
-          <span className="sr-only lg:hidden">{COMPASS.topField}:</span>
-          <span className="text-base font-bold text-space-2 lg:text-xl">{field.label}</span>
-          <span className={`self-start rounded-full px-2 py-0.5 text-[11px] font-semibold lg:hidden ${FIELD_FIT_STYLE[data.bidangFit]}`}>
+      {field && (
+        <div className="flex items-center gap-3 rounded-2xl bg-compass-soft p-3.5 lg:gap-4 lg:p-[18px]">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[14px] bg-white text-orbit-1 lg:h-[52px] lg:w-[52px] lg:rounded-2xl">
+            <Compass size={24} aria-hidden="true" />
+          </span>
+          <div className="flex min-w-0 flex-1 flex-col gap-1 lg:gap-0.5">
+            <span className="hidden text-[13px] text-prose lg:block">{COMPASS.topField}</span>
+            <span className="sr-only lg:hidden">{COMPASS.topField}:</span>
+            <span className="text-base font-bold text-space-2 lg:text-xl">{field.label}</span>
+            <span className={`self-start rounded-full px-2 py-0.5 text-[11px] font-semibold lg:hidden ${FIELD_FIT_STYLE[data.bidangFit]}`}>
+              {COMPASS.fieldFit[data.bidangFit]}
+            </span>
+          </div>
+          <span className={`hidden shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold lg:inline ${FIELD_FIT_STYLE[data.bidangFit]}`}>
             {COMPASS.fieldFit[data.bidangFit]}
           </span>
         </div>
-        <span className={`hidden shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold lg:inline ${FIELD_FIT_STYLE[data.bidangFit]}`}>
-          {COMPASS.fieldFit[data.bidangFit]}
-        </span>
-      </div>
+      )}
 
       <div className="flex flex-col">
         <span className="mb-1 hidden text-[13px] font-semibold text-prose lg:block">{COMPASS.explore}</span>
         <ul>
           {data.jurusan.map((j) => {
-            const bidang = BIDANG[j.bidang];
-            const theme = COVER_CLASSES[bidang.theme];
-            const Icon = bidang.icon;
+            const bidang = j.bidang ? BIDANG[j.bidang] : null;
+            const theme = COVER_CLASSES[bidang?.theme ?? "navy"];
+            const Icon = bidang?.icon ?? Compass;
+            const content = (
+              <>
+                <span className={`hidden h-9 w-9 shrink-0 items-center justify-center rounded-[10px] lg:flex ${theme.bg} ${theme.ink}`}>
+                  <Icon size={18} aria-hidden="true" />
+                </span>
+                <span className="min-w-0 flex-1 text-sm font-semibold text-space-2 lg:text-[15px]">{j.name}</span>
+                <FitBadge label={j.fit} className="shrink-0" />
+              </>
+            );
+            // Nama dari Compass yang tidak ada di katalog: tampil tanpa link detail.
             return (
-              <li key={j.slug}>
-                <Link
-                  to={ROUTES.jurusanDetail(j.slug)}
-                  className="flex min-h-14 items-center gap-3 border-b border-rim-soft transition-colors hover:bg-surface-soft lg:gap-3.5"
-                >
-                  <span className={`hidden h-9 w-9 shrink-0 items-center justify-center rounded-[10px] lg:flex ${theme.bg} ${theme.ink}`}>
-                    <Icon size={18} aria-hidden="true" />
-                  </span>
-                  <span className="min-w-0 flex-1 text-sm font-semibold text-space-2 lg:text-[15px]">{j.name}</span>
-                  <FitBadge label={j.fit} className="shrink-0" />
-                  <ChevronRight size={18} aria-hidden="true" className="shrink-0 text-prose-faint" />
-                </Link>
+              <li key={j.slug ?? j.name}>
+                {j.slug ? (
+                  <Link to={ROUTES.jurusanDetail(j.slug)} className={`${rowClass} transition-colors hover:bg-surface-soft`}>
+                    {content}
+                    <ChevronRight size={18} aria-hidden="true" className="shrink-0 text-prose-faint" />
+                  </Link>
+                ) : (
+                  <div className={`${rowClass} pr-[18px]`}>{content}</div>
+                )}
               </li>
             );
           })}

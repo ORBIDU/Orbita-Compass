@@ -112,6 +112,7 @@ export async function mockAddAchievement(token: string | null, body: MockAchieve
   };
   updateAccount(account.id, (a) => {
     a.achievements = [achievement, ...a.achievements];
+    a.inputsUpdatedAt = new Date().toISOString();
   });
   return { message: "Achievement added successfully", achievement };
 }
@@ -125,6 +126,7 @@ export async function mockUpdateAchievement(token: string | null, id: string, bo
   const achievement: MockAchievement = { ...account.achievements[index], ...body };
   updateAccount(account.id, (a) => {
     a.achievements[index] = achievement;
+    a.inputsUpdatedAt = new Date().toISOString();
   });
   return { message: "Achievement updated successfully", achievement };
 }
@@ -136,6 +138,7 @@ export async function mockDeleteAchievement(token: string | null, id: string): P
   if (!account.achievements.some((a) => a.id === id)) throw new ApiError(404, "Prestasi tidak ditemukan.");
   updateAccount(account.id, (a) => {
     a.achievements = a.achievements.filter((x) => x.id !== id);
+    a.inputsUpdatedAt = new Date().toISOString();
   });
   return { message: "Achievement deleted successfully" };
 }
