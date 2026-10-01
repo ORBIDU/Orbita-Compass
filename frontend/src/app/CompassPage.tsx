@@ -10,7 +10,8 @@ import {
   ArrowLeft,
   BookOpen,
 } from "lucide-react";
-import { triggerCompassAnalyzeApi, getCompassResultApi } from "../services/api";
+import { analyzeCompass, getCompassResult } from "../services/compassService";
+import { BRAND } from "@/config/brand";
 
 const PP = "Poppins, sans-serif";
 
@@ -304,7 +305,7 @@ function CompassResultsView({
       sublabel: "Perguruan Tinggi Swasta",
       pct: 86,
       matchColor: "#0d9488",
-      desc: "Program studi yang sesuai dengan hasil rekomendasi Orbita.",
+      desc: `Program studi yang sesuai dengan hasil rekomendasi ${BRAND.name}.`,
       note: "Pilihan disesuaikan dengan hasil scoring.",
       majors: [
         { rank: "🥇", name: "Sistem Informasi", pct: 94, minat: ["Teknologi", "Analisis Data", "Problem Solving"], kompetensi: ["Matematika", "Logika", "Pemecahan Masalah"] },
@@ -348,10 +349,10 @@ function CompassResultsView({
       {/* 01 — Arah Pendidikanmu */}
       <div className="bg-white rounded-2xl border border-[rgba(0,0,0,0.06)] shadow-sm overflow-hidden">
         <div className="px-6 pt-5 pb-4 border-b border-[rgba(0,0,0,0.05)]">
-          <p className="text-[11px] font-bold text-[#9ca3af] uppercase tracking-widest mb-1" style={{ fontFamily: PP }}>Orbita Compass</p>
+          <p className="text-[11px] font-bold text-[#9ca3af] uppercase tracking-widest mb-1" style={{ fontFamily: PP }}>{BRAND.compassName}</p>
           <h2 className="text-[17px] font-bold text-[#1a1d2e]" style={{ fontFamily: PP }}>🎯 Arah Pendidikanmu</h2>
           <p className="text-[12px] text-[#6b7280] mt-0.5 leading-relaxed" style={{ fontFamily: PP }}>
-            Berdasarkan minat, kompetensi, prestasi, dan profil akademikmu, ORBITA menemukan arah yang paling sesuai untukmu.
+            Berdasarkan minat, kompetensi, prestasi, dan profil akademikmu, {BRAND.name} menemukan arah yang paling sesuai untukmu.
           </p>
         </div>
         <div className="px-6 py-5 flex flex-col gap-4">
@@ -394,7 +395,7 @@ function CompassResultsView({
       {/* ── Education Path Recommendations ── */}
       <div className="bg-white rounded-2xl border border-[rgba(0,0,0,0.06)] shadow-sm overflow-hidden">
         <div className="px-6 pt-5 pb-4 border-b border-[rgba(0,0,0,0.05)]">
-          <p className="text-[11px] font-bold text-[#9ca3af] uppercase tracking-widest mb-1" style={{ fontFamily: PP }}>Orbita Compass</p>
+          <p className="text-[11px] font-bold text-[#9ca3af] uppercase tracking-widest mb-1" style={{ fontFamily: PP }}>{BRAND.compassName}</p>
           <h2 className="text-[17px] font-bold text-[#1a1d2e]" style={{ fontFamily: PP }}>🎓 Rekomendasi Pendidikan Lanjutan</h2>
           <p className="text-[12px] text-[#6b7280] mt-0.5" style={{ fontFamily: PP }}>Temukan jalur pendidikan yang paling sesuai dengan profilmu.</p>
         </div>
@@ -511,7 +512,7 @@ function CompassResultsView({
                         <div className="flex items-start gap-2.5 px-4 py-3 rounded-xl border" style={{ borderColor: "#f1ad0035", background: "#fffbeb" }}>
                           <span className="text-sm shrink-0 mt-0.5">⭐</span>
                           <div>
-                            <p className="text-[11px] font-bold text-[#92400e]" style={{ fontFamily: PP }}>Rekomendasi Orbita</p>
+                            <p className="text-[11px] font-bold text-[#92400e]" style={{ fontFamily: PP }}>Rekomendasi {BRAND.name}</p>
                             <p className="text-[11px] text-[#78350f] leading-relaxed" style={{ fontFamily: PP }}>
                               {path.unis[0]?.name} — paling sesuai dengan profil dan targetmu.
                             </p>
@@ -597,7 +598,7 @@ function CompassResultsView({
 
               {/* Catatan ORBITA */}
               <div className="rounded-xl px-4 py-3" style={{ background: "#f0fdf4", border: "1px solid #bbf7d0" }}>
-                <p className="text-[11px] font-bold text-[#15803d] mb-1" style={{ fontFamily: PP }}>Catatan ORBITA</p>
+                <p className="text-[11px] font-bold text-[#15803d] mb-1" style={{ fontFamily: PP }}>Catatan {BRAND.name}</p>
                 <p className="text-[11px] text-[#166534] leading-relaxed" style={{ fontFamily: PP }}>
                   Minat, kemampuan akademik, dan pengalaman yang kamu miliki menunjukkan arah yang konsisten menuju bidang teknologi sehingga rekomendasi yang diberikan memiliki tingkat keyakinan yang tinggi.
                 </p>
@@ -612,7 +613,7 @@ function CompassResultsView({
                 <span className="text-[18px]">🧠</span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[13px] font-bold mb-2" style={{ color: "#00b2dd", fontFamily: PP }}>Ringkasan ORBITA</p>
+                <p className="text-[13px] font-bold mb-2" style={{ color: "#00b2dd", fontFamily: PP }}>Ringkasan {BRAND.name}</p>
                 <p className="text-[12px] leading-relaxed" style={{ color: "rgba(255,255,255,0.82)", fontFamily: PP }}>
                   Berdasarkan seluruh data yang telah dianalisis, kamu memiliki potensi kuat pada bidang{" "}
                   <span className="font-bold" style={{ color: "#00b2dd" }}>teknologi</span>{" "}
@@ -891,7 +892,7 @@ function CompassAnalyzingView({
             className="text-[15px] font-bold text-white"
             style={{ fontFamily: "monospace" }}
           >
-            Orbita AI is analyzing your profile...
+            {BRAND.name} AI is analyzing your profile...
           </p>
         </div>
         <div className="flex gap-2 mb-6">
@@ -956,9 +957,9 @@ export default function OrbitaCompassPage({
   const [, setAnalysis] = useState<any>(null);
 
   useEffect(() => {
-    getCompassResultApi()
-      .then(res => {
-        if (res?.analysis) setAnalysis(res.analysis);
+    getCompassResult()
+      .then(analysis => {
+        if (analysis) setAnalysis(analysis);
       })
       .catch(() => {});
   }, []);
@@ -966,8 +967,7 @@ export default function OrbitaCompassPage({
   async function handleTriggerAnalyze() {
     setCompassState("analyzing");
     try {
-      const res = await triggerCompassAnalyzeApi();
-      if (res?.analysis) setAnalysis(res.analysis);
+      setAnalysis(await analyzeCompass());
     } catch (err) {
       console.warn("Compass AI analyze completed with local fallback", err);
     }

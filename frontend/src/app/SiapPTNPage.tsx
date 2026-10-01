@@ -6,6 +6,7 @@ import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis,
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
 } from "recharts";
+import { BRAND } from "@/config/brand";
 
 const PP = "Poppins, sans-serif";
 const BLUE = "#2563EB";
@@ -2049,7 +2050,7 @@ function SNBPPrepPage({ onBack, onNavigate }: { onBack: () => void; onNavigate?:
                   <div className="w-12 h-12 rounded-full border-4 border-[#e2e8f0] border-t-[#2563EB] animate-spin" />
                   <div className="text-center">
                     <p className="text-[16px] font-bold text-[#0f172a] mb-1" style={{ fontFamily: PP }}>Memperbarui target jurusan...</p>
-                    <p className="text-[13px] text-[#94a3b8]" style={{ fontFamily: PP }}>ORBITA sedang menyesuaikan rencana persiapanmu.</p>
+                    <p className="text-[13px] text-[#94a3b8]" style={{ fontFamily: PP }}>{BRAND.name} sedang menyesuaikan rencana persiapanmu.</p>
                   </div>
                 </div>
               )}
@@ -2059,7 +2060,7 @@ function SNBPPrepPage({ onBack, onNavigate }: { onBack: () => void; onNavigate?:
                 <div>
                   <p className="text-[20px] font-bold text-[#0f172a]" style={{ fontFamily: PP }}>Ubah Target Jurusan</p>
                   <p className="text-[13px] text-[#94a3b8] mt-1 leading-relaxed" style={{ fontFamily: PP }}>
-                    Sesuaikan target perguruan tinggi dan jurusanmu. Perubahan ini akan digunakan sebagai acuan rekomendasi persiapan di ORBITA.
+                    Sesuaikan target perguruan tinggi dan jurusanmu. Perubahan ini akan digunakan sebagai acuan rekomendasi persiapan di {BRAND.name}.
                   </p>
                 </div>
                 <button onClick={() => setShowTargetModal(false)}

@@ -4,6 +4,7 @@ import {
   ChevronRight, ChevronDown, ChevronUp, Info, Sparkles, Zap, BookOpen,
 } from "lucide-react";
 import { RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer } from "recharts";
+import { BRAND } from "@/config/brand";
 
 const PP = "Poppins, sans-serif";
 
@@ -434,7 +435,7 @@ function AIRaporRecommendation() {
           <p className="text-[13px] font-bold text-[#0965fa]" style={{ fontFamily: PP }}>AI Smart Recommendation</p>
           <p className="text-[11px] text-[#93c5fd]" style={{ fontFamily: PP }}>Berdasarkan analisis tren Sem 1–4</p>
         </div>
-        <div className="ml-auto px-3 py-1 rounded-full text-[10px] font-bold bg-[#0965fa] text-white" style={{ fontFamily: PP }}>ORBITA AI</div>
+        <div className="ml-auto px-3 py-1 rounded-full text-[10px] font-bold bg-[#0965fa] text-white" style={{ fontFamily: PP }}>{BRAND.name} AI</div>
       </div>
       <div className="px-6 py-4">
         <p className="text-[13px] text-[#1e40af] leading-relaxed" style={{ fontFamily: PP }}>

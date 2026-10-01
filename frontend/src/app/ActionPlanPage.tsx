@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { RefreshCw, Plus, Check, ChevronLeft, ChevronRight, Compass, Target, AlertCircle, Bot, User } from "lucide-react";
+import { BRAND } from "@/config/brand";
 
 const PP = "Poppins, sans-serif";
 const BLUE = "#0965fa";
@@ -463,7 +464,7 @@ function SchedulePanel({ day, dayLabel, data, onAddActivity, selectedFocus, toda
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Bot size={12} className="text-[#9ca3af]" />
-                <p className="text-[10px] font-bold text-[#9ca3af] uppercase tracking-widest" style={{ fontFamily: PP }}>ORBITA Recommendation</p>
+                <p className="text-[10px] font-bold text-[#9ca3af] uppercase tracking-widest" style={{ fontFamily: PP }}>{BRAND.name} Recommendation</p>
               </div>
               <div className="flex flex-col gap-2">
                 {orbitaActs.map(act => {
@@ -606,7 +607,7 @@ export default function ActionPlanPage({ onNavigate }: { onNavigate?: (page: str
             className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-2xl border border-[rgba(9,101,250,0.2)] text-[12px] font-semibold hover:bg-[#eff6ff] transition-colors"
             style={{ color: BLUE, outline: "none" }}
           >
-            <Compass size={14} /> Cek Orbita Compass
+            <Compass size={14} /> Cek {BRAND.compassName}
           </button>
         </div>
       </div>
