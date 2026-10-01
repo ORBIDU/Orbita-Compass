@@ -7,7 +7,6 @@ import PageLoader from "@/components/ui/PageLoader";
 import { GuestOnly, RequireAuth } from "@/routes/guards";
 import {
   ActionPlanRoute,
-  CompassRoute,
   LandingRoute,
   PersiapanRoute,
   ProfilRoute,
@@ -17,6 +16,7 @@ import {
 const AuthPage = lazy(() => import("@/app/AuthPage"));
 const DashboardPage = lazy(() => import("@/app/DashboardPage"));
 const AnalisisPotensiPage = lazy(() => import("@/app/AnalisisPotensiPage"));
+const CompassPage = lazy(() => import("@/app/CompassPage"));
 const BeasiswaPage = lazy(() => import("@/app/BeasiswaPage"));
 const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
 const JurusanListPage = lazy(() => import("@/app/JurusanListPage"));
@@ -62,7 +62,8 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <DashboardPage /> },
           { path: "analisis-potensi", element: <AnalisisPotensiPage /> },
-          { path: "compass", element: <CompassRoute /> },
+          // Compass mengatur tampilan terkunci sendiri (tanpa FeatureGate).
+          { path: "compass", element: <CompassPage /> },
           { path: "beasiswa", element: <BeasiswaPage /> },
           { path: "action-plan", element: <ActionPlanRoute /> },
           { path: "persiapan/snbp", element: <SiapSnbpRoute /> },

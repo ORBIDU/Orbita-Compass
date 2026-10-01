@@ -9,7 +9,6 @@ import { FeatureGate } from "./guards";
 // Setiap halaman dimuat terpisah (lazy) supaya landing lebih cepat terbuka.
 
 const LandingPage = lazy(() => import("@/app/LandingPage"));
-const CompassPage = lazy(() => import("@/app/CompassPage"));
 const ActionPlanPage = lazy(() => import("@/app/ActionPlanPage"));
 const SiapPTNPage = lazy(() => import("@/app/SiapPTNPage"));
 const LatihanTKAPage = lazy(() => import("@/app/LatihanTKAPage"));
@@ -22,15 +21,6 @@ const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
 /** Beranda baru (Fase 2) tidak butuh prop apa pun. */
 export function LandingRoute() {
   return <LandingPage />;
-}
-
-export function CompassRoute() {
-  const onNavigate = useLegacyNavigate();
-  return (
-    <FeatureGate feature="compass">
-      <CompassPage onNavigate={onNavigate} />
-    </FeatureGate>
-  );
 }
 
 export function ActionPlanRoute() {

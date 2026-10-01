@@ -100,5 +100,3 @@ export const EXPLORE = {
   cta: "Explore Jurusan",
 };
 
-export const LOAD_ERROR = "Bagian ini gagal dimuat.";
-export const RETRY = "Coba lagi";

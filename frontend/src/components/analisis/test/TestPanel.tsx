@@ -10,7 +10,7 @@ import { ApiError } from "@/services/http";
 import type { AsesmenAnswers, AsesmenDoc, AsesmenDraft, AssessmentSummary } from "@/types/analisis";
 import type { BidangKey } from "@/types/jurusan";
 import type { StudentStatus } from "@/types/student";
-import { PanelError, PanelSkeleton } from "../PanelState";
+import { PanelError, PanelSkeleton } from "@/components/ui/PanelState";
 import AnalyzingView from "./AnalyzingView";
 import TestDone from "./TestDone";
 import TestForm from "./TestForm";

@@ -115,15 +115,21 @@ Acuan desain: `docs/design/portal/Portal-Analisis.dc.html` (desktop) dan `Portal
 - Data: draft dan jawaban tes, riwayat per kelas, penilaian di backend, prestasi lengkap, dan kelas/tahun ajaran rapor belum ada di backend → API_CONTRACT bagian 3 dan 8.
 
 ## 7. ORBIDU Compass (`/portal/compass`)
-Terkunci jika status `baru`. Isinya berurutan:
-1. Arah Pendidikan: bidang utama dengan satu skor kesesuaian. Minat, kompetensi, dan akademik dijelaskan dengan label (misalnya "Sangat selaras"), bukan persentase tambahan.
-2. Rekomendasi jurusan: 3–5 jurusan, masing-masing satu skor. Angkanya harus sama dengan yang tampil di Dashboard.
-3. Rekomendasi jalur: S1 PTN, D4/Vokasi, PTS, PTLN, dan Kedinasan. Jalur yang tidak relevan disembunyikan di semua halaman. Tombol "Lihat pilihan" menampilkan daftar jurusan dan kampus.
-4. Justifikasi: catatan ORBIDU, detail minat/kompetensi/akademik, dan radar 5 dimensi.
-5. Beasiswa yang bisa dicoba: tanpa persentase eligibility. Tampilkan label kecocokan dengan jalur dan syarat utamanya, plus tombol ke `/portal/beasiswa`.
-6. Langkah Selanjutnya: ke Siap SNBP, Siap SNBT, dan Siap SKD (yang terakhir hanya jika Kedinasan relevan).
-
-Data: `POST /compass/analyze` dan `GET /compass/result` sudah ada, tapi hasilnya sekarang masih jawaban cadangan (bukan AI). Dalam mode dummy, simulasikan dari 5 skor asesmen, rata-rata rapor, dan jumlah prestasi.
+Acuan desain: `docs/design/portal/Portal-Compass.dc.html`. Teks di `frontend/src/content/compass.ts`.
+- **Status `baru`**: kartu terkunci "ORBIDU Compass terbuka setelah Gambaran Minat Bakat" dengan daftar manfaat dan tombol ke tes. Sudah tes tetapi belum pernah dianalisis → empty state dengan tombol "Jalankan analisis".
+- **Kepala halaman**: tanggal "Dianalisis …", chip **"Soal versi uji coba"** selama `asesmen.json` masih placeholder, dan tombol **Perbarui analisis**. Tombol hanya aktif jika ada data baru (tes, prestasi, atau rapor) setelah tanggal analisis; jika tidak, tampil "Hasil sudah sesuai data terbaru". Alasannya: setiap analisis dengan AI asli memakai kuota API.
+- **Hero navy**: bidang paling selaras (bidang rekomendasi teratas yang ada di katalog) + label "Sangat selaras/Selaras", ringkasan dari hasil Compass, tiga aspek **Minat / Akademik / Prestasi** berupa label + 5 bar (tanpa persen), dan radar 5 dimensi minat dari tes.
+  - Minat: keselarasan minat dari hasil Compass.
+  - Akademik: rata-rata mapel pendukung bidang teratas di semester terakhir ("Menunggu nilai rapor" jika belum ada).
+  - Prestasi: tingkat prestasi yang berhubungan dengan bidang teratas.
+  - Label "Kompetensi" di desain diganti karena tidak punya sumber data.
+- **Jurusan yang bisa kamu eksplorasi**: sampai 5 jurusan dengan label "Sangat sesuai/Sesuai" dari sumber yang sama dengan Dashboard dan `/jurusan` (`jurusanService.matchRecommendations`), bidang, dan maksimal 3 chip alasan yang hanya muncul jika datanya mendukung (minat tertinggi, mapel pendukung yang tinggi/naik terus, prestasi yang berhubungan). Nama dari Compass yang tidak ada di katalog tetap tampil tanpa link "Lihat jurusan".
+- **Target jurusan**: satu jurusan bisa dijadikan target ("Jadikan target" / "Target kamu"). Ini target **jurusan katalog**, berbeda dari target **prodi di kampus tertentu** untuk Siap SNBP. Disimpan lewat `compassService` (API_CONTRACT 9.1).
+- **Jalur pendidikan**: kampus yang membuka 3 jurusan rekomendasi teratas, dikelompokkan per jalur (S1 PTN, D4 Vokasi, PTS, PTLN, Kedinasan) dari jenis kampus di `ptnService`. Kartu jalur bisa dibuka untuk melihat prodi, kampus, dan kota. Jalur tanpa pilihan disembunyikan dengan alasannya (belum selaras, belum ada data kampus, atau data belum tersedia). Label "Contoh data" hanya di mode dummy.
+- **Kenapa ORBIDU merekomendasikan ini**: tiga kolom dari tes (dimensi minat tertinggi dan terendah), prestasi (3 tertinggi), dan rapor (2 mapel tertinggi, tren rata-rata, 1 mapel yang bisa ditingkatkan), masing-masing dengan link ke tab Analisis Potensi, plus "Catatan ORBIDU".
+- **Langkah selanjutnya**: Siap SNBP, Siap TKA, Siap SNBT; Siap SKD hanya jika ada jurusan Kedinasan di rekomendasi.
+- **Beasiswa yang bisa dicoba**: 3 beasiswa yang cocok + tombol ke `/portal/beasiswa` (Tahap 5B).
+- Data: `POST /compass/analyze` dan `GET /compass/result` sudah ada, tetapi hasilnya masih jawaban cadangan (bukan AI) dengan nama prodi yang belum tentu ada di katalog. Mode dummy menyimpulkan dari 5 skor tes, rata-rata rapor, dan jumlah prestasi. Kebutuhan lain di API_CONTRACT bagian 9.
 
 ## 8. Explore Beasiswa (`/portal/beasiswa`)
 - Daftar beasiswa dengan filter jenjang, dalam/luar negeri, dan jenis bantuan.

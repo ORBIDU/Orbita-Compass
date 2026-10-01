@@ -5,7 +5,7 @@ import { averageScore, formatScore } from "@/lib/rapor";
 import type { AsyncState } from "@/lib/useAsync";
 import { DESKTOP_QUERY, useMediaQuery } from "@/lib/useMediaQuery";
 import type { RaporData, RaporSemester } from "@/types/analisis";
-import { PanelError, PanelSkeleton } from "../PanelState";
+import { PanelError, PanelSkeleton } from "@/components/ui/PanelState";
 import RaporTrendChart from "./RaporTrendChart";
 
 const ROMAN: Record<number, string> = { 10: "X", 11: "XI", 12: "XII" };
