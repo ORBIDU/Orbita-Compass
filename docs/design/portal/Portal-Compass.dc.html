@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>ORBIDU Compass</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Poppins',system-ui,sans-serif;background:#F5F8FC}
+a{color:#0965FA}a:hover{color:#0747B8}
+a:focus-visible,button:focus-visible{outline:3px solid #F1AD00;outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 3000px; overflow: hidden; display: flex; flex-direction: column; font-family: 'Poppins', system-ui, sans-serif; background: #F5F8FC; color: #101A33">
+<dc-import name="PortalHeader" aktif="compass" hint-size="1440px,72px"></dc-import>
+
+<main style="padding: 28px 120px 48px; display: flex; flex-direction: column; gap: 24px">
+
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 680px">
+<nav aria-label="Breadcrumb" style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #6B7898"><a href="Portal-Dashboard.dc.html" style="color: #6B7898; text-decoration: none">Dashboard</a><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9AA6C0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg><span aria-current="page" style="font-weight: 600; color: #101A33">ORBIDU Compass</span></nav>
+<h1 style="margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spacing: -0.5px">ORBIDU Compass</h1>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A5877">Arah pendidikan yang disusun dari gambaran minat bakat, prestasi, dan nilai rapormu, lengkap dengan alasannya.</p>
+</div>
+<sc-if value="{{open}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; color: #4A5877">Dianalisis 12 September 2026</span><span style="align-self: flex-start; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: #FFF1E6; color: #B34700">Soal versi uji coba</span></div>
+<button type="button" style="height: 42px; padding: 0 14px; display: flex; align-items: center; gap: 8px; border-radius: 12px; border: 1.5px solid #DCE4F2; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #0965FA; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 11-2.3-5.7M20 4v5h-5"></path></svg>Perbarui analisis</button>
+</div>
+</sc-if>
+</div>
+
+<sc-if value="{{locked}}" hint-placeholder-val="{{ false }}">
+<section style="padding: 56px; display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 48px; align-items: center; border-radius: 24px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<span style="width: 56px; height: 56px; border-radius: 16px; background: #EEF2F8; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4A5877" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 11h12v9H6zM8 11V8a4 4 0 118 0v3"></path></svg></span>
+<h2 style="margin: 0; font-size: 26px; line-height: 1.25; font-weight: 700">ORBIDU Compass terbuka setelah Gambaran Minat Bakat</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.7; color: #4A5877">Rekomendasi disusun dari jawaban tesmu, ditambah prestasi dan nilai rapor. Isi tesnya dulu, bisa dicicil per bagian.</p>
+<a href="Portal-Analisis.dc.html" style="align-self: flex-start; margin-top: 6px; height: 50px; padding: 0 22px; display: flex; align-items: center; gap: 8px; border-radius: 12px; background: linear-gradient(90deg, #FF7000, #F1AD00); color: #101A33; font-size: 15px; font-weight: 600; text-decoration: none">Isi Gambaran Minat Bakat<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#101A33" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div style="padding: 24px; display: flex; flex-direction: column; gap: 14px; border-radius: 18px; background: #F5F8FC">
+<span style="font-size: 15px; font-weight: 700">Yang akan kamu dapatkan</span>
+<div style="display: flex; gap: 12px; font-size: 14px; line-height: 1.55; color: #15234D"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M12 21a9 9 0 100-18 9 9 0 000 18zM15.5 8.5l-2 5-5 2 2-5z"></path></svg>Bidang yang paling selaras dengan dirimu</div>
+<div style="display: flex; gap: 12px; font-size: 14px; line-height: 1.55; color: #15234D"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M4 6h16M4 12h16M4 18h10"></path></svg>Jurusan yang bisa kamu eksplorasi, beserta alasannya</div>
+<div style="display: flex; gap: 12px; font-size: 14px; line-height: 1.55; color: #15234D"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M3 10l9-6 9 6M5 10v9M19 10v9M9 10v9M15 10v9M3 21h18"></path></svg>Jalur pendidikan dan beasiswa yang bisa dicoba</div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{open}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 14px; background: #EEF4FF; font-size: 14px; color: #15234D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5M12 8v.01"></path></svg>Rekomendasi ini bahan pertimbangan, bukan keputusan. Diskusikan hasilnya dengan guru BK dan orang tuamu.</div>
+
+<section aria-labelledby="pc-arah" style="position: relative; overflow: hidden; padding: 32px 36px; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 40px; align-items: center; border-radius: 24px; background: radial-gradient(520px 280px at 85% 30%, rgba(9,101,250,0.35), rgba(9,101,250,0) 70%), linear-gradient(135deg, #15234D 0%, #101A33 100%)">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 13px; font-weight: 600; color: #A9B8D9">Bidang paling selaras</span>
+<h2 id="pc-arah" style="margin: 0; font-size: 34px; line-height: 1.15; font-weight: 700; letter-spacing: -0.6px; color: #F4F7FF">Teknologi &amp; Komputasi</h2>
+<span style="align-self: flex-start; padding: 4px 12px; border-radius: 999px; background: rgba(46,204,113,0.18); color: #7BE3A6; font-size: 13px; font-weight: 600">Sangat selaras</span>
+<p style="margin: 0; max-width: 560px; font-size: 15px; line-height: 1.7; color: #C8D4EE">Minatmu pada teknologi dan riset, nilai Matematika dan Informatika yang terus naik, serta prestasi olimpiade Matematika menunjuk ke arah yang sama.</p>
+<div style="margin-top: 6px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; max-width: 600px">
+<sc-for list="{{aspek}}" as="a" hint-placeholder-count="3">
+<div style="padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; border-radius: 14px; background: rgba(255,255,255,0.07); border: 1px solid rgba(169,184,217,0.2)">
+<span style="font-size: 13px; color: #A9B8D9">{{a.name}}</span>
+<span style="font-size: 14px; font-weight: 600; color: #F4F7FF">{{a.label}}</span>
+<div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px" aria-hidden="true"><sc-for list="{{a.bars}}" as="b" hint-placeholder-count="5"><span style="height: 5px; border-radius: 3px; background: {{b.c}}"></span></sc-for></div>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<svg width="300" height="230" viewBox="-44 -16 328 238" role="img" aria-label="Radar 5 dimensi minat: Teknologi 88, Riset 76, Kreativitas 64, Kepemimpinan 58, Komunikasi 70">
+<polygon points="120,20 205.6,82.2 172.9,182.8 67.1,182.8 34.4,82.2" fill="rgba(255,255,255,0.04)" stroke="rgba(169,184,217,0.35)" stroke-width="1"></polygon>
+<polygon points="120,50 177.1,91.5 155.3,158.5 84.7,158.5 62.9,91.5" fill="none" stroke="rgba(169,184,217,0.25)" stroke-width="1"></polygon>
+<polygon points="120,80 148.5,100.7 137.6,134.3 102.4,134.3 91.5,100.7" fill="none" stroke="rgba(169,184,217,0.2)" stroke-width="1"></polygon>
+<path d="M120 110L120 20M120 110L205.6 82.2M120 110L172.9 182.8M120 110L67.1 182.8M120 110L34.4 82.2" stroke="rgba(169,184,217,0.2)" stroke-width="1"></path>
+<polygon points="120,30.8 185.1,88.9 153.9,156.6 89.3,152.2 60.1,90.5" fill="rgba(255,138,31,0.25)" stroke="#FF8A1F" stroke-width="2" stroke-linejoin="round"></polygon>
+<circle cx="120" cy="30.8" r="3.5" fill="#FF8A1F"></circle><circle cx="185.1" cy="88.9" r="3.5" fill="#FF8A1F"></circle><circle cx="153.9" cy="156.6" r="3.5" fill="#FF8A1F"></circle><circle cx="89.3" cy="152.2" r="3.5" fill="#FF8A1F"></circle><circle cx="60.1" cy="90.5" r="3.5" fill="#FF8A1F"></circle>
+<g font-family="Poppins" font-size="12" font-weight="600" fill="#DCE6FF">
+<text x="120" y="4" text-anchor="middle">Teknologi</text>
+<text x="218" y="80" text-anchor="start">Riset</text>
+<text x="180" y="206" text-anchor="start">Kreativitas</text>
+<text x="60" y="206" text-anchor="end">Kepemimpinan</text>
+<text x="22" y="80" text-anchor="end">Komunikasi</text>
+</g>
+</svg>
+<span style="font-size: 12px; color: #A9B8D9">Gambaran minat dari tesmu</span>
+</div>
+</section>
+
+<section aria-labelledby="pc-rek" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 4px"><h2 id="pc-rek" style="margin: 0; font-size: 20px; font-weight: 700">Jurusan yang bisa kamu eksplorasi</h2><p style="margin: 0; font-size: 14px; color: #4A5877">Pilih satu sebagai target supaya rencana belajar dan rasionalisasi SNBP-mu lebih terarah.</p></div>
+<sc-if value="{{hasTarget}}" hint-placeholder-val="{{ false }}"><span style="flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 12px; background: #E3F5EC; font-size: 13px; font-weight: 600; color: #0A7A45"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A7A45" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Target: {{targetName}}</span></sc-if>
+</div>
+<sc-for list="{{rek}}" as="r" hint-placeholder-count="5">
+<article style="padding: 18px 20px; display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 16px; align-items: center; border-radius: 18px; background: #FFFFFF; border: 1.5px solid {{r.cardBd}}">
+<span class="num" style="width: 36px; height: 36px; border-radius: 10px; background: #F0F4FA; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #4A5877">{{r.no}}</span>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap"><h3 style="margin: 0; font-size: 17px; font-weight: 700">{{r.name}}</h3><span style="font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: {{r.lblBg}}; color: {{r.lblFg}}">{{r.label}}</span><span style="font-size: 13px; color: #6B7898">{{r.bidang}}</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{r.why}}" as="w" hint-placeholder-count="3"><span style="display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 8px; background: #F5F8FC; font-size: 13px; color: #15234D"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="{{w.c}}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{w.icon}}"></path></svg>{{w.t}}</span></sc-for></div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px">
+<a href="Jurusan-Detail.dc.html" style="height: 40px; padding: 0 14px; display: flex; align-items: center; border-radius: 10px; border: 1px solid #DCE4F2; font-size: 13px; font-weight: 600; color: #15234D; text-decoration: none">Lihat jurusan</a>
+<button type="button" aria-pressed="{{r.pressed}}" onClick="{{r.pick}}" style="height: 40px; padding: 0 14px; display: flex; align-items: center; gap: 6px; border-radius: 10px; border: 1.5px solid {{r.btnBd}}; background: {{r.btnBg}}; font-family: inherit; font-size: 13px; font-weight: 600; color: {{r.btnFg}}; cursor: pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{r.btnIcon}}"></path></svg>{{r.btnText}}</button>
+</div>
+</article>
+</sc-for>
+</section>
+
+<section aria-labelledby="pc-jalur" style="padding: 24px; display: flex; flex-direction: column; gap: 16px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<div style="display: flex; flex-direction: column; gap: 4px"><h2 id="pc-jalur" style="margin: 0; font-size: 20px; font-weight: 700">Jalur pendidikan</h2><p style="margin: 0; font-size: 14px; color: #4A5877">Jalur yang paling sesuai dengan profil dan rencanamu.</p></div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{jalur}}" as="j" hint-placeholder-count="4">
+<button type="button" aria-expanded="{{j.expanded}}" onClick="{{j.pick}}" style="padding: 16px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; border-radius: 16px; border: 1.5px solid {{j.bd}}; background: {{j.bg}}; font-family: inherit; text-align: left; cursor: pointer">
+<span style="display: flex; align-items: center; justify-content: space-between; width: 100%"><span style="font-size: 16px; font-weight: 700; color: #101A33">{{j.title}}</span><span style="font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: {{j.lblBg}}; color: {{j.lblFg}}">{{j.label}}</span></span>
+<span style="font-size: 13px; color: #4A5877">{{j.sub}}</span>
+<span style="margin-top: 4px; display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: #0965FA">{{j.cta}}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: {{j.rot}}"><path d="M6 9l6 6 6-6"></path></svg></span>
+</button>
+</sc-for>
+</div>
+<div style="border-radius: 16px; border: 1px solid #E3E9F3; overflow: hidden">
+<div style="padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; background: #F8FAFD; border-bottom: 1px solid #E3E9F3"><span style="font-size: 14px; font-weight: 700">Pilihan di jalur {{openTitle}}</span><span style="font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: #FFF1E6; color: #B34700">Contoh data</span></div>
+<sc-for list="{{openList}}" as="o" hint-placeholder-count="4">
+<div style="min-height: 56px; padding: 0 16px; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) 120px; align-items: center; gap: 16px; border-bottom: 1px solid #EEF2F8; font-size: 14px"><span style="font-weight: 600">{{o.prodi}}</span><span style="color: #4A5877">{{o.kampus}}</span><span style="text-align: right; color: #6B7898">{{o.kota}}</span></div>
+</sc-for>
+</div>
+<p style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #6B7898"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7898" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12zM4 4l16 16"></path></svg>Kedinasan tidak ditampilkan karena belum selaras dengan profilmu saat ini.</p>
+</section>
+
+<section aria-labelledby="pc-why" style="padding: 24px; display: flex; flex-direction: column; gap: 16px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<h2 id="pc-why" style="margin: 0; font-size: 20px; font-weight: 700">Kenapa ORBIDU merekomendasikan ini</h2>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{why}}" as="w" hint-placeholder-count="3">
+<div style="padding: 18px; display: flex; flex-direction: column; gap: 10px; border-radius: 16px; background: #F5F8FC">
+<span style="display: flex; align-items: center; gap: 10px"><span style="width: 36px; height: 36px; border-radius: 10px; background: {{w.bg}}; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{w.c}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{w.icon}}"></path></svg></span><span style="font-size: 15px; font-weight: 700">{{w.title}}</span></span>
+<sc-for list="{{w.items}}" as="i" hint-placeholder-count="3"><span style="display: flex; gap: 8px; font-size: 14px; line-height: 1.55; color: #15234D"><span style="width: 6px; height: 6px; flex-shrink: 0; margin-top: 8px; border-radius: 50%; background: {{w.c}}"></span>{{i.t}}</span></sc-for>
+<a href="{{w.href}}" style="margin-top: auto; font-size: 13px; font-weight: 600; color: #0965FA; text-decoration: none">{{w.link}}</a>
+</div>
+</sc-for>
+</div>
+<div style="padding: 16px 18px; display: flex; gap: 12px; border-radius: 14px; background: #EEF4FF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path></svg><p style="margin: 0; font-size: 14px; line-height: 1.65; color: #15234D"><strong>Catatan ORBIDU.</strong> Minat, kemampuan akademik, dan prestasimu konsisten mengarah ke bidang teknologi. Kalau kamu ragu antara Sistem Informasi dan Teknik Informatika, coba bandingkan isi kuliahnya di halaman jurusan dan ngobrol dengan guru BK.</p></div>
+</section>
+
+<section aria-labelledby="pc-bea" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end"><div style="display: flex; flex-direction: column; gap: 4px"><h2 id="pc-bea" style="margin: 0; font-size: 20px; font-weight: 700">Beasiswa yang bisa kamu coba</h2><p style="margin: 0; font-size: 14px; color: #4A5877">Cocokkan syaratnya dengan kondisimu. Seleksi beasiswa punya kriteria masing-masing.</p></div><a href="Portal-Beasiswa.dc.html" style="flex-shrink: 0; height: 42px; padding: 0 16px; display: flex; align-items: center; gap: 6px; border-radius: 12px; border: 1.5px solid #DCE4F2; background: #FFFFFF; font-size: 14px; font-weight: 600; color: #0965FA; text-decoration: none">Explore Beasiswa<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{bea}}" as="b" hint-placeholder-count="3">
+<article style="padding: 20px; display: flex; flex-direction: column; gap: 10px; border-radius: 18px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<span style="align-self: flex-start; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: {{b.tagBg}}; color: {{b.tagFg}}">{{b.tag}}</span>
+<h3 style="margin: 0; font-size: 16px; font-weight: 700">{{b.name}}</h3>
+<span style="font-size: 13px; color: #6B7898">{{b.org}}</span>
+<span style="font-size: 14px; line-height: 1.55; color: #15234D"><strong style="font-weight: 600">Cakupan:</strong> {{b.cover}}</span>
+<span style="font-size: 14px; line-height: 1.55; color: #15234D"><strong style="font-weight: 600">Syarat utama:</strong> {{b.req}}</span>
+</article>
+</sc-for>
+</div>
+</section>
+
+<section aria-labelledby="pc-next" style="display: flex; flex-direction: column; gap: 14px">
+<h2 id="pc-next" style="margin: 0; font-size: 20px; font-weight: 700">Langkah selanjutnya</h2>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{next}}" as="n" hint-placeholder-count="3">
+<a href="#" style="padding: 20px; display: flex; flex-direction: column; gap: 8px; border-radius: 18px; background: #FFFFFF; border: 1px solid #E3E9F3; text-decoration: none">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: {{n.bg}}; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{n.c}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{n.icon}}"></path></svg></span>
+<span style="font-size: 16px; font-weight: 700; color: #101A33">{{n.title}}</span>
+<span style="font-size: 14px; line-height: 1.55; color: #4A5877">{{n.desc}}</span>
+<span style="margin-top: 4px; display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: #0965FA">{{n.cta}}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+</a>
+</sc-for>
+</div>
+</section>
+</sc-if>
+</main>
+
+<div role="group" aria-label="Mode Demo: status siswa" style="position: absolute; left: 20px; top: 820px; z-index: 5; padding: 8px; display: flex; align-items: center; gap: 6px; border-radius: 14px; background: #101A33; box-shadow: 0 14px 30px rgba(16,26,51,0.3)">
+<span style="padding: 0 8px; font-size: 12px; font-weight: 600; color: #A9B8D9">Mode Demo</span>
+<sc-for list="{{demo}}" as="d" hint-placeholder-count="2">
+<button type="button" aria-pressed="{{d.pressed}}" onClick="{{d.pick}}" style="height: 34px; padding: 0 12px; border: 0; border-radius: 9px; background: {{d.bg}}; color: {{d.fg}}; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer">{{d.label}}</button>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3000}}'>
+class Component extends DCLogic {
+  constructor(...args) {
+    super(...args);
+    this.state = { status: 'aktif', target: null, jalur: 's1' };
+  }
+  renderVals() {
+    const S = this.state;
+    const locked = S.status === 'baru';
+    const bars = (n) => [1, 2, 3, 4, 5].map((i) => ({ c: i <= n ? '#FF8A1F' : 'rgba(169,184,217,0.25)' }));
+    const aspek = [['Minat', 'Sangat selaras', 5], ['Kompetensi', 'Selaras', 4], ['Akademik', 'Sangat selaras', 5]].map(([name, label, n]) => ({ name, label, bars: bars(n) }));
+    const IC = {
+      minat: ['M12 3a9 9 0 100 18 9 9 0 000-18zM12 7a5 5 0 100 10 5 5 0 000-10zM12 11a1 1 0 100 2 1 1 0 000-2z', '#0965FA'],
+      rapor: ['M4 16l6-6 4 4 6-6M14 8h6v6', '#0A7A45'],
+      prestasi: ['M8 4h8v5a4 4 0 01-8 0zM12 13v4M9 20h6M10 17h4', '#B34700']
+    };
+    const W = (k, t) => ({ t, icon: IC[k][0], c: IC[k][1] });
+    const REK = [
+      { name: 'Sistem Informasi', bidang: 'Teknologi & Informatika', sangat: true, why: [W('minat', 'Minat teknologi paling tinggi'), W('rapor', 'Matematika dan Informatika naik terus'), W('prestasi', 'OSN Matematika tingkat nasional')] },
+      { name: 'Teknik Informatika', bidang: 'Teknologi & Informatika', sangat: true, why: [W('minat', 'Minat teknologi dan riset'), W('rapor', 'Informatika 93 di semester 4')] },
+      { name: 'Ilmu Komputer', bidang: 'Teknologi & Informatika', sangat: false, why: [W('minat', 'Minat riset menonjol'), W('rapor', 'Matematika 91 di semester 4')] },
+      { name: 'Statistika', bidang: 'Matematika & Sains Data', sangat: false, why: [W('rapor', 'Matematika kuat dan stabil'), W('prestasi', 'Prestasi olimpiade Matematika')] },
+      { name: 'Sains Data', bidang: 'Matematika & Sains Data', sangat: false, why: [W('minat', 'Minat teknologi dan analisis'), W('rapor', 'Matematika dan Informatika kuat')] }
+    ];
+    const CHECK = 'M5 12.5l4.5 4.5L19 7.5', FLAG = 'M5 21V4M5 4h11l-2 4 2 4H5';
+    const rek = REK.map((r, i) => {
+      const on = S.target === i;
+      return {
+        ...r, no: i + 1, label: r.sangat ? 'Sangat sesuai' : 'Sesuai', lblBg: r.sangat ? '#E3F5EC' : '#E8F0FE', lblFg: r.sangat ? '#0A7A45' : '#0B3FA8',
+        cardBd: on ? '#0A7A45' : '#E3E9F3', pressed: on ? 'true' : 'false',
+        btnBg: on ? '#0A7A45' : '#FFFFFF', btnBd: on ? '#0A7A45' : '#0965FA', btnFg: on ? '#FFFFFF' : '#0965FA', btnIcon: on ? CHECK : FLAG, btnText: on ? 'Target kamu' : 'Jadikan target',
+        pick: () => this.setState({ target: on ? null : i })
+      };
+    });
+    const JALUR = {
+      s1: { title: 'S1 PTN', sub: 'Perguruan tinggi negeri', sangat: true, list: [['Sistem Informasi', 'Universitas Sriwijaya', 'Palembang'], ['Ilmu Komputer', 'Universitas Indonesia', 'Depok'], ['Teknik Informatika', 'Institut Teknologi Bandung', 'Bandung'], ['Sistem Informasi', 'Institut Teknologi Sepuluh Nopember', 'Surabaya']] },
+      d4: { title: 'D4 Vokasi', sub: 'Politeknik negeri', sangat: false, list: [['Teknologi Rekayasa Perangkat Lunak', '[Politeknik negeri]', '[Kota]'], ['Teknologi Rekayasa Komputer', '[Politeknik negeri]', '[Kota]'], ['Manajemen Informatika', '[Politeknik negeri]', '[Kota]']] },
+      pts: { title: 'PTS', sub: 'Perguruan tinggi swasta', sangat: false, list: [['Sistem Informasi', '[Universitas swasta]', '[Kota]'], ['Teknik Informatika', '[Universitas swasta]', '[Kota]'], ['Sains Data', '[Universitas swasta]', '[Kota]']] },
+      ptln: { title: 'PTLN', sub: 'Perguruan tinggi luar negeri', sangat: false, list: [['Computer Science', '[Universitas luar negeri]', '[Negara]'], ['Information Systems', '[Universitas luar negeri]', '[Negara]'], ['Data Science', '[Universitas luar negeri]', '[Negara]']] }
+    };
+    const jalur = Object.keys(JALUR).map((k) => {
+      const j = JALUR[k];
+      const on = S.jalur === k;
+      return { title: j.title, sub: j.sub, label: j.sangat ? 'Sangat sesuai' : 'Sesuai', lblBg: j.sangat ? '#E3F5EC' : '#E8F0FE', lblFg: j.sangat ? '#0A7A45' : '#0B3FA8', expanded: on ? 'true' : 'false', bd: on ? '#0965FA' : '#E3E9F3', bg: on ? '#F5F9FF' : '#FFFFFF', cta: on ? 'Sedang ditampilkan' : 'Lihat pilihan', rot: on ? 'rotate(180deg)' : 'none', pick: () => this.setState({ jalur: k }) };
+    });
+    const openList = JALUR[S.jalur].list.map(([prodi, kampus, kota]) => ({ prodi, kampus, kota }));
+    const why = [
+      { title: 'Dari tes minat bakat', icon: IC.minat[0], c: '#0965FA', bg: '#E8F0FE', href: 'Portal-Analisis.dc.html', link: 'Lihat jawaban tes', items: [{ t: 'Teknologi dan riset adalah minat paling kuat' }, { t: 'Yakin bisa memecahkan soal yang sulit' }, { t: 'Senang membuat aplikasi dan desain' }] },
+      { title: 'Dari prestasi', icon: IC.prestasi[0], c: '#B34700', bg: '#FFF1E6', href: 'Portal-Analisis.dc.html', link: 'Lihat prestasi', items: [{ t: 'Medali perunggu OSN Matematika (Nasional)' }, { t: 'Juara 2 Lomba Karya Tulis Ilmiah (Provinsi)' }, { t: 'Ketua OSIS 2025/2026' }] },
+      { title: 'Dari nilai rapor', icon: IC.rapor[0], c: '#0A7A45', bg: '#E3F5EC', href: 'Portal-Analisis.dc.html', link: 'Lihat nilai rapor', items: [{ t: 'Informatika 93 dan Matematika 91 di semester 4' }, { t: 'Rata-rata naik 4 semester berturut-turut' }, { t: 'Bahasa Inggris 84, masih bisa ditingkatkan' }] }
+    ];
+    const bea = [
+      { tag: 'Cek syarat ekonomi', tagBg: '#FFF1E6', tagFg: '#B34700', name: 'KIP Kuliah', org: 'Pemerintah', cover: 'Biaya kuliah dan bantuan biaya hidup', req: 'Siswa dari keluarga dengan keterbatasan ekonomi yang diterima di perguruan tinggi' },
+      { tag: 'Cocok dengan prestasimu', tagBg: '#E3F5EC', tagFg: '#0A7A45', name: 'Beasiswa prestasi [contoh]', org: '[Penyelenggara]', cover: '[Cakupan beasiswa]', req: 'Prestasi tingkat provinsi atau nasional dan nilai rapor tinggi' },
+      { tag: 'Untuk jalur PTLN', tagBg: '#E8F0FE', tagFg: '#0B3FA8', name: 'Beasiswa luar negeri [contoh]', org: '[Penyelenggara]', cover: '[Cakupan beasiswa]', req: 'Nilai rapor tinggi dan kemampuan bahasa Inggris' }
+    ];
+    const next = [
+      { title: 'Siap SNBP', desc: 'Cek peluangmu lewat rapor dan prestasi, lalu tentukan strategi pilihan.', cta: 'Mulai rasionalisasi', icon: 'M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h4', c: '#0965FA', bg: '#E8F0FE' },
+      { title: 'Siap TKA', desc: 'Nilai TKA ikut dipakai untuk SNBP. Latihan mapel wajib dan pilihanmu.', cta: 'Mulai latihan', icon: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 16a4 4 0 100-8 4 4 0 000 8zM12 12h.01', c: '#B34700', bg: '#FFF1E6' },
+      { title: 'Siap SNBT', desc: 'Latihan per subtes UTBK dan ikuti tryout berkala.', cta: 'Mulai latihan', icon: 'M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2zM4 5v16M8 7h7', c: '#0A7A45', bg: '#E3F5EC' }
+    ];
+    const demo = [['baru', 'Terkunci (baru)'], ['aktif', 'Terbuka']].map(([id, label]) => {
+      const on = S.status === id;
+      return { label, pressed: on ? 'true' : 'false', bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#101A33' : '#DCE6FF', pick: () => this.setState({ status: id }) };
+    });
+    return {
+      locked, open: !locked, aspek, rek,
+      hasTarget: S.target !== null, targetName: S.target !== null ? REK[S.target].name : '',
+      jalur, openList, openTitle: JALUR[S.jalur].title, why, bea, next, demo
+    };
+  }
+}
+</script>
+</body>
+</html>

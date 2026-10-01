@@ -8,6 +8,8 @@ Bangun ulang di React + Tailwind dengan mengikuti isi teks, warna, ukuran huruf,
 - Portal-Dashboard-HP.dc.html  : dashboard HP (lebar 390) dengan menu bawah 5 item.
 - Portal-Analisis.dc.html      : Analisis Potensi desktop, tiga tab: Gambaran Minat Bakat, Prestasi, Nilai Rapor. Panel 'Contoh tes' menampilkan Bagian 1 (pilihan tunggal, pilihan ganda, urutan), Bagian 5 (skala), Bagian 7 (Simpan & Analisis), layar Menganalisis, dan Selesai. Tweaks: raporKosong, modeBackend.
 - Portal-Analisis-HP.dc.html   : Analisis Potensi versi HP (lebar 390).
+- Portal-Compass.dc.html       : ORBIDU Compass desktop. Panel Mode Demo: Terkunci (status baru) dan Terbuka.
+- Portal-Beasiswa.dc.html      : Explore Beasiswa desktop (filter, simpan, jendela detail). Data beasiswa masih contoh.
 
 Cara membaca format:
 - <dc-import name="PortalHeader" ...> artinya komponen PortalHeader dipasang di situ.
