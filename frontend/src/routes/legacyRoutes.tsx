@@ -1,8 +1,7 @@
-import { lazy, useState } from "react";
+import { lazy } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLegacyNavigate } from "@/lib/legacyNav";
 import { ROUTES, UJIAN_KEYS, type UjianKey } from "@/config/navigation";
-import type { ProfileTab } from "@/app/StudentProfiling";
 import { FeatureGate } from "./guards";
 
 // Pembungkus sementara untuk halaman lama: menyambungkan prop lama
@@ -15,7 +14,6 @@ const ActionPlanPage = lazy(() => import("@/app/ActionPlanPage"));
 const SiapPTNPage = lazy(() => import("@/app/SiapPTNPage"));
 const LatihanTKAPage = lazy(() => import("@/app/LatihanTKAPage"));
 const SiapSKDPage = lazy(() => import("@/app/SiapSKDPage"));
-const StudentProfiling = lazy(() => import("@/app/StudentProfiling").then((m) => ({ default: m.StudentProfiling })));
 const InformasiPribadiPage = lazy(() =>
   import("@/app/StudentProfiling").then((m) => ({ default: m.InformasiPribadiPage })),
 );
@@ -24,11 +22,6 @@ const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
 /** Beranda baru (Fase 2) tidak butuh prop apa pun. */
 export function LandingRoute() {
   return <LandingPage />;
-}
-
-export function AnalisisPotensiRoute() {
-  const [activeTab, setActiveTab] = useState<ProfileTab>("minat-bakat");
-  return <StudentProfiling activeTab={activeTab} setActiveTab={setActiveTab} />;
 }
 
 export function CompassRoute() {

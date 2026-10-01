@@ -71,7 +71,7 @@ export default {
         // Teks isi dan teks redup di latar terang
         prose: { DEFAULT: "#4A5877", dim: "#6B7898", faint: "#9AA6C0" },
         // Garis dan border
-        rim: { DEFAULT: "#DCE4F2", strong: "#C9D5EA", dash: "#9DB6E3", soft: "#E3E9F3", faint: "#EEF2F8", box: "#B8C4DB" },
+        rim: { DEFAULT: "#DCE4F2", strong: "#C9D5EA", dash: "#9DB6E3", soft: "#E3E9F3", faint: "#EEF2F8", box: "#B8C4DB", upload: "#C2CFE6" },
         // Latar section dan permukaan
         surface: {
           soft: "#F5F8FC",
@@ -80,12 +80,16 @@ export default {
           bubble: "#F0F5FE",
           peach: "#FFF4EA",
           track: "#E6ECF7",
+          // Latar tombol pilihan dua (mis. Akademik | Non-akademik)
+          toggle: "#E9EEF6",
         },
         // Pasangan latar + teks untuk chip/label
         tint: {
           "orange-bg": "#FFF1E6", "orange-fg": "#B34700",
           "blue-bg": "#E8F0FE", "blue-fg": "#0B3FA8",
           "teal-bg": "#E3F6FB", "teal-fg": "#006F8C",
+          // Peringatan lembut (sertifikat belum ada, tugas siswa di kelengkapan profil)
+          "orange-rim": "#FFB066", "orange-ink": "#7A3300", "orange-line": "#FFD2AD",
           "green-bg": "#E3F5EC", "green-fg": "#0A7A45",
           "navy-bg": "#E9ECF4", "navy-fg": "#15234D",
           "amber-bg": "#FFF1CC", "amber-fg": "#8A5A00",
@@ -171,6 +175,10 @@ export default {
         tab: "0 4px 12px rgba(16, 26, 51, 0.10)",
         // Menu bawah portal di HP
         "nav-up": "0 -8px 24px rgba(16, 26, 51, 0.06)",
+        // Jendela dialog (tambah prestasi, konfirmasi hapus)
+        dialog: "0 30px 80px rgba(16, 26, 51, 0.30)",
+        // Tombol aktif di pilihan dua
+        toggle: "0 3px 10px rgba(16, 26, 51, 0.08)",
       },
       dropShadow: {
         // Bayangan maskot kecil (tombol konsultasi)

@@ -16,7 +16,8 @@ export function buildProfileDetail(account: MockAccount): StudentProfileDetail |
   return {
     ...account.profile,
     academicRecords: account.academicRecords,
-    achievements: account.achievements,
+    // Hanya field yang ada di backend; capaian/penyelenggara/sertifikat lewat achievementService.
+    achievements: account.achievements.map(({ rank: _r, organizer: _o, certificateName: _c, ...a }) => a),
     reflection: account.reflection,
     assessment: sudahAsesmen ? account.assessment : null,
     targetPtn: findUniversity(account.profile.targetPtnId),
@@ -51,6 +52,7 @@ export async function mockSetStatus(token: string | null, status: StudentStatus)
   const account = requireAccount(token);
   updateAccount(account.id, (a) => {
     a.status = status;
+    if (status !== "baru" && a.assessmentGrade === null) a.assessmentGrade = a.profile?.grade ?? null;
     if (status !== "baru" && !a.assessment && a.profile) {
       a.assessment = {
         id: `asm-${a.id}`,

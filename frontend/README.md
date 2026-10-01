@@ -54,15 +54,17 @@ src/
 ├── router.tsx          ← peta semua URL
 ├── config/            ← brand.ts (nama, tagline, kontak), navigation.ts (URL & menu), bidang.ts
 ├── content/           ← teks halaman statis (beranda, FAQ)
+├── data/              ← asesmen.json: soal Gambaran Minat Bakat (masih placeholder)
 ├── layouts/            ← kerangka halaman (portal, publik, auth)
 ├── routes/             ← penjaga halaman (wajib login, gembok status) + pembungkus halaman lama
 ├── components/
-│   ├── ui/             ← komponen dasar: Button, Card, EmptyState, LockedOverlay, FormField, Logo
+│   ├── ui/             ← komponen dasar: Button, Card, EmptyState, LockedOverlay, FormField, Logo, Dialog
 │   ├── landing/        ← header, section beranda, carousel, footer, tombol konsultasi
 │   ├── mascot/         ← MascotFigure (SVG) dan MascotSlot (maskot hero interaktif)
 │   ├── jurusan/        ← kartu dan sampul jurusan
 │   ├── auth/           ← form Masuk & Daftar, AuthVideoSlot
 │   ├── dashboard/      ← hero dan kartu Dashboard (rencana, performa, Compass, timeline)
+│   ├── analisis/       ← Analisis Potensi: tes, prestasi, rapor, kelengkapan profil
 │   ├── portal/         ← header, menu desktop, dropdown Persiapan, menu bawah HP
 │   └── dev/            ← panel Mode Demo
 ├── context/            ← AuthContext (login) dan StudentStatusContext (status siswa)
