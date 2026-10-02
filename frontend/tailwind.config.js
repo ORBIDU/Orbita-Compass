@@ -93,6 +93,10 @@ export default {
           "green-bg": "#E3F5EC", "green-fg": "#0A7A45",
           "navy-bg": "#E9ECF4", "navy-fg": "#15234D",
           "amber-bg": "#FFF1CC", "amber-fg": "#8A5A00",
+          // Action Plan: kategori Kedinasan, tanggal terjadwal, dan tanggal hari ini yang dipilih
+          "purple-bg": "#EFEBFB", "purple-fg": "#5B3FC4", "purple-dot": "#6B4FD1",
+          "amber-soft": "#FFF4D6",
+          "blue-deep": "#0747B8",
         },
         // Sampul kartu jurusan per tema warna (latar + ikon)
         cover: {

@@ -3,7 +3,8 @@ import { useAuth } from "@/context/AuthContext";
 import { useStudentStatus } from "@/context/StudentStatusContext";
 import { toDisplayUser } from "@/lib/user";
 import { useAsync } from "@/lib/useAsync";
-import { getPracticeSummary, getSelectionTimeline, getTodayPlan } from "@/services/dashboardService";
+import { getPracticeSummary, getSelectionTimeline } from "@/services/dashboardService";
+import { getTodayPlan } from "@/services/actionPlanService";
 import { getCompassHighlights } from "@/services/jurusanService";
 import PageLoader from "@/components/ui/PageLoader";
 import DashboardHero from "@/components/dashboard/DashboardHero";
@@ -33,7 +34,8 @@ export default function DashboardPage() {
   const canLoad = isStudent && ready && status !== null;
 
   // `status` ikut jadi deps supaya data dimuat ulang saat status diganti di Mode Demo.
-  const plan = useAsync(() => getTodayPlan(now), [status, user?.id], canLoad && !planLocked);
+  // Sumber sama dengan halaman Action Plan.
+  const plan = useAsync(() => getTodayPlan(user?.id ?? "", user?.profile?.grade ?? 12, now), [status, user?.id], canLoad && !planLocked);
   const practice = useAsync(getPracticeSummary, [status, user?.id], canLoad && !performaLocked);
   const compass = useAsync(() => getCompassHighlights(3), [status, user?.id], canLoad && !compassLocked);
   const timeline = useAsync(() => getSelectionTimeline(now), []);

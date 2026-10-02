@@ -87,17 +87,17 @@ Acuan desain: `docs/design/portal/PortalHeader.dc.html` (desktop) dan menu bawah
 Acuan desain: `docs/design/portal/Portal-Dashboard.dc.html` (1440px) dan `Portal-Dashboard-HP.dc.html` (390px). Teks di `frontend/src/content/dashboard.ts`, data lewat `dashboardService` dan `jurusanService.getCompassHighlights()`.
 - **Hero navy**: tanggal otomatis ("Kamis, 1 Oktober 2026") dan sapaan sesuai jam: pagi (04.00–10.59), siang (11.00–14.59), sore (15.00–17.59), malam (18.00–03.59). Nama yang dipakai: **nama panggilan** dari profil; kalau kosong, kata pertama nama lengkap.
 - **Kartu dan urutannya** (HP satu kolom dengan urutan yang sama):
-  - Rencana hari ini: cincin progres, jumlah tugas selesai, perkiraan menit tersisa, dan daftar tugas (desktop 4, HP 3, sisanya "+N tugas lainnya").
+  - Rencana hari ini: latihan soal Action Plan hari ini (sumber sama dengan bagian 9), dengan cincin progres, jumlah latihan selesai, perkiraan menit tersisa, dan daftar latihan (desktop 4, HP 3, sisanya "+N latihan lainnya"). Bukan hari belajar → "Latihan berikutnya: <hari, tanggal>, N latihan".
   - Performa latihan: radar 7 subtes SNBT (PU, PPU, PBM, PK, LBI, LBE, PM) dari tryout terakhir dengan subtes terlemah ditandai oranye, skor terakhir dan selisihnya, lalu hasil terakhir Siap SNBT, TKA, dan SKD ("Mulai" jika belum ada). "Lihat performa" membuka halaman Siap SNBT (tab Performance belum bisa dibuka lewat URL).
   - ORBIDU Compass: bidang yang paling selaras dan 3 jurusan teratas dengan label "Sangat sesuai"/"Sesuai" (tanpa persentase), menuju `/jurusan/:slug`.
   - Timeline seleksi (selalu tampil): 5 agenda mulai bulan ini, dengan catatan "Jadwal perkiraan. Jadwal resmi mengikuti SNPMB dan instansi terkait."
   - Explore Jurusan → `/jurusan`.
 - **Per status**:
   - `baru`: Rencana, Performa, dan Compass terkunci (kerangka abu-abu buram, tanpa angka contoh). Hero berisi satu CTA besar "Isi Gambaran Minat Bakat".
-  - `sudah_asesmen`: Compass terbuka. Rencana mengajak "Atur fokus belajar" kalau fokus belum diatur. Performa kosong dengan ajakan "Mulai latihan pertama".
-  - `aktif`: semua terisi. Hero menampilkan progres tugas hari ini, chip kelas, dan fokus belajar.
+  - `sudah_asesmen`: Compass terbuka. Rencana mengajak "Atur rencana belajar" kalau belum punya rencana. Performa kosong dengan ajakan "Mulai latihan pertama".
+  - `aktif`: semua terisi. Hero menampilkan progres latihan hari ini, chip kelas, dan fokus belajar.
 - Semua kartu punya kondisi memuat, gagal (dengan "Coba lagi"), dan kosong yang jujur.
-- Data: fokus belajar, durasi tugas, riwayat latihan, timeline, notifikasi, dan nama panggilan belum ada di backend → API_CONTRACT bagian 7. Dengan backend asli, status `aktif` belum bisa muncul.
+- Data: rencana belajar (API_CONTRACT bagian 11), riwayat latihan, timeline, notifikasi, dan nama panggilan belum ada di backend → API_CONTRACT bagian 7. Dengan backend asli, status `aktif` belum bisa muncul.
 
 ## 6. Analisis Potensi (`/portal/analisis-potensi`)
 Acuan desain: `docs/design/portal/Portal-Analisis.dc.html` (desktop) dan `Portal-Analisis-HP.dc.html` (390px). Teks di `frontend/src/content/analisis.ts`.
@@ -145,15 +145,37 @@ Acuan desain: `docs/design/portal/Portal-Beasiswa.dc.html`. Teks di `frontend/sr
 - Data: backend belum punya katalog beasiswa dan beasiswa tersimpan → API_CONTRACT bagian 10.
 
 ## 9. Action Plan (`/portal/action-plan`)
-- Fokus Minggu Ini: pilih maksimal 2 dari SNBT, TKA, dan Kedinasan, dengan progress masing-masing. Ringkasan hari belajar, jumlah aktivitas, dan progress minggu ini.
-- Kalender bulanan: warna kotak menunjukkan status hari (hijau selesai, merah terlewat, biru hari ini, kuning ada jadwal). Titik kecil menunjukkan kategori (SNBT, TKA, Kedinasan, Personal).
-- Daftar tugas berupa kartu seperti Englishnesia (judul, kategori, progress, jumlah soal, estimasi waktu), dengan filter Minggu Ini, Terlewat, Belum Selesai, dan Selesai beserta jumlahnya.
-- Panel Hari Ini: target hari ini + rekomendasi ORBIDU.
-- Modal Re-plan: pilih hari belajar (frekuensi dihitung otomatis dari jumlah hari), fokus (maks. 2), dan durasi rencana (jumlah minggu atau sampai tanggal ujian).
-- Penyusun tugas (simulasi AI): SNBT → 7 subtes SNBT; TKA → mapel wajib dan pilihan; SKD → TWK, TIU, TKP. Prioritaskan subtes dengan skor terendah; kalau belum ada data, bagi rata.
-- Tugas terlewat ditawarkan untuk digeser ke hari belajar berikutnya.
-- Siswa bisa menambah tugas Personal sendiri.
-- Data: CRUD `/action-plans` sudah ada (tanpa ubah). Pengaturan fokus, hari belajar, dan pembuatan tugas otomatis belum ada → catat di API_CONTRACT.
+Acuan desain: `docs/design/portal/Portal-ActionPlan.dc.html`. Teks di `frontend/src/content/actionPlan.ts`. Semua tugas berupa **latihan soal yang disusun AI** di hari belajar yang dipilih siswa. Tidak ada tugas manual atau tugas Personal.
+- **Tiga kondisi**:
+  - Terkunci (status `baru`): ajakan isi Gambaran Minat Bakat.
+  - Belum ada rencana: hero "Susun rencana belajarmu" dengan 3 langkah dan tombol "Atur rencana".
+  - Aktif: ringkasan minggu ini, kalender, dan daftar latihan per tanggal.
+  - Kepala halaman: tombol "Cek ORBIDU Compass" (target jurusan tidak ditampilkan) dan, saat aktif, "Atur ulang rencana".
+- **Kategori latihan**: SNBT (7 subtes), TKA (mapel wajib Matematika, Bahasa Indonesia, Bahasa Inggris + mapel pilihan siswa), Kedinasan (TWK, TIU, TKP).
+- **Ringkasan minggu ini** (Senin–Minggu): progres per fokus, persentase minggu ini, jumlah latihan selesai, dan jumlah hari belajar.
+- **Kalender**: cara utama melihat latihan.
+  - Warna tanggal: Selesai (hijau), Belum selesai (merah muda), Hari ini (biru), Terjadwal (kuning). Titik kategori: SNBT biru, TKA oranye, Kedinasan ungu.
+  - Navigasi bulan dibatasi dari awal sampai akhir rencana. Tombol panah memindah tanggal (±1 hari, ±1 minggu). Hari ini ditandai `aria-current="date"`.
+  - Laptop (≥1024px): kalender `sticky` di bawah header saat daftar latihan di-scroll. HP: kalender di atas daftar, tidak sticky; klik tanggal menggulir ke daftar latihan.
+- **Daftar latihan per tanggal**: judul, kategori, jumlah soal, perkiraan menit, dan cincin progres hari itu.
+  - Selesai: "16 dari 20 benar" + "Lihat pembahasan".
+  - Sedang dikerjakan: progres soal + "Lanjutkan".
+  - Belum dikerjakan: "Kerjakan".
+  - Hari yang sudah lewat tetap bisa dikerjakan. Tanggal yang akan datang terlihat tapi terkunci ("Terbuka Jumat").
+  - Tombol sementara mengarah ke halaman Siap SNBT/TKA/SKD; halaman pengerjaan soal dibangun di Fase 7.
+  - Tanggal kosong: "Rencana belajar belum dimulai", "Bukan hari belajar", atau "Rencana belajar sudah selesai". Kalau hari ini bukan hari belajar, tampil juga latihan berikutnya ("Latihan berikutnya: Senin, 5 Oktober, 3 latihan") dengan tombol untuk melihatnya.
+- **Jendela "Atur rencana / Atur ulang rencana"**:
+  - Fokus maksimal 2. Kedinasan diberi catatan "Kurang selaras dengan profilmu" kalau Compass tidak merekomendasikannya, tapi tetap bisa dipilih.
+  - Kalau TKA dipilih: **mapel pilihan TKA** (maks. 2) dipilih siswa sendiri dari daftar mapel pilihan TKA. Saran awal (label "Saran") diambil dari mapel pendukung jurusan rekomendasi Compass, lalu nilai rapor tertinggi; keputusan tetap di siswa.
+  - Hari belajar (jumlah per minggu dihitung otomatis), durasi (sampai UTBK-SNBT/TKA dengan bulan perkiraan dari timeline seleksi Dashboard, 4 minggu, atau 8 minggu), waktu belajar per hari (30/60/90 menit), dan perkiraan jumlah latihan per minggu.
+  - Rencana pertama berlaku mulai hari ini. Rencana yang diatur ulang berlaku mulai besok: hari ini dan riwayat hari yang sudah lewat tidak berubah.
+- **Penyusun latihan (simulasi AI, `frontend/src/mocks/actionPlanEngine.ts`)**:
+  - 30/60/90 menit → 2/3/4 latihan per hari belajar. Kategori bergiliran di antara fokus.
+  - Subtes/mapel dipilih acak berbobot (1 − skor)², jadi skor terendah dapat porsi lebih. Skor diambil dari hasil latihan di rencana; kalau belum ada, dari tryout SNBT terakhir atau nilai rapor; kalau belum ada juga, dianggap sama.
+  - Acaknya tetap per tanggal (isi tidak berubah saat halaman dibuka ulang). Hari ini dan hari yang sudah lewat dibekukan; hari yang akan datang menyesuaikan hasil terbaru.
+- **Dashboard**: kartu "Rencana hari ini" dan hero memakai sumber yang sama (`actionPlanService.getTodayPlan`), jadi isinya hanya latihan soal. Kalau hari ini bukan hari belajar, kartu menampilkan latihan berikutnya.
+- **Mode Demo**: Aktif = punya rencana contoh desain (mulai Senin 14 September 2026, Sen/Rab/Jum/Min, fokus SNBT + TKA, hari ini 5 latihan dengan 2 selesai). Sudah Asesmen = belum ada rencana (rencana disimpan dulu, kembali saat pindah ke Aktif). Baru = terkunci.
+- Data: endpoint `/action-plans` berisi tugas manual dan tidak dipakai. Mode backend menyimpan rencana di browser per akun sampai endpoint baru tersedia → API_CONTRACT bagian 11.
 
 ## 10. Persiapan
 
@@ -198,7 +220,7 @@ Field bertanda 🔒 diisi admin dan hanya bisa dibaca, dengan catatan "Hubungi w
 - [x] Fase 3 — Masuk & Daftar
 - [x] Fase 4 — Dashboard + Analisis Potensi
 - [x] Fase 5 — ORBIDU Compass + Explore Beasiswa
-- [ ] Fase 6 — Action Plan
+- [x] Fase 6 — Action Plan
 - [ ] Fase 7 — Persiapan
 - [ ] Fase 8 — Profil
 - [ ] Fase 9 — Finishing: cek tampilan HP, empty state, konsistensi angka antarhalaman, rapikan API_CONTRACT.md
@@ -211,3 +233,4 @@ Hal yang sengaja ditunda dan wajib dibereskan sebelum ORBIDU dipakai siswa:
 - Ganti soal placeholder di `frontend/src/data/asesmen.json` dengan 42 soal final dari Bu Putri (ubah `status` menjadi `"final"`), lalu pastikan jumlah bagian/soal yang disebut di beranda (`frontend/src/content/landing.ts`), FAQ, dan Dashboard ("7 bagian, bisa dicicil") sesuai.
 - Penilaian skor 5 dimensi dipindah ke backend dan disetujui Bu Putri (`docs/API_CONTRACT.md` bagian 3.4). Sebelum itu, rekomendasi Compass dari tes hanya untuk demo.
 - Ganti contoh data beasiswa (`frontend/src/mocks/data/beasiswa.ts`) dengan data resmi dari tim, cek ulang alamat situs resmi (KIP Kuliah bertanda "BELUM DIPASTIKAN"), lalu hapus label "Contoh data" (`SCHOLARSHIPS_ARE_SAMPLES`).
+- Action Plan memakai endpoint backend (`docs/API_CONTRACT.md` bagian 11), bukan penyimpanan browser, supaya rencana dan progres latihan terbawa ke perangkat lain.

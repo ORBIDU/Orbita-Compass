@@ -8,10 +8,12 @@ import type {
   StudentProfile,
 } from "@/types/backend";
 import type { StudentStatus } from "@/types/student";
-import type { ExamKey, PlanTask, PracticeSummary } from "@/types/dashboard";
+import type { PracticeSummary } from "@/types/dashboard";
 import type { AsesmenAnswers, AsesmenDraft, AssessmentHistoryEntry } from "@/types/analisis";
 import type { CompassTarget } from "@/types/compass";
 import { simulateCompass } from "./compassEngine";
+import type { PlanState } from "./actionPlanEngine";
+import { demoPlanState } from "./data/actionPlan";
 
 // "Database" dummy untuk mode VITE_USE_MOCK=true. Disimpan di localStorage
 // supaya login dan perubahan data tetap ada setelah halaman di-refresh.
@@ -37,10 +39,12 @@ export interface MockAccount {
   assessment: Assessment | null;
   compassAnalysis: CompassAnalysis | null;
   /**
-   * Fokus belajar dan tugas hari ini (Action Plan). null = fokus belum diatur.
-   * Belum ada di backend dalam bentuk ini (docs/API_CONTRACT.md bagian 7.1).
+   * Action Plan: pengaturan rencana + latihan harian (API_CONTRACT bagian 11).
+   * null = belum mengatur rencana.
    */
-  studyPlan: { focus: ExamKey[]; tasks: PlanTask[] } | null;
+  actionPlan: PlanState | null;
+  /** Mode Demo: rencana yang disembunyikan saat status bukan "aktif". */
+  actionPlanStash: PlanState | null;
   /** Hasil latihan/tryout terakhir per ujian (docs/API_CONTRACT.md bagian 7.2). */
   practice: PracticeSummary;
   /** Jawaban tes yang belum dikirim, disimpan per bagian (API_CONTRACT 3.3). */
@@ -86,7 +90,8 @@ const STORAGE_KEY = "orbita_mock_db";
 // v4 (Tahap 4B): rapor Kurikulum Merdeka lengkap, prestasi + sertifikat, riwayat tes.
 // v5 (Tahap 5A): target jurusan Compass dan waktu perubahan data masukan.
 // v6 (Tahap 5B): beasiswa yang disimpan.
-const DB_VERSION = 6;
+// v7 (Fase 6): Action Plan berisi latihan soal harian (menggantikan studyPlan).
+const DB_VERSION = 7;
 
 const SEED_DATE = "2026-07-01T08:00:00.000Z";
 
@@ -215,16 +220,8 @@ function seed(): MockDb {
     compassTarget: null,
     inputsUpdatedAt: null,
     savedScholarships: ["kip-kuliah"],
-    studyPlan: {
-      focus: ["SNBT", "TKA"],
-      tasks: [
-        { id: "task-1", title: "20 soal Penalaran Matematika", minutes: 25, category: "SNBT", done: true },
-        { id: "task-2", title: "Latihan Literasi Bahasa Inggris", minutes: 20, category: "SNBT", done: true },
-        { id: "task-3", title: "10 soal Matematika", minutes: 15, category: "TKA", done: false },
-        { id: "task-4", title: "Bahas ulang Tryout #3", minutes: 30, category: "SNBT", done: false },
-        { id: "task-5", title: "Latihan Bahasa Indonesia", minutes: 20, category: "TKA", done: false },
-      ],
-    },
+    actionPlan: demoPlanState(new Date()),
+    actionPlanStash: null,
     practice: {
       snbt: {
         label: "Tryout #3",
@@ -263,7 +260,8 @@ function seed(): MockDb {
       updatedAt: SEED_DATE,
     },
     compassAnalysis: null,
-    studyPlan: null,
+    actionPlan: null,
+    actionPlanStash: null,
     practice: EMPTY_PRACTICE,
     assessmentDraft: null,
     assessmentAnswers: null,
