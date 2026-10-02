@@ -186,7 +186,7 @@ Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
 | Katalog jurusan per nama jurusan, data PTS dan PTLN, label kecocokan per jurusan (lihat bagian 6) | 2 | 🔴 |
 | Prestasi: ubah, field capaian/penyelenggara, upload sertifikat (lihat bagian 8.1) | 4 | 🔴 |
 | Hasil Compass sungguhan (sekarang selalu jawaban cadangan, lihat `BACKEND_MAP.md` poin 10; rincian di bagian 9) | 5 | 🟡 |
-| Data beasiswa (daftar, filter, detail) | 5 | 🔴 |
+| Data beasiswa (daftar, filter, detail, simpan; lihat bagian 10) | 5 | 🔴 |
 | Action Plan: fokus, hari belajar, penyusun tugas otomatis, geser tugas terlewat (ringkasan harian Dashboard: bagian 7.1) | 6 | 🔴 |
 | Rasionalisasi SNBP dengan input TKA, prestasi terpilih, dan 2 target | 7 | 🟡 |
 | Bank soal lengkap, soal tanpa kunci, paket tryout berurutan, riwayat tryout | 7 | 🔴 |
@@ -417,4 +417,45 @@ Tombol "Perbarui analisis" hanya aktif jika data masukan (tes, prestasi, rapor) 
 - Aspek **Akademik** dan **Prestasi** di hero sekarang disimpulkan frontend dari rapor dan prestasi (`frontend/src/lib/compassInsights.ts`, aturan sederhana). Usulan: `GET /compass/result` mengirim `aspects: [{ "key": "minat" | "akademik" | "prestasi", "level": 1–5 }]` hasil analisis.
 - **Jalur pendidikan** dikelompokkan dari `University.type` lewat `GET /ptn/majors` (bisa sampai 15 permintaan untuk 3 jurusan). Usulan: `GET /compass/paths` → `{ "groups": [ { "key": "s1ptn" | "vokasi" | "pts" | "ptln" | "kedinasan", "fit": "…", "options": [ { "prodi", "kampus", "kota" } ] } ], "hidden": [ { "key", "reason" } ] }`.
 - Data PTS dan PTLN belum ada di backend (bagian 6.3), jadi jalur itu selalu disembunyikan di mode backend.
+
+---
+
+## 10. Explore Beasiswa (Fase 5)
+
+Dipakai `/portal/beasiswa` dan bagian beasiswa di Compass (SPEK bagian 8). Service: `frontend/src/services/beasiswaService.ts`; bentuk data: `frontend/src/types/beasiswa.ts`.
+
+### 10.1 Katalog beasiswa 🔴
+Sementara frontend memakai contoh data `frontend/src/mocks/data/beasiswa.ts` (di mode dummy maupun backend), diberi label "Contoh data".
+
+```
+GET /scholarships
+→ { "scholarships": [ {
+      "id": "kip-kuliah",
+      "name": "KIP Kuliah",
+      "organizer": "Pemerintah Indonesia",
+      "provider": "pemerintah",               // pemerintah | kampus | daerah | swasta | luarNegeri | kedinasan
+      "levels": ["S1", "D3/D4"],
+      "location": "Dalam negeri",             // Dalam negeri | Luar negeri
+      "aid": ["Biaya kuliah penuh", "Biaya hidup"],   // + Biaya kuliah sebagian | Ikatan dinas
+      "paths": ["s1ptn", "vokasi", "pts"],    // jalur dari Compass (bagian 9.4)
+      "coverage": "…", "requirements": ["…"], "documents": ["…"],
+      "period": "Bersamaan dengan seleksi masuk",
+      "officialUrl": "https://…" | null,
+      "note": "Cek syarat ekonomi",           // catatan singkat di kartu Compass
+      "updatedAt": "…"
+    } ] }
+```
+
+- Filter (jenjang, lokasi, jenis bantuan, pencarian) sekarang dikerjakan frontend. Jika katalog membesar, tambahkan query `?level=&location=&aid=&q=` dan pagination.
+- `paths` menentukan label "Cocok dengan jalurmu" (hanya jalur/jenjang, bukan kelayakan). Kelayakan sebenarnya tetap ditentukan penyelenggara.
+- Data dikelola admin/tim konten, termasuk periode pendaftaran yang berubah tiap tahun.
+
+### 10.2 Beasiswa tersimpan 🔴
+```
+GET    /scholarships/saved        → { "ids": ["kip-kuliah", "pemda"] }
+PUT    /scholarships/:id/save     → { "ids": [ … ] }
+DELETE /scholarships/:id/save     → { "ids": [ … ] }
+```
+
+- **Sementara:** mode dummy menyimpan di data dummy; mode backend menyimpan di browser (`localStorage`, per akun), jadi tidak terbawa ke perangkat lain.
 

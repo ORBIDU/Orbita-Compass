@@ -41,6 +41,8 @@ export interface NavItem {
   icon: LucideIcon;
   /** true = aktif hanya jika URL sama persis (untuk Dashboard). */
   end?: boolean;
+  /** Halaman lain yang termasuk menu ini (mis. Beasiswa di bawah Compass). */
+  activeFor?: string[];
 }
 
 export interface PersiapanItem {
@@ -57,7 +59,7 @@ export interface PersiapanItem {
 export const PORTAL_NAV_BEFORE: NavItem[] = [
   { label: "Dashboard", to: ROUTES.portal, icon: LayoutGrid, end: true },
   { label: "Analisis Potensi", to: ROUTES.analisisPotensi, icon: UserSearch },
-  { label: BRAND.compassName, to: ROUTES.compass, icon: Compass },
+  { label: BRAND.compassName, to: ROUTES.compass, icon: Compass, activeFor: [ROUTES.beasiswa] },
   { label: "Action Plan", to: ROUTES.actionPlan, icon: CalendarCheck },
 ];
 
@@ -71,7 +73,7 @@ export const PORTAL_NAV_AFTER: NavItem[] = [{ label: "Explore Jurusan", to: ROUT
 export const MOBILE_NAV: NavItem[] = [
   { label: "Dashboard", to: ROUTES.portal, icon: LayoutGrid, end: true },
   { label: "Analisis", to: ROUTES.analisisPotensi, icon: UserSearch },
-  { label: "Compass", to: ROUTES.compass, icon: Compass },
+  { label: "Compass", to: ROUTES.compass, icon: Compass, activeFor: [ROUTES.beasiswa] },
   { label: "Rencana", to: ROUTES.actionPlan, icon: CalendarCheck },
 ];
 

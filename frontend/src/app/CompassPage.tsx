@@ -13,6 +13,8 @@ import { analyzeCompass, getInputsUpdatedAt, getTarget, setTarget } from "@/serv
 import { USE_MOCK } from "@/services/config";
 import { catalogEntry, getCompassRecommendations, getEducationPaths } from "@/services/jurusanService";
 import { getRapor } from "@/services/raporService";
+import { listScholarships } from "@/services/beasiswaService";
+import { matchesPath } from "@/lib/beasiswa";
 import type { CompassRecommendation, CompassTarget } from "@/types/compass";
 import PageLoader from "@/components/ui/PageLoader";
 import { PanelError, PanelSkeleton } from "@/components/ui/PanelState";
@@ -21,6 +23,7 @@ import EducationPaths from "@/components/compass/EducationPaths";
 import NextSteps from "@/components/compass/NextSteps";
 import RecommendationList, { targetKeyOf } from "@/components/compass/RecommendationList";
 import WhySection from "@/components/compass/WhySection";
+import ScholarshipSection from "@/components/compass/ScholarshipSection";
 import { EmptyCompass, LockedCompass } from "@/components/compass/CompassStates";
 
 const MAX_RECOMMENDATIONS = 5;
@@ -44,6 +47,7 @@ export default function CompassPage() {
   const rapor = useAsync(() => getRapor(grade), [userId, grade], tested);
   const recommendations = result.data?.recommendations;
   const paths = useAsync(() => getEducationPaths(recommendations ?? []), [recommendations], tested && Boolean(recommendations?.length));
+  const scholarships = useAsync(listScholarships, [], tested);
 
   // Target yang baru dipilih (menimpa hasil muat awal tanpa memuat ulang).
   const [targetOverride, setTargetOverride] = useState<{ value: CompassTarget | null } | null>(null);
@@ -133,6 +137,12 @@ export default function CompassPage() {
           <EducationPaths groups={paths.data?.groups ?? []} hidden={paths.data?.hidden ?? []} sample={USE_MOCK} />
         )}
         <WhySection columns={columns} note={note} />
+        {/* Beasiswa: maksimal 3 yang cocok dengan jalur dari Compass (aturan sama dengan /portal/beasiswa). */}
+        {paths.data && scholarships.data && (
+          <ScholarshipSection
+            items={scholarships.data.filter((s) => matchesPath(s, paths.data!.groups.map((g) => g.key))).slice(0, 3)}
+          />
+        )}
         <NextSteps showSkd={recs.some((r) => r.bidang === "kedinasan")} />
       </>
     );
