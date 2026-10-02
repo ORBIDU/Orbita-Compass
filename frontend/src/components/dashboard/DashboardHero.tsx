@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { ROUTES } from "@/config/navigation";
 import { HERO } from "@/content/dashboard";
-import { formatLongDate, greetingFor } from "@/lib/datetime";
+import { formatDayName, formatLongDate, greetingFor } from "@/lib/datetime";
 import { makeStars } from "@/lib/stars";
 import type { StudentStatus } from "@/types/student";
-import type { TodayPlan } from "@/types/dashboard";
+import type { TodayPlan } from "@/types/actionPlan";
 import MascotFigure from "@/components/mascot/MascotFigure";
 
 interface DashboardHeroProps {
@@ -60,12 +60,12 @@ export default function DashboardHero({ now, nickname, kelas, status, plan }: Da
     body = HERO.baru.body;
     cta = { to: ROUTES.analisisPotensi, label: HERO.baru.cta };
     note = HERO.baru.note;
-  } else if (plan && !plan.focus && plan.tasks.length === 0) {
+  } else if (plan && !plan.focus) {
     body = HERO.noFocus.body;
     cta = { to: ROUTES.actionPlan, label: HERO.noFocus.cta };
   } else if (plan) {
-    const done = plan.tasks.filter((t) => t.done).length;
-    body = plan.tasks.length > 0 ? HERO.progress(done, plan.tasks.length) : HERO.noTaskToday;
+    const done = plan.tasks.filter((t) => t.status === "done").length;
+    body = plan.tasks.length > 0 ? HERO.progress(done, plan.tasks.length) : HERO.noTaskToday(plan.next ? formatDayName(plan.next.date) : null);
     chips = [kelas, ...(plan.focus?.length ? [HERO.focusChip(plan.focus)] : [])].filter(Boolean);
   }
 

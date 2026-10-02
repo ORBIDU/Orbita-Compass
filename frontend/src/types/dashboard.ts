@@ -3,25 +3,8 @@
 
 import type { BidangKey, FitLabel } from "./jurusan";
 
-/** Ujian yang bisa dipilih sebagai fokus belajar. */
+/** Jenis Persiapan di kartu Performa (fokus Action Plan memakai PlanCategory). */
 export type ExamKey = "SNBT" | "TKA" | "SKD";
-
-export interface PlanTask {
-  id: string;
-  title: string;
-  /** Perkiraan durasi. null jika belum diketahui (mis. data dari GET /action-plans). */
-  minutes: number | null;
-  /** Kategori tugas, biasanya ExamKey. Data backend lama bisa berisi kategori lain. */
-  category: string;
-  done: boolean;
-}
-
-export interface TodayPlan {
-  /** Fokus belajar yang dipilih siswa. null = belum pernah diatur. */
-  focus: ExamKey[] | null;
-  /** Tugas untuk hari ini saja. */
-  tasks: PlanTask[];
-}
 
 /** 7 subtes UTBK-SNBT, urutan sesuai radar di desain. */
 export const SNBT_SUBTESTS = [

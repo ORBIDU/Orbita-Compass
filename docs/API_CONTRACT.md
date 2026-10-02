@@ -187,7 +187,7 @@ Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
 | Prestasi: ubah, field capaian/penyelenggara, upload sertifikat (lihat bagian 8.1) | 4 | 🔴 |
 | Hasil Compass sungguhan (sekarang selalu jawaban cadangan, lihat `BACKEND_MAP.md` poin 10; rincian di bagian 9) | 5 | 🟡 |
 | Data beasiswa (daftar, filter, detail, simpan; lihat bagian 10) | 5 | 🔴 |
-| Action Plan: fokus, hari belajar, penyusun tugas otomatis, geser tugas terlewat (ringkasan harian Dashboard: bagian 7.1) | 6 | 🔴 |
+| Action Plan: pengaturan rencana, latihan harian buatan AI, hasil per latihan (lihat bagian 11) | 6 | 🔴 |
 | Rasionalisasi SNBP dengan input TKA, prestasi terpilih, dan 2 target | 7 | 🟡 |
 | Bank soal lengkap, soal tanpa kunci, paket tryout berurutan, riwayat tryout | 7 | 🔴 |
 
@@ -288,21 +288,18 @@ Kartu jurusan menampilkan "Sangat sesuai" / "Sesuai" dari hasil Compass (tanpa p
 
 Dipakai `/portal` (SPEK bagian 5). Service: `frontend/src/services/dashboardService.ts`, bentuk data: `frontend/src/types/dashboard.ts`.
 
-### 7.1 Rencana hari ini dan fokus belajar 🟡
-Sekarang frontend memakai `GET /action-plans` lalu menyaring tugas yang tenggatnya hari ini. Yang belum ada: **fokus belajar** siswa dan **perkiraan durasi** tugas, jadi di mode backend kartu tidak bisa menampilkan "Sekitar 65 menit lagi" dan hero tidak tahu fokusnya.
+### 7.1 Rencana hari ini 🔴
+Kartu "Rencana hari ini" dan hero Dashboard memakai sumber yang sama dengan Action Plan (bagian 11), sehingga isinya hanya latihan soal. Frontend tidak lagi memakai `GET /action-plans`.
 
+Ringkasan yang dibutuhkan (bisa dihitung frontend dari 11.2, atau disediakan backend):
 ```
-GET /dashboard/today
+GET /study-plan/today
 → {
-    "focus": ["SNBT", "TKA"],          // null = siswa belum pernah mengatur fokus
-    "tasks": [
-      { "id": "…", "title": "20 soal Penalaran Matematika", "minutes": 25, "category": "SNBT", "done": true }
-    ]
+    "focus": ["SNBT", "TKA"],                 // null = belum punya rencana
+    "tasks": [ /* PlanPractice hari ini, bagian 11.2 */ ],
+    "next": { "date": "2026-10-04", "count": 3 } | null   // hari belajar berikutnya
   }
 ```
-
-- `category` memakai `SNBT` | `TKA` | `SKD` (kategori lama seperti `Rapor`/`BK` boleh tetap ada).
-- `ActionPlanItem` perlu kolom `minutes`. Fokus disimpan per siswa (dirinci di Fase 6).
 - Tanggal "hari ini" mengikuti zona waktu siswa (WIB/WITA/WIT), bukan UTC server.
 
 ### 7.2 Hasil latihan terakhir per ujian 🔴
@@ -459,3 +456,71 @@ DELETE /scholarships/:id/save     → { "ids": [ … ] }
 
 - **Sementara:** mode dummy menyimpan di data dummy; mode backend menyimpan di browser (`localStorage`, per akun), jadi tidak terbawa ke perangkat lain.
 
+---
+
+## 11. Action Plan (Fase 6)
+
+Dipakai `/portal/action-plan` dan kartu "Rencana hari ini" di Dashboard (SPEK bagian 9). Service: `frontend/src/services/actionPlanService.ts`; bentuk data: `frontend/src/types/actionPlan.ts`.
+
+**Kenapa `/action-plans` tidak dipakai:** endpoint itu berisi tugas manual (`title`, `description`, `dueDate`, `completed`), sedangkan Action Plan sekarang hanya berisi latihan soal yang disusun AI per hari belajar, lengkap dengan jumlah soal, progres, dan skor. Endpoint lama dibiarkan (tidak diubah).
+
+**Sementara:** mode dummy menyimpan di data dummy akun; mode backend menyimpan di browser (`localStorage`, kunci `orbita_action_plan_<userId>`), jadi tidak terbawa ke perangkat lain. Penyusun latihan masih simulasi di frontend (`frontend/src/mocks/actionPlanEngine.ts`).
+
+### 11.1 Pengaturan rencana 🔴
+```
+GET /study-plan            → { "settings": PlanSettings | null }
+PUT /study-plan            ← PlanSettingsInput
+                           → { "settings": PlanSettings }
+
+PlanSettingsInput = {
+  "focus": ["SNBT", "TKA"],                   // 1–2 dari SNBT | TKA | Kedinasan
+  "tkaElectives": ["Matematika Tingkat Lanjut", "Fisika"],   // maks. 2, kosong jika TKA tidak dipilih
+  "studyDays": [0, 2, 4, 6],                  // 0 = Senin … 6 = Minggu
+  "duration": "utbk",                         // utbk | tka | 4w | 8w
+  "minutesPerDay": 60                         // 30 | 60 | 90
+}
+PlanSettings = PlanSettingsInput + {
+  "startDate": "2026-09-14",                  // hari pertama rencana, tetap saat diatur ulang
+  "endDate": "2027-04-30",                    // dihitung server dari duration
+  "updatedAt": "…"
+}
+```
+- **Mapel pilihan TKA** dipilih siswa sendiri (sesuai pendaftaran TKA-nya), bukan diambil dari rapor. Daftar yang valid: Matematika/Bahasa Indonesia/Bahasa Inggris Tingkat Lanjut, Fisika, Kimia, Biologi, Ekonomi, Sosiologi, Geografi, Sejarah, Antropologi, PPKn, Bahasa Arab, Jerman, Prancis, Jepang, Korea, Mandarin. Saran awal di frontend dari Compass dan rapor hanya bantuan.
+- `endDate` untuk `utbk`/`tka` = akhir bulan perkiraan ujian dari timeline seleksi (bagian 7.3).
+- **PUT pertama** berlaku mulai hari ini. **PUT berikutnya** hanya menyusun ulang hari setelah hari ini; latihan hari ini dan riwayat sebelumnya tidak boleh berubah.
+- Validasi: fokus 1–2 item unik, minimal 1 hari belajar, `tkaElectives` ≤ 2 dan hanya dari daftar di atas.
+
+### 11.2 Latihan harian yang disusun AI 🔴
+```
+GET /study-plan/days?from=2026-09-01&to=2026-10-31
+→ { "days": {
+      "2026-10-02": [ PlanPractice, … ]       // hanya hari belajar
+    } }
+
+PlanPractice = {
+  "id": "…",
+  "category": "SNBT",                         // SNBT | TKA | Kedinasan
+  "subject": "PM",                            // kode subtes SNBT, nama mapel TKA, atau TWK/TIU/TKP
+  "title": "Latihan Penalaran Matematika",
+  "questions": 20,
+  "minutes": 25,
+  "status": "in_progress",                    // todo | in_progress | done
+  "answered": 6,
+  "correct": null                             // terisi setelah selesai
+}
+```
+- Jumlah latihan per hari mengikuti `minutesPerDay` (frontend: 30/60/90 menit → 2/3/4 latihan). Kategori bergiliran di antara fokus.
+- **Subtes dengan skor terendah mendapat porsi lebih**: skor diambil dari hasil latihan di rencana, lalu tryout terakhir/nilai rapor, lalu dibagi rata jika belum ada data.
+- Hari yang akan datang boleh dikirim sebagai perkiraan (tampil terkunci "Terbuka Jumat"); isi soalnya baru disusun saat harinya tiba. Hari ini dan hari yang sudah lewat harus tetap (tidak disusun ulang).
+- Soal dan kunci jawaban **tidak** ikut di respons ini (lihat bagian 1.5); dikirim terpisah saat latihan dibuka di Fase 7.
+
+### 11.3 Hasil per latihan 🔴
+```
+PUT  /study-plan/practices/:id/progress  ← { "answered": 6 }
+                                         → { "practice": PlanPractice }
+POST /study-plan/practices/:id/submit    ← { "answers": [ … ] }
+                                         → { "practice": PlanPractice, "review": [ … ] }   // pembahasan setelah submit
+```
+- Penilaian dilakukan server (bagian 5.2), bukan dari kunci jawaban yang dikirim ke frontend.
+- Latihan di hari yang sudah lewat tetap bisa dikerjakan; latihan di tanggal yang akan datang ditolak sampai harinya tiba.
+- Hasil ini dipakai ulang untuk bobot subtes terlemah (11.2) dan kartu Performa Dashboard (bagian 7.2).
