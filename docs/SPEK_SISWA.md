@@ -132,9 +132,17 @@ Acuan desain: `docs/design/portal/Portal-Compass.dc.html`. Teks di `frontend/src
 - Data: `POST /compass/analyze` dan `GET /compass/result` sudah ada, tetapi hasilnya masih jawaban cadangan (bukan AI) dengan nama prodi yang belum tentu ada di katalog. Mode dummy menyimpulkan dari 5 skor tes, rata-rata rapor, dan jumlah prestasi. Kebutuhan lain di API_CONTRACT bagian 9.
 
 ## 8. Explore Beasiswa (`/portal/beasiswa`)
-- Daftar beasiswa dengan filter jenjang, dalam/luar negeri, dan jenis bantuan.
-- Detail: penyelenggara, syarat utama, cakupan, periode pendaftaran, tautan resmi.
-- Backend belum punya data beasiswa → dummy (diberi tanda contoh) + catat di API_CONTRACT.
+Acuan desain: `docs/design/portal/Portal-Beasiswa.dc.html`. Teks di `frontend/src/content/beasiswa.ts`. Menu ORBIDU Compass ikut aktif di halaman ini (breadcrumb Dashboard › ORBIDU Compass › Explore Beasiswa).
+- **Data**: contoh data di `frontend/src/mocks/data/beasiswa.ts` (6 jenis beasiswa), dengan label "Contoh data, menunggu data resmi dari tim" di halaman. Situs resmi yang belum pasti ditandai "BELUM DIPASTIKAN".
+- **Filter** (panel kiri di desktop; tombol "Filter" yang membuka lembar dari bawah di HP, dengan tombol "Lihat N beasiswa"):
+  - "Cocok dengan jalurku" (switch), jenjang (S1, D3/D4), lokasi kuliah (dalam/luar negeri), jenis bantuan (biaya kuliah penuh/sebagian, biaya hidup, ikatan dinas), dan "Hanya yang disimpan". Setiap pilihan menampilkan jumlah hasilnya.
+  - Pencarian nama beasiswa atau penyelenggara, jumlah hasil, "Atur ulang", dan empty state "Belum ada beasiswa yang cocok dengan filtermu".
+  - Semua filter tersimpan di URL, mis. `?jenjang=s1&lokasi=dalam-negeri&bantuan=biaya-hidup&cocok=1&disimpan=1&q=kip`.
+- **"Cocok dengan jalurmu"** hanya melihat jalur pendidikan (dan jenjangnya) dari ORBIDU Compass, dengan catatan kelayakan bahwa penyelenggara yang menentukan. Status `baru` atau belum ada hasil Compass → switch nonaktif dengan alasannya, dan `?cocok=1` diabaikan.
+- **Simpan**: tombol penanda di kartu dan jendela detail; tetap tersimpan setelah refresh (mode dummy di data dummy, mode backend di browser per akun).
+- **Jendela detail** (komponen Dialog): cakupan, syarat utama, dokumen yang biasanya diminta, periode, tombol simpan, dan "Kunjungi situs resmi" (tab baru, `rel="noopener noreferrer"`). Tanpa situs resmi → keterangan untuk mencari dari penyelenggara.
+- **Di halaman Compass**: "Beasiswa yang bisa kamu coba" menampilkan maksimal 3 beasiswa yang cocok dengan jalurmu (aturan sama), dengan tombol ke `/portal/beasiswa?cocok=1`.
+- Data: backend belum punya katalog beasiswa dan beasiswa tersimpan → API_CONTRACT bagian 10.
 
 ## 9. Action Plan (`/portal/action-plan`)
 - Fokus Minggu Ini: pilih maksimal 2 dari SNBT, TKA, dan Kedinasan, dengan progress masing-masing. Ringkasan hari belajar, jumlah aktivitas, dan progress minggu ini.
@@ -189,7 +197,7 @@ Field bertanda 🔒 diisi admin dan hanya bisa dibaca, dengan catatan "Hubungi w
 - [x] Fase 2 — Landing + Explore Jurusan
 - [x] Fase 3 — Masuk & Daftar
 - [x] Fase 4 — Dashboard + Analisis Potensi
-- [ ] Fase 5 — ORBIDU Compass + Explore Beasiswa
+- [x] Fase 5 — ORBIDU Compass + Explore Beasiswa
 - [ ] Fase 6 — Action Plan
 - [ ] Fase 7 — Persiapan
 - [ ] Fase 8 — Profil
@@ -202,3 +210,4 @@ Hal yang sengaja ditunda dan wajib dibereskan sebelum ORBIDU dipakai siswa:
 - Backend menyimpan persetujuan orang tua/wali beserta waktunya (`docs/API_CONTRACT.md` bagian 2.4).
 - Ganti soal placeholder di `frontend/src/data/asesmen.json` dengan 42 soal final dari Bu Putri (ubah `status` menjadi `"final"`), lalu pastikan jumlah bagian/soal yang disebut di beranda (`frontend/src/content/landing.ts`), FAQ, dan Dashboard ("7 bagian, bisa dicicil") sesuai.
 - Penilaian skor 5 dimensi dipindah ke backend dan disetujui Bu Putri (`docs/API_CONTRACT.md` bagian 3.4). Sebelum itu, rekomendasi Compass dari tes hanya untuk demo.
+- Ganti contoh data beasiswa (`frontend/src/mocks/data/beasiswa.ts`) dengan data resmi dari tim, cek ulang alamat situs resmi (KIP Kuliah bertanda "BELUM DIPASTIKAN"), lalu hapus label "Contoh data" (`SCHOLARSHIPS_ARE_SAMPLES`).

@@ -145,9 +145,40 @@ const MAX_PATH_OPTIONS = 6;
  * kampus yang membuka jurusan itu dikelompokkan per jalur. Jalur tanpa
  * pilihan disembunyikan beserta alasannya.
  */
-export async function getEducationPaths(
+export function getEducationPaths(
   recommendations: CompassRecommendation[],
   limitJurusan = 3,
+): Promise<{ groups: PathGroup[]; hidden: HiddenPath[] }> {
+  // Disimpan sementara per daftar rekomendasi, karena halaman Compass dan
+  // Beasiswa sama-sama memakainya dan setiap jurusan butuh beberapa permintaan.
+  const key = JSON.stringify([limitJurusan, recommendations.map((r) => [r.slug ?? r.name, r.fit, r.bidang])]);
+  let cached = pathCache.get(key);
+  if (!cached) {
+    cached = buildEducationPaths(recommendations, limitJurusan).catch((err) => {
+      pathCache.delete(key);
+      throw err;
+    });
+    pathCache.set(key, cached);
+  }
+  return cached;
+}
+
+const pathCache = new Map<string, Promise<{ groups: PathGroup[]; hidden: HiddenPath[] }>>();
+
+/**
+ * Jalur dari ORBIDU Compass yang tampil untuk siswa (dipakai label "Cocok
+ * dengan jalurmu" di beasiswa). null = belum ada hasil Compass.
+ */
+export async function getStudentPathKeys(): Promise<PathKey[] | null> {
+  const result = await getCompassRecommendations();
+  if (!result) return null;
+  const { groups } = await getEducationPaths(result.recommendations);
+  return groups.map((g) => g.key);
+}
+
+async function buildEducationPaths(
+  recommendations: CompassRecommendation[],
+  limitJurusan: number,
 ): Promise<{ groups: PathGroup[]; hidden: HiddenPath[] }> {
   const top = recommendations.filter((r) => r.slug).slice(0, limitJurusan);
   const perJurusan = await Promise.all(

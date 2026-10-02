@@ -58,14 +58,15 @@ src/
 ├── layouts/            ← kerangka halaman (portal, publik, auth)
 ├── routes/             ← penjaga halaman (wajib login, gembok status) + pembungkus halaman lama
 ├── components/
-│   ├── ui/             ← komponen dasar: Button, Card, EmptyState, LockedOverlay, FormField, Logo, Dialog, RadarChart, PanelState
+│   ├── ui/             ← komponen dasar: Button, Card, EmptyState, LockedOverlay, FormField, Logo, Dialog, BottomSheet, RadarChart, PanelState
 │   ├── landing/        ← header, section beranda, carousel, footer, tombol konsultasi
 │   ├── mascot/         ← MascotFigure (SVG) dan MascotSlot (maskot hero interaktif)
 │   ├── jurusan/        ← kartu dan sampul jurusan
 │   ├── auth/           ← form Masuk & Daftar, AuthVideoSlot
 │   ├── dashboard/      ← hero dan kartu Dashboard (rencana, performa, Compass, timeline)
 │   ├── analisis/       ← Analisis Potensi: tes, prestasi, rapor, kelengkapan profil
-│   ├── compass/        ← ORBIDU Compass: hero, rekomendasi + target, jalur, alasan
+│   ├── compass/        ← ORBIDU Compass: hero, rekomendasi + target, jalur, alasan, beasiswa
+│   ├── beasiswa/       ← Explore Beasiswa: filter, kartu, jendela detail, simpan
 │   ├── portal/         ← header, menu desktop, dropdown Persiapan, menu bawah HP
 │   └── dev/            ← panel Mode Demo
 ├── context/            ← AuthContext (login) dan StudentStatusContext (status siswa)

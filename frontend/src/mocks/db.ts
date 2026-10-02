@@ -58,6 +58,8 @@ export interface MockAccount {
    * (mis. prestasi diubah atau dihapus). Lihat API_CONTRACT 9.2.
    */
   inputsUpdatedAt: string | null;
+  /** Id beasiswa yang disimpan (API_CONTRACT 10.2). */
+  savedScholarships: string[];
   /** Waktu persetujuan orang tua/wali saat daftar (belum ada di backend, lihat docs/API_CONTRACT.md). */
   parentConsentAt?: string | null;
 }
@@ -83,7 +85,8 @@ const STORAGE_KEY = "orbita_mock_db";
 // v3 (Tahap 4A): nama panggilan, rencana belajar, dan riwayat latihan.
 // v4 (Tahap 4B): rapor Kurikulum Merdeka lengkap, prestasi + sertifikat, riwayat tes.
 // v5 (Tahap 5A): target jurusan Compass dan waktu perubahan data masukan.
-const DB_VERSION = 5;
+// v6 (Tahap 5B): beasiswa yang disimpan.
+const DB_VERSION = 6;
 
 const SEED_DATE = "2026-07-01T08:00:00.000Z";
 
@@ -211,6 +214,7 @@ function seed(): MockDb {
     ],
     compassTarget: null,
     inputsUpdatedAt: null,
+    savedScholarships: ["kip-kuliah"],
     studyPlan: {
       focus: ["SNBT", "TKA"],
       tasks: [
@@ -267,6 +271,7 @@ function seed(): MockDb {
     assessmentHistory: [],
     compassTarget: null,
     inputsUpdatedAt: null,
+    savedScholarships: [],
   };
 
   // Akun demo yang sudah asesmen dianggap sudah pernah membuka Compass,
