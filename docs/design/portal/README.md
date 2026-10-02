@@ -1,4 +1,4 @@
-# Referensi desain portal siswa ORBIDU (Dashboard & Analisis Potensi)
+# Referensi desain portal siswa ORBIDU
 
 File di folder ini adalah desain dari canvas (format .dc.html), bukan kode untuk dipakai langsung.
 Bangun ulang di React + Tailwind dengan mengikuti isi teks, warna, ukuran huruf, jarak, dan radius yang tertulis di sini.
@@ -10,6 +10,7 @@ Bangun ulang di React + Tailwind dengan mengikuti isi teks, warna, ukuran huruf,
 - Portal-Analisis-HP.dc.html   : Analisis Potensi versi HP (lebar 390).
 - Portal-Compass.dc.html       : ORBIDU Compass desktop. Panel Mode Demo: Terkunci (status baru) dan Terbuka.
 - Portal-Beasiswa.dc.html      : Explore Beasiswa desktop (filter, simpan, jendela detail). Data beasiswa masih contoh.
+- Portal-ActionPlan.dc.html    : Action Plan desktop. Semua tugas berupa latihan soal dari AI per hari belajar, tanpa tugas manual. Klik tanggal di kalender untuk melihat dan mengerjakan latihan hari itu. Di laptop kalender tetap di tempat (sticky) saat daftar latihan di-scroll. Mode Demo: Terkunci, Belum ada rencana, Aktif.
 
 Cara membaca format:
 - <dc-import name="PortalHeader" ...> artinya komponen PortalHeader dipasang di situ.
