@@ -173,5 +173,3 @@ export const RAPOR = {
   footnote: "Nilai semester 1 sampai 5 dipakai untuk SNBP. Nilai semester 5 muncul setelah rapor dibagikan.",
 };
 
-export const LOAD_ERROR = "Bagian ini gagal dimuat.";
-export const RETRY = "Coba lagi";

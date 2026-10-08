@@ -1,12 +1,14 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { PORTAL_NAV_AFTER, PORTAL_NAV_BEFORE, type NavItem } from "@/config/navigation";
 import PersiapanMenu from "./PersiapanMenu";
 import { NAV_ICON_CLASS, navItemClasses } from "./navStyles";
 
 function Item({ item }: { item: NavItem }) {
   const Icon = item.icon;
+  const { pathname } = useLocation();
+  const inSection = item.activeFor?.some((p) => pathname.startsWith(p)) ?? false;
   return (
-    <NavLink to={item.to} end={item.end} className={({ isActive }) => navItemClasses(isActive)}>
+    <NavLink to={item.to} end={item.end} className={({ isActive }) => navItemClasses(isActive || inSection)}>
       <Icon size={18} aria-hidden="true" className={NAV_ICON_CLASS} />
       {item.label}
     </NavLink>

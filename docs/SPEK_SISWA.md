@@ -87,17 +87,17 @@ Acuan desain: `docs/design/portal/PortalHeader.dc.html` (desktop) dan menu bawah
 Acuan desain: `docs/design/portal/Portal-Dashboard.dc.html` (1440px) dan `Portal-Dashboard-HP.dc.html` (390px). Teks di `frontend/src/content/dashboard.ts`, data lewat `dashboardService` dan `jurusanService.getCompassHighlights()`.
 - **Hero navy**: tanggal otomatis ("Kamis, 1 Oktober 2026") dan sapaan sesuai jam: pagi (04.00–10.59), siang (11.00–14.59), sore (15.00–17.59), malam (18.00–03.59). Nama yang dipakai: **nama panggilan** dari profil; kalau kosong, kata pertama nama lengkap.
 - **Kartu dan urutannya** (HP satu kolom dengan urutan yang sama):
-  - Rencana hari ini: cincin progres, jumlah tugas selesai, perkiraan menit tersisa, dan daftar tugas (desktop 4, HP 3, sisanya "+N tugas lainnya").
-  - Performa latihan: radar 7 subtes SNBT (PU, PPU, PBM, PK, LBI, LBE, PM) dari tryout terakhir dengan subtes terlemah ditandai oranye, skor terakhir dan selisihnya, lalu hasil terakhir Siap SNBT, TKA, dan SKD ("Mulai" jika belum ada). "Lihat performa" membuka halaman Siap SNBT (tab Performance belum bisa dibuka lewat URL).
+  - Rencana hari ini: latihan soal Action Plan hari ini (sumber sama dengan bagian 9), dengan cincin progres, jumlah latihan selesai, perkiraan menit tersisa, dan daftar latihan (desktop 4, HP 3, sisanya "+N latihan lainnya"). Bukan hari belajar → "Latihan berikutnya: <hari, tanggal>, N latihan".
+  - Performa latihan: radar 7 subtes SNBT (PU, PPU, PBM, PK, LBI, LBE, PM) dari tryout terakhir dengan subtes terlemah ditandai oranye, skor terakhir dan selisihnya, lalu hasil terakhir Siap SNBT, TKA, dan SKD ("Mulai" jika belum ada). "Lihat performa" membuka tab Performance Siap SNBT. Sumbernya sama dengan Siap SNBT/TKA/SKD (bagian 10); baris TKA memakai nilai tryout TKA terakhir atau akurasi latihan berlabel jika belum pernah tryout; baris SKD hanya jika Siap SKD relevan.
   - ORBIDU Compass: bidang yang paling selaras dan 3 jurusan teratas dengan label "Sangat sesuai"/"Sesuai" (tanpa persentase), menuju `/jurusan/:slug`.
   - Timeline seleksi (selalu tampil): 5 agenda mulai bulan ini, dengan catatan "Jadwal perkiraan. Jadwal resmi mengikuti SNPMB dan instansi terkait."
   - Explore Jurusan → `/jurusan`.
 - **Per status**:
   - `baru`: Rencana, Performa, dan Compass terkunci (kerangka abu-abu buram, tanpa angka contoh). Hero berisi satu CTA besar "Isi Gambaran Minat Bakat".
-  - `sudah_asesmen`: Compass terbuka. Rencana mengajak "Atur fokus belajar" kalau fokus belum diatur. Performa kosong dengan ajakan "Mulai latihan pertama".
-  - `aktif`: semua terisi. Hero menampilkan progres tugas hari ini, chip kelas, dan fokus belajar.
+  - `sudah_asesmen`: Compass terbuka. Rencana mengajak "Atur rencana belajar" kalau belum punya rencana. Performa kosong dengan ajakan "Mulai latihan pertama".
+  - `aktif`: semua terisi. Hero menampilkan progres latihan hari ini, chip kelas, dan fokus belajar.
 - Semua kartu punya kondisi memuat, gagal (dengan "Coba lagi"), dan kosong yang jujur.
-- Data: fokus belajar, durasi tugas, riwayat latihan, timeline, notifikasi, dan nama panggilan belum ada di backend → API_CONTRACT bagian 7. Dengan backend asli, status `aktif` belum bisa muncul.
+- Data: rencana belajar (API_CONTRACT bagian 11), riwayat latihan, timeline, notifikasi, dan nama panggilan belum ada di backend → API_CONTRACT bagian 7. Dengan backend asli, status `aktif` belum bisa muncul.
 
 ## 6. Analisis Potensi (`/portal/analisis-potensi`)
 Acuan desain: `docs/design/portal/Portal-Analisis.dc.html` (desktop) dan `Portal-Analisis-HP.dc.html` (390px). Teks di `frontend/src/content/analisis.ts`.
@@ -115,67 +115,131 @@ Acuan desain: `docs/design/portal/Portal-Analisis.dc.html` (desktop) dan `Portal
 - Data: draft dan jawaban tes, riwayat per kelas, penilaian di backend, prestasi lengkap, dan kelas/tahun ajaran rapor belum ada di backend → API_CONTRACT bagian 3 dan 8.
 
 ## 7. ORBIDU Compass (`/portal/compass`)
-Terkunci jika status `baru`. Isinya berurutan:
-1. Arah Pendidikan: bidang utama dengan satu skor kesesuaian. Minat, kompetensi, dan akademik dijelaskan dengan label (misalnya "Sangat selaras"), bukan persentase tambahan.
-2. Rekomendasi jurusan: 3–5 jurusan, masing-masing satu skor. Angkanya harus sama dengan yang tampil di Dashboard.
-3. Rekomendasi jalur: S1 PTN, D4/Vokasi, PTS, PTLN, dan Kedinasan. Jalur yang tidak relevan disembunyikan di semua halaman. Tombol "Lihat pilihan" menampilkan daftar jurusan dan kampus.
-4. Justifikasi: catatan ORBIDU, detail minat/kompetensi/akademik, dan radar 5 dimensi.
-5. Beasiswa yang bisa dicoba: tanpa persentase eligibility. Tampilkan label kecocokan dengan jalur dan syarat utamanya, plus tombol ke `/portal/beasiswa`.
-6. Langkah Selanjutnya: ke Siap SNBP, Siap SNBT, dan Siap SKD (yang terakhir hanya jika Kedinasan relevan).
-
-Data: `POST /compass/analyze` dan `GET /compass/result` sudah ada, tapi hasilnya sekarang masih jawaban cadangan (bukan AI). Dalam mode dummy, simulasikan dari 5 skor asesmen, rata-rata rapor, dan jumlah prestasi.
+Acuan desain: `docs/design/portal/Portal-Compass.dc.html`. Teks di `frontend/src/content/compass.ts`.
+- **Status `baru`**: kartu terkunci "ORBIDU Compass terbuka setelah Gambaran Minat Bakat" dengan daftar manfaat dan tombol ke tes. Sudah tes tetapi belum pernah dianalisis → empty state dengan tombol "Jalankan analisis".
+- **Kepala halaman**: tanggal "Dianalisis …", chip **"Soal versi uji coba"** selama `asesmen.json` masih placeholder, dan tombol **Perbarui analisis**. Tombol hanya aktif jika ada data baru (tes, prestasi, atau rapor) setelah tanggal analisis; jika tidak, tampil "Hasil sudah sesuai data terbaru". Alasannya: setiap analisis dengan AI asli memakai kuota API.
+- **Hero navy**: bidang paling selaras (bidang rekomendasi teratas yang ada di katalog) + label "Sangat selaras/Selaras", ringkasan dari hasil Compass, tiga aspek **Minat / Akademik / Prestasi** berupa label + 5 bar (tanpa persen), dan radar 5 dimensi minat dari tes.
+  - Minat: keselarasan minat dari hasil Compass.
+  - Akademik: rata-rata mapel pendukung bidang teratas di semester terakhir ("Menunggu nilai rapor" jika belum ada).
+  - Prestasi: tingkat prestasi yang berhubungan dengan bidang teratas.
+  - Label "Kompetensi" di desain diganti karena tidak punya sumber data.
+- **Jurusan yang bisa kamu eksplorasi**: sampai 5 jurusan dengan label "Sangat sesuai/Sesuai" dari sumber yang sama dengan Dashboard dan `/jurusan` (`jurusanService.matchRecommendations`), bidang, dan maksimal 3 chip alasan yang hanya muncul jika datanya mendukung (minat tertinggi, mapel pendukung yang tinggi/naik terus, prestasi yang berhubungan). Nama dari Compass yang tidak ada di katalog tetap tampil tanpa link "Lihat jurusan".
+- **Target jurusan**: satu jurusan bisa dijadikan target ("Jadikan target" / "Target kamu"). Ini target **jurusan katalog**, berbeda dari target **prodi di kampus tertentu** untuk Siap SNBP. Disimpan lewat `compassService` (API_CONTRACT 9.1).
+- **Jalur pendidikan**: kampus yang membuka 3 jurusan rekomendasi teratas, dikelompokkan per jalur (S1 PTN, D4 Vokasi, PTS, PTLN, Kedinasan) dari jenis kampus di `ptnService`. Kartu jalur bisa dibuka untuk melihat prodi, kampus, dan kota. Jalur tanpa pilihan disembunyikan dengan alasannya (belum selaras, belum ada data kampus, atau data belum tersedia). Label "Contoh data" hanya di mode dummy.
+- **Kenapa ORBIDU merekomendasikan ini**: tiga kolom dari tes (dimensi minat tertinggi dan terendah), prestasi (3 tertinggi), dan rapor (2 mapel tertinggi, tren rata-rata, 1 mapel yang bisa ditingkatkan), masing-masing dengan link ke tab Analisis Potensi, plus "Catatan ORBIDU".
+- **Langkah selanjutnya**: Siap SNBP, Siap TKA, Siap SNBT; Siap SKD hanya jika ada jurusan Kedinasan di rekomendasi.
+- **Beasiswa yang bisa dicoba**: 3 beasiswa yang cocok + tombol ke `/portal/beasiswa` (Tahap 5B).
+- Data: `POST /compass/analyze` dan `GET /compass/result` sudah ada, tetapi hasilnya masih jawaban cadangan (bukan AI) dengan nama prodi yang belum tentu ada di katalog. Mode dummy menyimpulkan dari 5 skor tes, rata-rata rapor, dan jumlah prestasi. Kebutuhan lain di API_CONTRACT bagian 9.
 
 ## 8. Explore Beasiswa (`/portal/beasiswa`)
-- Daftar beasiswa dengan filter jenjang, dalam/luar negeri, dan jenis bantuan.
-- Detail: penyelenggara, syarat utama, cakupan, periode pendaftaran, tautan resmi.
-- Backend belum punya data beasiswa → dummy (diberi tanda contoh) + catat di API_CONTRACT.
+Acuan desain: `docs/design/portal/Portal-Beasiswa.dc.html`. Teks di `frontend/src/content/beasiswa.ts`. Menu ORBIDU Compass ikut aktif di halaman ini (breadcrumb Dashboard › ORBIDU Compass › Explore Beasiswa).
+- **Data**: contoh data di `frontend/src/mocks/data/beasiswa.ts` (6 jenis beasiswa), dengan label "Contoh data, menunggu data resmi dari tim" di halaman. Situs resmi yang belum pasti ditandai "BELUM DIPASTIKAN".
+- **Filter** (panel kiri di desktop; tombol "Filter" yang membuka lembar dari bawah di HP, dengan tombol "Lihat N beasiswa"):
+  - "Cocok dengan jalurku" (switch), jenjang (S1, D3/D4), lokasi kuliah (dalam/luar negeri), jenis bantuan (biaya kuliah penuh/sebagian, biaya hidup, ikatan dinas), dan "Hanya yang disimpan". Setiap pilihan menampilkan jumlah hasilnya.
+  - Pencarian nama beasiswa atau penyelenggara, jumlah hasil, "Atur ulang", dan empty state "Belum ada beasiswa yang cocok dengan filtermu".
+  - Semua filter tersimpan di URL, mis. `?jenjang=s1&lokasi=dalam-negeri&bantuan=biaya-hidup&cocok=1&disimpan=1&q=kip`.
+- **"Cocok dengan jalurmu"** hanya melihat jalur pendidikan (dan jenjangnya) dari ORBIDU Compass, dengan catatan kelayakan bahwa penyelenggara yang menentukan. Status `baru` atau belum ada hasil Compass → switch nonaktif dengan alasannya, dan `?cocok=1` diabaikan.
+- **Simpan**: tombol penanda di kartu dan jendela detail; tetap tersimpan setelah refresh (mode dummy di data dummy, mode backend di browser per akun).
+- **Jendela detail** (komponen Dialog): cakupan, syarat utama, dokumen yang biasanya diminta, periode, tombol simpan, dan "Kunjungi situs resmi" (tab baru, `rel="noopener noreferrer"`). Tanpa situs resmi → keterangan untuk mencari dari penyelenggara.
+- **Di halaman Compass**: "Beasiswa yang bisa kamu coba" menampilkan maksimal 3 beasiswa yang cocok dengan jalurmu (aturan sama), dengan tombol ke `/portal/beasiswa?cocok=1`.
+- Data: backend belum punya katalog beasiswa dan beasiswa tersimpan → API_CONTRACT bagian 10.
 
 ## 9. Action Plan (`/portal/action-plan`)
-- Fokus Minggu Ini: pilih maksimal 2 dari SNBT, TKA, dan Kedinasan, dengan progress masing-masing. Ringkasan hari belajar, jumlah aktivitas, dan progress minggu ini.
-- Kalender bulanan: warna kotak menunjukkan status hari (hijau selesai, merah terlewat, biru hari ini, kuning ada jadwal). Titik kecil menunjukkan kategori (SNBT, TKA, Kedinasan, Personal).
-- Daftar tugas berupa kartu seperti Englishnesia (judul, kategori, progress, jumlah soal, estimasi waktu), dengan filter Minggu Ini, Terlewat, Belum Selesai, dan Selesai beserta jumlahnya.
-- Panel Hari Ini: target hari ini + rekomendasi ORBIDU.
-- Modal Re-plan: pilih hari belajar (frekuensi dihitung otomatis dari jumlah hari), fokus (maks. 2), dan durasi rencana (jumlah minggu atau sampai tanggal ujian).
-- Penyusun tugas (simulasi AI): SNBT → 7 subtes SNBT; TKA → mapel wajib dan pilihan; SKD → TWK, TIU, TKP. Prioritaskan subtes dengan skor terendah; kalau belum ada data, bagi rata.
-- Tugas terlewat ditawarkan untuk digeser ke hari belajar berikutnya.
-- Siswa bisa menambah tugas Personal sendiri.
-- Data: CRUD `/action-plans` sudah ada (tanpa ubah). Pengaturan fokus, hari belajar, dan pembuatan tugas otomatis belum ada → catat di API_CONTRACT.
+Acuan desain: `docs/design/portal/Portal-ActionPlan.dc.html`. Teks di `frontend/src/content/actionPlan.ts`. Semua tugas berupa **latihan soal yang disusun AI** di hari belajar yang dipilih siswa. Tidak ada tugas manual atau tugas Personal.
+- **Tiga kondisi**:
+  - Terkunci (status `baru`): ajakan isi Gambaran Minat Bakat.
+  - Belum ada rencana: hero "Susun rencana belajarmu" dengan 3 langkah dan tombol "Atur rencana".
+  - Aktif: ringkasan minggu ini, kalender, dan daftar latihan per tanggal.
+  - Kepala halaman: tombol "Cek ORBIDU Compass" (target jurusan tidak ditampilkan) dan, saat aktif, "Atur ulang rencana".
+- **Kategori latihan**: SNBT (7 subtes), TKA (mapel wajib Matematika, Bahasa Indonesia, Bahasa Inggris + mapel pilihan siswa), Kedinasan (TWK, TIU, TKP).
+- **Ringkasan minggu ini** (Senin–Minggu): progres per fokus, persentase minggu ini, jumlah latihan selesai, dan jumlah hari belajar.
+- **Kalender**: cara utama melihat latihan.
+  - Warna tanggal: Selesai (hijau), Belum selesai (merah muda), Hari ini (biru), Terjadwal (kuning). Titik kategori: SNBT biru, TKA oranye, Kedinasan ungu.
+  - Navigasi bulan dibatasi dari awal sampai akhir rencana. Tombol panah memindah tanggal (±1 hari, ±1 minggu). Hari ini ditandai `aria-current="date"`.
+  - Laptop (≥1024px): kalender `sticky` di bawah header saat daftar latihan di-scroll. HP: kalender di atas daftar, tidak sticky; klik tanggal menggulir ke daftar latihan.
+- **Daftar latihan per tanggal**: judul, kategori, jumlah soal, perkiraan menit, dan cincin progres hari itu.
+  - Selesai: "16 dari 20 benar" + "Lihat pembahasan".
+  - Sedang dikerjakan: progres soal + "Lanjutkan".
+  - Belum dikerjakan: "Kerjakan".
+  - Hari yang sudah lewat tetap bisa dikerjakan. Tanggal yang akan datang terlihat tapi terkunci ("Terbuka Jumat").
+  - Tombol sementara mengarah ke halaman Siap SNBT/TKA/SKD; halaman pengerjaan soal dibangun di Fase 7.
+  - Tanggal kosong: "Rencana belajar belum dimulai", "Bukan hari belajar", atau "Rencana belajar sudah selesai". Kalau hari ini bukan hari belajar, tampil juga latihan berikutnya ("Latihan berikutnya: Senin, 5 Oktober, 3 latihan") dengan tombol untuk melihatnya.
+- **Jendela "Atur rencana / Atur ulang rencana"**:
+  - Fokus maksimal 2. Kedinasan diberi catatan "Kurang selaras dengan profilmu" kalau Compass tidak merekomendasikannya, tapi tetap bisa dipilih.
+  - Kalau TKA dipilih: **mapel pilihan TKA** (maks. 2) dipilih siswa sendiri dari daftar mapel pilihan TKA. Saran awal (label "Saran") diambil dari mapel pendukung jurusan rekomendasi Compass, lalu nilai rapor tertinggi; keputusan tetap di siswa.
+  - Hari belajar (jumlah per minggu dihitung otomatis), durasi (sampai UTBK-SNBT/TKA dengan bulan perkiraan dari timeline seleksi Dashboard, 4 minggu, atau 8 minggu), waktu belajar per hari (30/60/90 menit), dan perkiraan jumlah latihan per minggu.
+  - Rencana pertama berlaku mulai hari ini. Rencana yang diatur ulang berlaku mulai besok: hari ini dan riwayat hari yang sudah lewat tidak berubah.
+- **Penyusun latihan (simulasi AI, `frontend/src/mocks/actionPlanEngine.ts`)**:
+  - 30/60/90 menit → 2/3/4 latihan per hari belajar. Kategori bergiliran di antara fokus.
+  - Subtes/mapel dipilih acak berbobot (1 − skor)², jadi skor terendah dapat porsi lebih. Skor diambil dari hasil latihan di rencana; kalau belum ada, dari tryout SNBT terakhir atau nilai rapor; kalau belum ada juga, dianggap sama.
+  - Acaknya tetap per tanggal (isi tidak berubah saat halaman dibuka ulang). Hari ini dan hari yang sudah lewat dibekukan; hari yang akan datang menyesuaikan hasil terbaru.
+- **Dashboard**: kartu "Rencana hari ini" dan hero memakai sumber yang sama (`actionPlanService.getTodayPlan`), jadi isinya hanya latihan soal. Kalau hari ini bukan hari belajar, kartu menampilkan latihan berikutnya.
+- **Mode Demo**: Aktif = punya rencana contoh desain (mulai Senin 14 September 2026, Sen/Rab/Jum/Min, fokus SNBT + TKA, hari ini 5 latihan dengan 2 selesai). Sudah Asesmen = belum ada rencana (rencana disimpan dulu, kembali saat pindah ke Aktif). Baru = terkunci.
+- Data: endpoint `/action-plans` berisi tugas manual dan tidak dipakai. Mode backend menyimpan rencana di browser per akun sampai endpoint baru tersedia → API_CONTRACT bagian 11.
 
 ## 10. Persiapan
+Acuan desain: `docs/design/portal/Portal-SiapSNBP.dc.html`, `Portal-SiapUjian.dc.html`, `Portal-Pengerjaan.dc.html`, `Portal-Laporan.dc.html`. Teks di `frontend/src/content/siapSnbp.ts`, `siapUjian.ts`, dan `pengerjaan.ts`. Angka dan nama subtes tidak ditulis di teks; semuanya dihitung dari data.
 
 ### Siap SNBP (`/portal/persiapan/snbp`)
-Rasionalisasi 3 langkah: Input Data → Review → Hasil.
-- A. Data akademik: rata-rata rapor semester 1–5, otomatis dari profil.
-- B. Nilai TKA (opsional): wajib Bahasa Indonesia, Matematika, Bahasa Inggris; mapel pilihan maksimal 2.
-- C. Prestasi: pilih maksimal 3 dari data prestasi di Analisis Potensi.
-- D. Target: 2 pilihan kampus + prodi dari data PTN.
-- Info bahwa SNBP hanya untuk siswa eligible yang ditentukan sekolah.
-- Hasil: kategori Aman, Waspada, atau Berisiko per pilihan, faktor yang mempengaruhi, saran, dan catatan bahwa ini estimasi.
-- Data: `GET /ptn/rationalization` sudah ada, tapi rumusnya belum memperhitungkan prodi dan daya tampung, dan belum menerima input TKA, prestasi terpilih, maupun target → catat di API_CONTRACT.
+- Catatan eligible di atas dengan status yang diisi siswa sendiri (Menunggu pengumuman sekolah / Eligible / Tidak eligible). Tidak eligible → ajakan ke Siap SNBT.
+- Tiga langkah: Input data → Review → Hasil. Isian dan hasil terakhir tersimpan.
+- **Input:**
+  - A. Rapor semester 1–5 otomatis (`raporService`); semester yang belum ada ditandai "Belum ada". Rapor kosong → tombol lanjut nonaktif dengan alasannya.
+  - B. Nilai TKA opsional (0–100): mapel wajib + mapel pilihan dari pengaturan Action Plan.
+  - C. Prestasi maks. 3 dari `achievementService`; prestasi tanpa sertifikat ditandai.
+  - D. Pilihan prodi 1 (wajib) dan 2 (opsional) dari kampus PTN Akademik, PTN Vokasi, dan PTKIN (`ptnService`), dengan catatan bahwa peserta SNBP mengikuti ketentuan resmi SNPMB. Pilihan 1 terisi dari target prodi di profil → target jurusan Compass → kosong, dengan label sumbernya.
+- **Hasil** per pilihan: Aman / Waspada / Berisiko (tanpa persentase), faktor naik/turun hanya dari data yang ada, strategi dan saran, "Jadikan target prodi" (`PUT /profile`), catatan "Ini estimasi, bukan jaminan" wajib tampil. Simulasi penilaian sementara di `frontend/src/mocks/snbpEngine.ts`; daya tampung dan keketatan prodi belum dihitung (API_CONTRACT 12.2).
 
-### Siap TKA, Siap SNBT, Siap SKD (`/portal/persiapan/:ujian`)
-Satu template dipakai tiga kali, bedanya hanya di konfigurasi:
-- SNBT: PU, PPU, PBM, PK, LBI, LBE, PM.
-- TKA: Bahasa Indonesia, Matematika, Bahasa Inggris + 2 mapel pilihan.
-- SKD: TWK, TIU, TKP.
+### Siap SNBT, Siap TKA, Siap SKD (`/portal/persiapan/:ujian?tab=latihan|tryout|performance`)
+Satu template (`SiapUjianPage`), konfigurasi per ujian di `content/siapUjian.ts`:
+- SNBT: PU, PPU, PBM, PK, LBI, LBE, PM. TKA: Matematika, Bahasa Indonesia, Bahasa Inggris + mapel pilihan dari Action Plan. SKD: TWK, TIU, TKP.
+- Kepala halaman dengan chip jadwal dari timeline seleksi. Tab tersimpan di URL dan bisa digeser dengan tombol panah.
+- **Latihan Soal:** kartu latihan hari ini dari Action Plan (ujian ini saja), lalu kartu per subtes/mapel dengan jumlah soal dan akurasi; akurasi terendah diberi label "Paling perlu dilatih". "Mulai latihan" membuka latihan bebas.
+- **Tryout:** paket terbuka berurutan (selesai → skor + "Lihat laporan", berikutnya → "Kerjakan", sisanya terkunci), aturan tryout, catatan skala skor.
+- **Performance:** skor tryout terakhir + kenaikan, akurasi latihan, "Paling perlu dilatih", tren skor tryout, skor per subtes tryout terakhir, catatan skala skor. Tidak ada perbandingan dengan skor target jurusan.
+- **Siap SKD** selalu tampil di menu Persiapan (desktop dan bottom sheet HP). Relevan = Compass merekomendasikan Kedinasan atau fokus Action Plan berisi Kedinasan (`frontend/src/lib/persiapan.ts`); jika tidak relevan (dan sudah ada hasil Compass), item menu diberi keterangan "Kurang selaras dengan profilmu". Baris SKD Dashboard dan "Langkah selanjutnya" Compass tetap hanya tampil jika relevan.
 
-Tiga tab:
-- Latihan Soal: pilih subtes, progress per subtes, rekomendasi fokus (subtes dengan akurasi terendah), pengerjaan soal dengan pembahasan setelah menjawab.
-- Tryout: paket TO terbuka berurutan (TO berikutnya terbuka setelah sebelumnya selesai). Halaman pengerjaan dengan timer, navigasi nomor soal, tandai ragu-ragu, dan konfirmasi submit. Laporan hasil per subtes.
-- Performance: tren skor, prediksi dibanding target jurusan, skor per subtes, dan subtes terlemah.
+### Pengerjaan soal (tanpa menu portal)
+- Route: `/portal/latihan/:id` (latihan Action Plan atau sesi latihan bebas), `/portal/latihan/bebas?ujian=&subtes=` (mulai latihan bebas), `/portal/tryout/:paket`.
+- **Mode Latihan:** pilih jawaban → "Cek jawaban" → benar/salah + pembahasan langsung. Nomor soal hijau/merah. Jawaban yang sudah dicek dikunci dan tidak bisa diubah, termasuk lewat refresh. Soal yang belum dijawab tidak dihitung benar.
+- **Mode Tryout:** timer per subtes, Ragu-ragu, nomor soal (dijawab/belum/ragu-ragu), konfirmasi selesai yang menyebut jumlah soal belum dijawab dan ragu-ragu, konfirmasi keluar. Tidak ada pembahasan selama tryout.
+  - Timer dihitung dari deadline yang disimpan saat subtes dimulai, jadi refresh atau menutup halaman tidak mereset waktu. Subtes yang waktunya habis saat halaman ditutup langsung dikumpulkan saat dibuka lagi. Waktu subtes berikutnya mulai saat subtes itu dibuka.
+  - Jawaban dan ragu-ragu tersimpan otomatis setiap berubah.
+  - Paket terkunci ditolak dan diarahkan ke tab Tryout dengan pesannya; paket yang sudah selesai diarahkan ke laporan.
+- **Kunci jawaban** tidak pernah ada di data soal yang dikirim ke halaman pengerjaan. Penilaian dilakukan "server" (`frontend/src/mocks/practiceServer.ts`), seperti seharusnya di backend (API_CONTRACT 12.5–12.6).
+- HP: nomor soal dibuka lewat tombol "Nomor soal" (bottom sheet).
 
-Judul halaman memakai "Siap SNBT" (bukan "Siap PTN"), tanpa toggle SNBP/SNBT.
-Data: bank soal backend baru 8 soal dan kunci jawabannya ikut terkirim; riwayat tryout belum punya endpoint → dummy + catat di API_CONTRACT.
+### Hasil latihan dan laporan tryout
+- `/portal/latihan/:id/hasil`: jawaban benar, tidak dijawab, akurasi, pembahasan (saringan Salah / Tidak dijawab / Semua). Latihan bebas punya tombol "Latihan lagi".
+- `/portal/tryout/:paket/laporan`: skor + kenaikan dari tryout sebelumnya, jumlah benar, tidak dijawab, waktu dipakai, hasil per subtes (label "Terendah"), "Fokus berikutnya" ke Action Plan (subtes terendah dan terkuat dihitung dari laporan), pembahasan dengan saringan Salah / Ragu-ragu / Tidak dijawab / Semua dan pilihan subtes.
+
+### Satu sumber data hasil latihan
+`practiceService` + `soalService`: hasil latihan Action Plan memperbarui latihan itu di Action Plan; latihan bebas dan tryout masuk riwayat latihan. Dari sumber yang sama dihitung progres Action Plan, akurasi dan tryout di Siap SNBT/TKA/SKD, kartu Performa Dashboard, dan bobot subtes terlemah di Action Plan.
+
+### Data contoh
+- Bank soal contoh 75 soal di `frontend/src/mocks/data/soal/` (SNBT 5 × 7 subtes, TKA 5 × 3 mapel wajib + Matematika Tingkat Lanjut dan Fisika, SKD 5 × 3 tes; TKP dinilai 1–5 poin per pilihan). Mapel pilihan TKA lain tampil "Soal contoh untuk mapel ini belum tersedia".
+- Satu sesi latihan berisi 5 soal (`SESSION_SIZE` di `frontend/src/config/practice.ts`); durasi per soal per ujian di file yang sama (SNBT 90 detik, TKA 120 detik, SKD 60 detik).
+- Semua paket tryout contoh memakai soal yang sama. Riwayat contoh (Action Plan dan Tryout Diagnostik/#1) disusun dari jawaban atas bank contoh, jadi pembahasannya bisa dibuka.
 
 ## 11. Profil (`/portal/profil`)
-Hanya berisi data diri; Prestasi dan Rapor tetap di Analisis Potensi.
-Field bertanda 🔒 diisi admin dan hanya bisa dibaca, dengan catatan "Hubungi wali kelas jika ada data yang salah".
-- Data Diri: nama lengkap 🔒, nama panggilan, jenis kelamin 🔒, NIS 🔒, NISN 🔒, kelas 🔒, jurusan 🔒, tempat & tanggal lahir, agama, foto profil.
-- Alamat & Kontak: alamat lengkap, kelurahan/desa, kecamatan, kota/kabupaten, provinsi, kode pos, No. HP/WhatsApp, email.
-- Data Keluarga: nama ayah & ibu, pekerjaan ayah & ibu, pendidikan ayah & ibu, No. HP orang tua/wali, status orang tua, tinggal bersama, anak ke-, jumlah saudara kandung.
-- Informasi Tambahan (opsional, tujuan dijelaskan): kondisi sosial ekonomi keluarga (untuk rekomendasi beasiswa), buta warna (beberapa prodi mensyaratkannya), berkebutuhan khusus (untuk info akses kampus).
-- Tombol simpan melayang dengan status "Data berhasil disimpan".
-- Data: backend baru menyimpan sekolah, kelas, jurusan, dan kota → field lainnya dicatat di API_CONTRACT.
+Acuan desain: `docs/design/portal/Portal-Profil.dc.html`. Teks di `frontend/src/content/profil.ts`; data lewat `frontend/src/services/profileService.ts`.
+- **Data diri diisi pihak kurikulum sekolah dan hanya bisa dibaca siswa**, ditampilkan sebagai daftar label–nilai (bukan kotak isian). Field kosong ditulis "Belum diisi sekolah", tanpa nilai contoh. Kotak info di atas menjelaskan hal ini dan tanggal "Diperbarui sekolah …".
+- **Yang bisa diubah siswa hanya:**
+  - nama panggilan (maks. 20 karakter, tidak boleh kosong; dipakai sapaan Dashboard; "Nama panggilan disimpan" baru tampil setelah tersimpan),
+  - foto profil (JPG/PNG, maks. 2 MB; dikecilkan ke 256 px; ikut tampil di avatar header),
+  - password, lewat jendela Ganti password (password sekarang dicek, password baru min. 8 karakter campuran huruf dan angka dan berbeda dari yang lama, ulangi harus sama).
+- **Kolom kiri** (sticky di laptop, paling atas di HP): kartu identitas (foto, nama, kelas · sekolah, nama panggilan), Akun ORBIDU (email akun saja, ganti password, status persetujuan orang tua/wali), pintasan "Prestasi dan nilai rapor" ke Analisis Potensi.
+- **Kolom kanan:**
+  - Data diri: nama lengkap, jenis kelamin, tempat dan tanggal lahir, NIS, NISN, agama, kelas, sekolah (SMA).
+  - Alamat tempat tinggal: alamat lengkap, RT/RW, kelurahan/desa, kecamatan, kota/kabupaten, provinsi (salah satu dari 38 provinsi), kode pos.
+  - Kontak dan orang tua/wali: HP siswa, HP orang tua/wali, nama dan pekerjaan ayah, nama dan pekerjaan ibu, nama wali.
+  - Kondisi keluarga: status orang tua, tinggal bersama, pendidikan ayah dan ibu, kondisi sosial ekonomi, bantuan pendidikan, anak ke-/jumlah saudara.
+  - Kondisi khusus: berkebutuhan khusus (beserta jenisnya), buta warna, catatan tambahan.
+  - Kondisi keluarga dan kondisi khusus disembunyikan secara default dengan tombol Tampilkan/Sembunyikan (`aria-expanded`) dan keterangan "Hanya terlihat olehmu, guru BK, dan wali kelas".
+- **Tidak ada di Profil:** tab Prestasi dan Nilai Rapor (ada di Analisis Potensi), jurusan (IPA/IPS), email kedua, golongan darah, riwayat penyakit, dan bar simpan.
+- **HP:** satu kolom, kartu identitas di atas, daftar label–nilai satu kolom.
+- **Mode Demo:** akun siswa berisi data lengkap (SMA Negeri 1 Palembang); akun Budi sebagian kosong.
+- **Dengan backend asli:** hanya nama, email, kelas, sekolah, dan kota yang tampil; field lain "Belum diisi sekolah". Nama panggilan dan foto disimpan di browser per akun ("Tersimpan di perangkat ini"); ganti password dinonaktifkan dengan catatan; status persetujuan "belum bisa ditampilkan". Kebutuhan backend → API_CONTRACT bagian 13.
 
 ## Fase pengerjaan
 - [x] Fase 0 — Audit frontend (tanpa mengubah kode)
@@ -183,10 +247,10 @@ Field bertanda 🔒 diisi admin dan hanya bisa dibaca, dengan catatan "Hubungi w
 - [x] Fase 2 — Landing + Explore Jurusan
 - [x] Fase 3 — Masuk & Daftar
 - [x] Fase 4 — Dashboard + Analisis Potensi
-- [ ] Fase 5 — ORBIDU Compass + Explore Beasiswa
-- [ ] Fase 6 — Action Plan
-- [ ] Fase 7 — Persiapan
-- [ ] Fase 8 — Profil
+- [x] Fase 5 — ORBIDU Compass + Explore Beasiswa
+- [x] Fase 6 — Action Plan
+- [x] Fase 7 — Persiapan
+- [x] Fase 8 — Profil
 - [ ] Fase 9 — Finishing: cek tampilan HP, empty state, konsistensi angka antarhalaman, rapikan API_CONTRACT.md
 
 ## Sebelum rilis
@@ -196,3 +260,9 @@ Hal yang sengaja ditunda dan wajib dibereskan sebelum ORBIDU dipakai siswa:
 - Backend menyimpan persetujuan orang tua/wali beserta waktunya (`docs/API_CONTRACT.md` bagian 2.4).
 - Ganti soal placeholder di `frontend/src/data/asesmen.json` dengan 42 soal final dari Bu Putri (ubah `status` menjadi `"final"`), lalu pastikan jumlah bagian/soal yang disebut di beranda (`frontend/src/content/landing.ts`), FAQ, dan Dashboard ("7 bagian, bisa dicicil") sesuai.
 - Penilaian skor 5 dimensi dipindah ke backend dan disetujui Bu Putri (`docs/API_CONTRACT.md` bagian 3.4). Sebelum itu, rekomendasi Compass dari tes hanya untuk demo.
+- Ganti contoh data beasiswa (`frontend/src/mocks/data/beasiswa.ts`) dengan data resmi dari tim, cek ulang alamat situs resmi (KIP Kuliah bertanda "BELUM DIPASTIKAN"), lalu hapus label "Contoh data" (`SCHOLARSHIPS_ARE_SAMPLES`).
+- Action Plan memakai endpoint backend (`docs/API_CONTRACT.md` bagian 11), bukan penyimpanan browser, supaya rencana dan progres latihan terbawa ke perangkat lain.
+- Ganti bank soal contoh (`frontend/src/mocks/data/soal/`) dengan bank soal resmi dari tim data: soal berbeda per paket tryout, cukup untuk sesi 20 soal (SNBT/SKD) dan 15 soal (TKA), lalu kembalikan `SESSION_SIZE` dan hapus label "Contoh soal".
+- Rumus rasionalisasi SNBP dan skor tryout (sekarang perkiraan sementara) disetujui tim, dan latihan/tryout memakai endpoint backend (API_CONTRACT 12.5–12.6) supaya kunci jawaban tidak pernah ada di browser.
+- Data kondisi keluarga dan kondisi khusus di Profil baru boleh diisi data asli siswa setelah celah keamanan di `BACKEND_MAP.md` bagian 6 ditutup (endpoint admin terbuka tanpa cek peran, `passwordHash` terkirim di respons). Lihat `docs/API_CONTRACT.md` bagian 13.4.
+- Profil memakai endpoint backend untuk nama panggilan, foto, dan ganti password (`docs/API_CONTRACT.md` bagian 13.3), bukan penyimpanan browser.

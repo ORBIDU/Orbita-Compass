@@ -93,6 +93,10 @@ export default {
           "green-bg": "#E3F5EC", "green-fg": "#0A7A45",
           "navy-bg": "#E9ECF4", "navy-fg": "#15234D",
           "amber-bg": "#FFF1CC", "amber-fg": "#8A5A00",
+          // Action Plan: kategori Kedinasan, tanggal terjadwal, dan tanggal hari ini yang dipilih
+          "purple-bg": "#EFEBFB", "purple-fg": "#5B3FC4", "purple-dot": "#6B4FD1",
+          "amber-soft": "#FFF4D6",
+          "blue-deep": "#0747B8",
         },
         // Sampul kartu jurusan per tema warna (latar + ikon)
         cover: {
@@ -103,7 +107,7 @@ export default {
           "amber-bg": "#FFF1CC", "amber-ink": "#8A5A00",
         },
         // Teks di latar navy (Final CTA dan footer)
-        night: { light: "#F4F7FF", sub: "#C8D4EE", text: "#A9B8D9", dim: "#8394BC", chip: "#DCE6FF", line: "rgba(169, 184, 217, 0.18)" },
+        night: { light: "#F4F7FF", sub: "#C8D4EE", text: "#A9B8D9", dim: "#8394BC", chip: "#DCE6FF", line: "rgba(169, 184, 217, 0.18)", positive: "#7BE3A6", "positive-bg": "rgba(46, 204, 113, 0.18)" },
         whatsapp: "#1FAF5A",
         mascot,
 

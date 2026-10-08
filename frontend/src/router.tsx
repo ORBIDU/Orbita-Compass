@@ -5,19 +5,22 @@ import AuthLayout from "@/layouts/AuthLayout";
 import AdaptiveLayout from "@/layouts/AdaptiveLayout";
 import PageLoader from "@/components/ui/PageLoader";
 import { GuestOnly, RequireAuth } from "@/routes/guards";
-import {
-  ActionPlanRoute,
-  CompassRoute,
-  LandingRoute,
-  PersiapanRoute,
-  ProfilRoute,
-  SiapSnbpRoute,
-} from "@/routes/legacyRoutes";
+
+const LandingPage = lazy(() => import("@/app/LandingPage"));
+const ProfilPage = lazy(() => import("@/app/ProfilPage"));
 
 const AuthPage = lazy(() => import("@/app/AuthPage"));
 const DashboardPage = lazy(() => import("@/app/DashboardPage"));
 const AnalisisPotensiPage = lazy(() => import("@/app/AnalisisPotensiPage"));
+const CompassPage = lazy(() => import("@/app/CompassPage"));
 const BeasiswaPage = lazy(() => import("@/app/BeasiswaPage"));
+const ActionPlanPage = lazy(() => import("@/app/ActionPlanPage"));
+const SiapSnbpPage = lazy(() => import("@/app/SiapSnbpPage"));
+const SiapUjianPage = lazy(() => import("@/app/SiapUjianPage"));
+const LatihanRunPage = lazy(() => import("@/app/LatihanRunPage"));
+const TryoutRunPage = lazy(() => import("@/app/TryoutRunPage"));
+const LatihanHasilPage = lazy(() => import("@/app/LatihanHasilPage"));
+const LaporanPage = lazy(() => import("@/app/LaporanPage"));
 const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
 const JurusanListPage = lazy(() => import("@/app/JurusanListPage"));
 const JurusanDetailPage = lazy(() => import("@/app/JurusanDetailPage"));
@@ -28,7 +31,7 @@ const withSuspense = (node: ReactNode) => <Suspense fallback={<PageLoader fullsc
 // Peta halaman sesuai docs/SPEK_SISWA.md.
 export const router = createBrowserRouter([
   // ── Publik ────────────────────────────────────────────────────────────────
-  { path: "/", element: withSuspense(<LandingRoute />) },
+  { path: "/", element: withSuspense(<LandingPage />) },
   {
     // Satu halaman untuk tamu dan siswa: layout mengikuti status login.
     path: "/jurusan",
@@ -62,15 +65,22 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <DashboardPage /> },
           { path: "analisis-potensi", element: <AnalisisPotensiPage /> },
-          { path: "compass", element: <CompassRoute /> },
+          // Compass, Action Plan, dan Profil mengatur tampilan terkunci/kosongnya sendiri.
+          { path: "compass", element: <CompassPage /> },
           { path: "beasiswa", element: <BeasiswaPage /> },
-          { path: "action-plan", element: <ActionPlanRoute /> },
-          { path: "persiapan/snbp", element: <SiapSnbpRoute /> },
-          { path: "persiapan/:ujian", element: <PersiapanRoute /> },
-          { path: "profil", element: <ProfilRoute /> },
+          // Action Plan juga mengatur tampilan terkunci sendiri.
+          { path: "action-plan", element: <ActionPlanPage /> },
+          { path: "persiapan/snbp", element: <SiapSnbpPage /> },
+          { path: "persiapan/:ujian", element: <SiapUjianPage /> },
+          { path: "latihan/:id/hasil", element: <LatihanHasilPage /> },
+          { path: "tryout/:id/laporan", element: <LaporanPage /> },
+          { path: "profil", element: <ProfilPage /> },
           { path: "*", element: <NotFoundPage /> },
         ],
       },
+      // Pengerjaan soal tampil tanpa menu portal (hasil dan laporan tetap di dalam portal).
+      { path: "/portal/latihan/:id", element: withSuspense(<LatihanRunPage />) },
+      { path: "/portal/tryout/:id", element: withSuspense(<TryoutRunPage />) },
     ],
   },
 

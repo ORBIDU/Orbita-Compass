@@ -71,5 +71,7 @@ export interface CampusOffering {
   majorName: string;
   city: string;
   group: CampusGroup;
+  /** Jenis kampus asli dari backend, mis. "PTN Vokasi" (dipakai jalur di Compass). */
+  campusType: string;
   logoUrl: string | null;
 }

@@ -5,7 +5,7 @@ import type { AsyncState } from "@/lib/useAsync";
 import { ACHIEVEMENT_FULL_SUPPORT, addAchievement, deleteAchievement, updateAchievement } from "@/services/achievementService";
 import type { AchievementInput, AchievementItem, AchievementKind } from "@/types/analisis";
 import Dialog from "@/components/ui/Dialog";
-import { PanelError, PanelSkeleton } from "../PanelState";
+import { PanelError, PanelSkeleton } from "@/components/ui/PanelState";
 import AchievementDialog from "./AchievementDialog";
 
 const KINDS: AchievementKind[] = ["akademik", "nonakademik"];

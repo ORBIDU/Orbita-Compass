@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Explore Beasiswa ORBIDU</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Poppins',system-ui,sans-serif;background:#F5F8FC}
+a{color:#0965FA}a:hover{color:#0747B8}
+input::placeholder{color:#8A96B2}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #F1AD00;outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 1320px; overflow: hidden; display: flex; flex-direction: column; font-family: 'Poppins', system-ui, sans-serif; background: #F5F8FC; color: #101A33">
+<dc-import name="PortalHeader" aktif="compass" hint-size="1440px,72px"></dc-import>
+
+<main style="padding: 28px 120px 48px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 720px">
+<nav aria-label="Breadcrumb" style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #6B7898"><a href="Portal-Dashboard.dc.html" style="color: #6B7898; text-decoration: none">Dashboard</a><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9AA6C0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg><a href="Portal-Compass.dc.html" style="color: #6B7898; text-decoration: none">ORBIDU Compass</a><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9AA6C0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg><span aria-current="page" style="font-weight: 600; color: #101A33">Explore Beasiswa</span></nav>
+<h1 style="margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spacing: -0.5px">Explore Beasiswa</h1>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A5877">Arah kuliahmu sudah ada. Sekarang cari cara untuk mewujudkannya.</p>
+</div>
+<span style="flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #FFF1E6; font-size: 13px; font-weight: 600; color: #B34700"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B34700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5M12 8v.01"></path></svg>Contoh data, menunggu data resmi dari tim</span>
+</div>
+
+<div style="display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 24px; align-items: start">
+<aside aria-label="Filter beasiswa" style="padding: 20px; display: flex; flex-direction: column; gap: 20px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 16px; font-weight: 700">Filter</span><button type="button" onClick="{{reset}}" style="min-height: 36px; padding: 0 4px; border: 0; background: none; font-family: inherit; font-size: 13px; font-weight: 600; color: #0965FA; cursor: pointer">Atur ulang</button></div>
+
+<button type="button" role="switch" aria-checked="{{cocokOn}}" onClick="{{toggleCocok}}" style="min-height: 56px; padding: 10px 12px; display: flex; align-items: center; gap: 12px; border-radius: 14px; border: 1.5px solid {{cocokBd}}; background: {{cocokBg}}; font-family: inherit; text-align: left; cursor: pointer">
+<span style="flex-grow: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600; color: #101A33">Cocok dengan jalurku</span><span style="font-size: 12px; color: #4A5877">Dari hasil ORBIDU Compass</span></span>
+<span style="width: 40px; height: 24px; flex-shrink: 0; border-radius: 999px; background: {{swBg}}; position: relative"><span style="position: absolute; top: 3px; left: {{swX}}px; width: 18px; height: 18px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(16,26,51,0.3)"></span></span>
+</button>
+
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+<fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 8px">
+<legend style="padding: 0 0 8px; font-size: 13px; font-weight: 600; color: #4A5877">{{g.title}}</legend>
+<sc-for list="{{g.opts}}" as="o" hint-placeholder-count="3">
+<button type="button" role="checkbox" aria-checked="{{o.checked}}" onClick="{{o.pick}}" style="min-height: 40px; padding: 0 4px; display: flex; align-items: center; gap: 10px; border: 0; background: none; font-family: inherit; font-size: 14px; color: #101A33; text-align: left; cursor: pointer"><span style="width: 20px; height: 20px; flex-shrink: 0; box-sizing: border-box; border-radius: 6px; border: 2px solid {{o.bd}}; background: {{o.bg}}; display: flex; align-items: center; justify-content: center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span><span style="flex-grow: 1">{{o.label}}</span><span class="num" style="font-size: 12px; color: #8A96B2">{{o.count}}</span></button>
+</sc-for>
+</fieldset>
+</sc-for>
+
+<button type="button" role="checkbox" aria-checked="{{savedOn}}" onClick="{{toggleSaved}}" style="min-height: 44px; padding: 0 12px; display: flex; align-items: center; gap: 10px; border-radius: 12px; border: 1px solid #E3E9F3; background: #F8FAFD; font-family: inherit; font-size: 14px; font-weight: 500; color: #101A33; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="{{savedFill}}" stroke="#0965FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg><span style="flex-grow: 1; text-align: left">Hanya yang disimpan</span><span class="num" style="font-size: 12px; color: #8A96B2">{{savedCount}}</span></button>
+</aside>
+
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 16px">
+<label style="position: relative; flex-grow: 1; display: block"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap">Cari beasiswa</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A5877" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="position: absolute; left: 16px; top: 15px"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg><input type="search" placeholder="Cari nama beasiswa atau penyelenggara" style="width: 100%; height: 48px; box-sizing: border-box; padding: 0 16px 0 44px; border-radius: 12px; border: 1.5px solid #D5DEEE; background: #FFFFFF; font-family: inherit; font-size: 15px; color: #101A33"></label>
+<span class="num" aria-live="polite" style="flex-shrink: 0; font-size: 14px; color: #4A5877"><strong style="color: #101A33">{{count}}</strong> beasiswa</span>
+</div>
+
+<sc-if value="{{hasResults}}" hint-placeholder-val="{{ true }}">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{list}}" as="b" hint-placeholder-count="4">
+<article style="padding: 20px; display: flex; flex-direction: column; gap: 12px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<div style="display: flex; align-items: flex-start; gap: 14px">
+<span style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 14px; background: {{b.tileBg}}; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="{{b.tileFg}}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{b.icon}}"></path></svg></span>
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px"><h2 style="margin: 0; font-size: 17px; line-height: 1.35; font-weight: 700">{{b.name}}</h2><span style="font-size: 13px; color: #4A5877">{{b.org}}</span></div>
+<button type="button" aria-pressed="{{b.savedP}}" aria-label="{{b.saveLabel}}" onClick="{{b.save}}" style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 10px; border: 1px solid #E3E9F3; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="{{b.saveFill}}" stroke="#0965FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: #EEF2F8; color: #15234D">{{b.jenjangText}}</span><span style="font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: #EEF2F8; color: #15234D">{{b.lokasi}}</span><sc-if value="{{b.cocok}}" hint-placeholder-val="{{ true }}"><span style="font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: #E3F5EC; color: #0A7A45">Cocok dengan jalurmu</span></sc-if></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; font-weight: 600; color: #6B7898">Cakupan</span><span style="font-size: 14px; line-height: 1.5; color: #101A33">{{b.cakupan}}</span></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; font-weight: 600; color: #6B7898">Syarat utama</span><span style="font-size: 14px; line-height: 1.55; color: #4A5877">{{b.syaratSingkat}}</span></div>
+<div style="margin-top: auto; padding-top: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid #EEF2F8">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #4A5877"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A5877" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"></path></svg>{{b.periode}}</span>
+<button type="button" onClick="{{b.open}}" style="height: 40px; padding: 0 14px; display: flex; align-items: center; gap: 6px; border-radius: 10px; border: 1.5px solid #DCE4F2; background: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 600; color: #0965FA; cursor: pointer">Lihat detail<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+</article>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{noResults}}" hint-placeholder-val="{{ false }}">
+<section style="padding: 48px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<span style="width: 56px; height: 56px; border-radius: 16px; background: #EEF2F8; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4A5877" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></span>
+<h2 style="margin: 0; font-size: 18px; font-weight: 700">Belum ada beasiswa yang cocok dengan filtermu</h2>
+<p style="margin: 0; font-size: 14px; color: #4A5877">Coba kurangi filter atau atur ulang.</p>
+<button type="button" onClick="{{reset}}" style="margin-top: 6px; height: 44px; padding: 0 18px; border-radius: 12px; border: 1.5px solid #DCE4F2; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #0965FA; cursor: pointer">Atur ulang filter</button>
+</section>
+</sc-if>
+
+<div style="display: flex; align-items: flex-start; gap: 10px; padding: 14px 16px; border-radius: 14px; background: #EEF4FF; font-size: 13px; line-height: 1.6; color: #15234D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px"><path d="M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5M12 8v.01"></path></svg><span>Label "Cocok dengan jalurmu" hanya melihat jenjang dan jalur dari ORBIDU Compass. Kelayakan sebenarnya ditentukan penyelenggara, misalnya kondisi ekonomi keluarga untuk KIP Kuliah. Selalu cek syarat terbaru di situs resminya.</span></div>
+</div>
+</div>
+</main>
+
+<sc-if value="{{dialogOpen}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; z-index: 10; background: rgba(16,26,51,0.45); display: flex; justify-content: center; align-items: flex-start; padding-top: 88px">
+<div role="dialog" aria-modal="true" aria-labelledby="pb-dialog" style="width: 600px; box-sizing: border-box; padding: 28px; display: flex; flex-direction: column; gap: 16px; border-radius: 24px; background: #FFFFFF; box-shadow: 0 30px 80px rgba(16,26,51,0.3)">
+<div style="display: flex; align-items: flex-start; gap: 14px">
+<span style="width: 52px; height: 52px; flex-shrink: 0; border-radius: 14px; background: {{d.tileBg}}; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="{{d.tileFg}}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{d.icon}}"></path></svg></span>
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px"><h2 id="pb-dialog" style="margin: 0; font-size: 20px; line-height: 1.3; font-weight: 700">{{d.name}}</h2><span style="font-size: 14px; color: #4A5877">{{d.org}}</span></div>
+<button type="button" aria-label="Tutup" onClick="{{close}}" style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 10px; border: 1px solid #E3E9F3; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15234D" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: #EEF2F8; color: #15234D">{{d.jenjangText}}</span><span style="font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: #EEF2F8; color: #15234D">{{d.lokasi}}</span><sc-if value="{{d.cocok}}" hint-placeholder-val="{{ true }}"><span style="font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: #E3F5EC; color: #0A7A45">Cocok dengan jalurmu</span></sc-if></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><h3 style="margin: 0; font-size: 14px; font-weight: 700">Cakupan</h3><p style="margin: 0; font-size: 14px; line-height: 1.6; color: #4A5877">{{d.cakupan}}</p></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-size: 14px; font-weight: 700">Syarat utama</h3><ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; font-size: 14px; line-height: 1.55; color: #4A5877"><sc-for list="{{d.syarat}}" as="s" hint-placeholder-count="3"><li>{{s}}</li></sc-for></ul></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-size: 14px; font-weight: 700">Dokumen yang biasanya diminta</h3><ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; font-size: 14px; line-height: 1.55; color: #4A5877"><sc-for list="{{d.dokumen}}" as="s" hint-placeholder-count="3"><li>{{s}}</li></sc-for></ul></div>
+<div style="display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-radius: 12px; background: #F5F8FC; font-size: 13px; color: #15234D"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A5877" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"></path></svg>{{d.periode}}</div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 4px">
+<a href="#" style="height: 46px; padding: 0 16px; display: flex; align-items: center; gap: 8px; border-radius: 12px; font-size: 14px; font-weight: 600; color: #0965FA">Kunjungi situs resmi<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"></path></svg></a>
+<button type="button" aria-pressed="{{d.savedP}}" onClick="{{d.save}}" style="height: 46px; padding: 0 18px; display: flex; align-items: center; gap: 8px; border-radius: 12px; border: 0; background: #0965FA; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="{{d.btnFill}}" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg>{{d.saveText}}</button>
+</div>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1320}}'>
+class Component extends DCLogic {
+  constructor(...args) {
+    super(...args);
+    this.state = { cocok: false, saved: false, f: { jenjang: [], lokasi: [], jenis: [] }, bookmarks: [0], open: null };
+  }
+  renderVals() {
+    const S = this.state;
+    const IC = {
+      gov: 'M3 10l9-6 9 6M5 10v9M19 10v9M9 10v9M15 10v9M3 21h18',
+      campus: 'M12 3l9 5-9 5-9-5zM7 10.5V16c0 1.5 2.2 3 5 3s5-1.5 5-3v-5.5',
+      region: 'M12 21s-6-5.4-6-11a6 6 0 1112 0c0 5.6-6 11-6 11zM12 12a2 2 0 100-4 2 2 0 000 4z',
+      company: 'M4 21V7l8-4 8 4v14M9 21v-6h6v6M8 10h.01M12 10h.01M16 10h.01',
+      globe: 'M12 21a9 9 0 100-18 9 9 0 000 18zM3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z',
+      shield: 'M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z'
+    };
+    const TILE = { blue: ['#E8F0FE', '#0B57D0'], orange: ['#FFF1E6', '#B34700'], teal: ['#E3F6FB', '#006F8C'], navy: ['#E9ECF4', '#15234D'], green: ['#E3F5EC', '#0A7A45'] };
+    const DATA = [
+      { name: 'KIP Kuliah', org: 'Pemerintah Indonesia', icon: IC.gov, t: 'blue', jenjang: ['S1', 'D3/D4'], lokasi: 'Dalam negeri', jenis: ['Biaya kuliah penuh', 'Biaya hidup'], cocok: true,
+        cakupan: 'Biaya kuliah dan bantuan biaya hidup selama masa studi.',
+        syarat: ['Lulusan SMA/sederajat', 'Berasal dari keluarga yang membutuhkan dukungan ekonomi', 'Diterima di perguruan tinggi lewat SNBP, SNBT, atau Mandiri'],
+        dokumen: ['Kartu keluarga', 'Bukti kondisi ekonomi keluarga', 'Rapor atau ijazah'], periode: 'Bersamaan dengan seleksi masuk' },
+      { name: 'Beasiswa Prestasi Kampus', org: 'Perguruan tinggi tujuan', icon: IC.campus, t: 'orange', jenjang: ['S1'], lokasi: 'Dalam negeri', jenis: ['Biaya kuliah sebagian'], cocok: true,
+        cakupan: 'Keringanan atau pembebasan UKT selama beberapa semester.',
+        syarat: ['Punya prestasi akademik atau non-akademik', 'Diterima di kampus penyelenggara', 'Menjaga IPK minimal sesuai ketentuan kampus'],
+        dokumen: ['Sertifikat prestasi', 'Rapor', 'Surat rekomendasi sekolah'], periode: 'Setelah pengumuman kelulusan' },
+      { name: 'Beasiswa Pemerintah Daerah', org: 'Pemerintah provinsi atau kabupaten/kota', icon: IC.region, t: 'teal', jenjang: ['S1', 'D3/D4'], lokasi: 'Dalam negeri', jenis: ['Biaya kuliah penuh', 'Biaya kuliah sebagian'], cocok: true,
+        cakupan: 'Biaya kuliah, sebagian program juga memberi biaya hidup.',
+        syarat: ['Berdomisili di daerah penyelenggara', 'Nilai rapor atau prestasi sesuai ketentuan daerah'],
+        dokumen: ['KTP orang tua dan kartu keluarga', 'Rapor', 'Surat keterangan domisili'], periode: 'Biasanya pertengahan tahun' },
+      { name: 'Beasiswa Yayasan dan Perusahaan', org: 'Yayasan atau perusahaan swasta', icon: IC.company, t: 'green', jenjang: ['S1'], lokasi: 'Dalam negeri', jenis: ['Biaya kuliah sebagian', 'Biaya hidup'], cocok: true,
+        cakupan: 'Bantuan biaya kuliah, uang saku, dan program pengembangan diri.',
+        syarat: ['Nilai akademik baik', 'Aktif berorganisasi', 'Lolos seleksi berkas dan wawancara'],
+        dokumen: ['Rapor', 'Esai motivasi', 'Surat rekomendasi'], periode: 'Berbeda di tiap penyelenggara' },
+      { name: 'Beasiswa Pemerintah Luar Negeri', org: 'Pemerintah negara tujuan', icon: IC.globe, t: 'blue', jenjang: ['S1'], lokasi: 'Luar negeri', jenis: ['Biaya kuliah penuh', 'Biaya hidup'], cocok: false,
+        cakupan: 'Biaya kuliah, biaya hidup, dan tiket perjalanan.',
+        syarat: ['Nilai akademik tinggi', 'Sertifikat kemampuan bahasa, misalnya IELTS atau TOEFL', 'Lolos seleksi berkas dan wawancara'],
+        dokumen: ['Paspor', 'Sertifikat bahasa', 'Rapor dan ijazah yang diterjemahkan'], periode: 'Satu tahun sebelum masa kuliah' },
+      { name: 'Pendidikan Ikatan Dinas', org: 'Sekolah kedinasan', icon: IC.shield, t: 'navy', jenjang: ['D3/D4'], lokasi: 'Dalam negeri', jenis: ['Ikatan dinas'], cocok: false,
+        cakupan: 'Biaya pendidikan ditanggung negara, dengan kewajiban bekerja di instansi setelah lulus.',
+        syarat: ['Lolos SKD dan tes lanjutan', 'Memenuhi syarat usia, kesehatan, dan fisik tertentu'],
+        dokumen: ['Ijazah dan rapor', 'Surat keterangan sehat', 'Dokumen kependudukan'], periode: 'Mengikuti jadwal tiap instansi' }
+    ];
+    const f = S.f;
+    const match = (b, skip) =>
+      (skip === 'jenjang' || f.jenjang.length === 0 || b.jenjang.some((j) => f.jenjang.includes(j))) &&
+      (skip === 'lokasi' || f.lokasi.length === 0 || f.lokasi.includes(b.lokasi)) &&
+      (skip === 'jenis' || f.jenis.length === 0 || b.jenis.some((j) => f.jenis.includes(j))) &&
+      (!S.cocok || b.cocok);
+    const idxs = DATA.map((b, i) => i).filter((i) => match(DATA[i]) && (!S.saved || S.bookmarks.includes(i)));
+    const toggleIn = (key, val) => {
+      const cur = f[key];
+      this.setState({ f: { ...f, [key]: cur.includes(val) ? cur.filter((x) => x !== val) : cur.concat(val) } });
+    };
+    const G = [
+      ['jenjang', 'Jenjang', ['S1', 'D3/D4'], (b, v) => b.jenjang.includes(v)],
+      ['lokasi', 'Lokasi kuliah', ['Dalam negeri', 'Luar negeri'], (b, v) => b.lokasi === v],
+      ['jenis', 'Jenis bantuan', ['Biaya kuliah penuh', 'Biaya kuliah sebagian', 'Biaya hidup', 'Ikatan dinas'], (b, v) => b.jenis.includes(v)]
+    ];
+    const groups = G.map(([key, title, opts, has]) => ({
+      title,
+      opts: opts.map((v) => {
+        const on = f[key].includes(v);
+        return { label: v, checked: on ? 'true' : 'false', bg: on ? '#0965FA' : '#FFFFFF', bd: on ? '#0965FA' : '#B8C4DB', count: DATA.filter((b) => match(b, key) && has(b, v)).length, pick: () => toggleIn(key, v) };
+      })
+    }));
+    const deco = (b, i) => {
+      const sv = S.bookmarks.includes(i);
+      return {
+        ...b, tileBg: TILE[b.t][0], tileFg: TILE[b.t][1], jenjangText: b.jenjang.join(', '),
+        syaratSingkat: b.syarat.slice(0, 2).join('. ') + '.',
+        savedP: sv ? 'true' : 'false', saveFill: sv ? '#0965FA' : 'none', btnFill: sv ? '#FFFFFF' : 'none',
+        saveLabel: sv ? 'Hapus ' + b.name + ' dari simpanan' : 'Simpan ' + b.name, saveText: sv ? 'Disimpan' : 'Simpan beasiswa',
+        save: () => this.setState({ bookmarks: sv ? S.bookmarks.filter((x) => x !== i) : S.bookmarks.concat(i) }),
+        open: () => this.setState({ open: i })
+      };
+    };
+    const list = idxs.map((i) => deco(DATA[i], i));
+    const d = S.open !== null ? deco(DATA[S.open], S.open) : deco(DATA[0], 0);
+    return {
+      groups, list, count: list.length, hasResults: list.length > 0, noResults: list.length === 0,
+      cocokOn: S.cocok ? 'true' : 'false', cocokBd: S.cocok ? '#0965FA' : '#E3E9F3', cocokBg: S.cocok ? '#EEF4FF' : '#F8FAFD', swBg: S.cocok ? '#0965FA' : '#C9D3E5', swX: S.cocok ? 19 : 3,
+      toggleCocok: () => this.setState({ cocok: !S.cocok }),
+      savedOn: S.saved ? 'true' : 'false', savedFill: S.saved ? '#0965FA' : 'none', savedCount: S.bookmarks.length,
+      toggleSaved: () => this.setState({ saved: !S.saved }),
+      reset: () => this.setState({ cocok: false, saved: false, f: { jenjang: [], lokasi: [], jenis: [] } }),
+      dialogOpen: S.open !== null, d, close: () => this.setState({ open: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

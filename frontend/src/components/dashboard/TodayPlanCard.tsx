@@ -1,19 +1,13 @@
 import { CalendarCheck, Check } from "lucide-react";
 import { ROUTES } from "@/config/navigation";
 import { LOCKED, PLAN } from "@/content/dashboard";
+import { formatDayName } from "@/lib/datetime";
 import type { AsyncState } from "@/lib/useAsync";
-import type { PlanTask, TodayPlan } from "@/types/dashboard";
+import type { PlanPractice, TodayPlan } from "@/types/actionPlan";
+import { CATEGORY_STYLE } from "@/components/actionPlan/planStyle";
 import { CardButton, CardError, CardLink, CardSkeleton, DashCard, EmptyPanel, LockedPanel } from "./DashCard";
 
-/** Warna tag kategori tugas. Kategori lain (dari data backend lama) memakai abu-abu. */
-const CATEGORY_TAG: Record<string, string> = {
-  SNBT: "bg-tint-blue-bg text-tint-blue-fg",
-  TKA: "bg-tint-orange-bg text-tint-orange-fg",
-  SKD: "bg-tint-navy-bg text-tint-navy-fg",
-};
-const OTHER_TAG = "bg-surface-track text-prose";
-
-/** Jumlah tugas yang ditampilkan sebelum "+N tugas lainnya": HP 3, desktop 4. */
+/** Jumlah latihan yang ditampilkan sebelum "+N latihan lainnya": HP 3, desktop 4. */
 const VISIBLE = { mobile: 3, desktop: 4 };
 
 /** Cincin progres oranye dengan persentase di tengah. */
@@ -43,25 +37,27 @@ function ProgressRing({ pct }: { pct: number }) {
   );
 }
 
-function TaskRow({ task, hideOnMobile }: { task: PlanTask; hideOnMobile: boolean }) {
-  const meta = task.minutes !== null ? PLAN.minutes(task.minutes) : null;
+function TaskRow({ task, hideOnMobile }: { task: PlanPractice; hideOnMobile: boolean }) {
+  const done = task.status === "done";
+  const meta = task.status === "in_progress" ? PLAN.progress(task.answered, task.questions) : PLAN.meta(task.questions, task.minutes);
+  const stateLabel = done ? PLAN.doneLabel : task.status === "in_progress" ? PLAN.inProgressLabel : PLAN.todoLabel;
   return (
     <li className={`min-h-14 items-center gap-3 rounded-[14px] border border-rim-soft px-3 lg:min-h-[52px] lg:px-3.5 ${hideOnMobile ? "hidden lg:flex" : "flex"}`}>
       <span
         className={`flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-[7px] border-2 ${
-          task.done ? "border-tint-green-fg bg-tint-green-fg" : "border-rim-box bg-white"
+          done ? "border-tint-green-fg bg-tint-green-fg" : task.status === "in_progress" ? "border-orbit-1 bg-tint-blue-bg" : "border-rim-box bg-white"
         }`}
       >
-        {task.done && <Check size={13} strokeWidth={3.2} aria-hidden="true" className="text-white" />}
+        {done && <Check size={13} strokeWidth={3.2} aria-hidden="true" className="text-white" />}
       </span>
-      <span className="sr-only">{task.done ? PLAN.doneLabel : PLAN.todoLabel}:</span>
+      <span className="sr-only">{stateLabel}:</span>
       <span className="flex min-w-0 flex-1 flex-col">
-        <span className={`text-sm font-medium ${task.done ? "text-prose-dim line-through" : "text-space-2"}`}>{task.title}</span>
+        <span className={`text-sm font-medium ${done ? "text-prose-dim line-through" : "text-space-2"}`}>{task.title}</span>
         {/* HP: kategori ikut di baris kecil. Desktop: kategori jadi tag di kanan. */}
-        <span className="text-xs text-prose-dim lg:hidden">{[task.category, meta].filter(Boolean).join(", ")}</span>
-        {meta && <span className="hidden text-xs text-prose-dim lg:block">{meta}</span>}
+        <span className="text-xs tabular-nums text-prose-dim lg:hidden">{`${task.category}, ${meta}`}</span>
+        <span className="hidden text-xs tabular-nums text-prose-dim lg:block">{meta}</span>
       </span>
-      <span className={`hidden shrink-0 rounded-full px-[9px] py-[3px] text-[11px] font-semibold lg:inline ${CATEGORY_TAG[task.category] ?? OTHER_TAG}`}>
+      <span className={`hidden shrink-0 rounded-full px-[9px] py-[3px] text-[11px] font-semibold lg:inline ${CATEGORY_STYLE[task.category].tile}`}>
         {task.category}
       </span>
     </li>
@@ -70,7 +66,12 @@ function TaskRow({ task, hideOnMobile }: { task: PlanTask; hideOnMobile: boolean
 
 function PlanBody({ plan }: { plan: TodayPlan }) {
   if (plan.tasks.length === 0) {
-    const empty = plan.focus ? PLAN.emptyToday : PLAN.emptyNoFocus;
+    // Bukan hari belajar: tetap tampilkan latihan berikutnya supaya kartu tidak kosong.
+    const empty = !plan.focus
+      ? PLAN.emptyNoFocus
+      : plan.next
+        ? { title: PLAN.restDay.title, body: PLAN.restDay.next(formatDayName(plan.next.date), plan.next.count), cta: PLAN.restDay.cta }
+        : PLAN.ended;
     return (
       <EmptyPanel
         icon={CalendarCheck}
@@ -82,12 +83,10 @@ function PlanBody({ plan }: { plan: TodayPlan }) {
   }
 
   const total = plan.tasks.length;
-  const done = plan.tasks.filter((t) => t.done).length;
+  const done = plan.tasks.filter((t) => t.status === "done").length;
   const pct = Math.round((done / total) * 100);
-  const minutesLeft = plan.tasks.every((t) => t.minutes !== null)
-    ? plan.tasks.filter((t) => !t.done).reduce((sum, t) => sum + (t.minutes ?? 0), 0)
-    : null;
-  const detail = done === total ? PLAN.allDone : minutesLeft !== null ? PLAN.remaining(minutesLeft) : null;
+  const minutesLeft = plan.tasks.filter((t) => t.status !== "done").reduce((sum, t) => sum + t.minutes, 0);
+  const detail = done === total ? PLAN.allDone : PLAN.remaining(minutesLeft);
   const visible = plan.tasks.slice(0, VISIBLE.desktop);
   const moreMobile = total - VISIBLE.mobile;
   const moreDesktop = total - VISIBLE.desktop;
@@ -120,7 +119,7 @@ function PlanBody({ plan }: { plan: TodayPlan }) {
   );
 }
 
-/** Kartu "Rencana hari ini": ringkasan tugas Action Plan untuk hari ini. */
+/** Kartu "Rencana hari ini": latihan Action Plan untuk hari ini (sumber sama dengan Action Plan). */
 export default function TodayPlanCard({ locked, state }: { locked: boolean; state: AsyncState<TodayPlan> }) {
   const aside = (
     <CardLink to={ROUTES.actionPlan}>

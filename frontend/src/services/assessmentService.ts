@@ -3,6 +3,7 @@ import type { MeUser } from "@/types/backend";
 import type { AsesmenAnswers, AsesmenDoc, AsesmenDraft, AssessmentSummary } from "@/types/analisis";
 import { mockGetAssessmentRecord, mockGetDraft, mockSaveDraft, mockSubmitAssessment } from "@/mocks/analisisMock";
 import { scoreAnswers } from "@/lib/asesmen";
+import { readLocal, writeLocal } from "@/lib/localStore";
 import { USE_MOCK } from "./config";
 import { getToken, request } from "./http";
 
@@ -10,29 +11,10 @@ import { getToken, request } from "./http";
 export const ASESMEN = asesmenJson as AsesmenDoc;
 
 // Backend belum menyimpan draft jawaban dan jawaban lengkap (API_CONTRACT 3.3),
-// jadi di mode backend keduanya disimpan di browser per akun. localStorage bisa
-// gagal (mode private), sehingga selalu dibungkus try/catch.
+// jadi di mode backend keduanya disimpan di browser per akun.
 
 const draftKey = (userId: string) => `orbita_asesmen_draft_${userId}`;
 const answersKey = (userId: string) => `orbita_asesmen_answers_${userId}`;
-
-function readLocal<T>(key: string): T | null {
-  try {
-    const raw = localStorage.getItem(key);
-    return raw ? (JSON.parse(raw) as T) : null;
-  } catch {
-    return null;
-  }
-}
-
-function writeLocal(key: string, value: unknown): void {
-  try {
-    if (value === null) localStorage.removeItem(key);
-    else localStorage.setItem(key, JSON.stringify(value));
-  } catch {
-    /* abaikan: jawaban tetap ada di layar sampai halaman ditutup */
-  }
-}
 
 /** Jawaban yang belum dikirim. null = belum pernah mengisi. */
 export async function getDraft(userId: string): Promise<AsesmenDraft | null> {

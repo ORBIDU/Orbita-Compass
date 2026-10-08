@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Lock, RotateCcw, type LucideIcon } from "lucide-react";
-import { LOAD_ERROR, LOCKED, RETRY } from "@/content/dashboard";
+import { LOCKED } from "@/content/dashboard";
+import { LOAD_ERROR, RETRY } from "@/content/common";
 
 interface DashCardProps {
   id: string;
