@@ -1,4 +1,5 @@
 import { BRAND } from "@/config/brand";
+import { ACCOUNT_ACCESS } from "./common";
 import type { CampusGroup, FitLabel, JalurKey } from "@/types/jurusan";
 
 // Teks halaman /jurusan dan /jurusan/:slug. Komponen hanya menampilkan isi file ini.
@@ -54,8 +55,11 @@ export const JURUSAN_DETAIL = {
   cta: {
     accent: "Cocok nggak sih buatku?",
     guestBody: (name: string) =>
-      `Isi Gambaran Minat Bakat, lalu lihat apakah ${name} termasuk pilihan yang selaras dengan profilmu.`,
-    guestButton: "Mulai Perjalanan",
+      `Dengan akun ${BRAND.name}, kamu bisa mengisi Gambaran Minat Bakat lalu melihat apakah ${name} termasuk pilihan yang selaras dengan profilmu. ${ACCOUNT_ACCESS.note}`,
+    /** Tamu: membuka WhatsApp (tidak ada pendaftaran mandiri). */
+    guestButton: ACCOUNT_ACCESS.subscribe,
+    guestLoginText: "Sudah punya akun?",
+    guestLogin: "Masuk",
     baruBody: (name: string) =>
       `Isi Gambaran Minat Bakat dulu, lalu lihat apakah ${name} termasuk pilihan yang selaras dengan profilmu.`,
     baruButton: "Isi Gambaran Minat Bakat",

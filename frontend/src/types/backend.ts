@@ -129,7 +129,7 @@ interface UserBase {
   avatarUrl?: string | null;
 }
 
-/** `user` di respons POST /auth/login dan POST /auth/register. */
+/** `user` di respons POST /auth/login. */
 export interface LoginUser extends UserBase {
   profile: StudentProfile | null;
 }
@@ -142,6 +142,16 @@ export interface MeUser extends UserBase {
   createdAt: string;
   updatedAt: string;
   profile: StudentProfileDetail | null;
+  /*
+   * Tiga field di bawah BELUM dikirim backend (API_CONTRACT 2.4 dan 14.2).
+   * Selama tidak ada (undefined), halaman /aktivasi dilewati.
+   */
+  /** true = akun masih memakai password awal dari admin. */
+  mustChangePassword?: boolean;
+  /** Waktu persetujuan orang tua/wali; null = belum. */
+  parentConsentAt?: string | null;
+  /** Waktu persetujuan Syarat & Ketentuan dan Kebijakan Privasi; null = belum. */
+  termsAcceptedAt?: string | null;
 }
 
 // ─── Respons endpoint ────────────────────────────────────────────────────────
@@ -151,8 +161,6 @@ export interface LoginResponse {
   token: string;
   user: LoginUser;
 }
-
-export type RegisterResponse = LoginResponse;
 
 export interface MeResponse {
   user: MeUser;
