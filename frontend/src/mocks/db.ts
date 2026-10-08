@@ -12,6 +12,8 @@ import type { PracticeLog } from "@/types/practice";
 import type { AsesmenAnswers, AsesmenDraft, AssessmentHistoryEntry } from "@/types/analisis";
 import type { CompassTarget } from "@/types/compass";
 import type { SnbpDraft } from "@/types/snbp";
+import type { SchoolProfile } from "@/types/profil";
+import { BUDI_SCHOOL_PROFILE, SISWA_SCHOOL_PROFILE } from "./data/profil";
 import { simulateCompass } from "./compassEngine";
 import type { PlanState } from "./actionPlanEngine";
 import { demoPlanState } from "./data/actionPlan";
@@ -73,6 +75,8 @@ export interface MockAccount {
   inputsUpdatedAt: string | null;
   /** Id beasiswa yang disimpan (API_CONTRACT 10.2). */
   savedScholarships: string[];
+  /** Data diri dari pihak kurikulum sekolah, hanya dibaca siswa (API_CONTRACT 13.1). */
+  schoolProfile: SchoolProfile;
   /** Isian dan hasil terakhir Siap SNBP (API_CONTRACT 12.1). */
   snbp: SnbpDraft | null;
   /** Waktu persetujuan orang tua/wali saat daftar (belum ada di backend, lihat docs/API_CONTRACT.md). */
@@ -106,7 +110,8 @@ const STORAGE_KEY = "orbita_mock_db";
 // v9 (Tahap 7B): riwayat tryout per paket (menggantikan ringkasan `practice`).
 // v10 (Tahap 7C): sesi latihan dan percobaan tryout dari bank soal contoh.
 // v11: riwayat tryout contoh dengan kenaikan yang wajar.
-const DB_VERSION = 11;
+// v12 (Fase 8): data diri dari sekolah, sekolah demo di Palembang.
+const DB_VERSION = 12;
 
 const SEED_DATE = "2026-07-01T08:00:00.000Z";
 
@@ -167,10 +172,10 @@ function profileOf(
 
 function seed(): MockDb {
   const siswaProfile = profileOf("user-siswa", {
-    schoolName: "SMA Negeri 1 Jakarta",
+    schoolName: "SMA Negeri 1 Palembang",
     grade: 12,
     majorTrack: "IPA",
-    city: "Jakarta Pusat",
+    city: "Palembang",
     targetPtnId: "univ-311",
     targetMajorId: "major-311-informatika",
     nickname: "Rizki",
@@ -200,9 +205,9 @@ function seed(): MockDb {
     academicRecords: raporSeed(siswaProfile.id),
     achievements: [
       { id: "ach-siswa-1", profileId: siswaProfile.id, title: "Olimpiade Sains Nasional bidang Informatika", category: "Academic", level: "National", year: 2025, createdAt: SEED_DATE, rank: "Medali Perunggu", organizer: "Puspresnas", certificateName: "sertifikat-osn.pdf" },
-      { id: "ach-siswa-2", profileId: siswaProfile.id, title: "Hackathon Pelajar SMA se-DKI Jakarta", category: "Academic", level: "Province", year: 2025, createdAt: SEED_DATE, rank: "Juara 2", organizer: "Dinas Pendidikan DKI Jakarta", certificateName: null },
-      { id: "ach-siswa-3", profileId: siswaProfile.id, title: "Ketua OSIS", category: "Non-Academic", level: "School", year: 2025, createdAt: SEED_DATE, rank: "Periode 2025/2026", organizer: "SMA Negeri 1 Jakarta", certificateName: "sk-osis.pdf" },
-      { id: "ach-siswa-4", profileId: siswaProfile.id, title: "Turnamen Futsal Pelajar", category: "Non-Academic", level: "City", year: 2024, createdAt: SEED_DATE, rank: "Juara 3", organizer: "Pemerintah Kota Jakarta Pusat", certificateName: "piagam-futsal.jpg" },
+      { id: "ach-siswa-2", profileId: siswaProfile.id, title: "Hackathon Pelajar SMA se-Sumatera Selatan", category: "Academic", level: "Province", year: 2025, createdAt: SEED_DATE, rank: "Juara 2", organizer: "Dinas Pendidikan Provinsi Sumatera Selatan", certificateName: null },
+      { id: "ach-siswa-3", profileId: siswaProfile.id, title: "Ketua OSIS", category: "Non-Academic", level: "School", year: 2025, createdAt: SEED_DATE, rank: "Periode 2025/2026", organizer: "SMA Negeri 1 Palembang", certificateName: "sk-osis.pdf" },
+      { id: "ach-siswa-4", profileId: siswaProfile.id, title: "Turnamen Futsal Pelajar", category: "Non-Academic", level: "City", year: 2024, createdAt: SEED_DATE, rank: "Juara 3", organizer: "Pemerintah Kota Palembang", certificateName: "piagam-futsal.jpg" },
     ],
     reflection: {
       id: "refl-siswa",
@@ -235,6 +240,8 @@ function seed(): MockDb {
     inputsUpdatedAt: null,
     savedScholarships: ["kip-kuliah"],
     snbp: null,
+    schoolProfile: structuredClone(SISWA_SCHOOL_PROFILE),
+    parentConsentAt: "2026-08-12T08:00:00.000Z",
     actionPlan: demoPlanState(new Date()),
     actionPlanStash: null,
     practiceLog: demoTryout.log,
@@ -282,6 +289,8 @@ function seed(): MockDb {
     inputsUpdatedAt: null,
     savedScholarships: [],
     snbp: null,
+    schoolProfile: structuredClone(BUDI_SCHOOL_PROFILE),
+    parentConsentAt: null,
   };
 
   // Akun demo yang sudah asesmen dianggap sudah pernah membuka Compass,

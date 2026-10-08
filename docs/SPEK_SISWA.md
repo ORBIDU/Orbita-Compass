@@ -222,14 +222,24 @@ Satu template (`SiapUjianPage`), konfigurasi per ujian di `content/siapUjian.ts`
 - Semua paket tryout contoh memakai soal yang sama. Riwayat contoh (Action Plan dan Tryout Diagnostik/#1) disusun dari jawaban atas bank contoh, jadi pembahasannya bisa dibuka.
 
 ## 11. Profil (`/portal/profil`)
-Hanya berisi data diri; Prestasi dan Rapor tetap di Analisis Potensi.
-Field bertanda 🔒 diisi admin dan hanya bisa dibaca, dengan catatan "Hubungi wali kelas jika ada data yang salah".
-- Data Diri: nama lengkap 🔒, nama panggilan, jenis kelamin 🔒, NIS 🔒, NISN 🔒, kelas 🔒, jurusan 🔒, tempat & tanggal lahir, agama, foto profil.
-- Alamat & Kontak: alamat lengkap, kelurahan/desa, kecamatan, kota/kabupaten, provinsi, kode pos, No. HP/WhatsApp, email.
-- Data Keluarga: nama ayah & ibu, pekerjaan ayah & ibu, pendidikan ayah & ibu, No. HP orang tua/wali, status orang tua, tinggal bersama, anak ke-, jumlah saudara kandung.
-- Informasi Tambahan (opsional, tujuan dijelaskan): kondisi sosial ekonomi keluarga (untuk rekomendasi beasiswa), buta warna (beberapa prodi mensyaratkannya), berkebutuhan khusus (untuk info akses kampus).
-- Tombol simpan melayang dengan status "Data berhasil disimpan".
-- Data: backend baru menyimpan sekolah, kelas, jurusan, dan kota → field lainnya dicatat di API_CONTRACT.
+Acuan desain: `docs/design/portal/Portal-Profil.dc.html`. Teks di `frontend/src/content/profil.ts`; data lewat `frontend/src/services/profileService.ts`.
+- **Data diri diisi pihak kurikulum sekolah dan hanya bisa dibaca siswa**, ditampilkan sebagai daftar label–nilai (bukan kotak isian). Field kosong ditulis "Belum diisi sekolah", tanpa nilai contoh. Kotak info di atas menjelaskan hal ini dan tanggal "Diperbarui sekolah …".
+- **Yang bisa diubah siswa hanya:**
+  - nama panggilan (maks. 20 karakter, tidak boleh kosong; dipakai sapaan Dashboard; "Nama panggilan disimpan" baru tampil setelah tersimpan),
+  - foto profil (JPG/PNG, maks. 2 MB; dikecilkan ke 256 px; ikut tampil di avatar header),
+  - password, lewat jendela Ganti password (password sekarang dicek, password baru min. 8 karakter campuran huruf dan angka dan berbeda dari yang lama, ulangi harus sama).
+- **Kolom kiri** (sticky di laptop, paling atas di HP): kartu identitas (foto, nama, kelas · sekolah, nama panggilan), Akun ORBIDU (email akun saja, ganti password, status persetujuan orang tua/wali), pintasan "Prestasi dan nilai rapor" ke Analisis Potensi.
+- **Kolom kanan:**
+  - Data diri: nama lengkap, jenis kelamin, tempat dan tanggal lahir, NIS, NISN, agama, kelas, sekolah (SMA).
+  - Alamat tempat tinggal: alamat lengkap, RT/RW, kelurahan/desa, kecamatan, kota/kabupaten, provinsi (salah satu dari 38 provinsi), kode pos.
+  - Kontak dan orang tua/wali: HP siswa, HP orang tua/wali, nama dan pekerjaan ayah, nama dan pekerjaan ibu, nama wali.
+  - Kondisi keluarga: status orang tua, tinggal bersama, pendidikan ayah dan ibu, kondisi sosial ekonomi, bantuan pendidikan, anak ke-/jumlah saudara.
+  - Kondisi khusus: berkebutuhan khusus (beserta jenisnya), buta warna, catatan tambahan.
+  - Kondisi keluarga dan kondisi khusus disembunyikan secara default dengan tombol Tampilkan/Sembunyikan (`aria-expanded`) dan keterangan "Hanya terlihat olehmu, guru BK, dan wali kelas".
+- **Tidak ada di Profil:** tab Prestasi dan Nilai Rapor (ada di Analisis Potensi), jurusan (IPA/IPS), email kedua, golongan darah, riwayat penyakit, dan bar simpan.
+- **HP:** satu kolom, kartu identitas di atas, daftar label–nilai satu kolom.
+- **Mode Demo:** akun siswa berisi data lengkap (SMA Negeri 1 Palembang); akun Budi sebagian kosong.
+- **Dengan backend asli:** hanya nama, email, kelas, sekolah, dan kota yang tampil; field lain "Belum diisi sekolah". Nama panggilan dan foto disimpan di browser per akun ("Tersimpan di perangkat ini"); ganti password dinonaktifkan dengan catatan; status persetujuan "belum bisa ditampilkan". Kebutuhan backend → API_CONTRACT bagian 13.
 
 ## Fase pengerjaan
 - [x] Fase 0 — Audit frontend (tanpa mengubah kode)
@@ -240,7 +250,7 @@ Field bertanda 🔒 diisi admin dan hanya bisa dibaca, dengan catatan "Hubungi w
 - [x] Fase 5 — ORBIDU Compass + Explore Beasiswa
 - [x] Fase 6 — Action Plan
 - [x] Fase 7 — Persiapan
-- [ ] Fase 8 — Profil
+- [x] Fase 8 — Profil
 - [ ] Fase 9 — Finishing: cek tampilan HP, empty state, konsistensi angka antarhalaman, rapikan API_CONTRACT.md
 
 ## Sebelum rilis
@@ -254,3 +264,5 @@ Hal yang sengaja ditunda dan wajib dibereskan sebelum ORBIDU dipakai siswa:
 - Action Plan memakai endpoint backend (`docs/API_CONTRACT.md` bagian 11), bukan penyimpanan browser, supaya rencana dan progres latihan terbawa ke perangkat lain.
 - Ganti bank soal contoh (`frontend/src/mocks/data/soal/`) dengan bank soal resmi dari tim data: soal berbeda per paket tryout, cukup untuk sesi 20 soal (SNBT/SKD) dan 15 soal (TKA), lalu kembalikan `SESSION_SIZE` dan hapus label "Contoh soal".
 - Rumus rasionalisasi SNBP dan skor tryout (sekarang perkiraan sementara) disetujui tim, dan latihan/tryout memakai endpoint backend (API_CONTRACT 12.5–12.6) supaya kunci jawaban tidak pernah ada di browser.
+- Data kondisi keluarga dan kondisi khusus di Profil baru boleh diisi data asli siswa setelah celah keamanan di `BACKEND_MAP.md` bagian 6 ditutup (endpoint admin terbuka tanpa cek peran, `passwordHash` terkirim di respons). Lihat `docs/API_CONTRACT.md` bagian 13.4.
+- Profil memakai endpoint backend untuk nama panggilan, foto, dan ganti password (`docs/API_CONTRACT.md` bagian 13.3), bukan penyimpanan browser.

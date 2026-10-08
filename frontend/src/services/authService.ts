@@ -1,6 +1,7 @@
 import type { LoginResponse, MeResponse, MeUser, RegisterResponse } from "@/types/backend";
 import { mockLogin, mockMe, mockRegister } from "@/mocks/authMock";
 import { USE_MOCK } from "./config";
+import { withLocalProfil } from "./profileService";
 import { clearToken, getToken, request, setToken } from "./http";
 
 /**
@@ -58,7 +59,8 @@ export async function getMe(): Promise<MeUser> {
   const data = USE_MOCK ? await mockMe(getToken()) : await request<MeResponse>("/auth/me");
   // Backend ikut mengirim passwordHash; dibuang di sini agar tidak pernah tersimpan di state.
   const { passwordHash: _passwordHash, ...user } = data.user as MeUser & { passwordHash?: string };
-  return user;
+  // Mode backend: nama panggilan dan foto masih disimpan di browser (API_CONTRACT 13.3).
+  return withLocalProfil(user);
 }
 
 export function hasToken(): boolean {

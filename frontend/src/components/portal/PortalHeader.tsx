@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Bell, ChevronDown, LogOut, Search, UserRound } from "lucide-react";
+import Avatar from "@/components/ui/Avatar";
 import { ROUTES } from "@/config/navigation";
 import type { DisplayUser } from "@/lib/user";
 import { useDismiss } from "@/lib/useDismiss";
@@ -60,9 +61,7 @@ function AccountMenu({ user, onLogout }: PortalHeaderProps) {
         aria-label={`Menu akun ${user.name}`}
         className="flex items-center gap-2.5 rounded-full transition-colors hover:bg-surface-soft nav:h-12 nav:rounded-[14px] nav:border nav:border-rim-soft nav:bg-white nav:pl-1.5 nav:pr-2.5"
       >
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-orbit text-[13px] font-semibold text-white nav:h-9 nav:w-9">
-          {user.initials}
-        </span>
+        <Avatar src={user.avatarUrl} initials={user.initials} className="h-11 w-11 text-[13px] nav:h-9 nav:w-9" />
         <span className="hidden text-left leading-tight nav:block">
           <span className="block max-w-[160px] truncate text-sm font-semibold text-space-2">{user.name}</span>
           <span className="block text-xs text-prose">{user.kelas}</span>

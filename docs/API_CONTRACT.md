@@ -70,6 +70,8 @@ Hasil pengecekan kode backend (2026-09-28):
 - **Mode dummy** saat ini meniru perilaku backend (mengisi "IPA").
 
 ### 2.3 Field profil yang belum ada 🔴
+> **Diperbarui di Fase 8:** bentuk lengkap dan aturan siapa yang boleh mengubah ada di **bagian 13**. Ringkasan di bawah dipertahankan sebagai riwayat.
+
 Dibutuhkan oleh `/portal/profil` (SPEK bagian 11) dan sapaan Dashboard.
 
 `PUT /profile` perlu menerima dan `GET /profile` perlu mengirim:
@@ -679,4 +681,70 @@ GET  /tryouts/:paket/report
 - **Skor (perkiraan, sementara):** SNBT per subtes 200 + 800 × benar/total, total = rata-rata; TKA per mapel 100 × benar/total, total = rata-rata; SKD TWK 150 × benar/total, TIU 175 × benar/total, TKP 225 × poin/(5 × total), total = jumlah (maks. 550). Rumus resmi perlu disetujui tim.
 - Durasi contoh per soal: SNBT 90 detik, TKA 120 detik, SKD 60 detik (`frontend/src/config/practice.ts`).
 - Hasil tryout masuk riwayat (12.4), sehingga Siap SNBT/TKA/SKD, kartu Performa Dashboard, dan bobot Action Plan ikut berubah.
+
+---
+
+## 13. Profil (Fase 8)
+
+Dipakai `/portal/profil` (SPEK bagian 11). Service: `frontend/src/services/profileService.ts`; bentuk data: `frontend/src/types/profil.ts`; contoh: `frontend/src/mocks/data/profil.ts`.
+
+**Keputusan tim:** data diri siswa diisi **pihak kurikulum sekolah**. Siswa hanya bisa melihat, kecuali **nama panggilan, foto, dan password**.
+
+### 13.1 Data diri dari sekolah 🔴
+Kolom yang sudah ada: `User.name`, `User.email`, `User.avatarUrl`, `StudentProfile.grade`, `schoolName`, `city`. Yang **belum ada di Prisma**:
+
+```
+GET /profile/school
+→ { "school": {
+      "identity": { "gender": "L" | "P" | null, "birthPlace": "Palembang", "birthDate": "2009-05-15",
+                    "nis": "…", "nisn": "…", "religion": "Islam" },
+      "address":  { "street": "…", "rt": "003", "rw": "005", "village": "…", "district": "…",
+                    "city": "Palembang", "province": "Sumatera Selatan", "postalCode": "30127" },   // province: salah satu dari 38 provinsi
+      "contact":  { "studentPhone": "…", "guardianPhone": "…", "fatherName": "…", "fatherJob": "…",
+                    "motherName": "…", "motherJob": "…", "guardianName": null },
+      "family":   { "parentStatus": "…", "livingWith": "…", "fatherEducation": "S1", "motherEducation": "S1",
+                    "socioEconomic": "Cukup", "educationAid": ["KIP"] | [], "childOrder": 1, "siblingCount": 2 },
+      "special":  { "specialNeeds": false, "specialNeedsTypes": [], "colorBlind": false, "notes": null },
+      "updatedAt": "2026-09-02T08:00:00Z"
+    } }
+```
+- Semua field boleh `null` (= belum diisi sekolah). Frontend menampilkannya "Belum diisi sekolah", tanpa nilai contoh.
+- `majorTrack` (IPA/IPS) **tidak** ditampilkan: Kurikulum Merdeka tidak memakai jurusan, dan backend mengisi "IPA" untuk semua siswa baru (bagian 2.2).
+- Field lama yang dihapus dari desain: golongan darah, riwayat penyakit, "email siswa" kedua (email akun saja).
+
+**Endpoint untuk pihak sekolah/admin** (peran baru atau `ADMIN`, dengan cek peran di server):
+```
+PUT  /admin/students/:userId/profile   ← { "name"?, "grade"?, "schoolName"?, "city"?, "school": { … sama dengan di atas } }
+POST /admin/students/import            ← file Excel/CSV dari sistem sekolah (Dapodik/e-rapor)
+                                       → { "updated": 120, "errors": [ { "row": 5, "message": "NISN tidak valid" } ] }
+```
+
+### 13.2 Siswa hanya boleh mengubah nickname, avatar, dan password 🔴
+- `PUT /profile` dari siswa **harus menolak** (atau mengabaikan) `schoolName`, `grade`, `majorTrack`, dan `city`. Sekarang siswa bisa mengubah semuanya lewat API, dan `PUT /profile` membuat profil dengan nilai bawaan palsu jika belum ada (bagian 2.2). Pengecualian: `targetPtnId`/`targetMajorId` (target prodi dari Siap SNBP, bagian 9.1) tetap boleh diubah siswa.
+- `POST /rapor`, `POST /rapor/import-excel`, dan `POST /rapor/upload-pdf` **hanya untuk sekolah/admin**. Sekarang siswa bisa menulis nilai rapornya sendiri.
+- Prestasi (`/achievements`) tetap diisi siswa (keputusan Fase 4).
+
+### 13.3 Nama panggilan, foto, dan password 🔴
+```
+PUT  /profile/nickname   ← { "nickname": "Rizki" }          // 1–20 karakter, di-trim
+                         → { "nickname": "Rizki" }
+POST /profile/avatar     ← multipart: file (image/jpeg | image/png, maks. 2 MB)
+                         → { "avatarUrl": "https://…" }      // server mengecilkan dan menyimpan
+DELETE /profile/avatar   → { "avatarUrl": null }
+PUT  /auth/password      ← { "currentPassword": "…", "newPassword": "…" }
+                         → 204   |   400 { "error": "Password sekarang salah" }
+```
+- Password baru: min. 8 karakter, berisi huruf dan angka, berbeda dari password lama. Server **wajib** mengecek password lama dan memberi batas percobaan.
+- `nickname` dikirim di `GET /auth/me` dan `GET /profile` (dipakai sapaan Dashboard); `avatarUrl` sudah ada di `User`.
+- **Sementara:** mode dummy menyimpan di data dummy. Mode backend menyimpan nama panggilan dan foto (gambar 256 px) di browser per akun (`orbita_profil_<userId>`, digabung ke data user saat `/auth/me` dibaca) dengan catatan "Tersimpan di perangkat ini"; ganti password dinonaktifkan dengan catatan.
+- Status persetujuan orang tua/wali di kartu Akun membaca `parentConsentAt` (bagian 2.4); dengan backend asli ditulis "belum bisa ditampilkan".
+
+### 13.4 Kondisi keluarga dan kondisi khusus: syarat sebelum diisi data asli 🔴
+Data ini sensitif (kondisi ekonomi, kebutuhan khusus, buta warna) dan hanya boleh terlihat oleh siswa itu sendiri, guru BK, dan wali kelas. **Jangan isi dengan data asli siswa sebelum:**
+- endpoint admin diberi cek peran (`BACKEND_MAP.md` bagian 6, poin endpoint admin terbuka; bagian 1.3 dokumen ini),
+- `passwordHash` tidak lagi terkirim di respons (bagian 1.1),
+- ada cek kepemilikan data (bagian 1.4), dan
+- akses guru BK/wali kelas dibatasi ke siswa di sekolah/kelasnya.
+
+Frontend menyembunyikan dua bagian ini secara default (Tampilkan/Sembunyikan), tapi itu hanya untuk privasi di layar, bukan pengamanan data.
 
