@@ -31,6 +31,8 @@ export const ROUTES = {
   persiapanUjian: (ujian: UjianKey) => `/portal/persiapan/${ujian}`,
   /** Pengerjaan latihan Action Plan (id latihan rencana). */
   latihan: (practiceId: string) => `/portal/latihan/${practiceId}`,
+  /** Hasil + pembahasan latihan (Action Plan atau latihan bebas). */
+  latihanHasil: (sessionId: string) => `/portal/latihan/${sessionId}/hasil`,
   /** Latihan bebas satu subtes/mapel dari halaman Siap. */
   latihanBebas: (ujian: UjianKey, subject: string) => `/portal/latihan/bebas?ujian=${ujian}&subtes=${encodeURIComponent(subject)}`,
   tryout: (packageId: string) => `/portal/tryout/${packageId}`,

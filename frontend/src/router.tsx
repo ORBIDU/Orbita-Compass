@@ -18,7 +18,10 @@ const BeasiswaPage = lazy(() => import("@/app/BeasiswaPage"));
 const ActionPlanPage = lazy(() => import("@/app/ActionPlanPage"));
 const SiapSnbpPage = lazy(() => import("@/app/SiapSnbpPage"));
 const SiapUjianPage = lazy(() => import("@/app/SiapUjianPage"));
-const PengerjaanSementaraPage = lazy(() => import("@/app/PengerjaanSementaraPage"));
+const LatihanRunPage = lazy(() => import("@/app/LatihanRunPage"));
+const TryoutRunPage = lazy(() => import("@/app/TryoutRunPage"));
+const LatihanHasilPage = lazy(() => import("@/app/LatihanHasilPage"));
+const LaporanPage = lazy(() => import("@/app/LaporanPage"));
 const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
 const JurusanListPage = lazy(() => import("@/app/JurusanListPage"));
 const JurusanDetailPage = lazy(() => import("@/app/JurusanDetailPage"));
@@ -70,15 +73,15 @@ export const router = createBrowserRouter([
           { path: "action-plan", element: <ActionPlanPage /> },
           { path: "persiapan/snbp", element: <SiapSnbpPage /> },
           { path: "persiapan/:ujian", element: <SiapUjianPage /> },
+          { path: "latihan/:id/hasil", element: <LatihanHasilPage /> },
+          { path: "tryout/:id/laporan", element: <LaporanPage /> },
           { path: "profil", element: <ProfilRoute /> },
           { path: "*", element: <NotFoundPage /> },
         ],
       },
-      // Pengerjaan soal dan laporan tampil tanpa menu portal.
-      // SEMENTARA (Tahap 7B): halaman "sedang disiapkan", diganti di Tahap 7C.
-      { path: "/portal/latihan/:id", element: withSuspense(<PengerjaanSementaraPage />) },
-      { path: "/portal/tryout/:id", element: withSuspense(<PengerjaanSementaraPage />) },
-      { path: "/portal/tryout/:id/laporan", element: withSuspense(<PengerjaanSementaraPage />) },
+      // Pengerjaan soal tampil tanpa menu portal (hasil dan laporan tetap di dalam portal).
+      { path: "/portal/latihan/:id", element: withSuspense(<LatihanRunPage />) },
+      { path: "/portal/tryout/:id", element: withSuspense(<TryoutRunPage />) },
     ],
   },
 

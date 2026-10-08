@@ -15,7 +15,9 @@ import { EXAM_COPY } from "@/content/siapUjian";
 import { formatMonthYear } from "@/lib/datetime";
 import { isSkdRelevant } from "@/lib/persiapan";
 import { SELECTION_TIMELINE } from "@/mocks/data/timeline";
-import { TRYOUT_PACKAGES } from "@/mocks/data/tryout";
+import { tryoutItems } from "@/mocks/data/tryout";
+import { tryoutSubjects } from "@/mocks/practiceServer";
+import { SECONDS_PER_QUESTION, SESSION_SIZE } from "@/config/practice";
 import { getActionPlan, getPlanSettings } from "./actionPlanService";
 import { getCompassRecommendations } from "./jurusanService";
 import { getPracticeLog } from "./practiceLog";
@@ -43,21 +45,7 @@ export function examSchedule(exam: ExamId, now = new Date()): string {
 
 const byDate = (a: TryoutResult, b: TryoutResult) => a.completedAt.localeCompare(b.completedAt);
 
-/** Status paket tryout berurutan: selesai → paket pertama yang belum selesai terbuka → sisanya terkunci. */
-export function tryoutItems(exam: ExamId, log: PracticeLog): TryoutItem[] {
-  const packages = TRYOUT_PACKAGES.filter((p) => p.exam === exam).sort((a, b) => a.order - b.order);
-  let openGiven = false;
-  return packages.map((pkg, i) => {
-    const result = log.tryouts.filter((t) => t.packageId === pkg.id).sort(byDate).pop() ?? null;
-    let status: TryoutItem["status"] = "locked";
-    if (result) status = "done";
-    else if (!openGiven) {
-      status = "open";
-      openGiven = true;
-    }
-    return { pkg, status, result, previousName: i > 0 ? packages[i - 1].name : null };
-  });
-}
+export { tryoutItems };
 
 /** Latihan Action Plan yang selesai untuk kategori ujian ini. */
 function donePlanPractices(days: Record<string, PlanPractice[]>, exam: ExamId): PlanPractice[] {
@@ -118,6 +106,7 @@ export async function getExamOverview(userId: string, grade: number, exam: ExamI
     tryouts,
     accuracy: answered ? { answered, correct, percent: Math.round((correct / answered) * 100) } : null,
     weakest: weakestSubject(exam, subjects, lastResult(tryouts)),
+    tryoutMinutes: Math.round((tryoutSubjects(exam, settings).length * SESSION_SIZE * SECONDS_PER_QUESTION[exam]) / 60),
     missingElectives: exam === "tka" && !(settings?.focus.includes("TKA") && settings.tkaElectives.length > 0),
     plan: plan ? planForExam(plan.days, plan.today, exam) : null,
   };
@@ -176,10 +165,10 @@ export async function getPracticeSummary(userId: string, grade: number, now = ne
  * Apakah Siap SKD relevan untuk siswa (aturan di lib/persiapan.ts): Compass
  * merekomendasikan Kedinasan atau fokus Action Plan berisi Kedinasan.
  */
-export async function getSkdRelevance(userId: string): Promise<boolean> {
+export async function getSkdRelevance(userId: string): Promise<{ relevant: boolean; hasCompass: boolean }> {
   const [compass, settings] = await Promise.all([
     getCompassRecommendations().catch(() => null),
     getPlanSettings(userId).catch(() => null),
   ]);
-  return isSkdRelevant(compass?.recommendations ?? [], settings?.focus ?? []);
+  return { relevant: isSkdRelevant(compass?.recommendations ?? [], settings?.focus ?? []), hasCompass: compass !== null };
 }

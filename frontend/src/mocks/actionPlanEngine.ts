@@ -12,6 +12,7 @@ import { KEDINASAN_TESTS, TKA_REQUIRED } from "@/types/actionPlan";
 import { SNBT_SUBTESTS } from "@/types/dashboard";
 import { addDays, formatMonthYear, lastDayOfMonth, weekdayOf } from "@/lib/datetime";
 import { SELECTION_TIMELINE } from "./data/timeline";
+import { SESSION_SIZE, sessionMinutes } from "@/config/practice";
 
 // Simulasi "AI penyusun Action Plan" (aturan data nomor 4 di CLAUDE.md).
 // Aturannya sederhana:
@@ -37,11 +38,11 @@ export type Weakness = Record<string, number>;
 
 export const PRACTICES_PER_DAY: Record<PlanMinutes, number> = { 30: 2, 60: 3, 90: 4 };
 
-/** Ukuran satu latihan per kategori. */
+/** Ukuran satu latihan per kategori (config/practice.ts: SESSION_SIZE dan detik per soal). */
 export const PRACTICE_SIZE: Record<PlanCategory, { questions: number; minutes: number }> = {
-  SNBT: { questions: 20, minutes: 25 },
-  TKA: { questions: 15, minutes: 20 },
-  Kedinasan: { questions: 20, minutes: 25 },
+  SNBT: { questions: SESSION_SIZE, minutes: sessionMinutes("snbt") },
+  TKA: { questions: SESSION_SIZE, minutes: sessionMinutes("tka") },
+  Kedinasan: { questions: SESSION_SIZE, minutes: sessionMinutes("skd") },
 };
 
 /** Skor anggapan untuk subtes yang belum punya data. */

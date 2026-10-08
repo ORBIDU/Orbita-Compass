@@ -11,6 +11,15 @@ import { useAsync } from "./useAsync";
  * atau bukan siswa: false.
  */
 export function useSkdRelevant(): boolean {
+  return useSkdRelevance().relevant;
+}
+
+/**
+ * Relevansi Siap SKD + apakah perlu keterangan "Kurang selaras dengan profilmu"
+ * (hanya jika sudah ada hasil Compass dan aturan tidak terpenuhi; sama dengan
+ * jendela Atur rencana). Dipakai menu Persiapan, yang selalu menampilkan SKD.
+ */
+export function useSkdRelevance(): { relevant: boolean; mismatch: boolean } {
   const { user } = useAuth();
   const { status } = useStudentStatus();
   const enabled = user?.role === "STUDENT" && status !== null && status !== "baru";
@@ -22,5 +31,6 @@ export function useSkdRelevant(): boolean {
     return () => window.removeEventListener(PLAN_CHANGED_EVENT, reload);
   }, [reload]);
 
-  return enabled && state.data === true;
+  const loaded = enabled && state.data !== undefined;
+  return { relevant: loaded && state.data!.relevant, mismatch: loaded && state.data!.hasCompass && !state.data!.relevant };
 }

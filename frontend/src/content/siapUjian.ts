@@ -9,6 +9,8 @@ export const UJIAN_HEADER = {
   breadcrumbSection: "Persiapan",
 };
 
+const duration = (m: number) => (m >= 60 ? `${Math.floor(m / 60)} jam${m % 60 ? ` ${m % 60} menit` : ""}` : `${m} menit`);
+
 export interface ExamCopy {
   title: string;
   description: string;
@@ -18,7 +20,8 @@ export interface ExamCopy {
   schedule: (monthYear: string | null) => string;
   heading: (count: number) => string;
   sessionSize: string;
-  tryoutFormat: string;
+  /** Format tryout; `minutes` dihitung dari jumlah soal dan detik per soal (config/practice.ts). */
+  tryoutFormat: (minutes: number) => string;
   scaleNote: string;
   /** Satuan skor di kartu Performance. */
   scoreUnit: string;
@@ -32,7 +35,7 @@ export const EXAM_COPY: Record<ExamId, ExamCopy> = {
     schedule: (m) => (m ? `UTBK-SNBT, perkiraan ${m}` : "UTBK-SNBT, jadwal mengikuti SNPMB"),
     heading: () => "7 subtes UTBK-SNBT",
     sessionSize: "20 soal",
-    tryoutFormat: "7 subtes sesuai format UTBK-SNBT, sekitar 3 jam.",
+    tryoutFormat: (m) => `7 subtes sesuai format UTBK-SNBT, sekitar ${duration(m)}.`,
     scaleNote: `Skor tryout ${BRAND.name} memakai skala 0–1000 sebagai perkiraan, tidak sama persis dengan skor resmi UTBK.`,
     scoreUnit: "skala 0–1000",
   },
@@ -43,7 +46,7 @@ export const EXAM_COPY: Record<ExamId, ExamCopy> = {
     schedule: (m) => (m ? `TKA SMA, perkiraan ${m}` : "TKA SMA, jadwal mengikuti Kemendikdasmen"),
     heading: (n) => (n > 3 ? `3 mapel wajib dan ${n - 3} mapel pilihan` : "3 mapel wajib"),
     sessionSize: "15 soal",
-    tryoutFormat: "Mapel wajib dan mapel pilihan yang kamu atur di Action Plan.",
+    tryoutFormat: (m) => `Mapel wajib dan mapel pilihan yang kamu atur di Action Plan, sekitar ${duration(m)}.`,
     scaleNote: `Nilai tryout ${BRAND.name} memakai skala 0–100 sebagai perkiraan. Skala nilai resmi mengikuti sertifikat TKA.`,
     scoreUnit: "skala 0–100",
   },
@@ -54,7 +57,7 @@ export const EXAM_COPY: Record<ExamId, ExamCopy> = {
     schedule: () => "SKD, mengikuti jadwal tiap instansi",
     heading: () => "3 subtes SKD",
     sessionSize: "20 soal",
-    tryoutFormat: "TWK, TIU, dan TKP dalam satu sesi.",
+    tryoutFormat: (m) => `TWK, TIU, dan TKP dalam satu sesi, sekitar ${duration(m)}.`,
     scaleNote: `Skor tryout ${BRAND.name} mengikuti susunan SKD dengan total maksimal 550 (TWK 150, TIU 175, TKP 225), sebagai latihan.`,
     scoreUnit: "maks. 550",
   },
@@ -153,10 +156,4 @@ export const PERFORMANCE = {
   trendEmpty: "Grafik muncul setelah kamu menyelesaikan tryout pertama.",
   subTitle: "Skor per subtes, tryout terakhir",
   subEmpty: "Skor per subtes muncul setelah tryout pertama.",
-};
-
-export const PENGERJAAN_SEMENTARA = {
-  title: "Halaman pengerjaan soal sedang disiapkan",
-  body: "Latihan dan tryout bisa dikerjakan di sini setelah tahap berikutnya selesai.",
-  back: "Kembali",
 };

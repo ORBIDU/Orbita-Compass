@@ -75,6 +75,18 @@ export async function mockSetStatus(token: string | null, status: StudentStatus)
       a.actionPlanStash = a.actionPlan;
       a.actionPlan = null;
     }
+    // Riwayat latihan/tryout: disimpan dulu saat status bukan "aktif", kembali saat "aktif".
+    if (status === "aktif" && a.practiceStash) {
+      a.practiceLog = a.practiceStash.log;
+      a.practiceSessions = a.practiceStash.sessions;
+      a.tryoutAttempts = a.practiceStash.attempts;
+      a.practiceStash = null;
+    } else if (status !== "aktif" && !a.practiceStash) {
+      a.practiceStash = { log: a.practiceLog, sessions: a.practiceSessions, attempts: a.tryoutAttempts };
+      a.practiceLog = { free: [], tryouts: [] };
+      a.practiceSessions = {};
+      a.tryoutAttempts = {};
+    }
     // Siswa yang sudah asesmen di Mode Demo dianggap sudah membuka Compass.
     if (status !== "baru" && !a.compassAnalysis && a.assessment && a.profile) {
       a.compassAnalysis = simulateCompass(a.assessment, a.academicRecords.map((r) => r.score), a.achievements.length, a.profile.id);

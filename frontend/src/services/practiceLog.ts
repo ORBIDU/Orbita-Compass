@@ -1,6 +1,6 @@
 import type { PracticeLog } from "@/types/practice";
-import { mockGetPracticeLog, mockSavePracticeLog } from "@/mocks/practiceMock";
-import { readLocal, writeLocal } from "@/lib/localStore";
+import { mockGetPracticeLog } from "@/mocks/practiceMock";
+import { readLocal } from "@/lib/localStore";
 import { USE_MOCK } from "./config";
 import { getToken } from "./http";
 
@@ -10,14 +10,9 @@ import { getToken } from "./http";
 // (BACKEND_MAP poin 4) dan riwayatnya belum bisa dibaca. Sementara:
 // mode dummy di data dummy, mode backend di browser per akun.
 
-const logKey = (userId: string) => `orbita_practice_${userId}`;
+export const logKey = (userId: string) => `orbita_practice_${userId}`;
 
 export async function getPracticeLog(userId: string): Promise<PracticeLog> {
   if (USE_MOCK) return mockGetPracticeLog(getToken());
   return readLocal<PracticeLog>(logKey(userId)) ?? { free: [], tryouts: [] };
-}
-
-export async function savePracticeLog(userId: string, log: PracticeLog): Promise<void> {
-  if (USE_MOCK) return mockSavePracticeLog(getToken(), log);
-  writeLocal(logKey(userId), log);
 }

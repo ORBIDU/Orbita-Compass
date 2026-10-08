@@ -75,6 +75,8 @@ export interface ExamOverview {
   accuracy: { answered: number; correct: number; percent: number } | null;
   /** Paling perlu dilatih (aturan di practiceService.weakestSubject). null = belum ada data. */
   weakest: { subject: string; from: "practice" | "tryout" } | null;
+  /** Perkiraan durasi tryout (menit), dari jumlah soal per subtes dan detik per soal. */
+  tryoutMinutes: number;
   /** true untuk TKA tanpa pengaturan mapel pilihan di Action Plan. */
   missingElectives: boolean;
   /** Latihan Action Plan ujian ini hari ini dan hari belajar berikutnya. null = belum ada rencana. */
