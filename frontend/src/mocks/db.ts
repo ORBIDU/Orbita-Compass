@@ -11,6 +11,7 @@ import type { StudentStatus } from "@/types/student";
 import type { PracticeSummary } from "@/types/dashboard";
 import type { AsesmenAnswers, AsesmenDraft, AssessmentHistoryEntry } from "@/types/analisis";
 import type { CompassTarget } from "@/types/compass";
+import type { SnbpDraft } from "@/types/snbp";
 import { simulateCompass } from "./compassEngine";
 import type { PlanState } from "./actionPlanEngine";
 import { demoPlanState } from "./data/actionPlan";
@@ -64,6 +65,8 @@ export interface MockAccount {
   inputsUpdatedAt: string | null;
   /** Id beasiswa yang disimpan (API_CONTRACT 10.2). */
   savedScholarships: string[];
+  /** Isian dan hasil terakhir Siap SNBP (API_CONTRACT 12.1). */
+  snbp: SnbpDraft | null;
   /** Waktu persetujuan orang tua/wali saat daftar (belum ada di backend, lihat docs/API_CONTRACT.md). */
   parentConsentAt?: string | null;
 }
@@ -91,7 +94,8 @@ const STORAGE_KEY = "orbita_mock_db";
 // v5 (Tahap 5A): target jurusan Compass dan waktu perubahan data masukan.
 // v6 (Tahap 5B): beasiswa yang disimpan.
 // v7 (Fase 6): Action Plan berisi latihan soal harian (menggantikan studyPlan).
-const DB_VERSION = 7;
+// v8 (Tahap 7A): isian Siap SNBP.
+const DB_VERSION = 8;
 
 const SEED_DATE = "2026-07-01T08:00:00.000Z";
 
@@ -220,6 +224,7 @@ function seed(): MockDb {
     compassTarget: null,
     inputsUpdatedAt: null,
     savedScholarships: ["kip-kuliah"],
+    snbp: null,
     actionPlan: demoPlanState(new Date()),
     actionPlanStash: null,
     practice: {
@@ -270,6 +275,7 @@ function seed(): MockDb {
     compassTarget: null,
     inputsUpdatedAt: null,
     savedScholarships: [],
+    snbp: null,
   };
 
   // Akun demo yang sudah asesmen dianggap sudah pernah membuka Compass,

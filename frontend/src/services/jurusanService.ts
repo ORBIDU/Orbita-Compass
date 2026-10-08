@@ -295,6 +295,15 @@ export async function getCompassRecommendations(): Promise<CompassResult | null>
   return { analysis, recommendations: matchRecommendations(analysis) };
 }
 
+/** Jurusan katalog untuk nama prodi dari backend (lewat `ptn.names`/`ptn.search`), atau null. */
+export function catalogForProdi(prodiName: string): JurusanDetail | null {
+  const name = normalize(prodiName);
+  return (
+    JURUSAN_CATALOG.find((j) => (j.ptn.names ? j.ptn.names.map(normalize).includes(name) : name.includes(normalize(j.ptn.search)))) ??
+    null
+  );
+}
+
 /** Detail katalog untuk slug, atau null. */
 export function catalogEntry(slug: string): JurusanDetail | null {
   return JURUSAN_CATALOG.find((j) => j.slug === slug) ?? null;

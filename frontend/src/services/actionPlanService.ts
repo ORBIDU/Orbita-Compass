@@ -2,6 +2,7 @@ import type {
   ActionPlanView,
   PlanOptions,
   PlanPractice,
+  PlanSettings,
   PlanSettingsInput,
   TodayPlan,
 } from "@/types/actionPlan";
@@ -73,6 +74,11 @@ async function initialWeakness(grade: number, now: Date): Promise<Weakness> {
     if (tkaSubjects.has(subject) && score > 0) out[weaknessKey("TKA", subject)] = score / 100;
   }
   return out;
+}
+
+/** Pengaturan rencana saja (dipakai Siap SNBP untuk mapel pilihan TKA). null = belum ada rencana. */
+export async function getPlanSettings(userId: string): Promise<PlanSettings | null> {
+  return (await loadState(userId))?.settings ?? null;
 }
 
 /** Rencana lengkap. null = siswa belum mengatur rencana. */
