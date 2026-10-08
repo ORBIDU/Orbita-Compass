@@ -4,23 +4,18 @@ import { ROUTES } from "@/config/navigation";
 import { LOCKED, PERFORMA } from "@/content/dashboard";
 import { formatDayMonth } from "@/lib/datetime";
 import type { AsyncState } from "@/lib/useAsync";
-import { SNBT_SUBTESTS, type ExamKey, type PracticeSummary, type SnbtResult, type SnbtSubtest } from "@/types/dashboard";
+import { SNBT_SUBTESTS, type ExamKey, type PracticeSummary } from "@/types/dashboard";
 import { CardButton, CardError, CardLink, CardSkeleton, DashCard, EmptyPanel, LockedPanel } from "./DashCard";
 import SnbtRadar from "./SnbtRadar";
 
-// "Lihat performa" membuka Siap SNBT; tab Performance di sana belum bisa dibuka
-// lewat URL, jadi diarahkan ke halamannya saja (SPEK bagian 10).
-const PERFORMA_URL = ROUTES.persiapanUjian("snbt");
+// "Lihat performa" membuka tab Performance di Siap SNBT.
+const PERFORMA_URL = `${ROUTES.persiapanUjian("snbt")}?tab=performance`;
 
 const EXAM_URL: Record<ExamKey, string> = {
   SNBT: ROUTES.persiapanUjian("snbt"),
   TKA: ROUTES.persiapanUjian("tka"),
   SKD: ROUTES.persiapanUjian("skd"),
 };
-
-function weakestOf(result: SnbtResult): SnbtSubtest {
-  return SNBT_SUBTESTS.reduce((min, s) => (result.subtests[s.key] < result.subtests[min] ? s.key : min), SNBT_SUBTESTS[0].key as SnbtSubtest);
-}
 
 function DeltaBadge({ diff }: { diff: number }) {
   const tone = diff > 0 ? "bg-tint-green-bg text-tint-green-fg" : diff < 0 ? "bg-tint-orange-bg text-tint-orange-fg" : "bg-surface-track text-prose";
@@ -38,16 +33,25 @@ interface ResultRow {
   value: string | null;
 }
 
-function rowsOf(summary: PracticeSummary): ResultRow[] {
+function rowsOf(summary: PracticeSummary, showSkd: boolean): ResultRow[] {
   const { snbt, tka, skd } = summary;
-  return [
+  const rows: ResultRow[] = [
     { exam: "SNBT", meta: snbt ? `${snbt.label}, ${formatDayMonth(snbt.completedAt)}` : PERFORMA.noPractice, value: snbt ? String(snbt.score) : null },
-    { exam: "TKA", meta: tka ? `${tka.label}, ${formatDayMonth(tka.completedAt)}` : PERFORMA.noPractice, value: tka ? PERFORMA.tkaValue(tka.correct, tka.total) : null },
-    { exam: "SKD", meta: skd ? `${skd.label}, ${formatDayMonth(skd.completedAt)}` : PERFORMA.noPractice, value: skd ? String(skd.score) : null },
+    !tka
+      ? { exam: "TKA", meta: PERFORMA.noPractice, value: null }
+      : tka.kind === "tryout"
+        ? { exam: "TKA", meta: `${tka.label}, ${formatDayMonth(tka.completedAt)}`, value: String(tka.score) }
+        : // Belum pernah tryout: akurasi latihan, dengan label berbeda dari nilai tryout.
+          { exam: "TKA", meta: PERFORMA.tkaAccuracyMeta(tka.answered), value: PERFORMA.tkaAccuracy(tka.percent) },
   ];
+  // Siap SKD hanya ditampilkan kalau relevan (lib/persiapan.ts), kecuali sudah ada hasilnya.
+  if (showSkd || skd) {
+    rows.push({ exam: "SKD", meta: skd ? `${skd.label}, ${formatDayMonth(skd.completedAt)}` : PERFORMA.noPractice, value: skd ? String(skd.score) : null });
+  }
+  return rows;
 }
 
-function PerformanceBody({ summary }: { summary: PracticeSummary }) {
+function PerformanceBody({ summary, showSkd }: { summary: PracticeSummary; showSkd: boolean }) {
   const { snbt } = summary;
   if (!snbt && !summary.tka && !summary.skd) {
     return (
@@ -61,7 +65,7 @@ function PerformanceBody({ summary }: { summary: PracticeSummary }) {
     );
   }
 
-  const weakest = snbt ? weakestOf(snbt) : null;
+  const weakest = snbt?.weakest ?? null;
   const weakestName = weakest ? SNBT_SUBTESTS.find((s) => s.key === weakest)?.name : null;
 
   return (
@@ -70,7 +74,7 @@ function PerformanceBody({ summary }: { summary: PracticeSummary }) {
         snbt ? "md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-1 xl:grid-cols-[260px_minmax(0,1fr)]" : ""
       }`}
     >
-      {snbt && weakest && (
+      {snbt && (
         <SnbtRadar scores={snbt.subtests} weakest={weakest} label={PERFORMA.radarLabel} className="mx-auto h-auto w-[236px] md:w-full md:max-w-[260px]" />
       )}
       <div className="flex min-w-0 flex-col gap-3.5">
@@ -92,7 +96,7 @@ function PerformanceBody({ summary }: { summary: PracticeSummary }) {
           </div>
         )}
         <ul className="flex flex-col border-t border-rim-soft">
-          {rowsOf(summary).map((row) => (
+          {rowsOf(summary, showSkd).map((row) => (
             <li key={row.exam} className="flex min-h-14 items-center justify-between gap-3 border-b border-rim-soft py-2 text-sm last:border-b-0 lg:min-h-0 lg:py-2.5">
               <span className="flex min-w-0 flex-col">
                 <span className="font-semibold text-space-2">{PERFORMA.rows[row.exam]}</span>
@@ -114,7 +118,7 @@ function PerformanceBody({ summary }: { summary: PracticeSummary }) {
 }
 
 /** Kartu "Performa latihan": radar 7 subtes SNBT dan hasil terakhir tiap Persiapan. */
-export default function PerformanceCard({ locked, state }: { locked: boolean; state: AsyncState<PracticeSummary> }) {
+export default function PerformanceCard({ locked, state, showSkd }: { locked: boolean; state: AsyncState<PracticeSummary>; showSkd: boolean }) {
   const aside = (
     <CardLink to={PERFORMA_URL}>
       <span className="lg:hidden">{PERFORMA.linkShort}</span>
@@ -126,7 +130,7 @@ export default function PerformanceCard({ locked, state }: { locked: boolean; st
   if (locked) body = <LockedPanel description={LOCKED.performa} />;
   else if (state.loading) body = <CardSkeleton />;
   else if (state.error || !state.data) body = <CardError onRetry={state.reload} />;
-  else body = <PerformanceBody summary={state.data} />;
+  else body = <PerformanceBody summary={state.data} showSkd={showSkd} />;
 
   return (
     <DashCard id="dash-performa" title={PERFORMA.title} aside={locked ? undefined : aside}>

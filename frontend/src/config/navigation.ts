@@ -29,6 +29,12 @@ export const ROUTES = {
   persiapan: "/portal/persiapan",
   persiapanSnbp: "/portal/persiapan/snbp",
   persiapanUjian: (ujian: UjianKey) => `/portal/persiapan/${ujian}`,
+  /** Pengerjaan latihan Action Plan (id latihan rencana). */
+  latihan: (practiceId: string) => `/portal/latihan/${practiceId}`,
+  /** Latihan bebas satu subtes/mapel dari halaman Siap. */
+  latihanBebas: (ujian: UjianKey, subject: string) => `/portal/latihan/bebas?ujian=${ujian}&subtes=${encodeURIComponent(subject)}`,
+  tryout: (packageId: string) => `/portal/tryout/${packageId}`,
+  laporan: (packageId: string) => `/portal/tryout/${packageId}/laporan`,
   profil: "/portal/profil",
 } as const;
 

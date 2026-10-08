@@ -7,7 +7,6 @@ import PageLoader from "@/components/ui/PageLoader";
 import { GuestOnly, RequireAuth } from "@/routes/guards";
 import {
   LandingRoute,
-  PersiapanRoute,
   ProfilRoute,
 } from "@/routes/legacyRoutes";
 
@@ -18,6 +17,8 @@ const CompassPage = lazy(() => import("@/app/CompassPage"));
 const BeasiswaPage = lazy(() => import("@/app/BeasiswaPage"));
 const ActionPlanPage = lazy(() => import("@/app/ActionPlanPage"));
 const SiapSnbpPage = lazy(() => import("@/app/SiapSnbpPage"));
+const SiapUjianPage = lazy(() => import("@/app/SiapUjianPage"));
+const PengerjaanSementaraPage = lazy(() => import("@/app/PengerjaanSementaraPage"));
 const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
 const JurusanListPage = lazy(() => import("@/app/JurusanListPage"));
 const JurusanDetailPage = lazy(() => import("@/app/JurusanDetailPage"));
@@ -68,11 +69,16 @@ export const router = createBrowserRouter([
           // Action Plan juga mengatur tampilan terkunci sendiri.
           { path: "action-plan", element: <ActionPlanPage /> },
           { path: "persiapan/snbp", element: <SiapSnbpPage /> },
-          { path: "persiapan/:ujian", element: <PersiapanRoute /> },
+          { path: "persiapan/:ujian", element: <SiapUjianPage /> },
           { path: "profil", element: <ProfilRoute /> },
           { path: "*", element: <NotFoundPage /> },
         ],
       },
+      // Pengerjaan soal dan laporan tampil tanpa menu portal.
+      // SEMENTARA (Tahap 7B): halaman "sedang disiapkan", diganti di Tahap 7C.
+      { path: "/portal/latihan/:id", element: withSuspense(<PengerjaanSementaraPage />) },
+      { path: "/portal/tryout/:id", element: withSuspense(<PengerjaanSementaraPage />) },
+      { path: "/portal/tryout/:id/laporan", element: withSuspense(<PengerjaanSementaraPage />) },
     ],
   },
 
