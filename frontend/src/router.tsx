@@ -5,10 +5,9 @@ import AuthLayout from "@/layouts/AuthLayout";
 import AdaptiveLayout from "@/layouts/AdaptiveLayout";
 import PageLoader from "@/components/ui/PageLoader";
 import { GuestOnly, RequireAuth } from "@/routes/guards";
-import {
-  LandingRoute,
-  ProfilRoute,
-} from "@/routes/legacyRoutes";
+
+const LandingPage = lazy(() => import("@/app/LandingPage"));
+const ProfilPage = lazy(() => import("@/app/ProfilPage"));
 
 const AuthPage = lazy(() => import("@/app/AuthPage"));
 const DashboardPage = lazy(() => import("@/app/DashboardPage"));
@@ -32,7 +31,7 @@ const withSuspense = (node: ReactNode) => <Suspense fallback={<PageLoader fullsc
 // Peta halaman sesuai docs/SPEK_SISWA.md.
 export const router = createBrowserRouter([
   // ── Publik ────────────────────────────────────────────────────────────────
-  { path: "/", element: withSuspense(<LandingRoute />) },
+  { path: "/", element: withSuspense(<LandingPage />) },
   {
     // Satu halaman untuk tamu dan siswa: layout mengikuti status login.
     path: "/jurusan",
@@ -66,7 +65,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <DashboardPage /> },
           { path: "analisis-potensi", element: <AnalisisPotensiPage /> },
-          // Compass mengatur tampilan terkunci sendiri (tanpa FeatureGate).
+          // Compass, Action Plan, dan Profil mengatur tampilan terkunci/kosongnya sendiri.
           { path: "compass", element: <CompassPage /> },
           { path: "beasiswa", element: <BeasiswaPage /> },
           // Action Plan juga mengatur tampilan terkunci sendiri.
@@ -75,7 +74,7 @@ export const router = createBrowserRouter([
           { path: "persiapan/:ujian", element: <SiapUjianPage /> },
           { path: "latihan/:id/hasil", element: <LatihanHasilPage /> },
           { path: "tryout/:id/laporan", element: <LaporanPage /> },
-          { path: "profil", element: <ProfilRoute /> },
+          { path: "profil", element: <ProfilPage /> },
           { path: "*", element: <NotFoundPage /> },
         ],
       },
