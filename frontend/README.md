@@ -88,3 +88,19 @@ src/
 ## Deploy
 
 Aplikasi memakai URL sungguhan (`/portal/compass`, `/jurusan`, dan seterusnya). Server hosting harus mengarahkan semua alamat yang tidak dikenal ke `index.html` (pengaturan "SPA fallback" atau "rewrite"), supaya halaman bisa dibuka langsung atau di-refresh.
+
+Butuh **Node.js 20.19+ atau 22.12+** (disarankan 22, tertulis di `.nvmrc`).
+
+### Situs demo di Cloudflare Pages (mode dummy)
+
+| Pengaturan | Nilai |
+|---|---|
+| Root directory | `frontend` |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Environment variable | `VITE_USE_MOCK` = `true` |
+
+- **`VITE_USE_MOCK` wajib diisi di pengaturan Cloudflare.** File `.env` tidak masuk git, jadi tanpa variabel ini hasil build memakai mode backend dan login akan gagal.
+- Refresh di alamat mana pun (mis. `/portal/compass`) tetap jalan: Cloudflare Pages otomatis menganggap proyek sebagai SPA selama tidak ada file `404.html`. Jangan menambah `404.html` di `public/`.
+- Di mode dummy, halaman otomatis diberi `<meta name="robots" content="noindex">` (diatur di `vite.config.js`) dan label "Versi demo, data contoh" selalu tampil di atas layar.
+- Data dummy tersimpan di browser masing-masing pengunjung; tidak ada data yang terkirim ke server.

@@ -46,7 +46,7 @@ export default function DemoModePanel() {
 
   return (
     // Di HP dinaikkan di atas menu bawah portal (68px + area aman).
-    <div className="fixed bottom-[calc(80px+env(safe-area-inset-bottom))] left-4 z-[60] flex flex-col items-start gap-2 lg:bottom-4">
+    <div className="fixed bottom-[calc(108px+env(safe-area-inset-bottom))] left-4 z-[60] flex flex-col items-start gap-2 lg:bottom-10">
       {open && (
         <div
           role="dialog"
