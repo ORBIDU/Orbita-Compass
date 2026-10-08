@@ -1,7 +1,8 @@
 import type { LoginResponse, LoginUser, MeResponse, RegisterResponse } from "@/types/backend";
 import type { RegisterPayload } from "@/services/authService";
 import { ApiError } from "@/services/http";
-import { EMPTY_PRACTICE, findAccountByEmail, insertAccount, mockTokenFor, type MockAccount } from "./db";
+import { EMPTY_SCHOOL_PROFILE } from "./data/profil";
+import { findAccountByEmail, insertAccount, mockTokenFor, type MockAccount } from "./db";
 import { buildProfileDetail, requireAccount } from "./studentMock";
 import { delay } from "./delay";
 
@@ -66,12 +67,22 @@ export async function mockRegister(payload: RegisterPayload): Promise<RegisterRe
     reflection: null,
     assessment: null,
     compassAnalysis: null,
-    studyPlan: null,
-    practice: EMPTY_PRACTICE,
+    actionPlan: null,
+    actionPlanStash: null,
+    practiceLog: { free: [], tryouts: [] },
+    practiceSessions: {},
+    tryoutAttempts: {},
+    practiceStash: null,
     assessmentDraft: null,
     assessmentAnswers: null,
     assessmentGrade: null,
     assessmentHistory: [],
+    compassTarget: null,
+    inputsUpdatedAt: null,
+    savedScholarships: [],
+    snbp: null,
+    // Akun baru belum punya data dari sekolah.
+    schoolProfile: structuredClone(EMPTY_SCHOOL_PROFILE),
     // Waktu dicatat server, bukan dikirim browser (lihat docs/API_CONTRACT.md bagian 2.4).
     parentConsentAt: payload.parentConsent ? now : null,
   };

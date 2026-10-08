@@ -8,9 +8,18 @@ import type {
   StudentProfile,
 } from "@/types/backend";
 import type { StudentStatus } from "@/types/student";
-import type { ExamKey, PlanTask, PracticeSummary } from "@/types/dashboard";
+import type { PracticeLog } from "@/types/practice";
 import type { AsesmenAnswers, AsesmenDraft, AssessmentHistoryEntry } from "@/types/analisis";
+import type { CompassTarget } from "@/types/compass";
+import type { SnbpDraft } from "@/types/snbp";
+import type { SchoolProfile } from "@/types/profil";
+import { BUDI_SCHOOL_PROFILE, SISWA_SCHOOL_PROFILE } from "./data/profil";
 import { simulateCompass } from "./compassEngine";
+import type { PlanState } from "./actionPlanEngine";
+import { demoPlanState } from "./data/actionPlan";
+import { EMPTY_PRACTICE_LOG } from "./data/tryout";
+import { demoTryoutData } from "./data/practiceSeed";
+import type { PracticeSession, TryoutAttempt } from "./practiceServer";
 
 // "Database" dummy untuk mode VITE_USE_MOCK=true. Disimpan di localStorage
 // supaya login dan perubahan data tetap ada setelah halaman di-refresh.
@@ -36,12 +45,19 @@ export interface MockAccount {
   assessment: Assessment | null;
   compassAnalysis: CompassAnalysis | null;
   /**
-   * Fokus belajar dan tugas hari ini (Action Plan). null = fokus belum diatur.
-   * Belum ada di backend dalam bentuk ini (docs/API_CONTRACT.md bagian 7.1).
+   * Action Plan: pengaturan rencana + latihan harian (API_CONTRACT bagian 11).
+   * null = belum mengatur rencana.
    */
-  studyPlan: { focus: ExamKey[]; tasks: PlanTask[] } | null;
-  /** Hasil latihan/tryout terakhir per ujian (docs/API_CONTRACT.md bagian 7.2). */
-  practice: PracticeSummary;
+  actionPlan: PlanState | null;
+  /** Mode Demo: rencana yang disembunyikan saat status bukan "aktif". */
+  actionPlanStash: PlanState | null;
+  /** Riwayat latihan bebas dan tryout (API_CONTRACT 12.4). Akurasi latihan Action Plan diambil dari `actionPlan`. */
+  practiceLog: PracticeLog;
+  /** Sesi latihan (jawaban per soal) dan percobaan tryout (API_CONTRACT 12.5–12.6). */
+  practiceSessions: Record<string, PracticeSession>;
+  tryoutAttempts: Record<string, TryoutAttempt>;
+  /** Mode Demo: data latihan yang disimpan dulu saat status bukan "aktif". */
+  practiceStash: { log: PracticeLog; sessions: Record<string, PracticeSession>; attempts: Record<string, TryoutAttempt> } | null;
   /** Jawaban tes yang belum dikirim, disimpan per bagian (API_CONTRACT 3.3). */
   assessmentDraft: AsesmenDraft | null;
   /** Jawaban tes terbaru yang sudah dikirim, untuk "Lihat jawabanku". */
@@ -50,6 +66,19 @@ export interface MockAccount {
   assessmentGrade: number | null;
   /** Riwayat tes kelas sebelumnya (API_CONTRACT 3.2). */
   assessmentHistory: AssessmentHistoryEntry[];
+  /** Target jurusan dari Compass (API_CONTRACT 9.1). */
+  compassTarget: CompassTarget | null;
+  /**
+   * Waktu terakhir data masukan Compass berubah tanpa jejak tanggal lain
+   * (mis. prestasi diubah atau dihapus). Lihat API_CONTRACT 9.2.
+   */
+  inputsUpdatedAt: string | null;
+  /** Id beasiswa yang disimpan (API_CONTRACT 10.2). */
+  savedScholarships: string[];
+  /** Data diri dari pihak kurikulum sekolah, hanya dibaca siswa (API_CONTRACT 13.1). */
+  schoolProfile: SchoolProfile;
+  /** Isian dan hasil terakhir Siap SNBP (API_CONTRACT 12.1). */
+  snbp: SnbpDraft | null;
   /** Waktu persetujuan orang tua/wali saat daftar (belum ada di backend, lihat docs/API_CONTRACT.md). */
   parentConsentAt?: string | null;
 }
@@ -74,7 +103,15 @@ const STORAGE_KEY = "orbita_mock_db";
 // v2 (Tahap 2B): akun demo langsung punya hasil Compass + kampus PTS contoh.
 // v3 (Tahap 4A): nama panggilan, rencana belajar, dan riwayat latihan.
 // v4 (Tahap 4B): rapor Kurikulum Merdeka lengkap, prestasi + sertifikat, riwayat tes.
-const DB_VERSION = 4;
+// v5 (Tahap 5A): target jurusan Compass dan waktu perubahan data masukan.
+// v6 (Tahap 5B): beasiswa yang disimpan.
+// v7 (Fase 6): Action Plan berisi latihan soal harian (menggantikan studyPlan).
+// v8 (Tahap 7A): isian Siap SNBP.
+// v9 (Tahap 7B): riwayat tryout per paket (menggantikan ringkasan `practice`).
+// v10 (Tahap 7C): sesi latihan dan percobaan tryout dari bank soal contoh.
+// v11: riwayat tryout contoh dengan kenaikan yang wajar.
+// v12 (Fase 8): data diri dari sekolah, sekolah demo di Palembang.
+const DB_VERSION = 12;
 
 const SEED_DATE = "2026-07-01T08:00:00.000Z";
 
@@ -133,14 +170,12 @@ function profileOf(
   return { id: `profile-${userId}`, userId, createdAt: SEED_DATE, updatedAt: SEED_DATE, ...data };
 }
 
-export const EMPTY_PRACTICE: PracticeSummary = { snbt: null, tka: null, skd: null };
-
 function seed(): MockDb {
   const siswaProfile = profileOf("user-siswa", {
-    schoolName: "SMA Negeri 1 Jakarta",
+    schoolName: "SMA Negeri 1 Palembang",
     grade: 12,
     majorTrack: "IPA",
-    city: "Jakarta Pusat",
+    city: "Palembang",
     targetPtnId: "univ-311",
     targetMajorId: "major-311-informatika",
     nickname: "Rizki",
@@ -155,6 +190,7 @@ function seed(): MockDb {
     nickname: "Budi",
   });
 
+  const demoTryout = demoTryoutData();
   const siswa: MockAccount = {
     id: "user-siswa",
     email: "siswa@orbita.id",
@@ -169,9 +205,9 @@ function seed(): MockDb {
     academicRecords: raporSeed(siswaProfile.id),
     achievements: [
       { id: "ach-siswa-1", profileId: siswaProfile.id, title: "Olimpiade Sains Nasional bidang Informatika", category: "Academic", level: "National", year: 2025, createdAt: SEED_DATE, rank: "Medali Perunggu", organizer: "Puspresnas", certificateName: "sertifikat-osn.pdf" },
-      { id: "ach-siswa-2", profileId: siswaProfile.id, title: "Hackathon Pelajar SMA se-DKI Jakarta", category: "Academic", level: "Province", year: 2025, createdAt: SEED_DATE, rank: "Juara 2", organizer: "Dinas Pendidikan DKI Jakarta", certificateName: null },
-      { id: "ach-siswa-3", profileId: siswaProfile.id, title: "Ketua OSIS", category: "Non-Academic", level: "School", year: 2025, createdAt: SEED_DATE, rank: "Periode 2025/2026", organizer: "SMA Negeri 1 Jakarta", certificateName: "sk-osis.pdf" },
-      { id: "ach-siswa-4", profileId: siswaProfile.id, title: "Turnamen Futsal Pelajar", category: "Non-Academic", level: "City", year: 2024, createdAt: SEED_DATE, rank: "Juara 3", organizer: "Pemerintah Kota Jakarta Pusat", certificateName: "piagam-futsal.jpg" },
+      { id: "ach-siswa-2", profileId: siswaProfile.id, title: "Hackathon Pelajar SMA se-Sumatera Selatan", category: "Academic", level: "Province", year: 2025, createdAt: SEED_DATE, rank: "Juara 2", organizer: "Dinas Pendidikan Provinsi Sumatera Selatan", certificateName: null },
+      { id: "ach-siswa-3", profileId: siswaProfile.id, title: "Ketua OSIS", category: "Non-Academic", level: "School", year: 2025, createdAt: SEED_DATE, rank: "Periode 2025/2026", organizer: "SMA Negeri 1 Palembang", certificateName: "sk-osis.pdf" },
+      { id: "ach-siswa-4", profileId: siswaProfile.id, title: "Turnamen Futsal Pelajar", category: "Non-Academic", level: "City", year: 2024, createdAt: SEED_DATE, rank: "Juara 3", organizer: "Pemerintah Kota Palembang", certificateName: "piagam-futsal.jpg" },
     ],
     reflection: {
       id: "refl-siswa",
@@ -200,27 +236,18 @@ function seed(): MockDb {
       { grade: 11, completedAt: "2025-08-08T08:00:00.000Z", topBidang: "teknologi" },
       { grade: 10, completedAt: "2024-08-14T08:00:00.000Z", topBidang: "sains" },
     ],
-    studyPlan: {
-      focus: ["SNBT", "TKA"],
-      tasks: [
-        { id: "task-1", title: "20 soal Penalaran Matematika", minutes: 25, category: "SNBT", done: true },
-        { id: "task-2", title: "Latihan Literasi Bahasa Inggris", minutes: 20, category: "SNBT", done: true },
-        { id: "task-3", title: "10 soal Matematika", minutes: 15, category: "TKA", done: false },
-        { id: "task-4", title: "Bahas ulang Tryout #3", minutes: 30, category: "SNBT", done: false },
-        { id: "task-5", title: "Latihan Bahasa Indonesia", minutes: 20, category: "TKA", done: false },
-      ],
-    },
-    practice: {
-      snbt: {
-        label: "Tryout #3",
-        completedAt: "2026-09-26T09:00:00.000Z",
-        score: 624,
-        previousScore: 606,
-        subtests: { PU: 690, PPU: 650, PBM: 610, PK: 640, LBI: 600, LBE: 520, PM: 660 },
-      },
-      tka: { label: "Latihan Matematika", completedAt: "2026-09-28T09:00:00.000Z", correct: 16, total: 20 },
-      skd: null,
-    },
+    compassTarget: null,
+    inputsUpdatedAt: null,
+    savedScholarships: ["kip-kuliah"],
+    snbp: null,
+    schoolProfile: structuredClone(SISWA_SCHOOL_PROFILE),
+    parentConsentAt: "2026-08-12T08:00:00.000Z",
+    actionPlan: demoPlanState(new Date()),
+    actionPlanStash: null,
+    practiceLog: demoTryout.log,
+    practiceSessions: {},
+    tryoutAttempts: demoTryout.attempts,
+    practiceStash: null,
   };
 
   const budi: MockAccount = {
@@ -248,12 +275,22 @@ function seed(): MockDb {
       updatedAt: SEED_DATE,
     },
     compassAnalysis: null,
-    studyPlan: null,
-    practice: EMPTY_PRACTICE,
+    actionPlan: null,
+    actionPlanStash: null,
+    practiceLog: structuredClone(EMPTY_PRACTICE_LOG),
+    practiceSessions: {},
+    tryoutAttempts: {},
+    practiceStash: null,
     assessmentDraft: null,
     assessmentAnswers: null,
     assessmentGrade: 12,
     assessmentHistory: [],
+    compassTarget: null,
+    inputsUpdatedAt: null,
+    savedScholarships: [],
+    snbp: null,
+    schoolProfile: structuredClone(BUDI_SCHOOL_PROFILE),
+    parentConsentAt: null,
   };
 
   // Akun demo yang sudah asesmen dianggap sudah pernah membuka Compass,

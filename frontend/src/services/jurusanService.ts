@@ -1,6 +1,7 @@
 import type { BidangKey, CampusGroup, CampusOffering, FitLabel, JurusanDetail, JurusanSummary } from "@/types/jurusan";
 import type { CompassAnalysis, MajorWithUniversity } from "@/types/backend";
 import type { CompassHighlights } from "@/types/dashboard";
+import type { CompassRecommendation, CompassResult, HiddenPath, PathGroup, PathKey } from "@/types/compass";
 import { FEATURED_SLUGS, JURUSAN_CATALOG } from "@/mocks/data/jurusan";
 import { delay } from "@/mocks/delay";
 import { BIDANG } from "@/config/bidang";
@@ -111,6 +112,7 @@ export async function getCampusesForJurusan(detail: JurusanDetail): Promise<Camp
       majorName: m.name,
       city: m.university.city,
       group: campusGroupOf(m.university.type),
+      campusType: m.university.type,
       logoUrl: m.university.logoUrl,
     });
   }
@@ -118,6 +120,107 @@ export async function getCampusesForJurusan(detail: JurusanDetail): Promise<Camp
   return offerings.sort(
     (a, b) => GROUP_ORDER.indexOf(a.group) - GROUP_ORDER.indexOf(b.group) || a.universityName.localeCompare(b.universityName, "id"),
   );
+}
+
+// ─── Jalur pendidikan untuk Compass ───────────────────────────────────────────
+
+/** Urutan jalur di halaman Compass. */
+export const PATH_ORDER: PathKey[] = ["s1ptn", "vokasi", "pts", "ptln", "kedinasan"];
+
+/** Mengelompokkan University.type backend ke jalur pendidikan. */
+export function pathOf(campusType: string): PathKey {
+  const t = campusType.toUpperCase();
+  if (t.includes("VOKASI")) return "vokasi";
+  if (t.startsWith("PTKIN")) return "s1ptn";
+  if (t.includes("KEDINASAN") || t.startsWith("PTK")) return "kedinasan";
+  if (t.startsWith("PTS")) return "pts";
+  if (t.startsWith("PTLN")) return "ptln";
+  return "s1ptn";
+}
+
+const MAX_PATH_OPTIONS = 6;
+
+/**
+ * Jalur pendidikan untuk jurusan rekomendasi teratas (yang ada di katalog):
+ * kampus yang membuka jurusan itu dikelompokkan per jalur. Jalur tanpa
+ * pilihan disembunyikan beserta alasannya.
+ */
+export function getEducationPaths(
+  recommendations: CompassRecommendation[],
+  limitJurusan = 3,
+): Promise<{ groups: PathGroup[]; hidden: HiddenPath[] }> {
+  // Disimpan sementara per daftar rekomendasi, karena halaman Compass dan
+  // Beasiswa sama-sama memakainya dan setiap jurusan butuh beberapa permintaan.
+  const key = JSON.stringify([limitJurusan, recommendations.map((r) => [r.slug ?? r.name, r.fit, r.bidang])]);
+  let cached = pathCache.get(key);
+  if (!cached) {
+    cached = buildEducationPaths(recommendations, limitJurusan).catch((err) => {
+      pathCache.delete(key);
+      throw err;
+    });
+    pathCache.set(key, cached);
+  }
+  return cached;
+}
+
+const pathCache = new Map<string, Promise<{ groups: PathGroup[]; hidden: HiddenPath[] }>>();
+
+/**
+ * Jalur dari ORBIDU Compass yang tampil untuk siswa (dipakai label "Cocok
+ * dengan jalurmu" di beasiswa). null = belum ada hasil Compass.
+ */
+export async function getStudentPathKeys(): Promise<PathKey[] | null> {
+  const result = await getCompassRecommendations();
+  if (!result) return null;
+  const { groups } = await getEducationPaths(result.recommendations);
+  return groups.map((g) => g.key);
+}
+
+async function buildEducationPaths(
+  recommendations: CompassRecommendation[],
+  limitJurusan: number,
+): Promise<{ groups: PathGroup[]; hidden: HiddenPath[] }> {
+  const top = recommendations.filter((r) => r.slug).slice(0, limitJurusan);
+  const perJurusan = await Promise.all(
+    top.map(async (r) => {
+      const detail = JURUSAN_CATALOG.find((j) => j.slug === r.slug);
+      return { rec: r, offerings: detail ? await getCampusesForJurusan(detail) : [] };
+    }),
+  );
+
+  const groups = new Map<PathKey, PathGroup & { seen: Set<string> }>();
+  for (const { rec, offerings } of perJurusan) {
+    for (const o of offerings) {
+      const key = pathOf(o.campusType);
+      const g = groups.get(key) ?? { key, fit: rec.fit, options: [], total: 0, seen: new Set<string>() };
+      if (rec.fit === "Sangat sesuai") g.fit = "Sangat sesuai";
+      if (!g.seen.has(o.id)) {
+        g.seen.add(o.id);
+        g.total += 1;
+        if (g.options.length < MAX_PATH_OPTIONS) g.options.push({ prodi: o.majorName, kampus: o.universityName, kota: o.city });
+      }
+      groups.set(key, g);
+    }
+  }
+
+  const aligned = new Set(recommendations.map((r) => r.bidang));
+  const visible: PathGroup[] = [];
+  const hidden: HiddenPath[] = [];
+  for (const key of PATH_ORDER) {
+    const g = groups.get(key);
+    if (g) {
+      const { seen: _seen, ...group } = g;
+      visible.push(group);
+    } else if (key === "kedinasan" && !aligned.has("kedinasan")) {
+      hidden.push({ key, reason: "notAligned" });
+    } else if (key === "ptln") {
+      // Belum ada data kampus luar negeri sama sekali (API_CONTRACT 6.3).
+      hidden.push({ key, reason: "noData" });
+    } else {
+      hidden.push({ key, reason: "noCampus" });
+    }
+  }
+  return { groups: visible, hidden };
 }
 
 // ─── Label kecocokan dari Compass ────────────────────────────────────────────
@@ -139,27 +242,71 @@ function parseRecommended(json: string): RecommendedMajor[] {
   }
 }
 
+interface RecommendedMajorFull extends RecommendedMajor {
+  rationale?: string;
+}
+
 /**
- * Rekomendasi Compass yang cocok dengan katalog, berurutan sesuai Compass.
- * Nama jurusan di Compass (nama prodi backend, mis. "Teknik Informatika /
- * Ilmu Komputer") dicocokkan ke katalog lewat nama dan `ptn.names`. Kalau satu
- * jurusan muncul dua kali, dipakai label yang lebih kuat.
+ * SATU-SATUNYA tempat rekomendasi Compass dicocokkan ke katalog jurusan.
+ * Dipakai halaman Compass, kartu Dashboard, dan label di /jurusan, supaya
+ * hasilnya sama di semua halaman.
+ *
+ * Nama dari Compass (mis. nama prodi backend "Teknik Informatika / Ilmu
+ * Komputer") dicocokkan lewat nama katalog dan `ptn.names`; satu nama bisa
+ * cocok ke beberapa jurusan. Nama yang tidak ada di katalog tetap disertakan
+ * tanpa `slug` (ditampilkan tanpa link detail). Duplikat memakai label terkuat.
  */
-function matchRecommended(analysis: CompassAnalysis): { jurusan: JurusanDetail; fit: FitLabel }[] {
-  const found = new Map<string, { jurusan: JurusanDetail; fit: FitLabel }>();
-  for (const rec of parseRecommended(analysis.recommendedMajors)) {
-    if (!rec.name) continue;
+export function matchRecommendations(analysis: CompassAnalysis): CompassRecommendation[] {
+  const out: CompassRecommendation[] = [];
+  const bySlug = new Map<string, CompassRecommendation>();
+  const unmatched = new Set<string>();
+
+  for (const rec of parseRecommended(analysis.recommendedMajors) as RecommendedMajorFull[]) {
+    if (!rec.name?.trim()) continue;
     const recName = normalize(rec.name);
     const fit: FitLabel = (rec.match_pct ?? 0) >= STRONG_FIT_MIN ? "Sangat sesuai" : "Sesuai";
-    for (const j of JURUSAN_CATALOG) {
-      const aliases = [j.name, ...(j.ptn.names ?? [])].map(normalize);
-      if (!aliases.includes(recName)) continue;
-      const prev = found.get(j.slug);
-      if (!prev) found.set(j.slug, { jurusan: j, fit });
-      else if (fit === "Sangat sesuai") prev.fit = fit;
+    const rationale = rec.rationale?.trim() || null;
+    const matches = JURUSAN_CATALOG.filter((j) => [j.name, ...(j.ptn.names ?? [])].map(normalize).includes(recName));
+
+    if (matches.length === 0) {
+      if (unmatched.has(recName)) continue;
+      unmatched.add(recName);
+      out.push({ name: rec.name.trim(), slug: null, bidang: null, fit, rationale });
+      continue;
+    }
+    for (const j of matches) {
+      const prev = bySlug.get(j.slug);
+      if (prev) {
+        if (fit === "Sangat sesuai") prev.fit = fit;
+        continue;
+      }
+      const item: CompassRecommendation = { name: j.name, slug: j.slug, bidang: j.bidang, fit, rationale };
+      bySlug.set(j.slug, item);
+      out.push(item);
     }
   }
-  return [...found.values()];
+  return out;
+}
+
+/** Hasil Compass terakhir beserta rekomendasi yang sudah dicocokkan. null = belum pernah analisis. */
+export async function getCompassRecommendations(): Promise<CompassResult | null> {
+  const analysis = await getCompassResult();
+  if (!analysis) return null;
+  return { analysis, recommendations: matchRecommendations(analysis) };
+}
+
+/** Jurusan katalog untuk nama prodi dari backend (lewat `ptn.names`/`ptn.search`), atau null. */
+export function catalogForProdi(prodiName: string): JurusanDetail | null {
+  const name = normalize(prodiName);
+  return (
+    JURUSAN_CATALOG.find((j) => (j.ptn.names ? j.ptn.names.map(normalize).includes(name) : name.includes(normalize(j.ptn.search)))) ??
+    null
+  );
+}
+
+/** Detail katalog untuk slug, atau null. */
+export function catalogEntry(slug: string): JurusanDetail | null {
+  return JURUSAN_CATALOG.find((j) => j.slug === slug) ?? null;
 }
 
 /**
@@ -167,26 +314,24 @@ function matchRecommended(analysis: CompassAnalysis): { jurusan: JurusanDetail; 
  * Belum pernah analisis → objek kosong (tidak ada label, tidak ada angka palsu).
  */
 export async function getFitLabels(): Promise<Record<string, FitLabel>> {
-  const analysis = await getCompassResult();
-  if (!analysis) return {};
-  return Object.fromEntries(matchRecommended(analysis).map(({ jurusan, fit }) => [jurusan.slug, fit]));
+  const result = await getCompassRecommendations();
+  if (!result) return {};
+  return Object.fromEntries(result.recommendations.filter((r) => r.slug).map((r) => [r.slug as string, r.fit]));
 }
 
 /**
  * Ringkasan Compass untuk kartu Dashboard: bidang yang paling selaras (bidang
- * jurusan rekomendasi teratas) dan `limit` jurusan teratas.
- * Belum pernah analisis atau tidak ada yang cocok dengan katalog → null.
+ * rekomendasi teratas yang ada di katalog) dan `limit` jurusan teratas.
+ * Belum pernah analisis atau tidak ada rekomendasi → null.
  */
 export async function getCompassHighlights(limit = 3): Promise<CompassHighlights | null> {
-  const analysis = await getCompassResult();
-  if (!analysis) return null;
-  const matches = matchRecommended(analysis);
-  if (matches.length === 0) return null;
-  const top = matches[0];
+  const result = await getCompassRecommendations();
+  if (!result || result.recommendations.length === 0) return null;
+  const topWithField = result.recommendations.find((r) => r.bidang);
   return {
-    analyzedAt: analysis.analyzedAt,
-    bidang: top.jurusan.bidang,
-    bidangFit: top.fit,
-    jurusan: matches.slice(0, limit).map(({ jurusan, fit }) => ({ slug: jurusan.slug, name: jurusan.name, bidang: jurusan.bidang, fit })),
+    analyzedAt: result.analysis.analyzedAt,
+    bidang: topWithField?.bidang ?? null,
+    bidangFit: topWithField?.fit ?? result.recommendations[0].fit,
+    jurusan: result.recommendations.slice(0, limit).map(({ slug, name, bidang, fit }) => ({ slug, name, bidang, fit })),
   };
 }

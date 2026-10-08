@@ -3,25 +3,8 @@
 
 import type { BidangKey, FitLabel } from "./jurusan";
 
-/** Ujian yang bisa dipilih sebagai fokus belajar. */
+/** Jenis Persiapan di kartu Performa (fokus Action Plan memakai PlanCategory). */
 export type ExamKey = "SNBT" | "TKA" | "SKD";
-
-export interface PlanTask {
-  id: string;
-  title: string;
-  /** Perkiraan durasi. null jika belum diketahui (mis. data dari GET /action-plans). */
-  minutes: number | null;
-  /** Kategori tugas, biasanya ExamKey. Data backend lama bisa berisi kategori lain. */
-  category: string;
-  done: boolean;
-}
-
-export interface TodayPlan {
-  /** Fokus belajar yang dipilih siswa. null = belum pernah diatur. */
-  focus: ExamKey[] | null;
-  /** Tugas untuk hari ini saja. */
-  tasks: PlanTask[];
-}
 
 /** 7 subtes UTBK-SNBT, urutan sesuai radar di desain. */
 export const SNBT_SUBTESTS = [
@@ -40,7 +23,7 @@ export type SnbtSubtest = (typeof SNBT_SUBTESTS)[number]["key"];
 export const SNBT_MAX_SCORE = 1000;
 
 export interface SnbtResult {
-  /** Nama sesi, mis. "Tryout #3" */
+  /** Nama paket, mis. "Tryout #1" */
   label: string;
   /** Tanggal selesai (ISO) */
   completedAt: string;
@@ -48,14 +31,17 @@ export interface SnbtResult {
   /** Skor tryout sebelumnya, untuk selisih. null = baru sekali tryout. */
   previousScore: number | null;
   subtests: Record<SnbtSubtest, number>;
+  /** Paling perlu dilatih, aturan sama dengan Siap SNBT (practiceService.weakestSubject). */
+  weakest: SnbtSubtest | null;
 }
 
-export interface TkaResult {
-  label: string;
-  completedAt: string;
-  correct: number;
-  total: number;
-}
+/**
+ * Baris TKA: nilai tryout terakhir, atau (kalau belum pernah tryout) akurasi
+ * latihan TKA dengan label berbeda supaya tidak terbaca sebagai nilai tryout.
+ */
+export type TkaSummary =
+  | { kind: "tryout"; label: string; completedAt: string; score: number }
+  | { kind: "accuracy"; percent: number; answered: number };
 
 export interface SkdResult {
   label: string;
@@ -63,10 +49,10 @@ export interface SkdResult {
   score: number;
 }
 
-/** Hasil terakhir tiap jenis Persiapan. null = belum pernah latihan. */
+/** Hasil terakhir tiap jenis Persiapan. null = belum ada data. Sumber: practiceService. */
 export interface PracticeSummary {
   snbt: SnbtResult | null;
-  tka: TkaResult | null;
+  tka: TkaSummary | null;
   skd: SkdResult | null;
 }
 
@@ -83,8 +69,10 @@ export interface TimelineEvent {
 /** Ringkasan ORBIDU Compass untuk kartu Dashboard. */
 export interface CompassHighlights {
   analyzedAt: string;
-  bidang: BidangKey;
+  /** null jika tidak ada rekomendasi yang cocok dengan katalog. */
+  bidang: BidangKey | null;
   /** Label keselarasan bidang, tanpa persentase. */
   bidangFit: FitLabel;
-  jurusan: { slug: string; name: string; bidang: BidangKey; fit: FitLabel }[];
+  /** `slug`/`bidang` null = nama dari Compass tidak ada di katalog (tanpa link). */
+  jurusan: { slug: string | null; name: string; bidang: BidangKey | null; fit: FitLabel }[];
 }

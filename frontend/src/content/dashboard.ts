@@ -3,6 +3,7 @@
 
 import { BRAND } from "@/config/brand";
 import type { ExamKey } from "@/types/dashboard";
+import type { PlanCategory } from "@/types/actionPlan";
 
 export const HERO = {
   baru: {
@@ -11,15 +12,16 @@ export const HERO = {
     note: "7 bagian, bisa dicicil",
   },
   noFocus: {
-    body: "Rekomendasimu sudah siap. Langkah berikutnya: atur fokus belajar lalu coba latihan pertamamu.",
-    cta: "Atur fokus belajar",
+    body: "Rekomendasimu sudah siap. Langkah berikutnya: atur rencana belajar, lalu AI menyusun latihan soal harianmu.",
+    cta: "Atur rencana belajar",
   },
   progress: (done: number, total: number) =>
     done >= total
-      ? `Semua ${total} tugas hari ini sudah selesai. Keren!`
-      : `${done} dari ${total} tugas hari ini sudah selesai. ${done > 0 ? "Tinggal sedikit lagi." : "Yuk mulai dari yang paling ringan."}`,
-  noTaskToday: "Tidak ada tugas untuk hari ini. Mau cicil latihan tambahan di Persiapan?",
-  focusChip: (focus: ExamKey[]) => `Fokus: ${focus.join(" dan ").replace(/ dan (?=.* dan )/g, ", ")}`,
+      ? `Semua ${total} latihan hari ini sudah selesai. Keren!`
+      : `${done} dari ${total} latihan hari ini sudah selesai. ${done > 0 ? "Tinggal sedikit lagi." : "Yuk mulai dari yang paling ringan."}`,
+  noTaskToday: (next: string | null) =>
+    next ? `Hari ini bukan hari belajar. Latihan berikutnya ${next}.` : "Rencana belajarmu sudah selesai. Atur ulang rencana untuk lanjut latihan.",
+  focusChip: (focus: PlanCategory[]) => `Fokus: ${focus.join(" dan ").replace(/ dan (?=.* dan )/g, ", ")}`,
 };
 
 export const LOCKED = {
@@ -33,21 +35,28 @@ export const PLAN = {
   title: "Rencana hari ini",
   link: "Buka Action Plan",
   linkShort: "Lihat semua",
-  summary: (done: number, total: number) => `${done} dari ${total} tugas selesai`,
+  summary: (done: number, total: number) => `${done} dari ${total} latihan selesai`,
   remaining: (minutes: number) => `Sekitar ${minutes} menit lagi untuk hari ini`,
-  allDone: "Semua tugas hari ini selesai",
-  more: (n: number) => `+${n} tugas lainnya`,
+  allDone: "Semua latihan hari ini selesai",
+  more: (n: number) => `+${n} latihan lainnya`,
   doneLabel: "Selesai",
-  todoLabel: "Belum selesai",
-  minutes: (m: number) => `${m} menit`,
+  inProgressLabel: "Sedang dikerjakan",
+  todoLabel: "Belum dikerjakan",
+  meta: (questions: number, minutes: number) => `${questions} soal, ${minutes} menit`,
+  progress: (answered: number, total: number) => `${answered} dari ${total} soal`,
   emptyNoFocus: {
     title: "Belum ada rencana belajar",
-    body: `Pilih fokusmu (SNBT, TKA, atau SKD) dan hari belajar, ${BRAND.name} akan menyusun latihannya.`,
-    cta: "Atur fokus belajar",
+    body: `Pilih fokusmu (SNBT, TKA, atau Kedinasan) dan hari belajar, AI ${BRAND.name} akan menyusun latihan soalnya.`,
+    cta: "Atur rencana belajar",
   },
-  emptyToday: {
-    title: "Tidak ada tugas hari ini",
-    body: "Rencanamu kosong untuk hari ini. Kamu bisa cicil latihan tambahan di Persiapan.",
+  restDay: {
+    title: "Hari ini bukan hari belajar",
+    next: (date: string, count: number) => `Latihan berikutnya: ${date}, ${count} latihan`,
+    cta: "Buka Action Plan",
+  },
+  ended: {
+    title: "Rencana belajarmu sudah selesai",
+    body: "Atur ulang rencana di Action Plan untuk menyusun latihan berikutnya.",
     cta: "Buka Action Plan",
   },
 };
@@ -67,7 +76,8 @@ export const PERFORMA = {
   rows: { SNBT: "Siap SNBT", TKA: "Siap TKA", SKD: "Siap SKD" } as Record<ExamKey, string>,
   noPractice: "Belum ada latihan",
   start: "Mulai",
-  tkaValue: (correct: number, total: number) => `${correct}/${total} benar`,
+  tkaAccuracy: (percent: number) => `Akurasi latihan ${percent}%`,
+  tkaAccuracyMeta: (answered: number) => `Belum ada tryout, dari ${answered} soal latihan`,
   empty: {
     title: "Belum ada hasil latihan",
     body: "Coba satu latihan atau tryout di Persiapan. Hasilnya akan muncul di sini, lengkap dengan subtes yang perlu dilatih.",
@@ -100,5 +110,3 @@ export const EXPLORE = {
   cta: "Explore Jurusan",
 };
 
-export const LOAD_ERROR = "Bagian ini gagal dimuat.";
-export const RETRY = "Coba lagi";

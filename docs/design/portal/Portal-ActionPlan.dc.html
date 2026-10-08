@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Action Plan siswa ORBIDU</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Poppins',system-ui,sans-serif;background:#F5F8FC}
+a{color:#0965FA}a:hover{color:#0747B8}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #F1AD00;outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 1180px; overflow: hidden; display: flex; flex-direction: column; font-family: 'Poppins', system-ui, sans-serif; background: #F5F8FC; color: #101A33">
+<dc-import name="PortalHeader" aktif="action" hint-size="1440px,72px"></dc-import>
+
+<main style="padding: 28px 120px 48px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 700px">
+<nav aria-label="Breadcrumb" style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #6B7898"><a href="Portal-Dashboard.dc.html" style="color: #6B7898; text-decoration: none">Dashboard</a><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9AA6C0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg><span aria-current="page" style="font-weight: 600; color: #101A33">Action Plan</span></nav>
+<h1 style="margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spacing: -0.5px">Action Plan</h1>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A5877">Latihan soal harian yang disusun AI sesuai fokus, hari belajar, dan subtes yang paling perlu kamu latih.</p>
+</div>
+<div style="display: flex; gap: 10px">
+<a href="Portal-Compass.dc.html" style="height: 46px; padding: 0 16px; display: flex; align-items: center; gap: 8px; border-radius: 12px; border: 1.5px solid #DCE4F2; background: #FFFFFF; font-size: 14px; font-weight: 600; color: #15234D; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15234D" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21a9 9 0 100-18 9 9 0 000 18zM15.5 8.5l-2 5-5 2 2-5z"></path></svg>Cek ORBIDU Compass</a>
+<sc-if value="{{isAktif}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{openPlan}}" style="height: 46px; padding: 0 18px; display: flex; align-items: center; gap: 8px; border-radius: 12px; border: 0; background: #0965FA; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 01-14.3 4.9M4 12a8 8 0 0114.3-4.9M18 3v4h-4M6 21v-4h4"></path></svg>Atur ulang rencana</button></sc-if>
+</div>
+</div>
+
+<sc-if value="{{isBaru}}" hint-placeholder-val="{{ false }}">
+<section style="padding: 56px 48px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; border-radius: 24px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<span style="width: 64px; height: 64px; border-radius: 18px; background: #EEF2F8; display: flex; align-items: center; justify-content: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4A5877" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 11h12v9H6zM8 11V8a4 4 0 118 0v3"></path></svg></span>
+<h2 style="margin: 0; font-size: 22px; font-weight: 700">Action Plan terbuka setelah Gambaran Minat Bakat</h2>
+<p style="margin: 0; max-width: 560px; font-size: 15px; line-height: 1.65; color: #4A5877">Latihan harian disusun dari hasil tes dan fokus seleksimu. Kenali dirimu dulu, lalu kita susun langkahnya bersama.</p>
+<a href="Portal-Analisis.dc.html" style="margin-top: 8px; height: 48px; padding: 0 22px; display: flex; align-items: center; gap: 8px; border-radius: 12px; background: linear-gradient(90deg, #FF7000, #F1AD00); color: #101A33; font-size: 15px; font-weight: 600; text-decoration: none">Isi Gambaran Minat Bakat<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#101A33" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</section>
+</sc-if>
+
+<sc-if value="{{isSetup}}" hint-placeholder-val="{{ false }}">
+<section style="position: relative; overflow: hidden; padding: 40px 44px; display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 40px; align-items: center; border-radius: 24px; background: radial-gradient(520px 260px at 20% 0%, rgba(9,101,250,0.35), rgba(9,101,250,0) 70%), linear-gradient(135deg, #15234D 0%, #101A33 100%)">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 28px; line-height: 1.25; font-weight: 700; color: #F4F7FF">Susun rencana belajarmu</h2>
+<p style="margin: 0; max-width: 560px; font-size: 15px; line-height: 1.65; color: #B4C2E3">Pilih fokus seleksi, hari belajar, dan sampai kapan rencananya berjalan. Di setiap hari belajar, AI ORBIDU menyiapkan latihan soal dan memberi porsi lebih untuk subtes yang skornya paling rendah.</p>
+<button type="button" onClick="{{openPlan}}" style="align-self: flex-start; margin-top: 8px; height: 50px; padding: 0 24px; display: flex; align-items: center; gap: 8px; border-radius: 12px; border: 0; background: linear-gradient(90deg, #FF7000, #F1AD00); font-family: inherit; font-size: 15px; font-weight: 600; color: #101A33; cursor: pointer">Atur rencana<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#101A33" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</div>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px">
+<li style="padding: 14px 16px; display: flex; align-items: center; gap: 14px; border-radius: 16px; background: rgba(255,255,255,0.08)"><span class="num" style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 50%; background: #FF7000; color: #101A33; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span><span style="display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600; color: #F4F7FF">Pilih fokus</span><span style="font-size: 13px; color: #A9B8D9">Maksimal 2: SNBT, TKA, atau Kedinasan</span></span></li>
+<li style="padding: 14px 16px; display: flex; align-items: center; gap: 14px; border-radius: 16px; background: rgba(255,255,255,0.08)"><span class="num" style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 50%; background: rgba(255,255,255,0.14); color: #F4F7FF; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">2</span><span style="display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600; color: #F4F7FF">Pilih hari belajar</span><span style="font-size: 13px; color: #A9B8D9">Latihan muncul di hari yang kamu pilih</span></span></li>
+<li style="padding: 14px 16px; display: flex; align-items: center; gap: 14px; border-radius: 16px; background: rgba(255,255,255,0.08)"><span class="num" style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 50%; background: rgba(255,255,255,0.14); color: #F4F7FF; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">3</span><span style="display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600; color: #F4F7FF">Tentukan durasi</span><span style="font-size: 13px; color: #A9B8D9">Beberapa minggu atau sampai hari ujian</span></span></li>
+</ol>
+</section>
+</sc-if>
+
+<sc-if value="{{isAktif}}" hint-placeholder-val="{{ true }}">
+<section aria-label="Ringkasan minggu ini" style="padding: 22px 24px; display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 32px; align-items: center; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 13px; font-weight: 600; color: #4A5877">Fokus minggu ini</span>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+<sc-for list="{{fokus}}" as="f" hint-placeholder-count="2">
+<div style="padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; border-radius: 14px; background: {{f.bg}}">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 15px; font-weight: 700; color: {{f.fg}}">{{f.label}}</span><span class="num" style="font-size: 12px; color: #4A5877">{{f.done}} dari {{f.total}} latihan</span></div>
+<div style="height: 6px; border-radius: 99px; background: rgba(255,255,255,0.8)"><div style="width: {{f.pct}}%; height: 100%; border-radius: 99px; background: {{f.bar}}"></div></div>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding-left: 32px; border-left: 1px solid #EEF2F8">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 13px; font-weight: 600; color: #4A5877">Minggu ini, 28 Sep sampai 4 Okt</span><span class="num" style="font-size: 18px; font-weight: 700">{{weekPct}}%</span></div>
+<div style="height: 10px; border-radius: 99px; background: #E6ECF7"><div style="width: {{weekPct}}%; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #0965FA, #00B2DD)"></div></div>
+<div style="display: flex; gap: 16px; font-size: 13px; color: #4A5877"><span class="num"><strong style="color: #101A33">{{weekDone}}</strong> dari {{weekTotal}} latihan selesai</span><span class="num"><strong style="color: #101A33">4</strong> hari belajar</span></div>
+</div>
+</section>
+
+<div style="display: grid; grid-template-columns: 540px minmax(0, 1fr); gap: 24px; align-items: start">
+<section aria-labelledby="ap-cal" style="padding: 22px; display: flex; flex-direction: column; gap: 14px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<button type="button" aria-label="Bulan sebelumnya" style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid #E3E9F3; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15234D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+<h2 id="ap-cal" style="margin: 0; font-size: 17px; font-weight: 700">September 2026</h2>
+<button type="button" aria-label="Bulan berikutnya" style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid #E3E9F3; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15234D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; text-align: center">
+<span style="font-size: 12px; font-weight: 600; color: #6B7898">Sen</span><span style="font-size: 12px; font-weight: 600; color: #6B7898">Sel</span><span style="font-size: 12px; font-weight: 600; color: #6B7898">Rab</span><span style="font-size: 12px; font-weight: 600; color: #6B7898">Kam</span><span style="font-size: 12px; font-weight: 600; color: #6B7898">Jum</span><span style="font-size: 12px; font-weight: 600; color: #6B7898">Sab</span><span style="font-size: 12px; font-weight: 600; color: #6B7898">Min</span>
+<sc-for list="{{cells}}" as="c" hint-placeholder-count="35">
+<button type="button" aria-label="{{c.aria}}" aria-pressed="{{c.sel}}" disabled="{{c.empty}}" onClick="{{c.pick}}" style="height: 60px; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-radius: 12px; border: 2px solid {{c.bd}}; background: {{c.bg}}; color: {{c.fg}}; font-family: inherit; font-size: 15px; font-weight: {{c.fw}}; cursor: pointer">
+<span class="num">{{c.d}}</span>
+<span style="display: flex; gap: 3px; height: 6px"><sc-for list="{{c.dots}}" as="dot" hint-placeholder-count="2"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{dot}}"></span></sc-for></span>
+</button>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding-top: 12px; border-top: 1px solid #EEF2F8; font-size: 12px; color: #4A5877">
+<div style="display: flex; flex-wrap: wrap; gap: 12px"><span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 4px; background: #E3F5EC"></span>Selesai</span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 4px; background: #FDECEC"></span>Belum selesai</span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 4px; background: #0965FA"></span>Hari ini</span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 4px; background: #FFF4D6"></span>Terjadwal</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px"><span style="display: flex; align-items: center; gap: 6px"><span style="width: 7px; height: 7px; border-radius: 50%; background: #0965FA"></span>SNBT</span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 7px; height: 7px; border-radius: 50%; background: #FF7000"></span>TKA</span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 7px; height: 7px; border-radius: 50%; background: #6B4FD1"></span>Kedinasan</span></div>
+</div>
+</section>
+
+<section aria-labelledby="ap-day" aria-live="polite" style="padding: 24px; display: flex; flex-direction: column; gap: 16px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="display: flex; align-items: center; gap: 8px"><h2 id="ap-day" style="margin: 0; font-size: 19px; font-weight: 700">{{dayTitle}}</h2><span style="font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: {{dayChipBg}}; color: {{dayChipFg}}">{{dayChip}}</span></span><span class="num" style="font-size: 13px; color: #4A5877">{{daySub}}</span></div>
+<sc-if value="{{dayHasTasks}}" hint-placeholder-val="{{ true }}"><svg width="48" height="48" viewBox="0 0 48 48" role="img" aria-label="{{dayDone}} dari {{dayTotal}} latihan selesai"><circle cx="24" cy="24" r="19" fill="none" stroke="#E6ECF7" stroke-width="6"></circle><circle cx="24" cy="24" r="19" fill="none" stroke="#FF7000" stroke-width="6" stroke-linecap="round" stroke-dasharray="{{dayDash}}" transform="rotate(-90 24 24)"></circle><text x="24" y="28" text-anchor="middle" font-family="Poppins" font-size="12" font-weight="700" fill="#101A33">{{dayDone}}/{{dayTotal}}</text></svg></sc-if>
+</div>
+<sc-if value="{{dayHasTasks}}" hint-placeholder-val="{{ true }}">
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{dayTasks}}" as="t" hint-placeholder-count="5">
+<li style="padding: 14px 16px; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 14px; align-items: center; border-radius: 16px; border: 1px solid #E3E9F3; background: {{t.rowBg}}">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: {{t.catBg}}; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{t.catFg}}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h4"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<span style="font-size: 15px; font-weight: 600; color: #101A33">{{t.title}}</span>
+<span style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 12px; color: #6B7898"><span style="padding: 2px 9px; border-radius: 999px; background: {{t.catBg}}; color: {{t.catFg}}; font-weight: 600">{{t.cat}}</span><span class="num">{{t.meta}}</span></span>
+<sc-if value="{{t.inProgress}}" hint-placeholder-val="{{ false }}"><span style="display: flex; align-items: center; gap: 10px"><span style="flex-grow: 1; max-width: 260px; height: 6px; border-radius: 99px; background: #E6ECF7"><span style="display: block; width: {{t.prog}}%; height: 100%; border-radius: 99px; background: #0965FA"></span></span><span class="num" style="font-size: 12px; color: #0B3FA8">{{t.progText}}</span></span></sc-if>
+<sc-if value="{{t.isDone}}" hint-placeholder-val="{{ false }}"><span class="num" style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #0A7A45"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0A7A45" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21a9 9 0 100-18 9 9 0 000 18zM8 12.5l3 3 5-6"></path></svg>Selesai, {{t.score}}</span></sc-if>
+</div>
+<sc-if value="{{t.canWork}}" hint-placeholder-val="{{ true }}"><a href="#" style="height: 40px; padding: 0 16px; display: flex; align-items: center; border-radius: 10px; border: 1.5px solid {{t.ctaBd}}; background: {{t.ctaBg}}; color: {{t.ctaFg}}; font-size: 13px; font-weight: 600; text-decoration: none; white-space: nowrap">{{t.cta}}</a></sc-if>
+<sc-if value="{{t.isLocked}}" hint-placeholder-val="{{ false }}"><span style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #8A5A00; white-space: nowrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A5A00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 11h12v9H6zM8 11V8a4 4 0 118 0v3"></path></svg>{{t.lockText}}</span></sc-if>
+</li>
+</sc-for>
+</ul>
+<p style="margin: 0; display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 1.55; color: #4A5877"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path></svg>{{dayNote}}</p>
+</sc-if>
+<sc-if value="{{dayEmpty}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 32px 24px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; border-radius: 16px; background: #F7F9FD">
+<span style="width: 48px; height: 48px; border-radius: 14px; background: #EEF2F8; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4A5877" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"></path></svg></span>
+<span style="font-size: 15px; font-weight: 600">{{emptyTitle}}</span>
+<span style="font-size: 14px; color: #4A5877">{{emptyText}}</span>
+</div>
+</sc-if>
+</section>
+</div>
+</sc-if>
+</main>
+
+<sc-if value="{{planOpen}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; z-index: 10; background: rgba(16,26,51,0.45); display: flex; justify-content: center; align-items: flex-start; padding-top: 80px">
+<div role="dialog" aria-modal="true" aria-labelledby="ap-plan" style="width: 600px; box-sizing: border-box; padding: 28px; display: flex; flex-direction: column; gap: 20px; border-radius: 24px; background: #FFFFFF; box-shadow: 0 30px 80px rgba(16,26,51,0.3)">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px"><div style="display: flex; flex-direction: column; gap: 4px"><h2 id="ap-plan" style="margin: 0; font-size: 20px; font-weight: 700">{{planTitle}}</h2><span style="font-size: 14px; color: #4A5877">Latihan di hari belajar berikutnya akan disusun ulang dari pilihan ini.</span></div><button type="button" aria-label="Tutup" onClick="{{closePlan}}" style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 10px; border: 1px solid #E3E9F3; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15234D" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+
+<fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 10px">
+<legend style="padding: 0 0 10px; display: flex; justify-content: space-between; width: 100%; font-size: 14px; font-weight: 600; color: #15234D">Fokus seleksi<span class="num" style="font-weight: 500; color: #4A5877">{{fokusCount}} dari 2 dipilih</span></legend>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{fokusOpts}}" as="o" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{o.pressed}}" disabled="{{o.disabled}}" onClick="{{o.pick}}" style="min-height: 76px; padding: 12px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; border-radius: 14px; border: 1.5px solid {{o.bd}}; background: {{o.bg}}; opacity: {{o.op}}; font-family: inherit; text-align: left; cursor: pointer"><span style="font-size: 15px; font-weight: 700; color: #101A33">{{o.label}}</span><span style="font-size: 12px; line-height: 1.4; color: {{o.subFg}}">{{o.sub}}</span></button>
+</sc-for>
+</div>
+</fieldset>
+
+<fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 10px">
+<legend style="padding: 0 0 10px; display: flex; justify-content: space-between; width: 100%; font-size: 14px; font-weight: 600; color: #15234D">Hari belajar<span class="num" style="font-weight: 500; color: #4A5877">{{dayCount}} hari per minggu</span></legend>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{dayOpts}}" as="o" hint-placeholder-count="7">
+<button type="button" aria-pressed="{{o.pressed}}" onClick="{{o.pick}}" style="height: 46px; border-radius: 12px; border: 1.5px solid {{o.bd}}; background: {{o.bg}}; color: {{o.fg}}; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer">{{o.label}}</button>
+</sc-for>
+</div>
+</fieldset>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="ap-durasi" style="font-size: 14px; font-weight: 600; color: #15234D">Durasi rencana</label><select id="ap-durasi" style="height: 48px; box-sizing: border-box; padding: 0 12px; border-radius: 12px; border: 1.5px solid #D5DEEE; background: #F8FAFD; font-family: inherit; font-size: 14px; color: #101A33"><option>Sampai UTBK-SNBT (perkiraan April 2027)</option><option>Sampai TKA (perkiraan November 2026)</option><option>4 minggu</option><option>8 minggu</option></select></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="ap-waktu" style="font-size: 14px; font-weight: 600; color: #15234D">Waktu belajar per hari</label><select id="ap-waktu" style="height: 48px; box-sizing: border-box; padding: 0 12px; border-radius: 12px; border: 1.5px solid #D5DEEE; background: #F8FAFD; font-family: inherit; font-size: 14px; color: #101A33"><option>Sekitar 60 menit</option><option>Sekitar 30 menit</option><option>Sekitar 90 menit</option></select></div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; background: #EEF4FF; font-size: 13px; line-height: 1.55; color: #15234D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"></path></svg><span class="num">Kira-kira {{taskEstimate}} latihan soal per minggu. Subtes dengan skor terendah dapat porsi lebih banyak.</span></div>
+
+<div style="display: flex; justify-content: flex-end; gap: 10px"><button type="button" onClick="{{closePlan}}" style="height: 46px; padding: 0 18px; border-radius: 12px; border: 1.5px solid #DCE4F2; background: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #15234D; cursor: pointer">Batal</button><button type="button" disabled="{{cantApply}}" onClick="{{applyPlan}}" style="height: 46px; padding: 0 22px; border-radius: 12px; border: 0; background: #0965FA; opacity: {{applyOp}}; font-family: inherit; font-size: 14px; font-weight: 600; color: #FFFFFF; cursor: pointer">Terapkan rencana</button></div>
+</div>
+</div>
+</sc-if>
+
+<div role="group" aria-label="Mode Demo: status siswa" style="position: absolute; left: 20px; top: 820px; z-index: 5; padding: 8px; display: flex; align-items: center; gap: 6px; border-radius: 14px; background: #101A33; box-shadow: 0 14px 30px rgba(16,26,51,0.3)">
+<span style="padding: 0 8px; font-size: 12px; font-weight: 600; color: #A9B8D9">Mode Demo</span>
+<sc-for list="{{demo}}" as="d" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{d.pressed}}" onClick="{{d.pick}}" style="height: 34px; padding: 0 12px; border: 0; border-radius: 9px; background: {{d.bg}}; color: {{d.fg}}; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer">{{d.label}}</button>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+  constructor(...args) {
+    super(...args);
+    this.state = { status: 'aktif', day: 30, modal: null, fokusSel: ['SNBT', 'TKA'], days: ['Sen', 'Rab', 'Jum', 'Min'] };
+  }
+  renderVals() {
+    const S = this.state;
+    const CAT = {
+      SNBT: { bg: '#E8F0FE', fg: '#0B3FA8', dot: '#0965FA' },
+      TKA: { bg: '#FFF1E6', fg: '#B34700', dot: '#FF7000' },
+      Kedinasan: { bg: '#EFEBFB', fg: '#5B3FC4', dot: '#6B4FD1' }
+    };
+    const L = (title, cat, n, menit, st) => ({ title, cat, n, menit, ...st });
+    const done = (benar) => ({ state: 'done', benar });
+    const prog = (dijawab) => ({ state: 'prog', dijawab });
+    const todo = { state: 'todo' };
+    const PLAN = {
+      14: [L('Latihan Penalaran Umum', 'SNBT', 20, 25, done(14)), L('Latihan TKA Matematika', 'TKA', 15, 20, done(9))],
+      16: [L('Latihan Pengetahuan Kuantitatif', 'SNBT', 20, 25, done(13)), L('Latihan Literasi Bahasa Indonesia', 'SNBT', 20, 25, done(15))],
+      18: [L('Latihan Penalaran Matematika', 'SNBT', 20, 25, done(15)), L('Latihan TKA Bahasa Inggris', 'TKA', 15, 20, done(10))],
+      20: [L('Latihan Literasi Bahasa Inggris', 'SNBT', 20, 25, done(11)), L('Latihan Pemahaman Bacaan dan Menulis', 'SNBT', 20, 25, done(14))],
+      21: [L('Latihan Pengetahuan dan Pemahaman Umum', 'SNBT', 20, 25, done(13)), L('Latihan TKA Bahasa Indonesia', 'TKA', 15, 20, done(12))],
+      23: [L('Latihan Penalaran Umum', 'SNBT', 20, 25, done(15)), L('Latihan Literasi Bahasa Inggris', 'SNBT', 20, 25, done(12))],
+      25: [L('Latihan Pengetahuan Kuantitatif', 'SNBT', 20, 25, todo), L('Latihan TKA Fisika', 'TKA', 10, 15, todo)],
+      27: [L('Latihan Penalaran Matematika', 'SNBT', 20, 25, done(16)), L('Latihan TKA Matematika', 'TKA', 15, 20, done(11))],
+      28: [L('Latihan Penalaran Umum', 'SNBT', 20, 25, done(15)), L('Latihan TKA Bahasa Indonesia', 'TKA', 15, 20, done(12)), L('Latihan Pengetahuan Kuantitatif', 'SNBT', 20, 25, done(14))],
+      30: [L('Latihan Penalaran Matematika', 'SNBT', 20, 25, done(16)), L('Latihan Literasi Bahasa Inggris', 'SNBT', 20, 25, done(13)), L('Latihan TKA Matematika', 'TKA', 15, 20, prog(6)), L('Latihan Penalaran Umum', 'SNBT', 20, 25, todo), L('Latihan TKA Bahasa Inggris', 'TKA', 15, 20, todo)],
+      102: [L('Latihan Literasi Bahasa Inggris', 'SNBT', 20, 25, todo), L('Latihan TKA Bahasa Inggris', 'TKA', 15, 20, todo), L('Latihan Pemahaman Bacaan dan Menulis', 'SNBT', 20, 25, todo)],
+      104: [L('Latihan Pengetahuan dan Pemahaman Umum', 'SNBT', 20, 25, todo), L('Latihan TKA Matematika', 'TKA', 15, 20, todo)]
+    };
+    const TODAY = 30;
+    const NAMES = { 14: 'Senin, 14 September', 16: 'Rabu, 16 September', 18: 'Jumat, 18 September', 20: 'Minggu, 20 September', 21: 'Senin, 21 September', 23: 'Rabu, 23 September', 25: 'Jumat, 25 September', 27: 'Minggu, 27 September', 28: 'Senin, 28 September', 30: 'Rabu, 30 September', 102: 'Jumat, 2 Oktober', 104: 'Minggu, 4 Oktober' };
+    const DOW = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+    const nameOf = (k) => NAMES[k] || (k > 100 ? DOW[(k - 100 + 2) % 7] + ', ' + (k - 100) + ' Oktober' : DOW[(k + 0) % 7] + ', ' + k + ' September');
+    const isFuture = (k) => k > TODAY;
+    const dayStatus = (k) => {
+      const p = PLAN[k];
+      if (!p) return null;
+      if (k === TODAY) return 'today';
+      if (isFuture(k)) return 'sched';
+      return p.every((t) => t.state === 'done') ? 'done' : 'unfinished';
+    };
+
+    const k = S.day;
+    const tasks = PLAN[k] || [];
+    const future = isFuture(k);
+    const dayTasks = tasks.map((t) => {
+      const c = CAT[t.cat];
+      const isDone = t.state === 'done', inProgress = t.state === 'prog';
+      return {
+        title: t.title, cat: t.cat, catBg: c.bg, catFg: c.fg,
+        meta: t.n + ' soal, sekitar ' + t.menit + ' menit',
+        isDone, inProgress, score: t.benar + ' dari ' + t.n + ' benar',
+        prog: inProgress ? Math.round(t.dijawab / t.n * 100) : 0, progText: inProgress ? t.dijawab + ' dari ' + t.n + ' soal' : '',
+        isLocked: future, lockText: 'Terbuka ' + nameOf(k).split(',')[0],
+        canWork: !future,
+        cta: isDone ? 'Lihat pembahasan' : inProgress ? 'Lanjutkan' : 'Kerjakan',
+        ctaBg: isDone ? '#FFFFFF' : '#0965FA', ctaFg: isDone ? '#0965FA' : '#FFFFFF', ctaBd: isDone ? '#DCE4F2' : '#0965FA',
+        rowBg: isDone ? '#FBFCFE' : '#FFFFFF'
+      };
+    });
+    const dDone = tasks.filter((t) => t.state === 'done').length;
+    const st = dayStatus(k);
+    const chip = { today: ['Hari ini', '#E8F0FE', '#0B3FA8'], done: ['Selesai', '#E3F5EC', '#0A7A45'], unfinished: ['Belum selesai', '#FDECEC', '#B42318'], sched: ['Terjadwal', '#FFF4D6', '#8A5A00'] }[st] || ['Bukan hari belajar', '#EEF2F8', '#4A5877'];
+    const totalSoal = tasks.reduce((a, t) => a + t.n, 0);
+    const totalMenit = tasks.reduce((a, t) => a + t.menit, 0);
+    const note = st === 'unfinished' ? 'Latihan di hari ini belum selesai. Kamu masih bisa mengerjakannya kapan saja.'
+      : future ? 'Soal disiapkan AI saat harinya tiba, menyesuaikan hasil latihanmu sebelumnya.'
+      : 'Soal disusun AI dari fokus SNBT dan TKA, dengan porsi lebih untuk subtes yang skornya paling rendah.';
+    const C = 2 * Math.PI * 19;
+
+    const SN = { done: 'selesai', unfinished: 'belum selesai', today: 'hari ini', sched: 'terjadwal' };
+    const COL = { done: ['#E3F5EC', '#0A7A45'], unfinished: ['#FDECEC', '#B42318'], today: ['#0965FA', '#FFFFFF'], sched: ['#FFF4D6', '#8A5A00'] };
+    const cells = [{ empty: true, d: '', dots: [], aria: 'Kosong', sel: 'false', bg: 'transparent', bd: 'transparent', fg: '#FFFFFF', fw: 500, pick: () => {} }];
+    const mk = (d, key, out) => {
+      const s = dayStatus(key);
+      const p = PLAN[key] || [];
+      const cats = Array.from(new Set(p.map((t) => t.cat)));
+      const sel = S.day === key;
+      const col = COL[s] || ['#FFFFFF', out ? '#B8C4DB' : '#15234D'];
+      return {
+        empty: false, d, dots: cats.map((c) => (s === 'today' ? '#FFFFFF' : CAT[c].dot)),
+        aria: nameOf(key) + (s ? ', ' + SN[s] : ', bukan hari belajar'),
+        sel: sel ? 'true' : 'false', bg: col[0], fg: col[1], fw: s ? 700 : 500,
+        bd: sel ? (s === 'today' ? '#0747B8' : '#0965FA') : 'transparent',
+        pick: () => this.setState({ day: key })
+      };
+    };
+    for (let d = 1; d <= 30; d++) cells.push(mk(d, d, false));
+    for (let d = 1; d <= 4; d++) cells.push(mk(d, 100 + d, true));
+
+    const WEEK = [28, 30, 102, 104];
+    const wk = WEEK.flatMap((x) => PLAN[x]);
+    const weekDone = wk.filter((t) => t.state === 'done').length;
+    const fokus = [['SNBT', '#E8F0FE', '#0B3FA8', '#0965FA'], ['TKA', '#FFF1E6', '#B34700', '#FF7000']].map(([label, bg, fg, bar]) => {
+      const all = wk.filter((t) => t.cat === label);
+      const dn = all.filter((t) => t.state === 'done').length;
+      return { label, bg, fg, bar, done: dn, total: all.length, pct: Math.round(dn / all.length * 100) };
+    });
+
+    const fs = S.fokusSel;
+    const FOK = [['SNBT', 'Latihan 7 subtes UTBK', false], ['TKA', 'Mapel wajib dan pilihan', false], ['Kedinasan', 'TWK, TIU, TKP. Kurang selaras dengan profilmu', true]];
+    const fokusOpts = FOK.map(([label, sub, warn]) => {
+      const on = fs.includes(label);
+      const dis = !on && fs.length >= 2;
+      return { label, sub, pressed: on ? 'true' : 'false', disabled: dis, op: dis ? 0.5 : 1, bd: on ? '#0965FA' : '#DCE4F2', bg: on ? '#EEF4FF' : '#FFFFFF', subFg: warn ? '#B34700' : '#4A5877', pick: () => this.setState({ fokusSel: on ? fs.filter((x) => x !== label) : fs.concat(label) }) };
+    });
+    const ds = S.days;
+    const dayOpts = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'].map((label) => {
+      const on = ds.includes(label);
+      return { label, pressed: on ? 'true' : 'false', bg: on ? '#0965FA' : '#FFFFFF', fg: on ? '#FFFFFF' : '#15234D', bd: on ? '#0965FA' : '#D5DEEE', pick: () => this.setState({ days: on ? ds.filter((x) => x !== label) : ds.concat(label) }) };
+    });
+    const canApply = fs.length > 0 && ds.length > 0;
+    const stt = S.status;
+    const demo = [['baru', 'Terkunci'], ['setup', 'Belum ada rencana'], ['aktif', 'Aktif']].map(([id, label]) => {
+      const on = stt === id;
+      return { label, pressed: on ? 'true' : 'false', bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#101A33' : '#DCE6FF', pick: () => this.setState({ status: id }) };
+    });
+    return {
+      isBaru: stt === 'baru', isSetup: stt === 'setup', isAktif: stt === 'aktif',
+      fokus, weekDone, weekTotal: wk.length, weekPct: Math.round(weekDone / wk.length * 100),
+      cells,
+      dayTitle: nameOf(k), dayChip: chip[0], dayChipBg: chip[1], dayChipFg: chip[2],
+      daySub: tasks.length ? tasks.length + ' latihan, ' + totalSoal + ' soal, sekitar ' + totalMenit + ' menit' : '',
+      dayTasks, dayHasTasks: tasks.length > 0, dayEmpty: tasks.length === 0,
+      emptyTitle: k < 14 ? 'Rencana belajar belum dimulai' : 'Bukan hari belajar',
+      emptyText: k < 14 ? 'Rencanamu dimulai Senin, 14 September.' : 'Istirahat juga bagian dari rencana. Pilih tanggal lain di kalender.',
+      dayDone: dDone, dayTotal: tasks.length, dayDash: (tasks.length ? C * dDone / tasks.length : 0).toFixed(1) + ' ' + C.toFixed(1),
+      dayNote: note,
+      planOpen: S.modal === 'plan', openPlan: () => this.setState({ modal: 'plan' }), closePlan: () => this.setState({ modal: null }),
+      applyPlan: () => this.setState({ modal: null, status: 'aktif' }),
+      planTitle: stt === 'aktif' ? 'Atur ulang rencana' : 'Atur rencana belajar',
+      fokusOpts, fokusCount: fs.length, dayOpts, dayCount: ds.length,
+      taskEstimate: Math.max(1, ds.length * 3), cantApply: !canApply, applyOp: canApply ? 1 : 0.45,
+      demo
+    };
+  }
+}
+</script>
+</body>
+</html>

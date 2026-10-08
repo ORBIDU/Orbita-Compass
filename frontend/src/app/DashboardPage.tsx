@@ -3,7 +3,10 @@ import { useAuth } from "@/context/AuthContext";
 import { useStudentStatus } from "@/context/StudentStatusContext";
 import { toDisplayUser } from "@/lib/user";
 import { useAsync } from "@/lib/useAsync";
-import { getPracticeSummary, getSelectionTimeline, getTodayPlan } from "@/services/dashboardService";
+import { getSelectionTimeline } from "@/services/dashboardService";
+import { getPracticeSummary } from "@/services/practiceService";
+import { useSkdRelevant } from "@/lib/useSkdRelevant";
+import { getTodayPlan } from "@/services/actionPlanService";
 import { getCompassHighlights } from "@/services/jurusanService";
 import PageLoader from "@/components/ui/PageLoader";
 import DashboardHero from "@/components/dashboard/DashboardHero";
@@ -33,8 +36,11 @@ export default function DashboardPage() {
   const canLoad = isStudent && ready && status !== null;
 
   // `status` ikut jadi deps supaya data dimuat ulang saat status diganti di Mode Demo.
-  const plan = useAsync(() => getTodayPlan(now), [status, user?.id], canLoad && !planLocked);
-  const practice = useAsync(getPracticeSummary, [status, user?.id], canLoad && !performaLocked);
+  // Sumber sama dengan halaman Action Plan.
+  const plan = useAsync(() => getTodayPlan(user?.id ?? "", user?.profile?.grade ?? 12, now), [status, user?.id], canLoad && !planLocked);
+  // Sumber sama dengan Siap SNBT/TKA/SKD.
+  const practice = useAsync(() => getPracticeSummary(user?.id ?? "", user?.profile?.grade ?? 12, now), [status, user?.id], canLoad && !performaLocked);
+  const showSkd = useSkdRelevant();
   const compass = useAsync(() => getCompassHighlights(3), [status, user?.id], canLoad && !compassLocked);
   const timeline = useAsync(() => getSelectionTimeline(now), []);
 
@@ -56,7 +62,7 @@ export default function DashboardPage() {
           <>
             <div className="grid gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-[488px_minmax(0,1fr)]">
               <TodayPlanCard locked={planLocked} state={plan} />
-              <PerformanceCard locked={performaLocked} state={practice} />
+              <PerformanceCard locked={performaLocked} state={practice} showSkd={showSkd} />
             </div>
             <div className="grid gap-4 lg:grid-cols-2 lg:gap-6 xl:grid-cols-[minmax(0,1fr)_488px]">
               <CompassCard locked={compassLocked} state={compass} />
