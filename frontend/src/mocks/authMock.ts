@@ -76,6 +76,7 @@ export async function mockRegister(payload: RegisterPayload): Promise<RegisterRe
     compassTarget: null,
     inputsUpdatedAt: null,
     savedScholarships: [],
+    snbp: null,
     // Waktu dicatat server, bukan dikirim browser (lihat docs/API_CONTRACT.md bagian 2.4).
     parentConsentAt: payload.parentConsent ? now : null,
   };

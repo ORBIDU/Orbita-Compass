@@ -21,11 +21,6 @@ export function LandingRoute() {
   return <LandingPage />;
 }
 
-export function SiapSnbpRoute() {
-  const onNavigate = useLegacyNavigate();
-  return <SiapPTNPage key="snbp" onNavigate={onNavigate} defaultTab="snbp" />;
-}
-
 /** /portal/persiapan/:ujian → tka, snbt, atau skd. Ujian lain → 404. */
 export function PersiapanRoute() {
   const { ujian } = useParams();

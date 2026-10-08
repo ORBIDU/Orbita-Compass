@@ -9,7 +9,6 @@ import {
   LandingRoute,
   PersiapanRoute,
   ProfilRoute,
-  SiapSnbpRoute,
 } from "@/routes/legacyRoutes";
 
 const AuthPage = lazy(() => import("@/app/AuthPage"));
@@ -18,6 +17,7 @@ const AnalisisPotensiPage = lazy(() => import("@/app/AnalisisPotensiPage"));
 const CompassPage = lazy(() => import("@/app/CompassPage"));
 const BeasiswaPage = lazy(() => import("@/app/BeasiswaPage"));
 const ActionPlanPage = lazy(() => import("@/app/ActionPlanPage"));
+const SiapSnbpPage = lazy(() => import("@/app/SiapSnbpPage"));
 const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
 const JurusanListPage = lazy(() => import("@/app/JurusanListPage"));
 const JurusanDetailPage = lazy(() => import("@/app/JurusanDetailPage"));
@@ -67,7 +67,7 @@ export const router = createBrowserRouter([
           { path: "beasiswa", element: <BeasiswaPage /> },
           // Action Plan juga mengatur tampilan terkunci sendiri.
           { path: "action-plan", element: <ActionPlanPage /> },
-          { path: "persiapan/snbp", element: <SiapSnbpRoute /> },
+          { path: "persiapan/snbp", element: <SiapSnbpPage /> },
           { path: "persiapan/:ujian", element: <PersiapanRoute /> },
           { path: "profil", element: <ProfilRoute /> },
           { path: "*", element: <NotFoundPage /> },

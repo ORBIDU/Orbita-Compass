@@ -188,7 +188,7 @@ Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
 | Hasil Compass sungguhan (sekarang selalu jawaban cadangan, lihat `BACKEND_MAP.md` poin 10; rincian di bagian 9) | 5 | 🟡 |
 | Data beasiswa (daftar, filter, detail, simpan; lihat bagian 10) | 5 | 🔴 |
 | Action Plan: pengaturan rencana, latihan harian buatan AI, hasil per latihan (lihat bagian 11) | 6 | 🔴 |
-| Rasionalisasi SNBP dengan input TKA, prestasi terpilih, dan 2 target | 7 | 🟡 |
+| Siap SNBP: isian tersimpan, status eligible, nilai TKA, rasionalisasi dengan 2 pilihan prodi, daya tampung dan keketatan prodi (lihat bagian 12) | 7 | 🔴 |
 | Bank soal lengkap, soal tanpa kunci, paket tryout berurutan, riwayat tryout | 7 | 🔴 |
 
 ---
@@ -383,7 +383,7 @@ Ada **dua tingkat target** yang berbeda, jangan dicampur:
 | Target | Dipilih di | Contoh | Disimpan di |
 |---|---|---|---|
 | Target **jurusan** (jurusan katalog) | ORBIDU Compass | Sistem Informasi | **Belum ada** (usulan di bawah) |
-| Target **prodi di kampus tertentu** | Siap SNBP (Fase 7) | Sistem Informasi Universitas Sriwijaya | `StudentProfile.targetMajorId` + `targetPtnId` (sudah ada) |
+| Target **prodi di kampus tertentu** | Siap SNBP, tombol "Jadikan target prodi" (Fase 7) | Sistem Informasi Universitas Sriwijaya | `StudentProfile.targetMajorId` + `targetPtnId` lewat `PUT /profile` (sudah ada, sudah dipakai) |
 
 Target jurusan dipakai untuk mengarahkan rencana belajar, Siap SNBP (memilih prodi di kampus untuk jurusan itu), dan Performance.
 
@@ -524,3 +524,66 @@ POST /study-plan/practices/:id/submit    ← { "answers": [ … ] }
 - Penilaian dilakukan server (bagian 5.2), bukan dari kunci jawaban yang dikirim ke frontend.
 - Latihan di hari yang sudah lewat tetap bisa dikerjakan; latihan di tanggal yang akan datang ditolak sampai harinya tiba.
 - Hasil ini dipakai ulang untuk bobot subtes terlemah (11.2) dan kartu Performa Dashboard (bagian 7.2).
+
+---
+
+## 12. Persiapan (Fase 7)
+
+Dipakai `/portal/persiapan/*`. Bagian ini diisi bertahap: 12.1–12.2 di Tahap 7A (Siap SNBP), sisanya di Tahap 7B–7C.
+
+### 12.1 Isian Siap SNBP 🔴
+Service: `frontend/src/services/snbpService.ts`; bentuk data: `frontend/src/types/snbp.ts`.
+
+```
+GET /snbp/draft  → { "draft": SnbpDraft | null }
+PUT /snbp/draft  ← SnbpDraft  → { "draft": SnbpDraft }
+
+SnbpDraft = {
+  "eligible": "menunggu",                     // menunggu | eligible | tidak (diisi siswa sendiri)
+  "tkaEnabled": true,
+  "tkaScores": { "Matematika": "82,5", "Fisika": "" },   // teks isian, 0–100, boleh kosong
+  "achievementIds": ["…"],                    // maks. 3, dari /achievements
+  "choices": [ { "universityId": "…", "majorId": "…" }, null ],   // pilihan 1 dan 2
+  "result": SnbpResult | null,                // hasil terakhir (12.2)
+  "updatedAt": "…"
+}
+```
+- **Status eligible** diisi siswa sendiri karena ditentukan sekolah. Idealnya nanti diisi sekolah/admin dan siswa hanya membaca.
+- **Nilai TKA** sebaiknya disimpan per siswa sebagai data sendiri (bukan hanya di isian SNBP), karena juga dipakai Siap TKA. Mapel pilihan TKA diambil dari pengaturan Action Plan (bagian 11.1).
+- Rapor (`/rapor`) dan prestasi (`/achievements`) tidak disalin; frontend membacanya langsung.
+- **Sementara:** mode dummy menyimpan di data dummy; mode backend menyimpan di browser (`localStorage`, kunci `orbita_snbp_<userId>`).
+
+### 12.2 Rasionalisasi SNBP 🔴
+`GET /ptn/rationalization` yang ada belum dipakai karena hanya menghitung rata-rata rapor + bonus prestasi untuk satu target, tanpa pilihan prodi, nilai TKA, dan prestasi terpilih. Sementara frontend memakai simulasi (`frontend/src/mocks/snbpEngine.ts`, ditandai "Cara hitung sementara") di kedua mode.
+
+```
+POST /snbp/rationalization
+← {
+    "choices": [ { "universityId": "…", "majorId": "…" } ],   // 1–2 pilihan
+    "achievementIds": ["…"],                                  // maks. 3
+    "tkaScores": { "Matematika": 82.5 } | null
+  }
+→ {
+    "result": {
+      "computedAt": "…",
+      "choices": [ {
+        "universityId": "…", "universityName": "Universitas Indonesia",
+        "majorId": "…", "majorName": "Sistem Informasi",
+        "category": "aman",                    // aman | waspada | berisiko (tanpa persentase)
+        "factors": [ { "direction": "up", "text": "Rata-rata rapor 85,7 dan naik di setiap semester" } ]
+      } ],
+      "strategy": "…",
+      "suggestions": [ "…" ]
+    }
+  }
+```
+- Server membaca rapor semester 1–5 dan prestasi sendiri dari data siswa; frontend tidak mengirim nilai rapor.
+- **Faktor hanya dari data yang benar-benar ada**: rata-rata dan tren rapor, mapel pendukung prodi, prestasi terpilih, nilai TKA, semester yang belum ada.
+- **Data daya tampung dan keketatan per prodi dibutuhkan** untuk rasionalisasi yang lebih akurat (daya tampung SNBP resmi, jumlah peminat, dan keketatan tahun sebelumnya). **Hasil sekarang belum memperhitungkannya**, sehingga dua pilihan bisa berkategori sama; ini juga disebut di catatan "Ini estimasi, bukan jaminan" di halaman. Kolom `capacitySnbp` dan `passingGrade` di tabel `Major` sekarang hasil rumus seed, bukan data resmi, jadi tidak dipakai.
+- Rumus akhir perlu disetujui tim sebelum dipakai siswa.
+
+### 12.3 Kampus peserta SNBP 🟡
+Daftar kampus diambil dari `GET /ptn/universities?type=PTN Akademik|PTN Vokasi|PTKIN` (sudah ada), lengkap dengan prodinya.
+- Kampus peserta SNBP berubah tiap tahun mengikuti SNPMB; perlu penanda resmi per tahun (mis. `University.snbpYear`).
+- `GET /ptn/universities` mengirim semua prodi tiap kampus (`BACKEND_MAP.md` poin 17). Untuk pilihan prodi cukup `{ id, name }`.
+- Target prodi di seed backend tidak cocok dengan kampusnya (bagian 5.3), jadi pilihan 1 akun demo `siswa@orbita.id` tidak terisi otomatis di mode backend.
