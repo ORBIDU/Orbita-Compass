@@ -3,15 +3,14 @@ import { Eye, EyeOff } from "lucide-react";
 import Dialog from "@/components/ui/Dialog";
 import { PASSWORD_DIALOG } from "@/content/profil";
 import { ApiError } from "@/services/http";
+import { passwordProblem } from "@/lib/password";
 
-const MIN = 8;
+const PROBLEM_TEXT = { short: PASSWORD_DIALOG.tooShort, mix: PASSWORD_DIALOG.needMix, same: PASSWORD_DIALOG.sameAsOld };
 
-/** Aturan password baru: min. 8 karakter, campuran huruf dan angka, berbeda dari yang lama. */
+/** Aturan password baru (lib/password.ts) dengan pesan jendela ini. */
 function nextError(current: string, next: string): string | null {
-  if (next.length < MIN) return PASSWORD_DIALOG.tooShort;
-  if (!/[a-zA-Z]/.test(next) || !/\d/.test(next)) return PASSWORD_DIALOG.needMix;
-  if (next === current) return PASSWORD_DIALOG.sameAsOld;
-  return null;
+  const problem = passwordProblem(next, current);
+  return problem ? PROBLEM_TEXT[problem] : null;
 }
 
 function PasswordField({

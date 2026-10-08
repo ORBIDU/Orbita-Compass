@@ -17,7 +17,7 @@ interface AuthVideoSlotProps {
 const MEDIA = { panel: AUTH_MEDIA.desktop, banner: AUTH_MEDIA.mobile } as const;
 
 /**
- * Slot video animasi di halaman Masuk & Daftar.
+ * Slot video animasi di halaman Masuk dan Aktivasi.
  *
  * Urutan yang ditampilkan:
  * 1. Video dari config/authMedia.ts (autoplay, muted, loop, tanpa suara).

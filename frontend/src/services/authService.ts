@@ -1,31 +1,8 @@
-import type { LoginResponse, MeResponse, MeUser, RegisterResponse } from "@/types/backend";
-import { mockLogin, mockMe, mockRegister } from "@/mocks/authMock";
+import type { LoginResponse, MeResponse, MeUser } from "@/types/backend";
+import { mockLogin, mockMe, mockSaveConsents, mockSetFirstPassword } from "@/mocks/authMock";
 import { USE_MOCK } from "./config";
 import { withLocalProfil } from "./profileService";
 import { clearToken, getToken, request, setToken } from "./http";
-
-/**
- * Data formulir Daftar. Sengaja TIDAK punya field `role`: backend menerima
- * `role` dari body sehingga siapa pun bisa mendaftar sebagai ADMIN
- * (BACKEND_MAP.md bagian 6), jadi frontend tidak pernah mengirimnya.
- */
-export interface RegisterPayload {
-  name: string;
-  email: string;
-  password: string;
-  schoolName: string;
-  /** 10, 11, atau 12 */
-  grade: number;
-  city: string;
-  majorTrack?: string;
-  /**
-   * Siswa dan orang tua/wali menyetujui Syarat & Ketentuan dan Kebijakan
-   * Privasi. Backend belum menyimpannya (field tak dikenal diabaikan), tetapi
-   * tetap dikirim supaya langsung tersimpan begitu backend mendukungnya.
-   * Lihat docs/API_CONTRACT.md bagian 2.4.
-   */
-  parentConsent: boolean;
-}
 
 export async function login(email: string, password: string): Promise<LoginResponse> {
   const data = USE_MOCK
@@ -35,23 +12,22 @@ export async function login(email: string, password: string): Promise<LoginRespo
   return data;
 }
 
-export async function register(payload: RegisterPayload): Promise<RegisterResponse> {
-  // Body disusun satu per satu supaya tidak ada field lain (termasuk role) yang ikut terkirim.
-  const body: RegisterPayload = {
-    name: payload.name,
-    email: payload.email,
-    password: payload.password,
-    schoolName: payload.schoolName,
-    grade: payload.grade,
-    city: payload.city,
-    parentConsent: payload.parentConsent,
-    ...(payload.majorTrack ? { majorTrack: payload.majorTrack } : {}),
-  };
-  const data = USE_MOCK
-    ? await mockRegister(body)
-    : await request<RegisterResponse>("/auth/register", { method: "POST", body });
-  setToken(data.token);
-  return data;
+/**
+ * Login pertama: ganti password awal dari admin (API_CONTRACT 14.2). Hanya
+ * dipanggil kalau `/auth/me` mengirim `mustChangePassword: true`.
+ */
+export async function setFirstPassword(newPassword: string): Promise<void> {
+  if (USE_MOCK) return mockSetFirstPassword(getToken(), newPassword);
+  await request("/auth/first-password", { method: "POST", body: { newPassword } });
+}
+
+/**
+ * Simpan persetujuan orang tua/wali serta Syarat & Ketentuan (API_CONTRACT
+ * 2.4). Waktunya dicatat server.
+ */
+export async function saveConsents(consent: { parent: boolean; terms: boolean }): Promise<void> {
+  if (USE_MOCK) return mockSaveConsents(getToken(), consent);
+  await request("/auth/consent", { method: "POST", body: { parentConsent: consent.parent, termsAccepted: consent.terms } });
 }
 
 /** Data user yang sedang login, beserta profil lengkapnya. */

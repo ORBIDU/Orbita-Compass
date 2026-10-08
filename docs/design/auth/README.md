@@ -13,3 +13,8 @@ Cara membaca format:
 - Blok <script type="text/x-dc"> berisi logika toggle Masuk/Daftar, tampilkan password, pilihan kelas, dan contoh error.
 - Gambar maskot di panel kiri dan banner HP hanya pengganti sementara. Nantinya diganti video MP4 dari tim.
 - Font 'Caveat' di desain adalah pengganti sementara font Pecita.
+
+## Perubahan setelah desain (keputusan tim)
+- **Tidak ada pendaftaran mandiri.** ORBIDU hanya untuk siswa yang sudah berlangganan dan akunnya dibuat admin. Bagian **Daftar** di desain (tombol Masuk | Daftar, form Daftar, link "Belum punya akun? Daftar") **tidak dipakai**. `/daftar` dialihkan ke `/masuk`.
+- Di bawah form Masuk ditambah teks "Akunmu dibuat setelah berlangganan. Belum punya akun? Hubungi tim ORBIDU." (link WhatsApp).
+- Halaman baru **Aktivasi akun** (`/aktivasi`, login pertama) tidak punya desain sendiri. Halaman ini memakai kerangka yang sama (panel video kiri / banner HP) serta gaya judul, input, tombol, dan banner error dari desain Masuk. Isinya dua langkah: ganti password awal, lalu dua kotak persetujuan. Detail di `docs/SPEK_SISWA.md` bagian 3.

@@ -2,14 +2,16 @@ import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { ROUTES } from "@/config/navigation";
+import { whatsappLink } from "@/config/brand";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 
 /** Id section beranda yang bisa dituju lewat tombol atau /#id. */
 export type LandingSection = "masalah" | "kenali" | "compass" | "jurusan" | "action-plan" | "faq";
 
 /**
- * Tujuan tombol-tombol beranda. Tamu diarahkan ke /daftar, siswa yang
- * sudah login langsung ke halaman portal terkait.
+ * Tujuan tombol-tombol beranda. Tidak ada pendaftaran mandiri: tamu diajak
+ * berlangganan lewat WhatsApp atau masuk; siswa yang sudah login langsung ke
+ * halaman portal terkait.
  */
 export function useLandingNav() {
   const { status } = useAuth();
@@ -38,11 +40,11 @@ export function useLandingNav() {
   return {
     loggedIn,
     scrollTo,
-    /** "Mulai Perjalanan" */
-    mulaiTo: loggedIn ? ROUTES.portal : ROUTES.daftar,
+    /** "Berlangganan": WhatsApp dengan pesan template (brand.ts). */
+    subscribeHref: whatsappLink("berlangganan"),
     /** "Kenali Dirimu" */
-    kenaliTo: loggedIn ? ROUTES.analisisPotensi : ROUTES.daftar,
+    kenaliTo: loggedIn ? ROUTES.analisisPotensi : ROUTES.masuk,
     /** "Mulai Action Plan" */
-    actionPlanTo: loggedIn ? ROUTES.actionPlan : ROUTES.daftar,
+    actionPlanTo: loggedIn ? ROUTES.actionPlan : ROUTES.masuk,
   };
 }

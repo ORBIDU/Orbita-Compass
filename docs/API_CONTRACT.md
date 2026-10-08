@@ -38,10 +38,11 @@ Hasil pengecekan kode backend (2026-09-28):
 
 **Sementara di frontend:** `authService.getMe()` membuang `passwordHash` sebelum data disimpan ke state.
 
-### 1.2 Register menerima field `role` 🔴
-- `POST /auth/register` menerima `role` dari body, sehingga siapa pun bisa mendaftar sebagai `ADMIN`.
-- **Dibutuhkan:** abaikan `role` dari body. Register publik selalu `STUDENT`. Akun guru BK dan admin dibuat oleh admin.
-- **Frontend:** `RegisterPayload` tidak punya field `role`, dan body disusun satu per satu.
+### 1.2 Register terbuka untuk umum dan menerima field `role` 🔴
+- `POST /auth/register` bisa dipanggil siapa saja dan menerima `role` dari body, sehingga siapa pun bisa mendaftar sebagai `ADMIN`.
+- **Keputusan tim:** ORBIDU hanya untuk siswa yang sudah berlangganan. **Tidak ada pendaftaran mandiri**; semua akun dibuat admin (bagian 14).
+- **Dibutuhkan:** `POST /auth/register` **ditutup untuk publik**: wajib login sebagai `ADMIN` (`requireRole("ADMIN")`), atau dihapus dan diganti `POST /admin/students` (bagian 14.1). `role` tetap tidak boleh diambil mentah dari body siswa; admin yang menentukan peran lewat endpoint admin. Ini sekaligus menutup celah daftar sebagai `ADMIN`.
+- **Frontend:** halaman Daftar dan `authService.register` sudah dihapus. Frontend tidak memanggil `POST /auth/register` sama sekali.
 
 ### 1.3 Endpoint admin tidak memeriksa role 🔴
 - **Dibutuhkan:** middleware `requireRole("ADMIN")` untuk semua `/admin/*`, dan `requireRole("STUDENT" | "BK_TEACHER")` di endpoint yang sesuai.
@@ -65,9 +66,9 @@ Hasil pengecekan kode backend (2026-09-28):
 
 ### 2.2 Register mengisi nilai bawaan palsu 🟡
 - Jika tidak dikirim, backend mengisi `schoolName: "SMA Negeri 1 Jakarta"`, `grade: 12`, `majorTrack: "IPA"`, dan `city: "Jakarta"`.
-- Form Daftar di SPEK tidak menanyakan jurusan SMA, sehingga semua siswa baru tercatat "IPA".
-- **Dibutuhkan:** field yang tidak dikirim disimpan kosong (`null`), bukan diisi contoh. Jurusan SMA diisi sekolah atau admin.
-- **Mode dummy** saat ini meniru perilaku backend (mengisi "IPA").
+- Jurusan SMA tidak ditanyakan, sehingga semua siswa baru tercatat "IPA".
+- **Dibutuhkan:** field yang tidak dikirim disimpan kosong (`null`), bukan diisi contoh. Berlaku juga untuk akun buatan admin (bagian 14.1). Jurusan SMA diisi sekolah atau admin.
+- **Mode dummy:** akun demo tidak lagi dibuat lewat form Daftar (sudah dihapus).
 
 ### 2.3 Field profil yang belum ada 🔴
 > **Diperbarui di Fase 8:** bentuk lengkap dan aturan siapa yang boleh mengubah ada di **bagian 13**. Ringkasan di bawah dipertahankan sebagai riwayat.
@@ -107,25 +108,33 @@ Dibutuhkan oleh `/portal/profil` (SPEK bagian 11) dan sapaan Dashboard.
 - Field 🔒 hanya boleh diubah admin. `PUT /profile` dari siswa harus mengabaikannya.
 - **Alasan:** SPEK memisahkan data yang diisi sekolah (terkunci) dan data yang diisi siswa.
 
-### 2.4 Persetujuan orang tua/wali saat daftar 🔴
-Form Daftar (Fase 3) mewajibkan kotak "Aku dan orang tua/wali setuju dengan Syarat & Ketentuan serta Kebijakan Privasi ORBIDU." Pengguna ORBIDU siswa SMA yang sebagian besar belum dewasa, jadi persetujuan ini perlu bisa dibuktikan.
+### 2.4 Persetujuan orang tua/wali dan Syarat & Ketentuan 🔴
+Pengguna ORBIDU siswa SMA yang sebagian besar belum dewasa, jadi persetujuan perlu bisa dibuktikan. Karena akun dibuat admin (bagian 14), persetujuan **tidak lagi diberikan saat daftar**, melainkan saat **login pertama** di halaman Aktivasi (`/aktivasi`, SPEK bagian 3). Ada **dua persetujuan terpisah, keduanya wajib**:
+1. "Orang tua/wali sudah mengetahui dan menyetujui aku memakai ORBIDU."
+2. "Aku setuju dengan Syarat & Ketentuan dan Kebijakan Privasi ORBIDU."
 
-- Frontend **sudah mengirim** `parentConsent: true` di body `POST /auth/register`. Backend saat ini mengabaikannya (tidak disimpan, tidak divalidasi).
 - **Dibutuhkan:**
-  - `POST /auth/register` menolak pendaftaran siswa jika `parentConsent` bukan `true` → `400 { "error": "Parent consent is required", "code": "PARENT_CONSENT_REQUIRED" }`.
-  - Simpan di tabel `User` atau `StudentProfile`:
+  - Kolom di `User` (atau `StudentProfile`), masing-masing dengan waktunya sendiri:
     ```jsonc
     {
-      "parentConsent": true,
-      "parentConsentAt": "2026-09-30T07:36:06.154Z",  // diisi SERVER saat register, bukan dikirim browser
-      "termsVersion": "2026-09"                       // opsional: versi S&K yang disetujui
+      "parentConsentAt": "2026-10-09T07:36:06.154Z",  // null = belum
+      "termsAcceptedAt": "2026-10-09T07:36:06.154Z",  // null = belum
+      "termsVersion": "2026-10"                        // opsional: versi S&K yang disetujui
     }
     ```
-  - `GET /auth/me` ikut mengirim `parentConsent` dan `parentConsentAt`.
-- **Mode dummy** mencatat `parentConsentAt` (waktu daftar) di akun dummy.
+  - Endpoint untuk siswa yang sedang login:
+    ```
+    POST /auth/consent   ← { "parentConsent": true, "termsAccepted": true }
+                         → 204
+                         | 400 { "error": "Both consents are required", "code": "CONSENT_REQUIRED" }
+    ```
+    Waktu diisi **server**, bukan dikirim browser. Persetujuan yang sudah tercatat tidak ditimpa.
+  - `GET /auth/me` ikut mengirim `parentConsentAt` dan `termsAcceptedAt` (`null` kalau belum).
+  - Endpoint portal siswa sebaiknya menolak (`403`, `code: "ACTIVATION_REQUIRED"`) selama salah satu persetujuan masih `null` atau `mustChangePassword` masih `true`, supaya aturan ini tidak hanya dijaga frontend.
+- **Frontend:** halaman Aktivasi memanggil `POST /auth/consent`. Selama `/auth/me` belum mengirim kedua field ini, langkah ini **dilewati** di mode backend (`frontend/src/lib/activation.ts`). Mode dummy sudah menyimpan dua waktu persetujuan per akun (`parentConsentAt`, `termsAcceptedAt`). Status persetujuan orang tua/wali juga tampil di kartu Akun halaman Profil (bagian 13.3).
 
 ### 2.5 Reset password 🔴
-- Belum ada endpoint lupa/reset password. Sementara, "Lupa password?" di halaman Masuk mengarahkan ke WhatsApp ORBIDU dan tim mereset manual.
+- Belum ada endpoint lupa/reset password. Sementara, "Lupa password?" di halaman Masuk mengarahkan ke WhatsApp ORBIDU dan tim mereset manual. Setelah reset manual oleh admin, akun sebaiknya kembali diberi `mustChangePassword: true` (bagian 14.2).
 - **Usulan:** `POST /auth/forgot-password` `{ "email": "..." }` → selalu `200` (tidak membocorkan email terdaftar atau tidak), lalu `POST /auth/reset-password` `{ "token": "...", "password": "..." }` dengan token sekali pakai yang kedaluwarsa.
 
 ---
@@ -192,6 +201,8 @@ Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
 | Action Plan: pengaturan rencana, latihan harian buatan AI, hasil per latihan (lihat bagian 11) | 6 | 🔴 |
 | Siap SNBP: isian tersimpan, status eligible, nilai TKA, rasionalisasi dengan 2 pilihan prodi, daya tampung dan keketatan prodi (lihat bagian 12) | 7 | 🔴 |
 | Bank soal lengkap, soal tanpa kunci, paket tryout berurutan, riwayat latihan dan tryout, sesi latihan, timer tryout dari server (lihat bagian 12.4–12.6) | 7 | 🔴 |
+| Profil: data diri dari sekolah, nama panggilan, foto, ganti password (lihat bagian 13) | 8 | 🔴 |
+| Akun berlangganan: register khusus admin, admin membuat akun siswa (satuan/massal), wajib ganti password awal, dua persetujuan (lihat bagian 1.2, 2.4, 14) | 9 | 🔴 |
 
 ---
 
@@ -718,6 +729,7 @@ PUT  /admin/students/:userId/profile   ← { "name"?, "grade"?, "schoolName"?, "
 POST /admin/students/import            ← file Excel/CSV dari sistem sekolah (Dapodik/e-rapor)
                                        → { "updated": 120, "errors": [ { "row": 5, "message": "NISN tidak valid" } ] }
 ```
+Import ini sebaiknya digabung dengan pembuatan akun massal di bagian 14.1: satu file yang sama bisa membuat akun baru sekaligus mengisi data diri.
 
 ### 13.2 Siswa hanya boleh mengubah nickname, avatar, dan password 🔴
 - `PUT /profile` dari siswa **harus menolak** (atau mengabaikan) `schoolName`, `grade`, `majorTrack`, dan `city`. Sekarang siswa bisa mengubah semuanya lewat API, dan `PUT /profile` membuat profil dengan nilai bawaan palsu jika belum ada (bagian 2.2). Pengecualian: `targetPtnId`/`targetMajorId` (target prodi dari Siap SNBP, bagian 9.1) tetap boleh diubah siswa.
@@ -747,4 +759,46 @@ Data ini sensitif (kondisi ekonomi, kebutuhan khusus, buta warna) dan hanya bole
 - akses guru BK/wali kelas dibatasi ke siswa di sekolah/kelasnya.
 
 Frontend menyembunyikan dua bagian ini secara default (Tampilkan/Sembunyikan), tapi itu hanya untuk privasi di layar, bukan pengamanan data.
+
+---
+
+## 14. Akun berlangganan (Fase 9)
+
+**Keputusan tim:** ORBIDU hanya bisa diakses siswa yang sudah berlangganan. Akun dibuat admin (pihak ORBIDU atau sekolah, belum diputuskan), jadi **tidak ada pendaftaran mandiri**. Dipakai halaman Masuk dan Aktivasi (SPEK bagian 3). Service: `frontend/src/services/authService.ts` (`setFirstPassword`, `saveConsents`); aturan langkah: `frontend/src/lib/activation.ts`; contoh: akun `dimas@orbita.id` di `frontend/src/mocks/db.ts`.
+
+### 14.1 Admin membuat akun siswa 🔴
+Wajib `requireRole("ADMIN")` (atau peran sekolah baru dengan cek peran dan batas sekolahnya sendiri).
+```
+POST /admin/students
+← { "name": "Dimas Saputra", "email": "dimas@sekolah.sch.id", "schoolName": "SMA Negeri 1 Palembang",
+    "grade": 10, "city": "Palembang",
+    "initialPassword": "…"            // opsional; kalau kosong server membuat password acak
+  }
+→ 201 { "user": { "id": "…", "email": "…", "name": "…", "role": "STUDENT" },
+        "initialPassword": "…" }      // hanya dikirim sekali, untuk dibagikan ke siswa
+| 409 { "error": "User with this email already exists" }
+
+POST /admin/students/bulk             ← file CSV/Excel: name, email, schoolName, grade, city (boleh ditambah kolom data diri bagian 13.1)
+→ { "created": 118, "skipped": 2,
+    "accounts": [ { "row": 2, "email": "…", "initialPassword": "…" } ],
+    "errors":   [ { "row": 7, "message": "Email sudah terdaftar" } ] }
+```
+- Akun baru selalu `role: "STUDENT"`, `mustChangePassword: true`, `parentConsentAt: null`, `termsAcceptedAt: null`.
+- Password awal tidak pernah disimpan dalam bentuk asli; hanya dikirim sekali di respons pembuatan akun.
+- Profil siswa dibuat dari data admin, **tanpa** nilai bawaan palsu (bagian 2.2).
+- **Pertanyaan terbuka:** kalau langganan bisa berakhir, perlu kolom mis. `subscriptionEndsAt`. Login akun yang langganannya habis ditolak `403 { "code": "SUBSCRIPTION_INACTIVE" }`, dan frontend akan menampilkan ajakan berlangganan lagi.
+
+### 14.2 Wajib ganti password awal 🔴
+- Kolom baru `User.mustChangePassword` (boolean, default `true` untuk akun buatan admin). Dikirim di `GET /auth/me`.
+- Endpoint untuk siswa yang sedang login:
+  ```
+  POST /auth/first-password   ← { "newPassword": "…" }
+                              → 204
+                              | 400 { "error": "New password must differ from the initial password" }
+                              | 409 { "error": "Password already changed" }   // mustChangePassword sudah false
+  ```
+  Hanya berlaku selama `mustChangePassword` masih `true`; password lama tidak ditanya lagi karena baru saja dipakai untuk masuk. Server mengecek aturan password (min. 8 karakter, huruf dan angka) dan bahwa password baru **berbeda** dari password awal, lalu mengubah `mustChangePassword` menjadi `false`.
+- Setelah itu ganti password biasa memakai `PUT /auth/password` (bagian 13.3).
+- Setelah admin mereset password (bagian 2.5), `mustChangePassword` kembali `true`.
+- **Frontend:** halaman Aktivasi langkah 1. Selama `/auth/me` belum mengirim `mustChangePassword`, langkah ini dilewati di mode backend.
 

@@ -5,7 +5,7 @@ Di luar cakupan tahap ini: Konsultasi Guru BK, feedback, portal guru BK, wali ke
 ## Keputusan sementara (bisa diubah)
 - Nama brand resmi **ORBIDU** (sebelumnya ORBITA). Semua teks yang terlihat pengguna memakai `frontend/src/config/brand.ts`. Nama file, variabel, route, dan email akun demo (`siswa@orbita.id`, dll., harus sama dengan seed backend) tidak diubah.
 - Menu "Tryout" berganti nama menjadi **Persiapan**.
-- Halaman Daftar tetap ada untuk siswa (memakai `/auth/register`). Bisa berubah kalau nanti akun siswa dibuat sekolah.
+- **Tidak ada pendaftaran mandiri**: ORBIDU hanya untuk siswa yang sudah berlangganan, akun dibuat admin. Siapa yang membuat akun (tim ORBIDU atau sekolah) belum diputuskan, jadi teksnya netral dan disimpan di `frontend/src/content/common.ts` (`ACCOUNT_ACCESS`).
 - Tes gambaran minat bakat: 42 soal dalam 7 bagian, skala 1–5. Soal yang sudah ada di kode dipindah ke `frontend/src/data/asesmen.json`; soal final dari Bu Putri menyusul. Hasil diolah jadi 5 skor sesuai backend: technology, research, creativity, leadership, communication.
 - Prestasi langsung dihitung tanpa verifikasi guru.
 - Nilai TKA memakai skala 0–100 (perlu dicek ulang ke aturan resmi).
@@ -23,25 +23,25 @@ Saat naik kelas, status kembali ke `baru` dan hasil tes lama disimpan sebagai ri
 Buat panel kecil "Mode Demo" yang hanya muncul saat `VITE_USE_MOCK=true`, untuk berpindah status dan melihat semua kondisi halaman.
 
 ## Peta halaman
-Publik: `/` Landing, `/jurusan` Explore Jurusan, `/jurusan/:slug` Detail Jurusan, `/masuk`, `/daftar`.
+Publik: `/` Landing, `/jurusan` Explore Jurusan, `/jurusan/:slug` Detail Jurusan, `/masuk` (`/daftar` dialihkan ke sini). Setelah masuk: `/aktivasi` untuk login pertama.
 Portal (wajib login): `/portal` Dashboard, `/portal/analisis-potensi`, `/portal/compass`, `/portal/beasiswa`, `/portal/action-plan`, `/portal/persiapan/snbp`, `/portal/persiapan/:ujian` (tka, snbt, skd), `/portal/profil`.
 Kalau route yang sudah ada berbeda, usulkan penyesuaiannya di Fase 0.
 
 ## 1. Landing (`/`)
 Acuan desain: `docs/design/landing/Home-Desktop.dc.html` (1440px) dan `Home-Mobile.dc.html` (390px). Teks mengikuti desain persis dan disimpan di `frontend/src/content/landing.ts`, bukan di komponen. Nama, tagline, dan kontak diambil dari `frontend/src/config/brand.ts`.
 - Nama brand **ORBIDU**, tagline "The Smart Way to Shape Your Future". Nomor WhatsApp, email, Instagram, dan LinkedIn masih ditandai "BELUM DIPASTIKAN" di `brand.ts` dan wajib dicek sebelum rilis.
-- Header tanpa navbar: logo di kiri, tombol Daftar dan Masuk di kanan. Kalau sudah login, keduanya diganti satu tombol "Buka Portal".
+- Header tanpa navbar: logo di kiri, tombol **Berlangganan** (WhatsApp, pesan template `berlangganan` di `brand.ts`) dan **Masuk** di kanan. Kalau sudah login, keduanya diganti satu tombol "Buka Portal".
 - Urutan section:
-  1. **Hero**: "Hi, Bifriends!" (font aksen), judul, subjudul, CTA "Mulai Perjalanan" (tamu → `/daftar`, sudah login → `/portal`) dan "Kenali ORBIDU" (scroll ke section Masalah). Visual planet berbintang, orbit, lima chip langkah, dan maskot. Di bawahnya deretan logo kampus (masih placeholder).
+  1. **Hero**: "Hi, Bifriends!" (font aksen), judul, subjudul, CTA **"Berlangganan"** (tamu → WhatsApp; sudah login → "Buka Portal" ke `/portal`) dan "Kenali ORBIDU" (scroll ke section Masalah). Visual planet berbintang, orbit, lima chip langkah, dan maskot. Di bawahnya deretan logo kampus (masih placeholder).
   2. **Masalah**: "Masih bingung harus mulai dari mana?" dengan enam gelembung pertanyaan, lalu "Tenang, Bifriends!".
-  3. **Kenali Dirimu** (1 Potensi): CTA "Kenali Dirimu" (tamu → `/daftar`, sudah login → `/portal/analisis-potensi`).
+  3. **Kenali Dirimu** (1 Potensi): CTA "Kenali Dirimu" (tamu → `/masuk`, sudah login → `/portal/analisis-potensi`).
   4. **ORBIDU Compass** (2 Arah): Profil → Pilihan untuk dieksplorasi → Jalur yang bisa ditempuh.
   5. **Eksplorasi Pilihan** (3 Pilihan): carousel kartu jurusan dan tombol "Lihat Jurusan Lainnya" → `/jurusan`.
-  6. **Action Plan** (4 Persiapan): CTA "Mulai Action Plan" (tamu → `/daftar`, sudah login → `/portal/action-plan`).
-  7. **FAQ**: tiga kategori (Tentang ORBIDU, Untuk Bifriends, Untuk Sekolah) + tombol "Tanya lewat WhatsApp".
+  6. **Action Plan** (4 Persiapan): CTA "Mulai Action Plan" (tamu → `/masuk`, sudah login → `/portal/action-plan`).
+  7. **FAQ**: tiga kategori (Tentang ORBIDU, Untuk Bifriends, Untuk Sekolah) + tombol "Tanya lewat WhatsApp". "Bagaimana cara mendapatkan akun ORBIDU?" dijawab dengan teks `ACCOUNT_ACCESS` yang sama dengan halaman Masuk.
   8. **Final CTA** "Ready to find your orbit, Bifriends?" + tombol "Hadirkan ORBIDU di Sekolahmu" (WhatsApp), lalu **footer**.
-- Footer: Jelajahi (Beranda, Explore Jurusan, FAQ), Akun (Masuk, Mulai Perjalanan), Hubungi kami (email, Instagram, LinkedIn, lokasi), © tahun berjalan (otomatis). Link "Untuk Sekolah" dan "Tentang Kami" disembunyikan sampai halamannya dibuat.
-- Tombol **"Ayo konsultasi!"** dengan maskot melompat menempel di pojok kanan bawah layar (`position: fixed`) di semua halaman publik (beranda, `/jurusan`, `/jurusan/:slug`) dan membuka WhatsApp. Tidak tampil di halaman Masuk/Daftar dan portal.
+- Footer: Jelajahi (Beranda, Explore Jurusan, FAQ), Akun (Masuk, Berlangganan), Hubungi kami (email, Instagram, LinkedIn, lokasi), © tahun berjalan (otomatis). Link "Untuk Sekolah" dan "Tentang Kami" disembunyikan sampai halamannya dibuat.
+- Tombol **"Ayo konsultasi!"** dengan maskot melompat menempel di pojok kanan bawah layar (`position: fixed`) di semua halaman publik (beranda, `/jurusan`, `/jurusan/:slug`) dan membuka WhatsApp. Tidak tampil di halaman Masuk/Aktivasi dan portal.
 - **Carousel jurusan** digeser dengan tombol panah dan swipe, tanpa scrollbar horizontal maupun vertikal yang terlihat. Desktop: 4 kartu per halaman. HP: 1 kartu dengan sebagian kartu berikutnya terlihat. Kartu membuka `/jurusan/:slug`.
 - **MascotSlot**: maskot hero versi SVG dari desain. Desktop: mata mengikuti kursor. HP: menoleh ke titik sentuhan. Semua animasi mati jika `prefers-reduced-motion`. Nanti diganti model 3D tanpa mengubah halaman.
 - Font aksen Pecita, dengan Caveat sebagai cadangan sampai file Pecita tersedia.
@@ -51,26 +51,32 @@ Acuan desain: `docs/design/landing/Home-Desktop.dc.html` (1440px) dan `Home-Mobi
 Acuan desain detail: `docs/design/landing/Jurusan-Detail.dc.html` (desktop).
 - Katalog jurusan dikelompokkan **per nama jurusan** (bukan per kampus), masing-masing punya `slug`. Konten dari `JurusanPage` lama dipindah ke `frontend/src/mocks/` (tanpa persentase "match", perkiraan gaji, dan daftar alumni karena tidak bisa dipertanggungjawabkan).
 - `/jurusan`: grid kartu jurusan yang sama dengan carousel beranda, dengan **pencarian** dan **filter bidang**. Chip filter turun ke baris baru kalau tidak muat (tidak digeser). Tanpa filter kota atau jenis kampus. Tanpa scroll horizontal.
-- `/jurusan/:slug`: sesuai desain detail (tentang jurusan, apa yang dipelajari, prospek karier, kampus yang membuka, mapel pendukung, jalur masuk, ajakan "Cocok nggak sih buatku?", jurusan lain yang mirip). Harus responsif walaupun desain HP-nya belum ada.
+- `/jurusan/:slug`: sesuai desain detail (tentang jurusan, apa yang dipelajari, prospek karier, kampus yang membuka, mapel pendukung, jalur masuk, ajakan "Cocok nggak sih buatku?" (tamu: tombol "Berlangganan" ke WhatsApp + link "Sudah punya akun? Masuk"), jurusan lain yang mirip). Harus responsif walaupun desain HP-nya belum ada.
 - Daftar **"Kampus yang membuka jurusan ini"** diambil dari `ptnService`, dengan **filter jenis kampus** (PTN, PTS, Kedinasan, PTLN) dan **filter kota**.
 - Kalau siswa sudah login dan sudah asesmen, kartu jurusan menampilkan **label kecocokan dari Compass** ("Sangat sesuai" atau "Sesuai"), bukan persentase.
 - Foto jurusan belum ada: tampil sampul berwarna dengan ikon per bidang. Field `imageUrl` sudah disiapkan untuk foto asli.
 - Tombol konsultasi di HP: gelembung teks tampil beberapa detik saat halaman dibuka, lalu mengecil jadi maskot saja supaya tidak menutupi konten. Di desktop gelembung selalu tampil.
 - Data: backend belum punya katalog per nama jurusan beserta deskripsi, mapel pendukung, dan prospek karier, juga belum punya data PTS dan PTLN → dummy + catat di `docs/API_CONTRACT.md`.
 
-## 3. Masuk & Daftar (`/masuk`, `/daftar`)
-Acuan desain: `docs/design/auth/Auth-Desktop.dc.html` (1440px) dan `Auth-Mobile.dc.html` (390px). `Brief-Animasi.dc.html` hanya untuk tim animasi. Teks disimpan di `frontend/src/content/auth.ts`.
-- Satu halaman (`AuthPage`) untuk dua route. Tombol **Masuk | Daftar** di atas form dan link di bawah form mengganti URL antara `/masuk` dan `/daftar` tanpa reload. Halaman asal (dari `RequireAuth`) ikut terbawa, jadi setelah login siswa kembali ke halaman yang tadi dibuka.
-- **Desktop (≥1024px)**: kiri 65% berisi `AuthVideoSlot` setinggi layar (logo ke beranda di kiri atas, "Hi, Bifriends! / Setiap siswa punya orbitnya sendiri." di kiri bawah), kanan 35% berisi form.
-- **HP dan tablet**: `AuthVideoSlot` menjadi banner 240px di atas form, dengan tombol kembali ke beranda dan logo. Lebar form dibatasi 440px.
-- **`AuthVideoSlot`**: video autoplay, muted, loop, playsInline, object-fit cover, dengan poster. Path video dan poster (versi desktop dan HP) diatur di `frontend/src/config/authMedia.ts`. Selama file belum ada, tampil ilustrasi maskot, orbit, dan bintang dari desain. Jika `prefers-reduced-motion`, video tidak diputar: yang tampil poster (atau ilustrasi diam). Video gagal dimuat → poster/ilustrasi. Hanya satu versi video yang dipasang sesuai lebar layar.
-- **Masuk**: email dan password (bisa ditampilkan/disembunyikan). "Lupa password?" membuka info bahwa reset password sementara dilakukan lewat WhatsApp ORBIDU (link dari `brand.ts`).
-- **Daftar**: nama lengkap, email, password (minimal 8 karakter), nama sekolah, kelas (tombol 10/11/12), kota, dan kotak persetujuan orang tua/wali yang wajib dicentang. Body sama dengan `POST /auth/register` (`name, email, password, schoolName, grade, city`) ditambah `parentConsent`. Field `role` tidak pernah dikirim.
-- **Validasi**: pesan per field di bawah input dan fokus pindah ke field salah paling atas. Error dari server tampil di banner merah `role="alert"` ("Email atau password salah.", "Email ini sudah terdaftar.") dan input email diberi border merah. Tombol kirim menampilkan status loading dan tidak bisa diklik dua kali.
-- **Aksesibilitas**: label di setiap input, autocomplete (`name`, `email`, `current-password`, `new-password`), `aria-pressed` di tombol mode dan tombol kelas, cincin fokus kuning.
-- Setelah berhasil → `/portal` (atau halaman asal). Kalau status `baru` (termasuk akun yang baru daftar), langsung ke Analisis Potensi.
+## 3. Masuk dan Aktivasi akun (`/masuk`, `/aktivasi`)
+Acuan desain: `docs/design/auth/Auth-Desktop.dc.html` (1440px) dan `Auth-Mobile.dc.html` (390px); bagian Daftar di desain tidak dipakai lagi (lihat README folder itu). `Brief-Animasi.dc.html` hanya untuk tim animasi. Teks disimpan di `frontend/src/content/auth.ts`; teks cara mendapatkan akun di `frontend/src/content/common.ts` (`ACCOUNT_ACCESS`).
+- **Tidak ada pendaftaran mandiri.** ORBIDU hanya untuk siswa yang sudah berlangganan; akun dibuat admin (API_CONTRACT bagian 14). `/daftar` dialihkan ke `/masuk` (halaman asal ikut terbawa).
+- **Kerangka (`AuthLayout`, dipakai Masuk dan Aktivasi)**:
+  - Desktop (≥1024px): kiri 65% berisi `AuthVideoSlot` setinggi layar (logo ke beranda di kiri atas, "Hi, Bifriends! / Setiap siswa punya orbitnya sendiri." di kiri bawah), kanan 35% berisi form.
+  - HP dan tablet: `AuthVideoSlot` menjadi banner 240px di atas form, dengan tombol kembali ke beranda dan logo. Lebar form dibatasi 440px.
+  - `AuthVideoSlot`: video autoplay, muted, loop, playsInline, object-fit cover, dengan poster. Path video dan poster (versi desktop dan HP) diatur di `frontend/src/config/authMedia.ts`. Selama file belum ada, tampil ilustrasi maskot, orbit, dan bintang dari desain. Jika `prefers-reduced-motion`, video tidak diputar: yang tampil poster (atau ilustrasi diam). Video gagal dimuat → poster/ilustrasi. Hanya satu versi video yang dipasang sesuai lebar layar.
+- **Masuk**: email dan password (bisa ditampilkan/disembunyikan). "Lupa password?" membuka info bahwa reset password sementara dilakukan lewat WhatsApp ORBIDU (link dari `brand.ts`). Di bawah form: "Akunmu dibuat setelah berlangganan. Belum punya akun? **Hubungi tim ORBIDU**." (link WhatsApp dengan pesan berlangganan). Mode dummy menampilkan akun demo `siswa@orbita.id` (siswa aktif) dan `dimas@orbita.id` (login pertama), password `password123`.
+- **Aktivasi (`/aktivasi`), login pertama**: akun dibuat admin dengan password awal, jadi sebelum membuka portal siswa wajib:
+  1. **Ganti password**: password baru dan ulangi. Minimal 8 karakter, campuran huruf dan angka (aturan sama dengan Profil, `frontend/src/lib/password.ts`), dan berbeda dari password awal (dicek server).
+  2. **Dua persetujuan terpisah, keduanya wajib**: "Orang tua/wali sudah mengetahui dan menyetujui aku memakai ORBIDU." dan "Aku setuju dengan Syarat & Ketentuan dan Kebijakan Privasi ORBIDU." (teks tebal biasa sampai halamannya ada). Waktu masing-masing dicatat server.
+  - Langkah yang sudah beres dilewati ("Langkah 1 dari 2", "Langkah 2 dari 2"). Saat pindah langkah, fokus pindah ke judul baru. Ada tombol "Bukan akunmu? Keluar".
+  - Selama aktivasi belum selesai, semua halaman portal (dan `/masuk`) diarahkan ke `/aktivasi` (`RequireAuth`, `frontend/src/lib/activation.ts`).
+  - **Mode backend**: backend belum mengirim `mustChangePassword`, `parentConsentAt`, dan `termsAcceptedAt`. Selama field itu tidak ada, aktivasi dilewati dan akun langsung masuk portal.
+- **Validasi**: pesan per field di bawah input dan fokus pindah ke field salah paling atas. Error dari server tampil di banner merah `role="alert"` ("Email atau password salah.") dan input email diberi border merah. Tombol kirim menampilkan status loading dan tidak bisa diklik dua kali.
+- **Aksesibilitas**: label di setiap input dan kotak centang, autocomplete (`email`, `current-password`, `new-password`), cincin fokus kuning.
+- Setelah berhasil masuk (dan aktivasi selesai) → `/portal` atau halaman asal. Kalau status `baru`, langsung ke Analisis Potensi.
 - Tombol konsultasi tidak tampil di halaman ini.
-- Data: backend belum menyimpan persetujuan orang tua/wali dan belum punya reset password → dicatat di `docs/API_CONTRACT.md` bagian 2.4 dan 2.5.
+- Data: kebutuhan backend (register khusus admin, pembuatan akun siswa, penanda ganti password, persetujuan) → `docs/API_CONTRACT.md` bagian 1.2, 2.4, 2.5, dan 14.
 
 ## 4. Kerangka portal
 Acuan desain: `docs/design/portal/PortalHeader.dc.html` (desktop) dan menu bawah di `Portal-Dashboard-HP.dc.html`.
@@ -245,7 +251,7 @@ Acuan desain: `docs/design/portal/Portal-Profil.dc.html`. Teks di `frontend/src/
 - [x] Fase 0 — Audit frontend (tanpa mengubah kode)
 - [x] Fase 1 — Fondasi: design token, lapisan services + mocks + saklar dummy, status siswa + Mode Demo, routing, kerangka portal, API_CONTRACT.md awal
 - [x] Fase 2 — Landing + Explore Jurusan
-- [x] Fase 3 — Masuk & Daftar
+- [x] Fase 3 — Masuk & Daftar (Daftar dihapus, diganti Aktivasi akun saat login pertama)
 - [x] Fase 4 — Dashboard + Analisis Potensi
 - [x] Fase 5 — ORBIDU Compass + Explore Beasiswa
 - [x] Fase 6 — Action Plan
@@ -255,7 +261,9 @@ Acuan desain: `docs/design/portal/Portal-Profil.dc.html`. Teks di `frontend/src/
 
 ## Sebelum rilis
 Hal yang sengaja ditunda dan wajib dibereskan sebelum ORBIDU dipakai siswa:
-- Halaman **Syarat & Ketentuan** dan **Kebijakan Privasi** wajib dibuat. Setelah itu, teks keduanya di kotak persetujuan form Daftar (`AUTH_FIELDS.consent` di `frontend/src/content/auth.ts`, sekarang teks tebal biasa) diubah menjadi link.
+- Halaman **Syarat & Ketentuan** dan **Kebijakan Privasi** wajib dibuat. Setelah itu, teks keduanya di kotak persetujuan halaman Aktivasi (`AKTIVASI.consent.terms` di `frontend/src/content/auth.ts`, sekarang teks tebal biasa) diubah menjadi link.
+- Nomor WhatsApp resmi wajib diisi di `brand.ts` sebelum tombol **Berlangganan** bisa dipakai (sekarang masih nomor contoh).
+- Backend: register khusus admin, endpoint admin membuat akun siswa (satuan dan massal), penanda `mustChangePassword`, dan penyimpanan dua persetujuan (`docs/API_CONTRACT.md` bagian 1.2, 2.4, 14). Setelah itu alur Aktivasi juga berjalan di mode backend.
 - Nomor WhatsApp, email, Instagram, dan LinkedIn bertanda "BELUM DIPASTIKAN" di `frontend/src/config/brand.ts` wajib dicek (dipakai juga oleh "Lupa password?").
 - Backend menyimpan persetujuan orang tua/wali beserta waktunya (`docs/API_CONTRACT.md` bagian 2.4).
 - Ganti soal placeholder di `frontend/src/data/asesmen.json` dengan 42 soal final dari Bu Putri (ubah `status` menjadi `"final"`), lalu pastikan jumlah bagian/soal yang disebut di beranda (`frontend/src/content/landing.ts`), FAQ, dan Dashboard ("7 bagian, bisa dicicil") sesuai.

@@ -4,12 +4,13 @@ import PortalLayout from "@/layouts/PortalLayout";
 import AuthLayout from "@/layouts/AuthLayout";
 import AdaptiveLayout from "@/layouts/AdaptiveLayout";
 import PageLoader from "@/components/ui/PageLoader";
-import { GuestOnly, RequireAuth } from "@/routes/guards";
+import { DaftarRedirect, GuestOnly, RequireAuth } from "@/routes/guards";
 
 const LandingPage = lazy(() => import("@/app/LandingPage"));
 const ProfilPage = lazy(() => import("@/app/ProfilPage"));
 
 const AuthPage = lazy(() => import("@/app/AuthPage"));
+const AktivasiPage = lazy(() => import("@/app/AktivasiPage"));
 const DashboardPage = lazy(() => import("@/app/DashboardPage"));
 const AnalisisPotensiPage = lazy(() => import("@/app/AnalisisPotensiPage"));
 const CompassPage = lazy(() => import("@/app/CompassPage"));
@@ -46,19 +47,19 @@ export const router = createBrowserRouter([
     children: [
       {
         element: <AuthLayout />,
-        children: [
-          // Satu komponen untuk dua mode: berpindah Masuk ↔ Daftar tanpa reload.
-          { path: "/masuk", element: <AuthPage mode="masuk" /> },
-          { path: "/daftar", element: <AuthPage mode="daftar" /> },
-        ],
+        children: [{ path: "/masuk", element: <AuthPage /> }],
       },
     ],
   },
+  // Akun dibuat setelah berlangganan; tidak ada pendaftaran mandiri.
+  { path: "/daftar", element: <DaftarRedirect /> },
 
   // ── Portal (wajib login) ──────────────────────────────────────────────────
   {
     element: <RequireAuth />,
     children: [
+      // Login pertama: ganti password awal dan persetujuan, sebelum portal.
+      { element: <AuthLayout />, children: [{ path: "/aktivasi", element: <AktivasiPage /> }] },
       {
         path: "/portal",
         element: <PortalLayout />,

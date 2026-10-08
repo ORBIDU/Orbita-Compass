@@ -18,6 +18,7 @@ import {
 import type { CareerIcon, FitLabel, JurusanDetail, JurusanSummary } from "@/types/jurusan";
 import { BIDANG, COVER_CLASSES } from "@/config/bidang";
 import { ROUTES } from "@/config/navigation";
+import { whatsappLink } from "@/config/brand";
 import { JALUR_INFO, JURUSAN_DETAIL as T } from "@/content/jurusan";
 import { getJurusanDetail, getSimilarJurusan } from "@/services/jurusanService";
 import { useAuth } from "@/context/AuthContext";
@@ -81,14 +82,33 @@ function FitCta({ jurusan, fit }: { jurusan: JurusanDetail; fit: FitLabel | unde
   const { status } = useStudentStatus();
   const loggedIn = authStatus === "authenticated";
 
+  const buttonClass =
+    "mt-1.5 flex h-[50px] items-center justify-center gap-2 rounded-xl bg-gradient-sun-x px-4 text-center text-[15px] font-semibold text-space-2 transition hover:brightness-105";
+
+  // Tamu: tidak ada pendaftaran mandiri, jadi ajak berlangganan (WhatsApp) atau masuk.
+  if (!loggedIn) {
+    return (
+      <div className="relative flex flex-col gap-3 overflow-hidden rounded-[20px] bg-gradient-to-b from-space-1 to-space-2 p-5 sm:p-6">
+        <p className="font-accent text-[26px] font-bold leading-[1.1] text-sun-2">{T.cta.accent}</p>
+        <p className="text-[15px] leading-[1.65] text-night-sub">{T.cta.guestBody(jurusan.name)}</p>
+        <a href={whatsappLink("berlangganan")} target="_blank" rel="noopener noreferrer" className={buttonClass}>
+          {T.cta.guestButton}
+          <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
+        </a>
+        <p className="text-center text-sm text-night-sub">
+          {T.cta.guestLoginText}{" "}
+          <Link to={ROUTES.masuk} className="rounded font-semibold text-night-light underline-offset-2 hover:underline">
+            {T.cta.guestLogin}
+          </Link>
+        </p>
+      </div>
+    );
+  }
+
   let body: string;
   let to: string;
   let label: string;
-  if (!loggedIn) {
-    body = T.cta.guestBody(jurusan.name);
-    to = ROUTES.daftar;
-    label = T.cta.guestButton;
-  } else if (status === "baru" || status === null) {
+  if (status === "baru" || status === null) {
     body = T.cta.baruBody(jurusan.name);
     to = ROUTES.analisisPotensi;
     label = T.cta.baruButton;
@@ -102,10 +122,7 @@ function FitCta({ jurusan, fit }: { jurusan: JurusanDetail; fit: FitLabel | unde
     <div className="relative flex flex-col gap-3 overflow-hidden rounded-[20px] bg-gradient-to-b from-space-1 to-space-2 p-5 sm:p-6">
       <p className="font-accent text-[26px] font-bold leading-[1.1] text-sun-2">{T.cta.accent}</p>
       <p className="text-[15px] leading-[1.65] text-night-sub">{body}</p>
-      <Link
-        to={to}
-        className="mt-1.5 flex h-[50px] items-center justify-center gap-2 rounded-xl bg-gradient-sun-x px-4 text-center text-[15px] font-semibold text-space-2 transition hover:brightness-105"
-      >
+      <Link to={to} className={buttonClass}>
         {label}
         <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
       </Link>

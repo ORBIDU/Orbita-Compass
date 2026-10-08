@@ -13,7 +13,7 @@ import type { AsesmenAnswers, AsesmenDraft, AssessmentHistoryEntry } from "@/typ
 import type { CompassTarget } from "@/types/compass";
 import type { SnbpDraft } from "@/types/snbp";
 import type { SchoolProfile } from "@/types/profil";
-import { BUDI_SCHOOL_PROFILE, SISWA_SCHOOL_PROFILE } from "./data/profil";
+import { BUDI_SCHOOL_PROFILE, EMPTY_SCHOOL_PROFILE, SISWA_SCHOOL_PROFILE } from "./data/profil";
 import { simulateCompass } from "./compassEngine";
 import type { PlanState } from "./actionPlanEngine";
 import { demoPlanState } from "./data/actionPlan";
@@ -79,8 +79,15 @@ export interface MockAccount {
   schoolProfile: SchoolProfile;
   /** Isian dan hasil terakhir Siap SNBP (API_CONTRACT 12.1). */
   snbp: SnbpDraft | null;
-  /** Waktu persetujuan orang tua/wali saat daftar (belum ada di backend, lihat docs/API_CONTRACT.md). */
+  /**
+   * Akun dibuat admin dengan password awal; siswa wajib menggantinya saat
+   * pertama masuk (API_CONTRACT 14.2).
+   */
+  mustChangePassword?: boolean;
+  /** Waktu siswa mencentang "Orang tua/wali sudah mengetahui dan menyetujui…" (API_CONTRACT 2.4). */
   parentConsentAt?: string | null;
+  /** Waktu siswa menyetujui Syarat & Ketentuan dan Kebijakan Privasi (API_CONTRACT 2.4). */
+  termsAcceptedAt?: string | null;
 }
 
 /**
@@ -111,7 +118,8 @@ const STORAGE_KEY = "orbita_mock_db";
 // v10 (Tahap 7C): sesi latihan dan percobaan tryout dari bank soal contoh.
 // v11: riwayat tryout contoh dengan kenaikan yang wajar.
 // v12 (Fase 8): data diri dari sekolah, sekolah demo di Palembang.
-const DB_VERSION = 12;
+// v13: akun dibuat admin (tanpa daftar mandiri), akun demo login pertama, dua persetujuan.
+const DB_VERSION = 13;
 
 const SEED_DATE = "2026-07-01T08:00:00.000Z";
 
@@ -241,7 +249,9 @@ function seed(): MockDb {
     savedScholarships: ["kip-kuliah"],
     snbp: null,
     schoolProfile: structuredClone(SISWA_SCHOOL_PROFILE),
+    mustChangePassword: false,
     parentConsentAt: "2026-08-12T08:00:00.000Z",
+    termsAcceptedAt: "2026-08-12T08:00:00.000Z",
     actionPlan: demoPlanState(new Date()),
     actionPlanStash: null,
     practiceLog: demoTryout.log,
@@ -290,7 +300,56 @@ function seed(): MockDb {
     savedScholarships: [],
     snbp: null,
     schoolProfile: structuredClone(BUDI_SCHOOL_PROFILE),
+    mustChangePassword: false,
+    parentConsentAt: "2026-07-20T08:00:00.000Z",
+    termsAcceptedAt: "2026-07-20T08:00:00.000Z",
+  };
+
+  // Akun yang baru dibuat admin: belum pernah masuk, jadi wajib ganti password
+  // awal dan mengisi dua persetujuan dulu (halaman /aktivasi).
+  const dimasProfile = profileOf("user-dimas", {
+    schoolName: "SMA Negeri 1 Palembang",
+    grade: 10,
+    majorTrack: "IPA",
+    city: "Palembang",
+    targetPtnId: null,
+    targetMajorId: null,
+    nickname: null,
+  });
+  const dimas: MockAccount = {
+    id: "user-dimas",
+    email: "dimas@orbita.id",
+    password: "password123",
+    name: "Dimas Saputra",
+    role: "STUDENT",
+    avatarUrl: null,
+    createdAt: SEED_DATE,
+    updatedAt: SEED_DATE,
+    profile: dimasProfile,
+    status: "baru",
+    academicRecords: [],
+    achievements: [],
+    reflection: null,
+    assessment: null,
+    compassAnalysis: null,
+    actionPlan: null,
+    actionPlanStash: null,
+    practiceLog: structuredClone(EMPTY_PRACTICE_LOG),
+    practiceSessions: {},
+    tryoutAttempts: {},
+    practiceStash: null,
+    assessmentDraft: null,
+    assessmentAnswers: null,
+    assessmentGrade: null,
+    assessmentHistory: [],
+    compassTarget: null,
+    inputsUpdatedAt: null,
+    savedScholarships: [],
+    snbp: null,
+    schoolProfile: structuredClone(EMPTY_SCHOOL_PROFILE),
+    mustChangePassword: true,
     parentConsentAt: null,
+    termsAcceptedAt: null,
   };
 
   // Akun demo yang sudah asesmen dianggap sudah pernah membuka Compass,
@@ -306,7 +365,7 @@ function seed(): MockDb {
     }
   }
 
-  return { version: DB_VERSION, accounts: [siswa, budi] };
+  return { version: DB_VERSION, accounts: [siswa, budi, dimas] };
 }
 
 let cache: MockDb | null = null;
@@ -344,11 +403,6 @@ export function findAccountById(id: string): MockAccount | undefined {
 export function findAccountByEmail(email: string): MockAccount | undefined {
   const target = email.trim().toLowerCase();
   return load().accounts.find((a) => a.email.toLowerCase() === target);
-}
-
-export function insertAccount(account: MockAccount): void {
-  load().accounts.push(account);
-  save();
 }
 
 /** Ubah akun lalu simpan. */

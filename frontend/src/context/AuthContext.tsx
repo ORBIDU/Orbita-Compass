@@ -1,7 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { MeUser } from "@/types/backend";
 import * as authService from "@/services/authService";
-import type { RegisterPayload } from "@/services/authService";
 import { ApiError } from "@/services/http";
 
 /** loading = sedang memeriksa sesi yang tersimpan saat halaman dibuka. */
@@ -13,7 +12,6 @@ interface AuthContextValue {
   /** Pesan jika sesi lama gagal dipulihkan karena server tidak bisa dihubungi. */
   sessionError: string | null;
   login: (email: string, password: string) => Promise<MeUser>;
-  register: (payload: RegisterPayload) => Promise<MeUser>;
   logout: () => void;
   /** Ambil ulang data user, misalnya setelah profil atau status berubah. */
   refreshUser: () => Promise<void>;
@@ -68,23 +66,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return me;
   }, []);
 
-  const register = useCallback(async (payload: RegisterPayload) => {
-    await authService.register(payload);
-    const me = await authService.getMe();
-    setUser(me);
-    setSessionError(null);
-    setStatus("authenticated");
-    return me;
-  }, []);
-
   const refreshUser = useCallback(async () => {
     const me = await authService.getMe();
     setUser(me);
   }, []);
 
   const value = useMemo<AuthContextValue>(
-    () => ({ status, user, sessionError, login, register, logout, refreshUser }),
-    [status, user, sessionError, login, register, logout, refreshUser],
+    () => ({ status, user, sessionError, login, logout, refreshUser }),
+    [status, user, sessionError, login, logout, refreshUser],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
