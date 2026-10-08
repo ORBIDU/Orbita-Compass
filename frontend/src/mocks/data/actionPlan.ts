@@ -14,6 +14,8 @@ import {
 // fokus SNBT dan TKA. Riwayat 14–30 September sama dengan desain (Jumat 25
 // September belum selesai). Hari ini selalu 5 latihan, 2 selesai dan 1 sedang
 // dikerjakan (sama dengan kartu Dashboard), kalau hari ini hari belajar.
+// Jawaban per soal tidak disimpan di sini; mocks/practiceServer.ts menyusunnya
+// dari bank contoh saat pembahasan dibuka, sesuai jumlah benar.
 
 export const DEMO_PLAN_START = "2026-09-14";
 
@@ -25,27 +27,27 @@ export const DEMO_PLAN_INPUT: PlanSettingsInput = {
   minutesPerDay: 60,
 };
 
-/** [kategori, subtes/mapel, jumlah benar (null = belum dikerjakan)] */
+/** [kategori, subtes/mapel, jumlah benar dari 5 soal (null = belum dikerjakan)] */
 type DemoItem = [PlanCategory, string, number | null];
 
 const HISTORY: Record<string, DemoItem[]> = {
-  "2026-09-14": [["SNBT", "PU", 14], ["TKA", "Matematika", 9]],
-  "2026-09-16": [["SNBT", "PK", 13], ["SNBT", "LBI", 15]],
-  "2026-09-18": [["SNBT", "PM", 15], ["TKA", "Bahasa Inggris", 10]],
-  "2026-09-20": [["SNBT", "LBE", 11], ["SNBT", "PBM", 14]],
-  "2026-09-21": [["SNBT", "PPU", 13], ["TKA", "Bahasa Indonesia", 12]],
-  "2026-09-23": [["SNBT", "PU", 15], ["SNBT", "LBE", 12]],
+  "2026-09-14": [["SNBT", "PU", 4], ["TKA", "Matematika", 3]],
+  "2026-09-16": [["SNBT", "PK", 3], ["SNBT", "LBI", 4]],
+  "2026-09-18": [["SNBT", "PM", 4], ["TKA", "Bahasa Inggris", 3]],
+  "2026-09-20": [["SNBT", "LBE", 3], ["SNBT", "PBM", 4]],
+  "2026-09-21": [["SNBT", "PPU", 3], ["TKA", "Bahasa Indonesia", 4]],
+  "2026-09-23": [["SNBT", "PU", 4], ["SNBT", "LBE", 3]],
   "2026-09-25": [["SNBT", "PK", null], ["TKA", "Fisika", null]],
-  "2026-09-27": [["SNBT", "PM", 16], ["TKA", "Matematika", 11]],
-  "2026-09-28": [["SNBT", "PU", 15], ["TKA", "Bahasa Indonesia", 12], ["SNBT", "PK", 14]],
-  "2026-09-30": [["SNBT", "PM", 16], ["SNBT", "LBE", 13], ["TKA", "Matematika", 11], ["SNBT", "PU", 15], ["TKA", "Bahasa Inggris", 10]],
+  "2026-09-27": [["SNBT", "PM", 4], ["TKA", "Matematika", 4]],
+  "2026-09-28": [["SNBT", "PU", 4], ["TKA", "Bahasa Indonesia", 4], ["SNBT", "PK", 4]],
+  "2026-09-30": [["SNBT", "PM", 4], ["SNBT", "LBE", 3], ["TKA", "Matematika", 4], ["SNBT", "PU", 4], ["TKA", "Bahasa Inggris", 3]],
 };
 
-/** Hari ini: 2 selesai, 1 sedang dikerjakan (6 soal), 2 belum. */
+/** Hari ini: 2 selesai, 1 sedang dikerjakan (2 soal sudah dijawab), 2 belum. */
 const TODAY: { item: DemoItem; answered: number }[] = [
-  { item: ["SNBT", "PM", 16], answered: 20 },
-  { item: ["SNBT", "LBE", 13], answered: 20 },
-  { item: ["TKA", "Matematika", null], answered: 6 },
+  { item: ["SNBT", "PM", 4], answered: 5 },
+  { item: ["SNBT", "LBE", 3], answered: 5 },
+  { item: ["TKA", "Matematika", null], answered: 2 },
   { item: ["SNBT", "PU", null], answered: 0 },
   { item: ["TKA", "Bahasa Inggris", null], answered: 0 },
 ];

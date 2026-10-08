@@ -90,7 +90,7 @@ function PracticeRow({ p, locked, opensOn }: { p: PlanPractice; locked: boolean;
         </span>
       ) : (
         <Link
-          to={practiceUrl(p.category)}
+          to={practiceUrl(p)}
           className={`col-start-2 inline-flex h-10 items-center justify-center justify-self-start whitespace-nowrap rounded-[10px] border-[1.5px] px-4 text-[13px] font-semibold sm:col-start-3 lg:col-start-2 xl:col-start-3 ${
             done ? "border-rim bg-white text-orbit-1 hover:bg-surface-sky" : "border-orbit-1 bg-orbit-1 text-white hover:brightness-95"
           }`}

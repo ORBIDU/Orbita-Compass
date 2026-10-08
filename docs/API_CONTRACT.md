@@ -53,7 +53,7 @@ Hasil pengecekan kode backend (2026-09-28):
 ### 1.5 Kunci jawaban ikut terkirim 🔴
 - `GET /ptn/practice/questions` mengirim `answerIndex`.
 - **Dibutuhkan:** soal dikirim tanpa kunci. Penilaian dan pembahasan dikirim oleh backend **setelah** jawaban disubmit (lihat 5.2).
-- **Frontend:** tidak pernah menampilkan kunci sebelum soal disubmit.
+- **Frontend:** tidak pernah menampilkan kunci sebelum soal disubmit. Halaman pengerjaan hanya menerima soal tanpa kunci; bentuk endpoint pengganti di bagian 12.5–12.6. Sementara `GET /ptn/practice/questions` tidak dipakai.
 
 ---
 
@@ -189,7 +189,7 @@ Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
 | Data beasiswa (daftar, filter, detail, simpan; lihat bagian 10) | 5 | 🔴 |
 | Action Plan: pengaturan rencana, latihan harian buatan AI, hasil per latihan (lihat bagian 11) | 6 | 🔴 |
 | Siap SNBP: isian tersimpan, status eligible, nilai TKA, rasionalisasi dengan 2 pilihan prodi, daya tampung dan keketatan prodi (lihat bagian 12) | 7 | 🔴 |
-| Bank soal lengkap, soal tanpa kunci, paket tryout berurutan, riwayat latihan dan tryout (lihat bagian 12.4) | 7 | 🔴 |
+| Bank soal lengkap, soal tanpa kunci, paket tryout berurutan, riwayat latihan dan tryout, sesi latihan, timer tryout dari server (lihat bagian 12.4–12.6) | 7 | 🔴 |
 
 ---
 
@@ -308,8 +308,8 @@ Kartu Performa Dashboard dihitung frontend dari sumber yang sama dengan Siap SNB
 ```
 GET /practice/summary
 → {
-    "snbt": { "label": "Tryout #1", "completedAt": "2026-09-26T09:00:00Z", "score": 624, "previousScore": 606,
-              "subtests": { "PU": 690, "PPU": 650, "PBM": 610, "PK": 640, "LBI": 600, "LBE": 520, "PM": 660 },
+    "snbt": { "label": "Tryout #1", "completedAt": "2026-09-26T08:42:00Z", "score": 657, "previousScore": 634,
+              "subtests": { "PU": 840, "PPU": 680, "PBM": 680, "PK": 680, "LBI": 520, "LBE": 520, "PM": 680 },
               "weakest": "PPU" },
     "tka":  { "kind": "tryout", "label": "Tryout #1", "completedAt": "2026-09-20T09:00:00Z", "score": 72 }
           | { "kind": "accuracy", "percent": 71, "answered": 195 },     // belum pernah tryout TKA
@@ -595,7 +595,7 @@ Daftar kampus diambil dari `GET /ptn/universities?type=PTN Akademik|PTN Vokasi|P
 ### 12.4 Riwayat latihan, akurasi, dan paket tryout 🔴
 Dipakai Siap SNBT/TKA/SKD (`/portal/persiapan/:ujian?tab=latihan|tryout|performance`), kartu Performa Dashboard (7.2), dan bobot subtes terlemah di Action Plan (11.2). Service: `frontend/src/services/practiceService.ts` + `practiceLog.ts`; bentuk data: `frontend/src/types/practice.ts`.
 
-**Sementara:** mode dummy menyimpan di data dummy; mode backend menyimpan di browser (`localStorage`, kunci `orbita_practice_<userId>`). Endpoint `/ptn/practice/*` yang ada belum dipakai karena `GET /ptn/practice/questions` mengirim kunci jawaban (bagian 1.5) dan riwayat `TryoutSession` belum bisa dibaca; dirinci di 12.5–12.6 (Tahap 7C).
+**Sementara:** mode dummy menyimpan di data dummy; mode backend menyimpan di browser (`localStorage`, kunci `orbita_practice_<userId>`). Endpoint `/ptn/practice/*` yang ada belum dipakai karena `GET /ptn/practice/questions` mengirim kunci jawaban (bagian 1.5) dan riwayat `TryoutSession` belum bisa dibaca; penggantinya dirinci di 12.5–12.6.
 
 ```
 GET /exams/:exam/subjects          // exam = snbt | tka | skd
@@ -617,6 +617,66 @@ GET /tryouts?exam=snbt
 - **Paket berurutan:** paket berikutnya terbuka setelah paket sebelumnya selesai; urutan dan isi paket diatur tim konten.
 - **Skala skor (perkiraan, bukan skor resmi):** SNBT rata-rata subtes 0–1000; TKA rata-rata mapel 0–100; SKD jumlah TWK (maks. 150) + TIU (175) + TKP (225) = 550. Catatan skala tampil di tab Tryout dan Performance.
 - `TryoutSession.type` perlu dibedakan `SNBT`/`TKA`/`SKD`, menyimpan paket, skor per subtes, dan waktu selesai.
-- **Relevansi Siap SKD** (menu Persiapan, baris SKD di Dashboard, "Langkah selanjutnya" Compass) dihitung frontend dari dua data yang sudah ada: Compass merekomendasikan jurusan Kedinasan, atau fokus Action Plan berisi Kedinasan (`frontend/src/lib/persiapan.ts`). URL Siap SKD tetap bisa dibuka langsung.
+- **Relevansi Siap SKD** dihitung frontend dari dua data yang sudah ada: Compass merekomendasikan jurusan Kedinasan, atau fokus Action Plan berisi Kedinasan (`frontend/src/lib/persiapan.ts`). Baris SKD di Dashboard dan kartu Siap SKD di "Langkah selanjutnya" Compass hanya tampil jika relevan. Menu Persiapan **selalu** menampilkan Siap SKD; jika sudah ada hasil Compass dan aturan tidak terpenuhi, item menu diberi keterangan "Kurang selaras dengan profilmu" (sama dengan jendela Atur rencana).
 - Halaman Siap tidak menampilkan perbandingan dengan "skor target jurusan" karena datanya tidak ada.
+
+### 12.5 Bank soal dan sesi latihan 🔴
+Dipakai `/portal/latihan/:id` dan `/portal/latihan/:id/hasil`. Service: `frontend/src/services/soalService.ts`; "server" simulasi: `frontend/src/mocks/practiceServer.ts`; bentuk data: `frontend/src/types/soal.ts`.
+
+**Sementara:** bank soal contoh 75 soal di `frontend/src/mocks/data/soal/` (diberi label "Contoh soal"). **Semua paket tryout contoh memakai soal yang sama; bank resmi harus punya soal berbeda per paket.** Satu sesi latihan berisi 5 soal (`SESSION_SIZE`). Mode dummy menyimpan sesi di data dummy; mode backend di browser (`orbita_sessions_<userId>`). Di mode dummy bank contoh ikut terunduh browser (tidak ada server); jaminan kunci tidak bocor baru ada di backend.
+
+```
+POST /practice-sessions
+← { "planPracticeId": "2026-10-02-3" }                 // latihan Action Plan (sesi yang sama dibuka lagi)
+ | { "exam": "snbt", "subject": "PM" }                 // latihan bebas (sesi baru)
+→ { "session": {
+      "id": "…", "exam": "snbt", "subject": "PM", "title": "Latihan Penalaran Matematika",
+      "planDate": "2026-10-02" | null, "startedAt": "…", "finished": false,
+      "questions": [ { "id": "…", "subject": "PM", "passage": "…"?, "text": "…", "options": ["…"] } ],   // TANPA kunci
+      "answers": { "<questionId>": { "choice": 0, "correct": false, "answer": 1, "explanation": "…", "points": 3? } }
+    } }
+GET  /practice-sessions/:id                            → { "session": … }     // sama dengan di atas
+POST /practice-sessions/:id/answers  ← { "questionId": "…", "choice": 2 }
+                                     → { "choice": 2, "correct": true, "answer": 2, "explanation": "…", "points"? }
+POST /practice-sessions/:id/finish   → { "result": PracticeResult }
+GET  /practice-sessions/:id/result   → { "result": { "correct": 4, "total": 5, "unanswered": 0, "finishedAt": "…", "items": [ ReviewItem ] } }
+```
+**Kewajiban backend:**
+- Soal dikirim **tanpa** `answerIndex`, pembahasan, dan poin. `answers` hanya berisi soal yang sudah dicek siswa.
+- **Jawaban yang sudah dicek tidak bisa diubah**: `POST …/answers` untuk soal yang sudah dijawab mengembalikan hasil yang tersimpan (pilihan baru diabaikan), termasuk setelah refresh.
+- Latihan Action Plan di tanggal yang akan datang ditolak (`403`, "Latihan ini baru terbuka hari …"); latihan di hari yang sudah lewat tetap bisa dikerjakan.
+- `finish` memperbarui latihan Action Plan (status, `answered`, `correct`; bagian 11.3) atau riwayat latihan bebas (12.4). Soal yang belum dijawab tidak dihitung benar.
+- `result` hanya untuk sesi yang sudah selesai (`409` jika belum).
+- TKP: setiap pilihan bernilai 1–5 poin; "benar" = pilihan 5 poin.
+
+### 12.6 Tryout: percobaan, timer, dan laporan 🔴
+Dipakai `/portal/tryout/:paket` dan `/portal/tryout/:paket/laporan`.
+
+```
+GET  /tryouts/:paket/attempt
+→ { "attempt": {
+      "packageId": "snbt-to-2", "name": "Tryout #2", "exam": "snbt",
+      "sections": [ { "subject": "PU", "name": "Penalaran Umum", "count": 5, "status": "done|active|pending" } ],
+      "current": { "subject": "PPU", "index": 1, "questions": [ PublicQuestion ], "deadline": "…", "durationSec": 450 } | null,
+      "answers": { "<questionId>": 1 }, "flags": ["<questionId>"],
+      "serverNow": "…",                    // untuk selisih jam perangkat
+      "expired": ["Penalaran Umum"]        // subtes yang ditutup otomatis karena waktunya habis
+    } }
+PUT  /tryouts/:paket/attempt/answers  ← { "questionId": "…", "choice": 1 | null, "flagged": true }
+POST /tryouts/:paket/attempt/sections/current/finish  → { "finished": false }   // true = tryout selesai dan sudah dinilai
+GET  /tryouts/:paket/report
+→ { "report": { "score": 657, "previous": { "name": "Tryout Diagnostik", "score": 634 } | null,
+                "correct": 20, "total": 35, "unanswered": 0, "timeUsedSec": 2520, "completedAt": "…",
+                "subjects": [ { "subject": "LBE", "name": "…", "correct": 2, "total": 5, "score": 520, "max": 1000 } ],
+                "items": [ ReviewItem + subject + flagged ] } }    // kunci dan pembahasan, hanya setelah selesai
+```
+**Kewajiban backend:**
+- **Paket terkunci ditolak** (`403`, "Tryout ini terbuka setelah … selesai"); frontend mengarahkan ke tab Tryout dengan pesan itu.
+- **Paket yang sudah selesai tidak bisa dimulai ulang** (`409`); frontend mengarahkan ke laporannya.
+- **Timer dari server:** saat subtes dimulai, server menyimpan `startedAt` dan `deadline` (= mulai + jumlah soal × detik per soal). Sisa waktu selalu `deadline − sekarang`, jadi refresh atau menutup halaman tidak mereset waktu. Saat attempt dibuka lagi setelah deadline lewat, subtes itu ditutup dengan jawaban yang tersimpan, lalu subtes berikutnya dimulai saat dibuka.
+- Jawaban dan ragu-ragu disimpan setiap berubah. Jawaban untuk subtes yang sudah ditutup atau setelah deadline (toleransi 2 detik) ditolak (`409`).
+- Soal tanpa kunci selama tryout; penilaian di server saat subtes terakhir selesai; kunci dan pembahasan hanya di laporan.
+- **Skor (perkiraan, sementara):** SNBT per subtes 200 + 800 × benar/total, total = rata-rata; TKA per mapel 100 × benar/total, total = rata-rata; SKD TWK 150 × benar/total, TIU 175 × benar/total, TKP 225 × poin/(5 × total), total = jumlah (maks. 550). Rumus resmi perlu disetujui tim.
+- Durasi contoh per soal: SNBT 90 detik, TKA 120 detik, SKD 60 detik (`frontend/src/config/practice.ts`).
+- Hasil tryout masuk riwayat (12.4), sehingga Siap SNBT/TKA/SKD, kartu Performa Dashboard, dan bobot Action Plan ikut berubah.
 

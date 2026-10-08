@@ -8,12 +8,9 @@ export const CATEGORY_STYLE: Record<PlanCategory, { tile: string; dot: string; b
   Kedinasan: { tile: "bg-tint-purple-bg text-tint-purple-fg", dot: "bg-tint-purple-dot", bar: "bg-tint-purple-dot", card: "bg-tint-purple-bg text-tint-purple-fg" },
 };
 
-/**
- * Halaman latihan untuk tombol Kerjakan/Lanjutkan/Lihat pembahasan.
- * Halaman pengerjaan soal dibangun di Fase 7; sementara ke halaman Persiapan.
- */
-export function practiceUrl(category: PlanCategory): string {
-  return ROUTES.persiapanUjian(category === "SNBT" ? "snbt" : category === "TKA" ? "tka" : "skd");
+/** Tujuan tombol latihan: Kerjakan/Lanjutkan → pengerjaan, Lihat pembahasan → hasil. */
+export function practiceUrl(p: PlanPractice): string {
+  return p.status === "done" ? ROUTES.latihanHasil(p.id) : ROUTES.latihan(p.id);
 }
 
 export type DayStatus = "done" | "unfinished" | "today" | "scheduled";

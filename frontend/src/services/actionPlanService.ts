@@ -36,16 +36,17 @@ import { getToken } from "./http";
 // - mode backend: disimpan di browser (localStorage) per akun.
 // Penyusun latihannya simulasi (mocks/actionPlanEngine.ts) di kedua mode.
 
-const localKey = (userId: string) => `orbita_action_plan_${userId}`;
+/** Kunci browser untuk mode backend (dipakai juga soalService). */
+export const planKey = (userId: string) => `orbita_action_plan_${userId}`;
 
 async function loadState(userId: string): Promise<PlanState | null> {
   if (USE_MOCK) return mockGetPlanState(getToken());
-  return readLocal<PlanState>(localKey(userId));
+  return readLocal<PlanState>(planKey(userId));
 }
 
 async function saveState(userId: string, state: PlanState): Promise<void> {
   if (USE_MOCK) return mockSavePlanState(getToken(), state);
-  writeLocal(localKey(userId), state);
+  writeLocal(planKey(userId), state);
 }
 
 /** Nilai rapor semester terakhir yang sudah terisi. */

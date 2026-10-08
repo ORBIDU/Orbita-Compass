@@ -15,7 +15,9 @@ import type { SnbpDraft } from "@/types/snbp";
 import { simulateCompass } from "./compassEngine";
 import type { PlanState } from "./actionPlanEngine";
 import { demoPlanState } from "./data/actionPlan";
-import { DEMO_PRACTICE_LOG, EMPTY_PRACTICE_LOG } from "./data/tryout";
+import { EMPTY_PRACTICE_LOG } from "./data/tryout";
+import { demoTryoutData } from "./data/practiceSeed";
+import type { PracticeSession, TryoutAttempt } from "./practiceServer";
 
 // "Database" dummy untuk mode VITE_USE_MOCK=true. Disimpan di localStorage
 // supaya login dan perubahan data tetap ada setelah halaman di-refresh.
@@ -49,6 +51,11 @@ export interface MockAccount {
   actionPlanStash: PlanState | null;
   /** Riwayat latihan bebas dan tryout (API_CONTRACT 12.4). Akurasi latihan Action Plan diambil dari `actionPlan`. */
   practiceLog: PracticeLog;
+  /** Sesi latihan (jawaban per soal) dan percobaan tryout (API_CONTRACT 12.5–12.6). */
+  practiceSessions: Record<string, PracticeSession>;
+  tryoutAttempts: Record<string, TryoutAttempt>;
+  /** Mode Demo: data latihan yang disimpan dulu saat status bukan "aktif". */
+  practiceStash: { log: PracticeLog; sessions: Record<string, PracticeSession>; attempts: Record<string, TryoutAttempt> } | null;
   /** Jawaban tes yang belum dikirim, disimpan per bagian (API_CONTRACT 3.3). */
   assessmentDraft: AsesmenDraft | null;
   /** Jawaban tes terbaru yang sudah dikirim, untuk "Lihat jawabanku". */
@@ -97,7 +104,9 @@ const STORAGE_KEY = "orbita_mock_db";
 // v7 (Fase 6): Action Plan berisi latihan soal harian (menggantikan studyPlan).
 // v8 (Tahap 7A): isian Siap SNBP.
 // v9 (Tahap 7B): riwayat tryout per paket (menggantikan ringkasan `practice`).
-const DB_VERSION = 9;
+// v10 (Tahap 7C): sesi latihan dan percobaan tryout dari bank soal contoh.
+// v11: riwayat tryout contoh dengan kenaikan yang wajar.
+const DB_VERSION = 11;
 
 const SEED_DATE = "2026-07-01T08:00:00.000Z";
 
@@ -176,6 +185,7 @@ function seed(): MockDb {
     nickname: "Budi",
   });
 
+  const demoTryout = demoTryoutData();
   const siswa: MockAccount = {
     id: "user-siswa",
     email: "siswa@orbita.id",
@@ -227,7 +237,10 @@ function seed(): MockDb {
     snbp: null,
     actionPlan: demoPlanState(new Date()),
     actionPlanStash: null,
-    practiceLog: structuredClone(DEMO_PRACTICE_LOG),
+    practiceLog: demoTryout.log,
+    practiceSessions: {},
+    tryoutAttempts: demoTryout.attempts,
+    practiceStash: null,
   };
 
   const budi: MockAccount = {
@@ -258,6 +271,9 @@ function seed(): MockDb {
     actionPlan: null,
     actionPlanStash: null,
     practiceLog: structuredClone(EMPTY_PRACTICE_LOG),
+    practiceSessions: {},
+    tryoutAttempts: {},
+    practiceStash: null,
     assessmentDraft: null,
     assessmentAnswers: null,
     assessmentGrade: 12,
