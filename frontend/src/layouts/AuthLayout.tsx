@@ -9,7 +9,7 @@ import Logo from "@/components/ui/Logo";
 import PageLoader from "@/components/ui/PageLoader";
 
 /**
- * Kerangka halaman Masuk & Daftar (docs/design/auth).
+ * Kerangka halaman Masuk dan Aktivasi (docs/design/auth).
  * - Desktop (≥1024px): kiri 65% video/animasi setinggi layar (tetap di tempat),
  *   kanan 35% form.
  * - HP & tablet: video menjadi banner 240px di atas form.

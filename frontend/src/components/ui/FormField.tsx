@@ -1,7 +1,7 @@
 import { forwardRef, useId, useState, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
-// Gaya input mengikuti desain Masuk & Daftar (docs/design/auth). Ukuran huruf
+// Gaya input mengikuti desain halaman Masuk (docs/design/auth). Ukuran huruf
 // 16px di HP supaya iOS tidak memperbesar layar saat input disentuh.
 const controlClass = (hasError: boolean, extra = "") =>
   [

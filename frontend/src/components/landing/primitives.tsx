@@ -87,6 +87,16 @@ export function PillLink({ to, variant = "blue", icon = "right", className = "",
   );
 }
 
+/** Tombol pil ke situs luar (mis. WhatsApp Berlangganan), dibuka di tab baru. */
+export function PillExternal({ href, variant = "blue", icon = "right", className = "", children }: PillCommon & { href: string }) {
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={pillClasses(variant, className)}>
+      {children}
+      <PillIconEl icon={icon} />
+    </a>
+  );
+}
+
 /** Tombol pil untuk aksi (scroll, dll.). */
 export function PillButton({
   variant = "blue",

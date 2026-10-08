@@ -1,9 +1,8 @@
-// Teks halaman Masuk & Daftar, mengikuti docs/design/auth.
-// Nama brand diambil dari config/brand.ts.
+// Teks halaman Masuk dan Aktivasi akun, mengikuti docs/design/auth.
+// Nama brand diambil dari config/brand.ts. Tidak ada pendaftaran mandiri:
+// akun dibuat setelah berlangganan (teks ajakan di content/common.ts).
 
 import { BRAND } from "@/config/brand";
-
-export type AuthMode = "masuk" | "daftar";
 
 export const MIN_PASSWORD = 8;
 
@@ -15,66 +14,23 @@ export const AUTH_PANEL = {
   backLabel: "Kembali ke beranda",
 };
 
-export const AUTH_TOGGLE = {
-  label: "Pilih Masuk atau Daftar",
-  masuk: "Masuk",
-  daftar: "Daftar",
-};
-
-export const AUTH_MODES: Record<
-  AuthMode,
-  { title: string; subtitle: string; submit: string; submitting: string; switchText: string; switchCta: string }
-> = {
-  masuk: {
-    title: "Selamat datang kembali",
-    subtitle: "Masuk untuk melanjutkan rencana dan latihanmu.",
-    submit: "Masuk",
-    submitting: "Memeriksa...",
-    switchText: "Belum punya akun?",
-    switchCta: "Daftar",
-  },
-  daftar: {
-    title: "Mulai perjalananmu",
-    subtitle: "Buat akun dan mulai kenali potensimu.",
-    submit: "Daftar",
-    submitting: "Mendaftarkan...",
-    switchText: "Sudah punya akun?",
-    switchCta: "Masuk",
-  },
+export const AUTH_MASUK = {
+  title: "Selamat datang kembali",
+  subtitle: "Masuk untuk melanjutkan rencana dan latihanmu.",
+  submit: "Masuk",
+  submitting: "Memeriksa...",
 };
 
 export const AUTH_FIELDS = {
-  name: { label: "Nama lengkap", placeholder: "Nama sesuai data sekolah" },
   email: { label: "Email", placeholder: "nama@email.com" },
-  passwordMasuk: { label: "Password", placeholder: "Masukkan password" },
-  passwordDaftar: { label: "Password", placeholder: `Minimal ${MIN_PASSWORD} karakter` },
-  schoolName: { label: "Nama sekolah", placeholder: "Contoh: SMA Negeri 1 Palembang" },
-  grade: { label: "Kelas", options: [10, 11, 12] as const, optionLabel: (k: number) => `Kelas ${k}` },
-  city: { label: "Kota", placeholder: "Palembang" },
-  // Syarat & Ketentuan dan Kebijakan Privasi belum punya halaman, jadi sementara
-  // tampil sebagai teks tebal. Ubah jadi link setelah halamannya dibuat
-  // (lihat SPEK_SISWA.md bagian "Sebelum rilis").
-  consent: {
-    before: "Aku dan orang tua/wali setuju dengan ",
-    terms: "Syarat & Ketentuan",
-    between: " serta ",
-    privacy: "Kebijakan Privasi",
-    after: ` ${BRAND.name}.`,
-  },
+  password: { label: "Password", placeholder: "Masukkan password" },
 };
 
 export const AUTH_ERRORS = {
   emailEmpty: "Email wajib diisi.",
   emailFormat: "Format email belum benar. Contoh: nama@email.com",
   passwordEmpty: "Password wajib diisi.",
-  passwordShort: `Password minimal ${MIN_PASSWORD} karakter.`,
-  nameShort: "Tulis nama lengkapmu (minimal 3 huruf).",
-  schoolEmpty: "Nama sekolah wajib diisi.",
-  gradeEmpty: "Pilih kelasmu.",
-  cityEmpty: "Kota wajib diisi.",
-  consentEmpty: "Centang persetujuan ini bersama orang tua/wali untuk melanjutkan.",
   masukFallback: "Gagal masuk. Coba lagi.",
-  daftarFallback: "Gagal mendaftar. Coba lagi.",
 };
 
 export const AUTH_FORGOT = {
@@ -87,6 +43,55 @@ export const AUTH_FORGOT = {
 /** Petunjuk akun demo, hanya tampil di mode dummy (VITE_USE_MOCK=true). */
 export const AUTH_DEMO_HINT = {
   label: "Mode dummy · akun demo",
-  email: "siswa@orbita.id",
   password: "password123",
+  accounts: [
+    { email: "siswa@orbita.id", note: "siswa aktif" },
+    { email: "dimas@orbita.id", note: "login pertama" },
+  ],
+};
+
+/**
+ * Aktivasi akun saat pertama masuk (/aktivasi): ganti password awal dari admin,
+ * lalu dua persetujuan. Syarat & Ketentuan dan Kebijakan Privasi belum punya
+ * halaman, jadi sementara tampil sebagai teks tebal. Ubah jadi link setelah
+ * halamannya dibuat (lihat SPEK_SISWA.md bagian "Sebelum rilis").
+ */
+export const AKTIVASI = {
+  step: (no: number, total: number) => `Langkah ${no} dari ${total}`,
+  logout: "Bukan akunmu? Keluar",
+  password: {
+    title: "Buat password barumu",
+    subtitle: "Akunmu masih memakai password awal dari admin. Ganti dulu dengan password yang hanya kamu ketahui.",
+    next: "Password baru",
+    nextPlaceholder: `Minimal ${MIN_PASSWORD} karakter`,
+    nextHint: `Minimal ${MIN_PASSWORD} karakter, campuran huruf dan angka.`,
+    repeat: "Ulangi password baru",
+    repeatPlaceholder: "Ketik ulang password baru",
+    submit: "Simpan password",
+    submitting: "Menyimpan...",
+  },
+  consent: {
+    title: "Satu langkah lagi",
+    subtitle: "Baca dan centang dua persetujuan ini sebelum mulai memakai portal.",
+    parent: `Orang tua/wali sudah mengetahui dan menyetujui aku memakai ${BRAND.name}.`,
+    terms: {
+      before: "Aku setuju dengan ",
+      terms: "Syarat & Ketentuan",
+      between: " dan ",
+      privacy: "Kebijakan Privasi",
+      after: ` ${BRAND.name}.`,
+    },
+    submit: "Masuk ke portal",
+    submitting: "Menyimpan...",
+  },
+  errors: {
+    nextEmpty: "Password baru wajib diisi.",
+    tooShort: `Password baru minimal ${MIN_PASSWORD} karakter.`,
+    needMix: "Gunakan campuran huruf dan angka.",
+    mismatch: "Password tidak sama. Coba ketik ulang.",
+    sameAsInitial: "Password baru harus berbeda dari password awal.",
+    parentEmpty: "Centang persetujuan orang tua/wali untuk melanjutkan.",
+    termsEmpty: "Centang persetujuan Syarat & Ketentuan untuk melanjutkan.",
+    fallback: "Gagal menyimpan. Coba lagi.",
+  },
 };

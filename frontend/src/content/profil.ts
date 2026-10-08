@@ -48,7 +48,7 @@ export const AKUN = {
   change: "Ganti password",
   changeUnavailable: "Ganti password belum tersedia. Hubungi admin sekolah kalau perlu mengganti password.",
   consentOk: "Persetujuan orang tua/wali tercatat",
-  consentOkDate: (date: string) => `Diberikan saat mendaftar, ${date}`,
+  consentOkDate: (date: string) => `Diberikan saat pertama masuk, ${date}`,
   consentMissing: "Persetujuan orang tua/wali belum tercatat",
   consentMissingBody: "Hubungi wali kelas supaya persetujuan orang tua/wali dicatat.",
   consentUnknown: "Status persetujuan orang tua/wali belum bisa ditampilkan",

@@ -1,4 +1,4 @@
-// Video panel Masuk & Daftar (komponen AuthVideoSlot).
+// Video panel Masuk dan Aktivasi (komponen AuthVideoSlot).
 //
 // File diletakkan di `frontend/public/media/auth/`, lalu tulis path-nya di
 // sini (diawali "/"). Selama nilainya null, yang tampil ilustrasi maskot dan
