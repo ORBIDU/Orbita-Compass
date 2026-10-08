@@ -1,17 +1,21 @@
 import { NavLink } from "react-router-dom";
-import { PERSIAPAN_ITEMS } from "@/config/navigation";
+import { PERSIAPAN_ITEMS, ROUTES } from "@/config/navigation";
+import { useSkdRelevant } from "@/lib/useSkdRelevant";
 
 export const SOON_LABEL = "Segera hadir";
 
 /**
  * Daftar pilihan Persiapan (Siap SNBP s.d. Siap Mandiri). Dipakai dropdown
  * desktop dan bottom sheet HP. Pilihan tanpa `to` tampil "Segera hadir" dan
- * tidak bisa diklik.
+ * tidak bisa diklik. Siap SKD hanya tampil jika relevan (lib/persiapan.ts);
+ * URL-nya tetap bisa dibuka langsung.
  */
 export default function PersiapanList({ itemRole }: { itemRole?: "menuitem" }) {
+  const skdRelevant = useSkdRelevant();
+  const items = PERSIAPAN_ITEMS.filter((item) => item.to !== ROUTES.persiapanUjian("skd") || skdRelevant);
   return (
     <>
-      {PERSIAPAN_ITEMS.map((item) => {
+      {items.map((item) => {
         const Icon = item.icon;
         const content = (
           <>

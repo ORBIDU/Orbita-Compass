@@ -1,7 +1,7 @@
 import type { LoginResponse, LoginUser, MeResponse, RegisterResponse } from "@/types/backend";
 import type { RegisterPayload } from "@/services/authService";
 import { ApiError } from "@/services/http";
-import { EMPTY_PRACTICE, findAccountByEmail, insertAccount, mockTokenFor, type MockAccount } from "./db";
+import { findAccountByEmail, insertAccount, mockTokenFor, type MockAccount } from "./db";
 import { buildProfileDetail, requireAccount } from "./studentMock";
 import { delay } from "./delay";
 
@@ -68,7 +68,7 @@ export async function mockRegister(payload: RegisterPayload): Promise<RegisterRe
     compassAnalysis: null,
     actionPlan: null,
     actionPlanStash: null,
-    practice: EMPTY_PRACTICE,
+    practiceLog: { free: [], tryouts: [] },
     assessmentDraft: null,
     assessmentAnswers: null,
     assessmentGrade: null,

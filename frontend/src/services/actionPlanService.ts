@@ -7,7 +7,7 @@ import type {
   TodayPlan,
 } from "@/types/actionPlan";
 import { TKA_ELECTIVES, TKA_REQUIRED } from "@/types/actionPlan";
-import { SNBT_MAX_SCORE } from "@/types/dashboard";
+import { EXAM_CATEGORY, SUBSCORE_MAX } from "@/types/practice";
 import {
   applySettings,
   buildDays,
@@ -22,7 +22,8 @@ import { mockGetPlanState, mockSavePlanState } from "@/mocks/actionPlanMock";
 import { aiDelay } from "@/mocks/delay";
 import { readLocal, writeLocal } from "@/lib/localStore";
 import { toDateKey } from "@/lib/datetime";
-import { getPracticeSummary } from "./dashboardService";
+import { PLAN_CHANGED_EVENT } from "@/lib/persiapan";
+import { getPracticeLog } from "./practiceLog";
 import { getRapor } from "./raporService";
 import { catalogEntry, getCompassRecommendations } from "./jurusanService";
 import { USE_MOCK } from "./config";
@@ -58,20 +59,24 @@ async function latestRapor(grade: number, now: Date): Promise<{ subject: string;
   }
 }
 
-/** Skor awal sebelum ada hasil latihan di rencana: tryout SNBT terakhir dan nilai rapor. */
-async function initialWeakness(grade: number, now: Date): Promise<Weakness> {
+/** Skor awal sebelum ada hasil latihan di rencana: nilai rapor (TKA), lalu tryout terakhir tiap ujian. */
+async function initialWeakness(userId: string, grade: number, now: Date): Promise<Weakness> {
   const out: Weakness = {};
-  try {
-    const summary = await getPracticeSummary();
-    for (const [key, score] of Object.entries(summary.snbt?.subtests ?? {})) {
-      out[weaknessKey("SNBT", key)] = score / SNBT_MAX_SCORE;
-    }
-  } catch {
-    /* tanpa data tryout: semua subtes dianggap sama */
-  }
   const tkaSubjects = new Set<string>([...TKA_REQUIRED, ...TKA_ELECTIVES]);
   for (const { subject, score } of await latestRapor(grade, now)) {
     if (tkaSubjects.has(subject) && score > 0) out[weaknessKey("TKA", subject)] = score / 100;
+  }
+  try {
+    const { tryouts } = await getPracticeLog(userId);
+    // Diurutkan dari yang lama, jadi tryout terbaru yang dipakai.
+    for (const t of [...tryouts].sort((a, b) => a.completedAt.localeCompare(b.completedAt))) {
+      for (const [subject, score] of Object.entries(t.subscores)) {
+        const max = SUBSCORE_MAX[t.exam](subject);
+        if (max > 0) out[weaknessKey(EXAM_CATEGORY[t.exam], subject)] = score / max;
+      }
+    }
+  } catch {
+    /* tanpa data tryout: pakai rapor atau anggap sama */
   }
   return out;
 }
@@ -83,7 +88,7 @@ export async function getPlanSettings(userId: string): Promise<PlanSettings | nu
 
 /** Rencana lengkap. null = siswa belum mengatur rencana. */
 export async function getActionPlan(userId: string, grade: number, now = new Date()): Promise<ActionPlanView | null> {
-  const [state, initial] = await Promise.all([loadState(userId), initialWeakness(grade, now)]);
+  const [state, initial] = await Promise.all([loadState(userId), initialWeakness(userId, grade, now)]);
   if (!state) return null;
   const today = toDateKey(now);
   const weakness = buildWeakness(state.days, initial);
@@ -95,10 +100,12 @@ export async function getActionPlan(userId: string, grade: number, now = new Dat
 /** Terapkan pengaturan dari jendela "Atur rencana" (simulasi AI 2–3 detik). */
 export async function applyPlan(userId: string, grade: number, input: PlanSettingsInput, now = new Date()): Promise<ActionPlanView> {
   const today = toDateKey(now);
-  const [current, initial] = await Promise.all([loadState(userId), initialWeakness(grade, now)]);
+  const [current, initial] = await Promise.all([loadState(userId), initialWeakness(userId, grade, now)]);
   const next = applySettings(current, input, today, buildWeakness(current?.days ?? {}, initial), now.toISOString());
   await aiDelay();
   await saveState(userId, next);
+  // Fokus bisa berubah, jadi relevansi Siap SKD di menu perlu dihitung ulang.
+  window.dispatchEvent(new Event(PLAN_CHANGED_EVENT));
   return { settings: next.settings, today, days: buildDays(next, buildWeakness(next.days, initial)) };
 }
 

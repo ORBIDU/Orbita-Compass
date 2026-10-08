@@ -1,42 +1,19 @@
 import { lazy } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useLegacyNavigate } from "@/lib/legacyNav";
-import { ROUTES, UJIAN_KEYS, type UjianKey } from "@/config/navigation";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/config/navigation";
 
 // Pembungkus sementara untuk halaman lama: menyambungkan prop lama
-// (onNavigate, onBack, currentUser) ke router. Isi halaman tidak diubah.
+// (onClose, defaultTab) ke router. Isi halaman tidak diubah.
 // Setiap halaman dimuat terpisah (lazy) supaya landing lebih cepat terbuka.
 
 const LandingPage = lazy(() => import("@/app/LandingPage"));
-const SiapPTNPage = lazy(() => import("@/app/SiapPTNPage"));
-const LatihanTKAPage = lazy(() => import("@/app/LatihanTKAPage"));
-const SiapSKDPage = lazy(() => import("@/app/SiapSKDPage"));
 const InformasiPribadiPage = lazy(() =>
   import("@/app/StudentProfiling").then((m) => ({ default: m.InformasiPribadiPage })),
 );
-const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
 
 /** Beranda baru (Fase 2) tidak butuh prop apa pun. */
 export function LandingRoute() {
   return <LandingPage />;
-}
-
-/** /portal/persiapan/:ujian → tka, snbt, atau skd. Ujian lain → 404. */
-export function PersiapanRoute() {
-  const { ujian } = useParams();
-  const onNavigate = useLegacyNavigate();
-  const navigate = useNavigate();
-
-  if (!UJIAN_KEYS.includes(ujian as UjianKey)) return <NotFoundPage />;
-
-  switch (ujian as UjianKey) {
-    case "snbt":
-      return <SiapPTNPage key="snbt" onNavigate={onNavigate} defaultTab="snbt" />;
-    case "tka":
-      return <LatihanTKAPage onBack={() => navigate(ROUTES.persiapanSnbp)} />;
-    case "skd":
-      return <SiapSKDPage />;
-  }
 }
 
 export function ProfilRoute() {

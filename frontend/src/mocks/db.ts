@@ -8,13 +8,14 @@ import type {
   StudentProfile,
 } from "@/types/backend";
 import type { StudentStatus } from "@/types/student";
-import type { PracticeSummary } from "@/types/dashboard";
+import type { PracticeLog } from "@/types/practice";
 import type { AsesmenAnswers, AsesmenDraft, AssessmentHistoryEntry } from "@/types/analisis";
 import type { CompassTarget } from "@/types/compass";
 import type { SnbpDraft } from "@/types/snbp";
 import { simulateCompass } from "./compassEngine";
 import type { PlanState } from "./actionPlanEngine";
 import { demoPlanState } from "./data/actionPlan";
+import { DEMO_PRACTICE_LOG, EMPTY_PRACTICE_LOG } from "./data/tryout";
 
 // "Database" dummy untuk mode VITE_USE_MOCK=true. Disimpan di localStorage
 // supaya login dan perubahan data tetap ada setelah halaman di-refresh.
@@ -46,8 +47,8 @@ export interface MockAccount {
   actionPlan: PlanState | null;
   /** Mode Demo: rencana yang disembunyikan saat status bukan "aktif". */
   actionPlanStash: PlanState | null;
-  /** Hasil latihan/tryout terakhir per ujian (docs/API_CONTRACT.md bagian 7.2). */
-  practice: PracticeSummary;
+  /** Riwayat latihan bebas dan tryout (API_CONTRACT 12.4). Akurasi latihan Action Plan diambil dari `actionPlan`. */
+  practiceLog: PracticeLog;
   /** Jawaban tes yang belum dikirim, disimpan per bagian (API_CONTRACT 3.3). */
   assessmentDraft: AsesmenDraft | null;
   /** Jawaban tes terbaru yang sudah dikirim, untuk "Lihat jawabanku". */
@@ -95,7 +96,8 @@ const STORAGE_KEY = "orbita_mock_db";
 // v6 (Tahap 5B): beasiswa yang disimpan.
 // v7 (Fase 6): Action Plan berisi latihan soal harian (menggantikan studyPlan).
 // v8 (Tahap 7A): isian Siap SNBP.
-const DB_VERSION = 8;
+// v9 (Tahap 7B): riwayat tryout per paket (menggantikan ringkasan `practice`).
+const DB_VERSION = 9;
 
 const SEED_DATE = "2026-07-01T08:00:00.000Z";
 
@@ -153,8 +155,6 @@ function profileOf(
 ): StudentProfile {
   return { id: `profile-${userId}`, userId, createdAt: SEED_DATE, updatedAt: SEED_DATE, ...data };
 }
-
-export const EMPTY_PRACTICE: PracticeSummary = { snbt: null, tka: null, skd: null };
 
 function seed(): MockDb {
   const siswaProfile = profileOf("user-siswa", {
@@ -227,17 +227,7 @@ function seed(): MockDb {
     snbp: null,
     actionPlan: demoPlanState(new Date()),
     actionPlanStash: null,
-    practice: {
-      snbt: {
-        label: "Tryout #3",
-        completedAt: "2026-09-26T09:00:00.000Z",
-        score: 624,
-        previousScore: 606,
-        subtests: { PU: 690, PPU: 650, PBM: 610, PK: 640, LBI: 600, LBE: 520, PM: 660 },
-      },
-      tka: { label: "Latihan Matematika", completedAt: "2026-09-28T09:00:00.000Z", correct: 16, total: 20 },
-      skd: null,
-    },
+    practiceLog: structuredClone(DEMO_PRACTICE_LOG),
   };
 
   const budi: MockAccount = {
@@ -267,7 +257,7 @@ function seed(): MockDb {
     compassAnalysis: null,
     actionPlan: null,
     actionPlanStash: null,
-    practice: EMPTY_PRACTICE,
+    practiceLog: structuredClone(EMPTY_PRACTICE_LOG),
     assessmentDraft: null,
     assessmentAnswers: null,
     assessmentGrade: 12,

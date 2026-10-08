@@ -76,7 +76,8 @@ export const PERFORMA = {
   rows: { SNBT: "Siap SNBT", TKA: "Siap TKA", SKD: "Siap SKD" } as Record<ExamKey, string>,
   noPractice: "Belum ada latihan",
   start: "Mulai",
-  tkaValue: (correct: number, total: number) => `${correct}/${total} benar`,
+  tkaAccuracy: (percent: number) => `Akurasi latihan ${percent}%`,
+  tkaAccuracyMeta: (answered: number) => `Belum ada tryout, dari ${answered} soal latihan`,
   empty: {
     title: "Belum ada hasil latihan",
     body: "Coba satu latihan atau tryout di Persiapan. Hasilnya akan muncul di sini, lengkap dengan subtes yang perlu dilatih.",

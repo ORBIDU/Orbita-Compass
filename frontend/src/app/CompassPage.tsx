@@ -15,6 +15,7 @@ import { catalogEntry, getCompassRecommendations, getEducationPaths } from "@/se
 import { getRapor } from "@/services/raporService";
 import { listScholarships } from "@/services/beasiswaService";
 import { matchesPath } from "@/lib/beasiswa";
+import { useSkdRelevant } from "@/lib/useSkdRelevant";
 import type { CompassRecommendation, CompassTarget } from "@/types/compass";
 import PageLoader from "@/components/ui/PageLoader";
 import { PanelError, PanelSkeleton } from "@/components/ui/PanelState";
@@ -48,6 +49,8 @@ export default function CompassPage() {
   const recommendations = result.data?.recommendations;
   const paths = useAsync(() => getEducationPaths(recommendations ?? []), [recommendations], tested && Boolean(recommendations?.length));
   const scholarships = useAsync(listScholarships, [], tested);
+  // Aturan sama dengan menu Persiapan dan kartu Performa (lib/persiapan.ts).
+  const skdRelevant = useSkdRelevant();
 
   // Target yang baru dipilih (menimpa hasil muat awal tanpa memuat ulang).
   const [targetOverride, setTargetOverride] = useState<{ value: CompassTarget | null } | null>(null);
@@ -143,7 +146,7 @@ export default function CompassPage() {
             items={scholarships.data.filter((s) => matchesPath(s, paths.data!.groups.map((g) => g.key))).slice(0, 3)}
           />
         )}
-        <NextSteps showSkd={recs.some((r) => r.bidang === "kedinasan")} />
+        <NextSteps showSkd={skdRelevant} />
       </>
     );
   }

@@ -189,7 +189,7 @@ Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
 | Data beasiswa (daftar, filter, detail, simpan; lihat bagian 10) | 5 | 🔴 |
 | Action Plan: pengaturan rencana, latihan harian buatan AI, hasil per latihan (lihat bagian 11) | 6 | 🔴 |
 | Siap SNBP: isian tersimpan, status eligible, nilai TKA, rasionalisasi dengan 2 pilihan prodi, daya tampung dan keketatan prodi (lihat bagian 12) | 7 | 🔴 |
-| Bank soal lengkap, soal tanpa kunci, paket tryout berurutan, riwayat tryout | 7 | 🔴 |
+| Bank soal lengkap, soal tanpa kunci, paket tryout berurutan, riwayat latihan dan tryout (lihat bagian 12.4) | 7 | 🔴 |
 
 ---
 
@@ -303,20 +303,24 @@ GET /study-plan/today
 - Tanggal "hari ini" mengikuti zona waktu siswa (WIB/WITA/WIT), bukan UTC server.
 
 ### 7.2 Hasil latihan terakhir per ujian 🔴
-Belum ada endpoint untuk membaca riwayat latihan/tryout (`TryoutSession` hanya ditulis lewat `POST /ptn/practice/submit`). Di mode backend kartu Performa selalu tampil sebagai empty state, dan status siswa `aktif` tidak bisa muncul.
+Kartu Performa Dashboard dihitung frontend dari sumber yang sama dengan Siap SNBT/TKA/SKD (`frontend/src/services/practiceService.ts`, bagian 12.4), jadi angkanya selalu sama. Backend cukup menyediakan riwayat di 12.4; ringkasan ini boleh dihitung frontend atau disediakan sebagai jalan pintas:
 
 ```
 GET /practice/summary
 → {
-    "snbt": { "label": "Tryout #3", "completedAt": "2026-09-26T09:00:00Z", "score": 624, "previousScore": 606,
-              "subtests": { "PU": 690, "PPU": 650, "PBM": 610, "PK": 640, "LBI": 600, "LBE": 520, "PM": 660 } },
-    "tka":  { "label": "Latihan Matematika", "completedAt": "2026-09-28T09:00:00Z", "correct": 16, "total": 20 },
-    "skd":  null                        // null = belum pernah latihan
+    "snbt": { "label": "Tryout #1", "completedAt": "2026-09-26T09:00:00Z", "score": 624, "previousScore": 606,
+              "subtests": { "PU": 690, "PPU": 650, "PBM": 610, "PK": 640, "LBI": 600, "LBE": 520, "PM": 660 },
+              "weakest": "PPU" },
+    "tka":  { "kind": "tryout", "label": "Tryout #1", "completedAt": "2026-09-20T09:00:00Z", "score": 72 }
+          | { "kind": "accuracy", "percent": 71, "answered": 195 },     // belum pernah tryout TKA
+    "skd":  null                        // null = belum ada tryout SKD
   }
 ```
 
 - Skor subtes SNBT pada skala 0–1000 (sama dengan radar). `previousScore` null jika baru sekali tryout.
-- `TryoutSession.type` perlu dibedakan `SNBT`/`TKA`/`SKD` dan menyimpan skor per subtes, bukan hanya `totalScore`.
+- **`weakest` (paling perlu dilatih)** memakai satu aturan untuk Dashboard dan Siap SNBT: akurasi latihan terendah; kalau belum ada latihan, skor terendah (relatif terhadap skor maksimum) di tryout terakhir.
+- Baris TKA memakai nilai tryout TKA terakhir. Kalau belum pernah tryout, frontend menampilkan akurasi latihan dengan label berbeda ("Akurasi latihan 71%") supaya tidak terbaca sebagai nilai tryout.
+- Baris SKD hanya tampil jika Siap SKD relevan (12.4) atau sudah ada hasil SKD.
 
 ### 7.3 Timeline seleksi 🔴
 Jadwal sekarang disimpan di `frontend/src/mocks/data/timeline.ts` sebagai **perkiraan** dan harus diedit manual tiap tahun.
@@ -587,3 +591,32 @@ Daftar kampus diambil dari `GET /ptn/universities?type=PTN Akademik|PTN Vokasi|P
 - Kampus peserta SNBP berubah tiap tahun mengikuti SNPMB; perlu penanda resmi per tahun (mis. `University.snbpYear`).
 - `GET /ptn/universities` mengirim semua prodi tiap kampus (`BACKEND_MAP.md` poin 17). Untuk pilihan prodi cukup `{ id, name }`.
 - Target prodi di seed backend tidak cocok dengan kampusnya (bagian 5.3), jadi pilihan 1 akun demo `siswa@orbita.id` tidak terisi otomatis di mode backend.
+
+### 12.4 Riwayat latihan, akurasi, dan paket tryout 🔴
+Dipakai Siap SNBT/TKA/SKD (`/portal/persiapan/:ujian?tab=latihan|tryout|performance`), kartu Performa Dashboard (7.2), dan bobot subtes terlemah di Action Plan (11.2). Service: `frontend/src/services/practiceService.ts` + `practiceLog.ts`; bentuk data: `frontend/src/types/practice.ts`.
+
+**Sementara:** mode dummy menyimpan di data dummy; mode backend menyimpan di browser (`localStorage`, kunci `orbita_practice_<userId>`). Endpoint `/ptn/practice/*` yang ada belum dipakai karena `GET /ptn/practice/questions` mengirim kunci jawaban (bagian 1.5) dan riwayat `TryoutSession` belum bisa dibaca; dirinci di 12.5–12.6 (Tahap 7C).
+
+```
+GET /exams/:exam/subjects          // exam = snbt | tka | skd
+→ { "subjects": [ { "subject": "PU", "name": "Penalaran Umum" } ] }
+   // TKA: 3 mapel wajib + mapel pilihan dari pengaturan rencana (11.1)
+
+GET /practice/stats?exam=snbt
+→ { "subjects": [ { "subject": "PU", "answered": 100, "correct": 71 } ] }
+   // gabungan latihan Action Plan yang selesai (11.3) + latihan bebas
+
+GET /tryouts?exam=snbt
+→ { "packages": [
+      { "id": "snbt-to-0", "name": "Tryout Diagnostik", "order": 0,
+        "status": "done",                          // done | open | locked (berurutan)
+        "result": { "score": 606, "subscores": { "PU": 670 }, "completedAt": "…" } },
+      { "id": "snbt-to-2", "name": "Tryout #2", "order": 2, "status": "open", "result": null }
+    ] }
+```
+- **Paket berurutan:** paket berikutnya terbuka setelah paket sebelumnya selesai; urutan dan isi paket diatur tim konten.
+- **Skala skor (perkiraan, bukan skor resmi):** SNBT rata-rata subtes 0–1000; TKA rata-rata mapel 0–100; SKD jumlah TWK (maks. 150) + TIU (175) + TKP (225) = 550. Catatan skala tampil di tab Tryout dan Performance.
+- `TryoutSession.type` perlu dibedakan `SNBT`/`TKA`/`SKD`, menyimpan paket, skor per subtes, dan waktu selesai.
+- **Relevansi Siap SKD** (menu Persiapan, baris SKD di Dashboard, "Langkah selanjutnya" Compass) dihitung frontend dari dua data yang sudah ada: Compass merekomendasikan jurusan Kedinasan, atau fokus Action Plan berisi Kedinasan (`frontend/src/lib/persiapan.ts`). URL Siap SKD tetap bisa dibuka langsung.
+- Halaman Siap tidak menampilkan perbandingan dengan "skor target jurusan" karena datanya tidak ada.
+

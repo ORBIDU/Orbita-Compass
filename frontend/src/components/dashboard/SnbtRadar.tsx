@@ -15,7 +15,8 @@ const LABEL_AT: Record<SnbtSubtest, RadarAxis["labelAt"]> = {
 interface SnbtRadarProps {
   scores: Record<SnbtSubtest, number>;
   /** Subtes terlemah, ditandai oranye. */
-  weakest: SnbtSubtest;
+  /** null = belum ada yang ditandai. */
+  weakest: SnbtSubtest | null;
   label: string;
   className?: string;
 }
