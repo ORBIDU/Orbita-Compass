@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Siap SNBT, TKA, SKD ORBIDU</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Poppins',system-ui,sans-serif;background:#F5F8FC}
+a{color:#0965FA}a:hover{color:#0747B8}
+a:focus-visible,button:focus-visible{outline:3px solid #F1AD00;outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 1220px; overflow: hidden; display: flex; flex-direction: column; font-family: 'Poppins', system-ui, sans-serif; background: #F5F8FC; color: #101A33">
+<dc-import name="PortalHeader" aktif="persiapan" hint-size="1440px,72px"></dc-import>
+
+<main style="padding: 28px 120px 48px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 760px">
+<nav aria-label="Breadcrumb" style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #6B7898"><a href="Portal-Dashboard.dc.html" style="color: #6B7898; text-decoration: none">Dashboard</a><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9AA6C0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg><span>Persiapan</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9AA6C0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg><span aria-current="page" style="font-weight: 600; color: #101A33">{{title}}</span></nav>
+<h1 style="margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spacing: -0.5px">{{title}}</h1>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A5877">{{desc}}</p>
+</div>
+<span style="flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E3E9F3; font-size: 13px; font-weight: 600; color: #15234D"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B34700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"></path></svg>{{jadwal}}</span>
+</div>
+
+<div role="tablist" aria-label="Bagian persiapan" style="display: flex; gap: 4px; border-bottom: 1px solid #DCE4F2">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+<button type="button" role="tab" aria-selected="{{t.sel}}" onClick="{{t.pick}}" style="height: 52px; padding: 0 18px; display: flex; align-items: center; gap: 8px; border: 0; border-bottom: 2px solid {{t.line}}; margin-bottom: -1px; background: none; font-family: inherit; font-size: 15px; font-weight: {{t.weight}}; color: {{t.fg}}; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>{{t.label}}</button>
+</sc-for>
+</div>
+
+<sc-if value="{{showLatihan}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="padding: 16px 20px; display: flex; align-items: center; gap: 16px; border-radius: 18px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<span style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px; background: #FFF1E6; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B34700" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4M9 15l2 2 4-4"></path></svg></span>
+<span style="flex-grow: 1; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600">{{todayTitle}}</span><span style="font-size: 13px; color: #4A5877">Latihan ini disiapkan Action Plan untuk hari ini.</span></span>
+<a href="Portal-Pengerjaan.dc.html" style="height: 42px; padding: 0 16px; display: flex; align-items: center; border-radius: 10px; background: #0965FA; color: #FFFFFF; font-size: 14px; font-weight: 600; text-decoration: none">{{todayCta}}</a>
+<a href="Portal-ActionPlan.dc.html" style="height: 42px; padding: 0 14px; display: flex; align-items: center; border-radius: 10px; border: 1.5px solid #DCE4F2; color: #15234D; font-size: 14px; font-weight: 600; text-decoration: none">Buka Action Plan</a>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: baseline"><h2 style="margin: 0; font-size: 18px; font-weight: 700">{{latihanHeading}}</h2><span style="font-size: 13px; color: #4A5877">Satu sesi latihan berisi {{sesi}}, dengan pembahasan setiap kali kamu menjawab.</span></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{subtes}}" as="s" hint-placeholder-count="6">
+<article style="padding: 20px; display: flex; flex-direction: column; gap: 12px; border-radius: 18px; background: #FFFFFF; border: 1.5px solid {{s.bd}}">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 12px; font-weight: 700; color: {{s.codeFg}}">{{s.code}}</span><h3 style="margin: 0; font-size: 16px; line-height: 1.35; font-weight: 700">{{s.name}}</h3></span><sc-if value="{{s.weak}}" hint-placeholder-val="{{ false }}"><span style="flex-shrink: 0; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: #FFF1E6; color: #B34700">Paling perlu dilatih</span></sc-if></div>
+<p style="margin: 0; font-size: 13px; line-height: 1.55; color: #4A5877">{{s.desc}}</p>
+<div style="display: flex; flex-direction: column; gap: 6px"><div style="display: flex; justify-content: space-between; font-size: 12px; color: #4A5877"><span class="num">{{s.soal}} soal dikerjakan</span><span class="num" style="font-weight: 700; color: {{s.accFg}}">Akurasi {{s.acc}}%</span></div><div style="height: 6px; border-radius: 99px; background: #E6ECF7"><div style="width: {{s.acc}}%; height: 100%; border-radius: 99px; background: {{s.bar}}"></div></div></div>
+<a href="Portal-Pengerjaan.dc.html" style="align-self: flex-start; margin-top: 2px; height: 40px; padding: 0 14px; display: flex; align-items: center; gap: 6px; border-radius: 10px; border: 1.5px solid #DCE4F2; color: #0965FA; font-size: 13px; font-weight: 600; text-decoration: none">Mulai latihan<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0965FA" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</article>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showTryout}}" hint-placeholder-val="{{ false }}">
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{tryouts}}" as="o" hint-placeholder-count="5">
+<article style="padding: 18px 20px; display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; gap: 16px; align-items: center; border-radius: 18px; background: {{o.bg}}; border: 1.5px solid {{o.bd}}">
+<span style="width: 48px; height: 48px; border-radius: 14px; background: {{o.tileBg}}; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{o.tileFg}}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{o.icon}}"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 16px; font-weight: 700; color: {{o.fg}}">{{o.name}}</span><span style="font-size: 13px; color: #4A5877">{{o.meta}}</span></div>
+<div style="display: flex; align-items: center; gap: 12px">
+<sc-if value="{{o.done}}" hint-placeholder-val="{{ false }}"><span style="display: flex; flex-direction: column; align-items: flex-end"><span class="num" style="font-size: 20px; font-weight: 700">{{o.score}}</span><span style="font-size: 11px; color: #6B7898">{{o.date}}</span></span><a href="Portal-Laporan.dc.html" style="height: 40px; padding: 0 14px; display: flex; align-items: center; border-radius: 10px; border: 1.5px solid #DCE4F2; color: #0965FA; font-size: 13px; font-weight: 600; text-decoration: none">Lihat laporan</a></sc-if>
+<sc-if value="{{o.open}}" hint-placeholder-val="{{ true }}"><a href="Portal-Pengerjaan.dc.html" style="height: 42px; padding: 0 18px; display: flex; align-items: center; border-radius: 10px; background: #0965FA; color: #FFFFFF; font-size: 14px; font-weight: 600; text-decoration: none">Kerjakan</a></sc-if>
+<sc-if value="{{o.locked}}" hint-placeholder-val="{{ false }}"><span style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #6B7898"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B7898" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 11h12v9H6zM8 11V8a4 4 0 118 0v3"></path></svg>{{o.lockText}}</span></sc-if>
+</div>
+</article>
+</sc-for>
+</div>
+<aside style="padding: 22px; display: flex; flex-direction: column; gap: 12px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700">Sebelum mulai tryout</h2>
+<ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.55; color: #4A5877">
+<li>{{toFormat}}</li>
+<li>Waktu berjalan per subtes dan tidak bisa dijeda.</li>
+<li>Siapkan tempat yang tenang dan koneksi internet yang stabil.</li>
+<li>Paket berikutnya terbuka setelah paket sebelumnya selesai.</li>
+</ul>
+<p style="margin: 0; padding: 12px; border-radius: 12px; background: #F5F8FC; font-size: 12px; line-height: 1.55; color: #4A5877">{{skalaNote}}</p>
+</aside>
+</div>
+</sc-if>
+
+<sc-if value="{{showPerf}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<div style="padding: 20px; display: flex; flex-direction: column; gap: 4px; border-radius: 18px; background: #FFFFFF; border: 1px solid #E3E9F3"><span style="font-size: 13px; color: #4A5877">Skor tryout terakhir</span><span style="display: flex; align-items: baseline; gap: 10px"><span class="num" style="font-size: 30px; font-weight: 700">{{lastScore}}</span><span class="num" style="font-size: 13px; font-weight: 700; padding: 2px 9px; border-radius: 999px; background: #E3F5EC; color: #0A7A45">{{delta}}</span></span><span style="font-size: 12px; color: #6B7898">{{lastName}}</span></div>
+<div style="padding: 20px; display: flex; flex-direction: column; gap: 4px; border-radius: 18px; background: #FFFFFF; border: 1px solid #E3E9F3"><span style="font-size: 13px; color: #4A5877">Akurasi latihan</span><span class="num" style="font-size: 30px; font-weight: 700">{{accAll}}%</span><span class="num" style="font-size: 12px; color: #6B7898">dari {{soalAll}} soal latihan</span></div>
+<div style="padding: 20px; display: flex; flex-direction: column; gap: 4px; border-radius: 18px; background: #FFF4EA; border: 1px solid #FFD2AD"><span style="font-size: 13px; color: #7A3300">Paling perlu dilatih</span><span style="font-size: 20px; font-weight: 700; color: #101A33">{{weakName}}</span><span style="font-size: 12px; color: #7A3300">Porsinya ditambah di Action Plan</span></div>
+</div>
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start">
+<section aria-labelledby="pu-tren" style="padding: 22px; display: flex; flex-direction: column; gap: 14px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<h2 id="pu-tren" style="margin: 0; font-size: 17px; font-weight: 700">Tren skor tryout</h2>
+<svg width="540" height="220" viewBox="0 0 540 220" role="img" aria-label="Grafik tren skor tryout">
+<g font-family="Poppins" font-size="11" fill="#6B7898">
+<line x1="50" y1="20" x2="520" y2="20" stroke="#EEF2F8"></line><text x="40" y="24" text-anchor="end">{{yTop}}</text>
+<line x1="50" y1="100" x2="520" y2="100" stroke="#EEF2F8"></line><text x="40" y="104" text-anchor="end">{{yMid}}</text>
+<line x1="50" y1="180" x2="520" y2="180" stroke="#DCE4F2"></line><text x="40" y="184" text-anchor="end">{{yLow}}</text>
+<text x="120" y="206" text-anchor="middle">{{x1}}</text><text x="300" y="206" text-anchor="middle">{{x2}}</text><text x="470" y="206" text-anchor="middle">{{x3}}</text>
+</g>
+<line x1="300" y1="{{p2y}}" x2="470" y2="130" stroke="#B8C4DB" stroke-width="2" stroke-dasharray="5 5"></line>
+<polyline points="120,{{p1y}} 300,{{p2y}}" fill="none" stroke="#0965FA" stroke-width="3" stroke-linecap="round"></polyline>
+<circle cx="120" cy="{{p1y}}" r="5" fill="#FFFFFF" stroke="#0965FA" stroke-width="2.5"></circle><text x="120" y="{{p1t}}" text-anchor="middle" font-family="Poppins" font-size="12" font-weight="700" fill="#0B3FA8">{{s1}}</text>
+<circle cx="300" cy="{{p2y}}" r="5" fill="#FFFFFF" stroke="#0965FA" stroke-width="2.5"></circle><text x="300" y="{{p2t}}" text-anchor="middle" font-family="Poppins" font-size="12" font-weight="700" fill="#0B3FA8">{{s2}}</text>
+<circle cx="470" cy="130" r="5" fill="#FFFFFF" stroke="#B8C4DB" stroke-width="2.5" stroke-dasharray="3 2"></circle><text x="470" y="118" text-anchor="middle" font-family="Poppins" font-size="12" fill="#8A96B2">Belum dikerjakan</text>
+</svg>
+<p style="margin: 0; font-size: 12px; line-height: 1.55; color: #6B7898">{{skalaNote}}</p>
+</section>
+<section aria-labelledby="pu-sub" style="padding: 22px; display: flex; flex-direction: column; gap: 12px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E9F3">
+<h2 id="pu-sub" style="margin: 0; font-size: 17px; font-weight: 700">Skor per subtes, tryout terakhir</h2>
+<sc-for list="{{bars}}" as="b" hint-placeholder-count="7">
+<div style="display: grid; grid-template-columns: 170px minmax(0, 1fr) 48px; gap: 12px; align-items: center; font-size: 13px"><span style="color: #15234D; font-weight: {{b.fw}}">{{b.name}}</span><span style="height: 10px; border-radius: 99px; background: #EEF2F8"><span style="display: block; width: {{b.w}}%; height: 100%; border-radius: 99px; background: {{b.bar}}"></span></span><span class="num" style="text-align: right; font-weight: 700; color: {{b.fg}}">{{b.v}}</span></div>
+</sc-for>
+</section>
+</div>
+</div>
+</sc-if>
+</main>
+
+<div role="group" aria-label="Contoh ujian" style="position: absolute; left: 20px; top: 820px; z-index: 5; padding: 8px; display: flex; align-items: center; gap: 6px; border-radius: 14px; background: #101A33; box-shadow: 0 14px 30px rgba(16,26,51,0.3)">
+<span style="padding: 0 8px; font-size: 12px; font-weight: 600; color: #A9B8D9">Contoh ujian</span>
+<sc-for list="{{demo}}" as="d" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{d.pressed}}" onClick="{{d.pick}}" style="height: 34px; padding: 0 12px; border: 0; border-radius: 9px; background: {{d.bg}}; color: {{d.fg}}; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer">{{d.label}}</button>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"ujian":{"editor":"enum","options":["snbt","tka","skd"],"default":"snbt"},"tab":{"editor":"enum","options":["latihan","tryout","performance"],"default":"latihan"},"$preview":{"width":1440,"height":1220}}'>
+class Component extends DCLogic {
+  constructor(...args) {
+    super(...args);
+    this.state = { ujian: null, tab: null };
+  }
+  renderVals() {
+    const U = this.state.ujian || this.props.ujian || 'snbt';
+    const tab = this.state.tab || this.props.tab || 'latihan';
+    const CFG = {
+      snbt: {
+        title: 'Siap SNBT', desc: 'Latihan soal, tryout, dan pantauan skor untuk 7 subtes UTBK-SNBT.', jadwal: 'UTBK-SNBT, perkiraan April 2027',
+        heading: '7 subtes UTBK-SNBT', sesi: '20 soal', today: ['Latihan Penalaran Umum, 20 soal', 'Kerjakan'],
+        toFormat: '7 subtes sesuai format UTBK-SNBT, sekitar 3 jam.', skala: 'Skor tryout ORBIDU memakai skala 0–1000 sebagai perkiraan, tidak sama persis dengan skor resmi UTBK.',
+        subtes: [
+          ['PU', 'Penalaran Umum', 'Penalaran induktif, deduktif, dan kuantitatif.', 180, 72, 608],
+          ['PPU', 'Pengetahuan dan Pemahaman Umum', 'Pemahaman bacaan, kosakata, dan kaidah bahasa.', 140, 68, 610],
+          ['PBM', 'Pemahaman Bacaan dan Menulis', 'Memahami isi teks dan menyunting tulisan.', 120, 64, 580],
+          ['PK', 'Pengetahuan Kuantitatif', 'Konsep dasar matematika dan logika angka.', 160, 78, 690],
+          ['LBI', 'Literasi Bahasa Indonesia', 'Membaca dan menalar teks berbahasa Indonesia.', 140, 70, 620],
+          ['LBE', 'Literasi Bahasa Inggris', 'Membaca dan menalar teks berbahasa Inggris.', 100, 58, 560],
+          ['PM', 'Penalaran Matematika', 'Memecahkan masalah sehari-hari dengan matematika.', 200, 80, 700]
+        ],
+        tryouts: [['Tryout Diagnostik', 'done', 606, '1 Sep'], ['Tryout #1', 'done', 624, '14 Sep'], ['Tryout #2', 'open'], ['Tryout #3', 'locked'], ['Tryout #4', 'locked']],
+        yTop: '700', yMid: '600', yLow: '500', min: 500, max: 700
+      },
+      tka: {
+        title: 'Siap TKA', desc: 'Latihan soal, tryout, dan pantauan nilai untuk mapel wajib dan mapel pilihan TKA-mu.', jadwal: 'TKA SMA, perkiraan November 2026',
+        heading: '3 mapel wajib dan 2 mapel pilihan', sesi: '15 soal', today: ['Latihan TKA Matematika, 15 soal', 'Lanjutkan'],
+        toFormat: 'Mapel wajib dan 2 mapel pilihan yang kamu atur di Action Plan.', skala: 'Nilai tryout ORBIDU memakai skala 0–100 sebagai perkiraan. Skala nilai resmi mengikuti sertifikat TKA.',
+        subtes: [
+          ['Wajib', 'Bahasa Indonesia', 'Teks, kebahasaan, dan literasi.', 90, 74, 78],
+          ['Wajib', 'Matematika', 'Bilangan, aljabar, geometri, dan data.', 105, 76, 80],
+          ['Wajib', 'Bahasa Inggris', 'Reading dan language use.', 75, 62, 66],
+          ['Pilihan', 'Matematika Tingkat Lanjut', 'Fungsi, kalkulus dasar, dan statistika.', 60, 70, 72],
+          ['Pilihan', 'Fisika', 'Mekanika, listrik, dan gelombang.', 45, 66, 70]
+        ],
+        tryouts: [['Tryout Diagnostik', 'done', 68, '6 Sep'], ['Tryout #1', 'done', 72, '20 Sep'], ['Tryout #2', 'open'], ['Tryout #3', 'locked']],
+        yTop: '90', yMid: '75', yLow: '60', min: 60, max: 90
+      },
+      skd: {
+        title: 'Siap SKD', desc: 'Latihan soal, tryout, dan pantauan skor Seleksi Kompetensi Dasar untuk sekolah kedinasan.', jadwal: 'SKD, mengikuti jadwal tiap instansi',
+        heading: '3 subtes SKD', sesi: '20 soal', today: ['Tidak ada latihan SKD hari ini', 'Latihan bebas'],
+        toFormat: 'TWK, TIU, dan TKP dalam satu sesi.', skala: 'Skor tryout ORBIDU mengikuti susunan SKD dengan total maksimal 550, sebagai latihan.',
+        subtes: [
+          ['TWK', 'Tes Wawasan Kebangsaan', 'Pancasila, UUD 1945, NKRI, dan Bhinneka Tunggal Ika.', 40, 62, 75],
+          ['TIU', 'Tes Intelegensia Umum', 'Kemampuan verbal, numerik, dan figural.', 60, 70, 95],
+          ['TKP', 'Tes Karakteristik Pribadi', 'Pelayanan publik, jejaring kerja, dan profesionalisme.', 40, 81, 142]
+        ],
+        tryouts: [['Tryout Diagnostik', 'done', 286, '30 Agu'], ['Tryout #1', 'done', 312, '7 Sep'], ['Tryout #2', 'open'], ['Tryout #3', 'locked']],
+        yTop: '400', yMid: '300', yLow: '200', min: 200, max: 400
+      }
+    }[U];
+    const tabs = [['latihan', 'Latihan Soal', 'M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2zM4 5v16M8 7h7'], ['tryout', 'Tryout', 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 7v5l3 2'], ['performance', 'Performance', 'M4 20V10M10 20V4M16 20v-7M22 20H2']].map(([id, label, icon]) => {
+      const on = id === tab;
+      return { label, icon, sel: on ? 'true' : 'false', line: on ? '#0965FA' : 'transparent', weight: on ? 600 : 500, fg: on ? '#0965FA' : '#4A5877', pick: () => this.setState({ tab: id }) };
+    });
+    const minAcc = Math.min(...CFG.subtes.map((s) => s[4]));
+    const subtes = CFG.subtes.map(([code, name, desc, soal, acc]) => {
+      const weak = acc === minAcc;
+      return { code, name, desc, soal, acc, weak, bd: weak ? '#FFD2AD' : '#E3E9F3', codeFg: weak ? '#B34700' : '#0965FA', accFg: weak ? '#B34700' : '#101A33', bar: weak ? '#FF7000' : '#0965FA' };
+    });
+    const ICON = { done: 'M12 21a9 9 0 100-18 9 9 0 000 18zM8 12.5l3 3 5-6', open: 'M12 21a9 9 0 100-18 9 9 0 000 18zM10 8.5l5 3.5-5 3.5z', locked: 'M6 11h12v9H6zM8 11V8a4 4 0 118 0v3' };
+    let prevName = '';
+    const tryouts = CFG.tryouts.map(([name, st, score, date]) => {
+      const o = {
+        name, done: st === 'done', open: st === 'open', locked: st === 'locked', score, date: date ? 'Selesai ' + date : '',
+        meta: st === 'done' ? 'Selesai, lihat skor per subtes dan pembahasannya' : st === 'open' ? CFG.toFormat : 'Terbuka setelah ' + prevName + ' selesai',
+        lockText: 'Terbuka setelah ' + prevName,
+        icon: ICON[st], bg: st === 'open' ? '#FFFFFF' : st === 'locked' ? '#F8FAFD' : '#FFFFFF', bd: st === 'open' ? '#0965FA' : '#E3E9F3',
+        tileBg: st === 'done' ? '#E3F5EC' : st === 'open' ? '#E8F0FE' : '#EEF2F8', tileFg: st === 'done' ? '#0A7A45' : st === 'open' ? '#0965FA' : '#8A96B2', fg: st === 'locked' ? '#6B7898' : '#101A33'
+      };
+      prevName = name;
+      return o;
+    });
+    const doneTO = CFG.tryouts.filter((t) => t[1] === 'done');
+    const last = doneTO[doneTO.length - 1];
+    const first = doneTO.length > 1 ? doneTO[doneTO.length - 2] : null;
+    const yOf = (v) => Math.round(180 - (v - CFG.min) / (CFG.max - CFG.min) * 160);
+    const s1 = first ? first[2] : last[2];
+    const s2 = last[2];
+    const maxV = Math.max(...CFG.subtes.map((s) => s[5]));
+    const minV = Math.min(...CFG.subtes.map((s) => s[5]));
+    const bars = CFG.subtes.map(([code, name, , , , v]) => {
+      const weak = v === minV;
+      return { name, v, w: Math.round(v / (U === 'snbt' ? 1000 : U === 'tka' ? 100 : maxV * 1.1) * 100), bar: weak ? '#FF7000' : '#0965FA', fg: weak ? '#B34700' : '#101A33', fw: weak ? 700 : 500 };
+    });
+    const totalSoal = CFG.subtes.reduce((a, s) => a + s[3], 0);
+    const accAll = Math.round(CFG.subtes.reduce((a, s) => a + s[3] * s[4], 0) / totalSoal);
+    const weakSub = CFG.subtes.find((s) => s[4] === minAcc);
+    const demo = [['snbt', 'SNBT'], ['tka', 'TKA'], ['skd', 'SKD']].map(([id, label]) => {
+      const on = id === U;
+      return { label, pressed: on ? 'true' : 'false', bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#101A33' : '#DCE6FF', pick: () => this.setState({ ujian: id }) };
+    });
+    return {
+      title: CFG.title, desc: CFG.desc, jadwal: CFG.jadwal, tabs,
+      showLatihan: tab === 'latihan', showTryout: tab === 'tryout', showPerf: tab === 'performance',
+      todayTitle: CFG.today[0], todayCta: CFG.today[1], latihanHeading: CFG.heading, sesi: CFG.sesi, subtes,
+      tryouts, toFormat: CFG.toFormat, skalaNote: CFG.skala,
+      lastScore: last[2], delta: first ? '+' + (last[2] - first[2]) : 'Pertama', lastName: last[0] + ', ' + last[3],
+      accAll, soalAll: totalSoal, weakName: weakSub[1],
+      yTop: CFG.yTop, yMid: CFG.yMid, yLow: CFG.yLow,
+      x1: first ? first[0] : last[0], x2: first ? last[0] : '', x3: CFG.tryouts.find((t) => t[1] === 'open')[0],
+      s1, s2, p1y: yOf(s1), p2y: yOf(s2), p1t: yOf(s1) - 12, p2t: yOf(s2) - 12,
+      bars, demo
+    };
+  }
+}
+</script>
+</body>
+</html>
