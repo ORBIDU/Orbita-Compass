@@ -15,4 +15,6 @@ File .dc.html di folder ini adalah file desain dari canvas, bukan kode aplikasi.
 - Portal-Pengerjaan.dc.html    : Halaman pengerjaan soal tanpa menu portal. Panel 'Contoh mode': Latihan (pembahasan langsung setelah cek jawaban) dan Tryout (timer per subtes, ragu-ragu, konfirmasi selesai).
 - Portal-Laporan.dc.html       : Laporan tryout: skor dan kenaikan, hasil per subtes, fokus berikutnya, pembahasan dengan filter Salah, Ragu-ragu, Tidak dijawab.
 
+- Portal-Profil.dc.html       : Profil desktop. Data diri dari pihak kurikulum sekolah, hanya bisa dibaca; siswa hanya mengubah nama panggilan, foto, dan password. Kondisi keluarga dan khusus disembunyikan default. Panel 'Data sekolah': Lengkap, Sebagian, Belum diisi.
+
 Contoh soal di desain hanya ilustrasi. Bank soal asli menunggu tim data.
