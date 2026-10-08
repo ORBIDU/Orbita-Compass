@@ -17,7 +17,7 @@ const HEADING = "mb-1.5 text-sm font-semibold text-night-light lg:mb-0 lg:text-[
 
 /** Footer halaman publik (di atas latar navy, dipakai bersama Final CTA). */
 export default function SiteFooter() {
-  const { scrollTo, mulaiTo } = useLandingNav();
+  const { scrollTo, subscribeHref } = useLandingNav();
 
   function renderLink(label: string, target: FooterTarget) {
     switch (target) {
@@ -45,11 +45,11 @@ export default function SiteFooter() {
             {label}
           </Link>
         );
-      case "mulai":
+      case "berlangganan":
         return (
-          <Link to={mulaiTo} className={LINK}>
+          <ExternalLink href={subscribeHref} className={LINK}>
             {label}
-          </Link>
+          </ExternalLink>
         );
     }
   }

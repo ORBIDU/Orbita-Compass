@@ -4,7 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import { ApiError } from "@/services/http";
 import { USE_MOCK } from "@/services/config";
 import { whatsappLink } from "@/config/brand";
-import { AUTH_DEMO_HINT, AUTH_ERRORS, AUTH_FIELDS, AUTH_FORGOT, AUTH_MODES } from "@/content/auth";
+import { AUTH_DEMO_HINT, AUTH_ERRORS, AUTH_FIELDS, AUTH_FORGOT, AUTH_MASUK } from "@/content/auth";
 import { TextField } from "@/components/ui/FormField";
 import AuthAlert from "./AuthAlert";
 import SubmitButton from "./SubmitButton";
@@ -12,8 +12,6 @@ import { compact, emailError } from "./validation";
 
 type Field = "email" | "password";
 type Errors = Partial<Record<Field, string>>;
-
-const COPY = AUTH_MODES.masuk;
 
 /** Form Masuk: email + password, lupa password lewat WhatsApp. */
 export default function MasukForm() {
@@ -90,11 +88,11 @@ export default function MasukForm() {
       />
       <TextField
         ref={passwordRef}
-        label={AUTH_FIELDS.passwordMasuk.label}
+        label={AUTH_FIELDS.password.label}
         type="password"
         name="password"
         autoComplete="current-password"
-        placeholder={AUTH_FIELDS.passwordMasuk.placeholder}
+        placeholder={AUTH_FIELDS.password.placeholder}
         value={password}
         onChange={(e) => {
           setPassword(e.target.value);
@@ -128,13 +126,21 @@ export default function MasukForm() {
         </div>
       </div>
 
-      <SubmitButton loading={submitting} label={COPY.submit} loadingLabel={COPY.submitting} />
+      <SubmitButton loading={submitting} label={AUTH_MASUK.submit} loadingLabel={AUTH_MASUK.submitting} />
 
       {USE_MOCK && (
-        <p className="rounded-xl bg-surface-soft px-4 py-2.5 text-center text-xs text-prose">
-          {AUTH_DEMO_HINT.label} <span className="font-semibold text-space-1">{AUTH_DEMO_HINT.email}</span> /{" "}
-          <span className="font-semibold text-space-1">{AUTH_DEMO_HINT.password}</span>
-        </p>
+        <div className="flex flex-col gap-1 rounded-xl bg-surface-soft px-4 py-2.5 text-center text-xs text-prose">
+          <p>
+            {AUTH_DEMO_HINT.label}, password <span className="font-semibold text-space-1">{AUTH_DEMO_HINT.password}</span>
+          </p>
+          <ul className="flex flex-col gap-0.5">
+            {AUTH_DEMO_HINT.accounts.map((a) => (
+              <li key={a.email}>
+                <span className="font-semibold text-space-1">{a.email}</span> ({a.note})
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </form>
   );

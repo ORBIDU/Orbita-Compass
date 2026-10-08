@@ -1,11 +1,12 @@
 import { HERO } from "@/content/landing";
 import LandingHeader from "../LandingHeader";
 import HeroVisual from "../HeroVisual";
-import { CONTAINER, PillButton, PillLink } from "../primitives";
+import { ROUTES } from "@/config/navigation";
+import { CONTAINER, PillButton, PillExternal, PillLink } from "../primitives";
 import { useLandingNav } from "../useLandingNav";
 
 export default function HeroSection() {
-  const { mulaiTo, scrollTo } = useLandingNav();
+  const { loggedIn, subscribeHref, scrollTo } = useLandingNav();
 
   return (
     <section className="relative overflow-hidden bg-hero-glow pb-14 lg:pb-20">
@@ -23,9 +24,15 @@ export default function HeroSection() {
             </h1>
             <p className="max-w-[520px] text-base leading-[1.65] text-prose lg:text-[19px]">{HERO.subtitle}</p>
             <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-3.5 lg:mt-2.5">
-              <PillLink to={mulaiTo} variant="sun" className="h-[54px] lg:h-[58px] lg:px-7 lg:text-[17px]">
-                {HERO.primaryCta}
-              </PillLink>
+              {loggedIn ? (
+                <PillLink to={ROUTES.portal} variant="sun" className="h-[54px] lg:h-[58px] lg:px-7 lg:text-[17px]">
+                  {HERO.primaryCtaLoggedIn}
+                </PillLink>
+              ) : (
+                <PillExternal href={subscribeHref} variant="sun" className="h-[54px] lg:h-[58px] lg:px-7 lg:text-[17px]">
+                  {HERO.primaryCta}
+                </PillExternal>
+              )}
               <PillButton variant="outline" icon="down" onClick={() => scrollTo("masalah")} className="h-[54px] lg:h-[58px] lg:text-[17px]">
                 {HERO.secondaryCta}
               </PillButton>

@@ -9,3 +9,10 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* Label "Versi demo" (DemoBadge) naik ke atas menu bawah portal di HP. */
+@media (max-width: 1023.98px) {
+  body:has([data-bottom-nav]) .demo-badge {
+    bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+}

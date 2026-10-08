@@ -38,6 +38,10 @@ export const CONTACT = {
 
 /** Pesan pembuka WhatsApp untuk tiap tombol. */
 export const WHATSAPP_MESSAGES = {
+  berlangganan: `Halo tim ${BRAND.name}, aku mau berlangganan ${BRAND.name}.
+Nama: 
+Sekolah: 
+Kelas: `,
   konsultasi: `Halo tim ${BRAND.name}, aku mau konsultasi soal jurusan dan persiapan kuliah.`,
   faq: `Halo tim ${BRAND.name}, aku punya pertanyaan tentang ${BRAND.name}.`,
   sekolah: `Halo tim ${BRAND.name}, saya ingin tahu cara menghadirkan ${BRAND.name} di sekolah kami.`,

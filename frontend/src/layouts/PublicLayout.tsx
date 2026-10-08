@@ -8,7 +8,7 @@ import PageLoader from "@/components/ui/PageLoader";
 
 /**
  * Kerangka halaman publik selain beranda (mis. /jurusan saat belum login):
- * header yang sama dengan beranda (logo, Daftar, Masuk), footer ringkas,
+ * header yang sama dengan beranda (logo, Berlangganan, Masuk), footer ringkas,
  * dan tombol konsultasi. Halaman di-scroll seperti dokumen biasa.
  */
 export default function PublicLayout() {

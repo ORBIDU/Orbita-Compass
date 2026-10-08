@@ -33,6 +33,7 @@ export default function BottomNav() {
     <>
       <nav
         aria-label="Menu portal"
+        data-bottom-nav
         className="fixed inset-x-0 bottom-0 z-40 border-t border-rim-soft bg-white pb-[env(safe-area-inset-bottom)] shadow-nav-up lg:hidden"
       >
         <div className="grid h-[68px] grid-cols-5">

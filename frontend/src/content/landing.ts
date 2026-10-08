@@ -1,4 +1,5 @@
 import { BRAND } from "@/config/brand";
+import { ACCOUNT_ACCESS } from "./common";
 
 // Semua teks beranda, mengikuti desain docs/design/landing/Home-*.dc.html.
 // Komponen hanya menampilkan isi file ini; ubah teks di sini, bukan di komponen.
@@ -16,7 +17,8 @@ export const STEPS = {
 } as const;
 
 export const HEADER = {
-  daftar: "Daftar",
+  /** Tamu: membuka WhatsApp (tidak ada pendaftaran mandiri). */
+  berlangganan: ACCOUNT_ACCESS.subscribe,
   masuk: "Masuk",
   bukaPortal: "Buka Portal",
   logoLabel: `${B}, ke beranda`,
@@ -26,7 +28,9 @@ export const HERO = {
   greeting: `Hi, ${HI}!`,
   title: "Setiap siswa punya orbitnya sendiri.",
   subtitle: "Kenali potensimu, temukan arah pendidikanmu, dan mulai langkahmu menuju tujuan yang ingin kamu capai.",
-  primaryCta: "Mulai Perjalanan",
+  /** Tamu: "Berlangganan" (WhatsApp). Siswa yang sudah masuk: "Buka Portal". */
+  primaryCta: ACCOUNT_ACCESS.subscribe,
+  primaryCtaLoggedIn: "Buka Portal",
   secondaryCta: `Kenali ${B}`,
   campusCaption: "Jelajahi program studi dari berbagai kampus di dalam dan luar negeri",
   /** PLACEHOLDER: logo kampus belum tersedia. */
@@ -139,6 +143,7 @@ export const FAQ = {
       category: `Tentang ${B}`,
       items: [
         { q: `Apa itu ${B}?`, a: `${B} adalah platform pendampingan perencanaan pendidikan bagi siswa SMA untuk membantu mengenali potensi, menemukan arah pendidikan, mengeksplorasi pilihan, dan menentukan langkah berikutnya.` },
+        { q: `Bagaimana cara mendapatkan akun ${B}?`, a: ACCOUNT_ACCESS.full },
         { q: `Siapa yang bisa menggunakan ${B}?`, a: `${B} ditujukan untuk siswa SMA kelas 10–12, serta mendukung Guru BK, Wali Kelas, dan sekolah dalam proses pendampingan pendidikan.` },
         { q: `Bagaimana ${B} memberikan rekomendasi pendidikan?`, a: "Rekomendasi disusun berdasarkan informasi dalam profil siswa, seperti data akademik, prestasi, minat dan bakat, serta refleksi diri. Setiap rekomendasi dilengkapi alasan agar siswa memahami dasar pilihannya." },
         { q: "Apakah data siswa aman?", a: `Data siswa dikelola dengan akses berbasis peran dan tujuan penggunaan yang jelas. Detail pengumpulan, penggunaan, penyimpanan, dan akses data dijelaskan dalam kebijakan privasi ${B}.` },
@@ -185,7 +190,7 @@ export const FOOTER = {
     title: "Akun",
     links: [
       { label: "Masuk", target: "masuk" },
-      { label: "Mulai Perjalanan", target: "mulai" },
+      { label: ACCOUNT_ACCESS.subscribe, target: "berlangganan" },
     ] as const,
   },
   contactTitle: "Hubungi kami",
