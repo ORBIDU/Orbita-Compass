@@ -1,12 +1,13 @@
 import type { SnbpCampus, SnbpChoice, SnbpDraft, SnbpInput, SnbpResult } from "@/types/snbp";
 import { SNBP_CAMPUS_TYPES } from "@/types/snbp";
-import { mockGetSnbpDraft, mockRationalizeSnbp, mockSaveSnbpDraft, mockSetTargetProdi } from "@/mocks/snbpMock";
-import { rationalizeSnbp } from "@/mocks/snbpEngine";
-import { aiDelay } from "@/mocks/delay";
+import { rationalizeSnbp } from "@/data/snbpEngine";
+import { aiDelay } from "@/lib/delay";
 import { readLocal, writeLocal } from "@/lib/localStore";
 import { getUniversities } from "./ptnService";
-import { USE_MOCK } from "./config";
 import { getToken, request } from "./http";
+
+// Mode dummy: dimuat hanya di cabang USE_MOCK, jadi tidak ikut di build mode backend.
+const mock = () => import("@/mocks/snbpMock");
 
 // Siap SNBP. Backend belum menyimpan isian SNBP, dan GET /ptn/rationalization
 // hanya menghitung rapor + bonus prestasi (tanpa pilihan prodi, TKA, dan
@@ -18,12 +19,12 @@ import { getToken, request } from "./http";
 const draftKey = (userId: string) => `orbita_snbp_${userId}`;
 
 export async function getSnbpDraft(userId: string): Promise<SnbpDraft | null> {
-  if (USE_MOCK) return mockGetSnbpDraft(getToken());
+  if (USE_MOCK) return (await mock()).mockGetSnbpDraft(getToken());
   return readLocal<SnbpDraft>(draftKey(userId));
 }
 
 export async function saveSnbpDraft(userId: string, draft: SnbpDraft): Promise<void> {
-  if (USE_MOCK) return mockSaveSnbpDraft(getToken(), draft);
+  if (USE_MOCK) return (await mock()).mockSaveSnbpDraft(getToken(), draft);
   writeLocal(draftKey(userId), draft);
 }
 
@@ -62,7 +63,7 @@ export function getSnbpCampuses(): Promise<SnbpCampus[]> {
 
 /** Hitung peluang per pilihan (simulasi sementara, jeda 2–3 detik). */
 export async function rationalize(input: SnbpInput): Promise<SnbpResult> {
-  if (USE_MOCK) return mockRationalizeSnbp(getToken(), input);
+  if (USE_MOCK) return (await mock()).mockRationalizeSnbp(getToken(), input);
   await aiDelay();
   return rationalizeSnbp(input);
 }
@@ -72,7 +73,7 @@ export async function rationalize(input: SnbpInput): Promise<SnbpResult> {
  * Backend: PUT /profile hanya dengan targetPtnId + targetMajorId; field lain tidak berubah.
  */
 export async function setTargetProdi(target: SnbpChoice | null): Promise<void> {
-  if (USE_MOCK) return mockSetTargetProdi(getToken(), target);
+  if (USE_MOCK) return (await mock()).mockSetTargetProdi(getToken(), target);
   await request("/profile", {
     method: "PUT",
     body: { targetPtnId: target?.universityId ?? null, targetMajorId: target?.majorId ?? null },

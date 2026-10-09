@@ -17,6 +17,7 @@ import WeekSummary from "@/components/actionPlan/WeekSummary";
 import PlanCalendar from "@/components/actionPlan/PlanCalendar";
 import DayPanel from "@/components/actionPlan/DayPanel";
 import PlanDialog from "@/components/actionPlan/PlanDialog";
+import { usePageTitle } from "@/lib/usePageTitle";
 
 /**
  * Action Plan (/portal/action-plan), sesuai docs/design/portal/Portal-ActionPlan.dc.html
@@ -24,6 +25,7 @@ import PlanDialog from "@/components/actionPlan/PlanDialog";
  * dan aktif (kalender + daftar latihan per tanggal).
  */
 export default function ActionPlanPage() {
+  usePageTitle(AP_HEADER.title);
   const { user } = useAuth();
   const { status, ready } = useStudentStatus();
   const userId = user?.id ?? "";

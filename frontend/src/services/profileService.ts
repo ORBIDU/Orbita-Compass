@@ -1,10 +1,11 @@
 import type { MeUser } from "@/types/backend";
 import { NICKNAME_MAX, type ProfilView, type SchoolProfile } from "@/types/profil";
-import { mockChangePassword, mockGetProfil, mockSetAvatar, mockSetNickname } from "@/mocks/profilMock";
-import { EMPTY_SCHOOL_PROFILE } from "@/mocks/data/profil";
+import { EMPTY_SCHOOL_PROFILE } from "@/data/profilKosong";
 import { readLocal, writeLocal } from "@/lib/localStore";
-import { USE_MOCK } from "./config";
 import { getToken } from "./http";
+
+// Mode dummy: dimuat hanya di cabang USE_MOCK, jadi tidak ikut di build mode backend.
+const mock = () => import("@/mocks/profilMock");
 
 // Profil siswa (API_CONTRACT bagian 13). Data diri diisi pihak kurikulum
 // sekolah dan hanya dibaca siswa. Siswa hanya mengubah nama panggilan, foto,
@@ -28,7 +29,7 @@ export async function getProfil(user: MeUser): Promise<ProfilView> {
     schoolName: user.profile?.schoolName?.trim() || null,
   };
   if (USE_MOCK) {
-    const data = await mockGetProfil(getToken());
+    const data = await (await mock()).mockGetProfil(getToken());
     return { ...base, ...data, savedOnServer: true, canChangePassword: true };
   }
   const local = readLocalProfil(user.id);
@@ -47,18 +48,18 @@ export async function getProfil(user: MeUser): Promise<ProfilView> {
 
 export async function setNickname(userId: string, nickname: string): Promise<void> {
   const value = nickname.trim().slice(0, NICKNAME_MAX);
-  if (USE_MOCK) return mockSetNickname(getToken(), value);
+  if (USE_MOCK) return (await mock()).mockSetNickname(getToken(), value);
   writeLocal(localKey(userId), { ...readLocalProfil(userId), nickname: value });
 }
 
 /** `dataUrl` = gambar yang sudah dikecilkan (lib/avatar.ts). null = hapus foto. */
 export async function setAvatar(userId: string, dataUrl: string | null): Promise<void> {
-  if (USE_MOCK) return mockSetAvatar(getToken(), dataUrl);
+  if (USE_MOCK) return (await mock()).mockSetAvatar(getToken(), dataUrl);
   writeLocal(localKey(userId), { ...readLocalProfil(userId), avatarUrl: dataUrl });
 }
 
 export async function changePassword(current: string, next: string): Promise<void> {
-  if (USE_MOCK) return mockChangePassword(getToken(), current, next);
+  if (USE_MOCK) return (await mock()).mockChangePassword(getToken(), current, next);
   throw new Error("Ganti password belum tersedia di backend (API_CONTRACT 13.3).");
 }
 

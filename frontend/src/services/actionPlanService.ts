@@ -17,17 +17,18 @@ import {
   weaknessKey,
   type PlanState,
   type Weakness,
-} from "@/mocks/actionPlanEngine";
-import { mockGetPlanState, mockSavePlanState } from "@/mocks/actionPlanMock";
-import { aiDelay } from "@/mocks/delay";
+} from "@/data/actionPlanEngine";
+import { aiDelay } from "@/lib/delay";
 import { readLocal, writeLocal } from "@/lib/localStore";
 import { toDateKey } from "@/lib/datetime";
 import { PLAN_CHANGED_EVENT } from "@/lib/persiapan";
 import { getPracticeLog } from "./practiceLog";
 import { getRapor } from "./raporService";
 import { catalogEntry, getCompassRecommendations } from "./jurusanService";
-import { USE_MOCK } from "./config";
 import { getToken } from "./http";
+
+// Mode dummy: dimuat hanya di cabang USE_MOCK, jadi tidak ikut di build mode backend.
+const mock = () => import("@/mocks/actionPlanMock");
 
 // Action Plan: pengaturan rencana + latihan harian yang disusun AI.
 // Endpoint /action-plans di backend berisi tugas manual dan tidak cocok, jadi
@@ -40,12 +41,12 @@ import { getToken } from "./http";
 export const planKey = (userId: string) => `orbita_action_plan_${userId}`;
 
 async function loadState(userId: string): Promise<PlanState | null> {
-  if (USE_MOCK) return mockGetPlanState(getToken());
+  if (USE_MOCK) return (await mock()).mockGetPlanState(getToken());
   return readLocal<PlanState>(planKey(userId));
 }
 
 async function saveState(userId: string, state: PlanState): Promise<void> {
-  if (USE_MOCK) return mockSavePlanState(getToken(), state);
+  if (USE_MOCK) return (await mock()).mockSavePlanState(getToken(), state);
   writeLocal(planKey(userId), state);
 }
 

@@ -3,7 +3,7 @@ import type { AsesmenAnswers, AsesmenDraft, AssessmentHistoryEntry, AssessmentSc
 import { ApiError } from "@/services/http";
 import { updateAccount, type MockAchievement } from "./db";
 import { requireAccount } from "./studentMock";
-import { delay } from "./delay";
+import { delay } from "@/lib/delay";
 
 // Tiruan endpoint Analisis Potensi. Yang sudah ada di backend meniru bentuk
 // responsnya (POST /assessment, /achievements, GET /rapor); sisanya mengikuti

@@ -7,6 +7,10 @@ export const BEASISWA_HEADER = {
   breadcrumbCompass: BRAND.compassName,
   title: "Explore Beasiswa",
   description: "Arah kuliahmu sudah ada. Sekarang cari cara untuk mewujudkannya.",
+  /** Belum mengisi Gambaran Minat Bakat (status "baru"). */
+  descriptionBaru: `Cari beasiswa yang bisa membantu biaya kuliahmu. Isi Gambaran Minat Bakat supaya ${BRAND.name} bisa menandai yang cocok dengan jalurmu.`,
+  /** Sudah tes, tetapi belum punya hasil ORBIDU Compass. */
+  descriptionNoCompass: `Cari beasiswa yang bisa membantu biaya kuliahmu. Buka ${BRAND.compassName} supaya beasiswa yang cocok dengan jalurmu bisa ditandai.`,
   sample: "Contoh data, menunggu data resmi dari tim",
 };
 

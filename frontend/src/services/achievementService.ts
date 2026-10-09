@@ -1,16 +1,12 @@
 import type { Achievement } from "@/types/backend";
 import type { AchievementInput, AchievementItem, AchievementKind, AchievementLevel } from "@/types/analisis";
-import {
-  mockAddAchievement,
-  mockDeleteAchievement,
-  mockListAchievements,
-  mockUpdateAchievement,
-  type MockAchievementBody,
-} from "@/mocks/analisisMock";
 import type { MockAchievement } from "@/mocks/db";
-import { USE_MOCK } from "./config";
+import type { MockAchievementBody } from "@/mocks/analisisMock";
 import { getToken, request } from "./http";
 import { getProfile } from "./studentService";
+
+// Mode dummy: dimuat hanya di cabang USE_MOCK, jadi tidak ikut di build mode backend.
+const mock = () => import("@/mocks/analisisMock");
 
 /**
  * Backend baru punya tambah dan hapus prestasi dengan field title, category,
@@ -63,14 +59,14 @@ function toBody(input: AchievementInput, previousCertificate: string | null): Mo
 }
 
 export async function listAchievements(): Promise<AchievementItem[]> {
-  const list = USE_MOCK ? (await mockListAchievements(getToken())).achievements : (await getProfile()).achievements;
+  const list = USE_MOCK ? (await (await mock()).mockListAchievements(getToken())).achievements : (await getProfile()).achievements;
   return list.map(toItem).sort((a, b) => b.year - a.year);
 }
 
 export async function addAchievement(input: AchievementInput): Promise<void> {
   const body = toBody(input, null);
   if (USE_MOCK) {
-    await mockAddAchievement(getToken(), body);
+    await (await mock()).mockAddAchievement(getToken(), body);
     return;
   }
   // Backend hanya menerima field ini; sisanya belum didukung (form menyembunyikannya).
@@ -80,12 +76,12 @@ export async function addAchievement(input: AchievementInput): Promise<void> {
 
 export async function updateAchievement(id: string, input: AchievementInput, previous: AchievementItem): Promise<void> {
   if (!USE_MOCK) throw new Error("Mengubah prestasi belum didukung backend (API_CONTRACT 8.1).");
-  await mockUpdateAchievement(getToken(), id, toBody(input, previous.certificateName));
+  await (await mock()).mockUpdateAchievement(getToken(), id, toBody(input, previous.certificateName));
 }
 
 export async function deleteAchievement(id: string): Promise<void> {
   if (USE_MOCK) {
-    await mockDeleteAchievement(getToken(), id);
+    await (await mock()).mockDeleteAchievement(getToken(), id);
     return;
   }
   await request(`/achievements/${encodeURIComponent(id)}`, { method: "DELETE" });

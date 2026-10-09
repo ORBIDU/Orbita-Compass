@@ -35,7 +35,7 @@ export function CompletenessCard({
                   ? "border-tint-green-fg bg-tint-green-fg text-white"
                   : r.state === "missing"
                     ? "border-alert-rim/40 bg-alert-bg text-alert-fg"
-                    : "border-rim-box bg-white text-field-hint"
+                    : "border-rim-box bg-white text-prose-dim"
               }`}
             >
               {r.state === "done" ? <Check size={12} strokeWidth={3.2} /> : r.state === "missing" ? "!" : "·"}
@@ -195,7 +195,7 @@ export function ResultStep({
                     <span key={b} className={`h-2 rounded-full ${b < style.bars ? style.bar : "bg-surface-track"}`} />
                   ))}
                 </div>
-                <div className="flex justify-between text-[11px] text-field-hint">
+                <div className="flex justify-between text-[11px] text-prose-dim">
                   {SNBP_RESULT.scale.map((s) => (
                     <span key={s}>{s}</span>
                   ))}

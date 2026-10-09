@@ -1,11 +1,12 @@
 import type { MeUser, ProfileResponse, StudentProfileDetail } from "@/types/backend";
 import type { StudentStatus } from "@/types/student";
-import { mockGetProfile, mockGetStatus, mockSetStatus } from "@/mocks/studentMock";
-import { USE_MOCK } from "./config";
 import { getToken, request } from "./http";
 
+// Mode dummy: dimuat hanya di cabang USE_MOCK, jadi tidak ikut di build mode backend.
+const mock = () => import("@/mocks/studentMock");
+
 export async function getProfile(): Promise<StudentProfileDetail> {
-  const data = USE_MOCK ? await mockGetProfile(getToken()) : await request<ProfileResponse>("/profile");
+  const data = USE_MOCK ? await (await mock()).mockGetProfile(getToken()) : await request<ProfileResponse>("/profile");
   return data.profile;
 }
 
@@ -19,12 +20,12 @@ export async function getProfile(): Promise<StudentProfileDetail> {
  */
 export async function getStudentStatus(user: MeUser): Promise<StudentStatus | null> {
   if (user.role !== "STUDENT") return null;
-  if (USE_MOCK) return mockGetStatus(getToken());
+  if (USE_MOCK) return (await mock()).mockGetStatus(getToken());
   return user.profile?.assessment ? "sudah_asesmen" : "baru";
 }
 
 /** Khusus panel Mode Demo: mengganti status akun dummy. */
 export async function setDemoStatus(status: StudentStatus): Promise<StudentStatus> {
   if (!USE_MOCK) throw new Error("Status hanya bisa diganti di mode dummy.");
-  return mockSetStatus(getToken(), status);
+  return (await mock()).mockSetStatus(getToken(), status);
 }

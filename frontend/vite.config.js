@@ -17,6 +17,12 @@ export default defineConfig(({ mode }) => {
         transformIndexHtml: () => (useMock ? [{ tag: 'meta', attrs: { name: 'robots', content: 'noindex' }, injectTo: 'head' }] : []),
       },
     ],
+    // USE_MOCK diganti teks true/false di setiap file saat build, supaya cabang
+    // mode dummy (termasuk import() ke src/mocks/) benar-benar dibuang dari
+    // build mode backend. Konstanta yang diimpor dari file lain tidak dilipat.
+    define: {
+      USE_MOCK: JSON.stringify(useMock),
+    },
     resolve: {
       alias: {
         '@': path.resolve(import.meta.dirname, './src'),

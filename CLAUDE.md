@@ -29,8 +29,11 @@ Nama resmi **ORBIDU** ("ORBIDU Compass" untuk fitur rekomendasi). Semua nama, ta
 ## Aturan data
 1. Komponen tidak boleh berisi data hardcode. Semua data lewat `frontend/src/services/`. Teks halaman statis (landing, FAQ) disimpan di `frontend/src/content/`.
 2. Data dummy ada di `frontend/src/mocks/`. Saklar `VITE_USE_MOCK=true` di `.env` membuat semua service memakai dummy, termasuk login, sehingga frontend bisa jalan tanpa backend.
+   - `src/mocks/` **khusus mode dummy** (akun demo, password, data siswa contoh, Mode Demo) dan tidak boleh ada isinya di build mode backend. Kode di luar `mocks/` hanya boleh memuatnya lewat `import()` di dalam `if (USE_MOCK)` (atau `USE_MOCK ? lazy(...) : null` untuk komponen), tidak pernah lewat `import` di bagian atas file. `USE_MOCK` adalah konstanta global dari `vite.config.js` (`define`), jangan diimpor.
+   - Data contoh dan simulasi yang dipakai **kedua mode** karena endpoint-nya belum ada (katalog jurusan, contoh beasiswa, timeline, bank soal, paket tryout, penyusun Action Plan, rasionalisasi SNBP, profil kosong) ada di `frontend/src/data/`. Setiap file diberi catatan "Sementara, dipakai juga di mode backend sampai endpoint X ada". `src/data/` tidak boleh mengimpor dari `src/mocks/`.
+   - Cek setelah mengubah impor: build dengan `VITE_USE_MOCK=false` lalu pastikan tidak ada file dari `src/mocks/` di hasil build.
 3. Kalau endpoint sudah ada (lihat BACKEND_MAP.md), bentuk data dummy harus sama dengan respons API aslinya. Kalau belum ada, tentukan bentuknya lalu catat di `docs/API_CONTRACT.md` (method, URL, request, response, alasan dibutuhkan).
-4. Fitur AI (Compass, rasionalisasi SNBP, penyusun Action Plan, rekomendasi latihan) disimulasikan di `mocks/` dengan aturan sederhana dan jeda 2–3 detik.
+4. Fitur AI (Compass, rasionalisasi SNBP, penyusun Action Plan, rekomendasi latihan) disimulasikan dengan aturan sederhana dan jeda 2–3 detik (`lib/delay.ts`): di `mocks/` kalau hanya untuk mode dummy, di `data/` kalau dipakai juga mode backend.
 5. Data kosong tampil sebagai empty state yang jujur dengan ajakan bertindak. Jangan pernah mengganti nilai kosong dengan angka palsu.
 6. Frontend tidak pernah mengirim field `role` saat register, dan tidak menampilkan kunci jawaban sebelum soal disubmit.
 7. Masalah keamanan backend (BACKEND_MAP.md bagian 6) tidak diperbaiki dari frontend. Cukup catat kebutuhannya di `docs/API_CONTRACT.md`.

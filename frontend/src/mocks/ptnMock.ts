@@ -1,7 +1,7 @@
 import type { MajorsResponse, Pagination, UniversitiesResponse } from "@/types/backend";
 import type { MajorQuery, UniversityQuery } from "@/services/ptnService";
 import { MOCK_MAJORS, MOCK_UNIVERSITIES, findUniversity } from "./data/ptn";
-import { delay } from "./delay";
+import { delay } from "@/lib/delay";
 
 // Filter, urutan, dan batas limit meniru backend-api/src/controllers/ptnController.ts.
 

@@ -14,6 +14,7 @@ import LatihanTab from "@/components/ujian/LatihanTab";
 import TryoutTab from "@/components/ujian/TryoutTab";
 import PerformanceTab from "@/components/ujian/PerformanceTab";
 import NotFoundPage from "./NotFoundPage";
+import { usePageTitle } from "@/lib/usePageTitle";
 
 const TAB_ICON: Record<UjianTab, typeof BookOpen> = { latihan: BookOpen, tryout: Clock, performance: BarChart3 };
 const isTab = (v: string | null): v is UjianTab => UJIAN_TABS.some((t) => t.id === v);
@@ -39,6 +40,7 @@ function SiapUjian({ exam }: { exam: ExamId }) {
 
   const overview = useAsync(() => getExamOverview(user?.id ?? "", user?.profile?.grade ?? 12, exam, now), [user?.id, status, exam]);
   const copy = EXAM_COPY[exam];
+  usePageTitle(copy.title);
 
   if (!user) return <PageLoader />;
 

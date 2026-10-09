@@ -113,7 +113,7 @@ export function OptionList({
     picked: { box: "border-orbit-1 bg-surface-blue", letter: "bg-orbit-1 text-white" },
     correct: { box: "border-tint-green-fg bg-tint-green-bg", letter: "bg-tint-green-fg text-white" },
     wrong: { box: "border-alert-fg bg-alert-bg", letter: "bg-alert-fg text-white" },
-    dim: { box: "border-rim-soft bg-white", letter: "bg-rim-faint text-field-hint" },
+    dim: { box: "border-rim-soft bg-white", letter: "bg-rim-faint text-prose-dim" },
   };
   return (
     <div role="radiogroup" aria-labelledby={labelledBy} onKeyDown={onKeyDown} className="flex flex-col gap-2.5">

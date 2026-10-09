@@ -4,6 +4,8 @@ import PortalLayout from "@/layouts/PortalLayout";
 import AuthLayout from "@/layouts/AuthLayout";
 import AdaptiveLayout from "@/layouts/AdaptiveLayout";
 import PageLoader from "@/components/ui/PageLoader";
+// Tidak lazy: halaman error harus tetap bisa tampil walau file halaman lain gagal dimuat.
+import ErrorPage from "@/app/ErrorPage";
 import { DaftarRedirect, GuestOnly, RequireAuth } from "@/routes/guards";
 
 const LandingPage = lazy(() => import("@/app/LandingPage"));
@@ -30,61 +32,79 @@ const JurusanDetailPage = lazy(() => import("@/app/JurusanDetailPage"));
 const withSuspense = (node: ReactNode) => <Suspense fallback={<PageLoader fullscreen />}>{node}</Suspense>;
 
 // Peta halaman sesuai docs/SPEK_SISWA.md.
+// errorElement: komponen crash atau file halaman gagal dimuat → halaman error
+// berbahasa Indonesia. Di dalam layout (portal, /jurusan) error tampil di
+// dalam kerangka, jadi header dan menu tetap bisa dipakai.
 export const router = createBrowserRouter([
-  // ── Publik ────────────────────────────────────────────────────────────────
-  { path: "/", element: withSuspense(<LandingPage />) },
   {
-    // Satu halaman untuk tamu dan siswa: layout mengikuti status login.
-    path: "/jurusan",
-    element: <AdaptiveLayout />,
+    errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <JurusanListPage /> },
-      { path: ":slug", element: <JurusanDetailPage /> },
-    ],
-  },
-  {
-    element: <GuestOnly />,
-    children: [
+      // ── Publik ──────────────────────────────────────────────────────────────
+      { path: "/", element: withSuspense(<LandingPage />) },
       {
-        element: <AuthLayout />,
-        children: [{ path: "/masuk", element: <AuthPage /> }],
-      },
-    ],
-  },
-  // Akun dibuat setelah berlangganan; tidak ada pendaftaran mandiri.
-  { path: "/daftar", element: <DaftarRedirect /> },
-
-  // ── Portal (wajib login) ──────────────────────────────────────────────────
-  {
-    element: <RequireAuth />,
-    children: [
-      // Login pertama: ganti password awal dan persetujuan, sebelum portal.
-      { element: <AuthLayout />, children: [{ path: "/aktivasi", element: <AktivasiPage /> }] },
-      {
-        path: "/portal",
-        element: <PortalLayout />,
+        // Satu halaman untuk tamu dan siswa: layout mengikuti status login.
+        path: "/jurusan",
+        element: <AdaptiveLayout />,
         children: [
-          { index: true, element: <DashboardPage /> },
-          { path: "analisis-potensi", element: <AnalisisPotensiPage /> },
-          // Compass, Action Plan, dan Profil mengatur tampilan terkunci/kosongnya sendiri.
-          { path: "compass", element: <CompassPage /> },
-          { path: "beasiswa", element: <BeasiswaPage /> },
-          // Action Plan juga mengatur tampilan terkunci sendiri.
-          { path: "action-plan", element: <ActionPlanPage /> },
-          { path: "persiapan/snbp", element: <SiapSnbpPage /> },
-          { path: "persiapan/:ujian", element: <SiapUjianPage /> },
-          { path: "latihan/:id/hasil", element: <LatihanHasilPage /> },
-          { path: "tryout/:id/laporan", element: <LaporanPage /> },
-          { path: "profil", element: <ProfilPage /> },
-          { path: "*", element: <NotFoundPage /> },
+          {
+            errorElement: <ErrorPage inLayout />,
+            children: [
+              { index: true, element: <JurusanListPage /> },
+              { path: ":slug", element: <JurusanDetailPage /> },
+            ],
+          },
         ],
       },
-      // Pengerjaan soal tampil tanpa menu portal (hasil dan laporan tetap di dalam portal).
-      { path: "/portal/latihan/:id", element: withSuspense(<LatihanRunPage />) },
-      { path: "/portal/tryout/:id", element: withSuspense(<TryoutRunPage />) },
+      {
+        element: <GuestOnly />,
+        children: [
+          {
+            element: <AuthLayout />,
+            children: [{ path: "/masuk", element: <AuthPage /> }],
+          },
+        ],
+      },
+      // Akun dibuat setelah berlangganan; tidak ada pendaftaran mandiri.
+      { path: "/daftar", element: <DaftarRedirect /> },
+
+      // ── Portal (wajib login) ────────────────────────────────────────────────
+      {
+        element: <RequireAuth />,
+        children: [
+          // Login pertama: ganti password awal dan persetujuan, sebelum portal.
+          { element: <AuthLayout />, children: [{ path: "/aktivasi", element: <AktivasiPage /> }] },
+          {
+            path: "/portal",
+            element: <PortalLayout />,
+            children: [
+              {
+                errorElement: <ErrorPage inLayout />,
+                children: [
+                  { index: true, element: <DashboardPage /> },
+                  { path: "analisis-potensi", element: <AnalisisPotensiPage /> },
+                  // Compass, Action Plan, dan Profil mengatur tampilan terkunci/kosongnya sendiri.
+                  { path: "compass", element: <CompassPage /> },
+                  { path: "beasiswa", element: <BeasiswaPage /> },
+                  // Action Plan juga mengatur tampilan terkunci sendiri.
+                  { path: "action-plan", element: <ActionPlanPage /> },
+                  { path: "persiapan/snbp", element: <SiapSnbpPage /> },
+                  { path: "persiapan/:ujian", element: <SiapUjianPage /> },
+                  { path: "latihan/:id/hasil", element: <LatihanHasilPage /> },
+                  { path: "tryout/:id/laporan", element: <LaporanPage /> },
+                  { path: "profil", element: <ProfilPage /> },
+                  { path: "*", element: <NotFoundPage /> },
+                ],
+              },
+            ],
+          },
+          // Pengerjaan soal tampil tanpa menu portal (hasil dan laporan tetap di dalam portal).
+          { path: "/portal/latihan/:id", element: withSuspense(<LatihanRunPage />) },
+          { path: "/portal/tryout/:id", element: withSuspense(<TryoutRunPage />) },
+        ],
+      },
+
+      // ── Tidak ditemukan ─────────────────────────────────────────────────────
+      { element: <AdaptiveLayout />, children: [{ path: "*", element: <NotFoundPage /> }] },
     ],
   },
-
-  // ── Tidak ditemukan ───────────────────────────────────────────────────────
-  { element: <AdaptiveLayout />, children: [{ path: "*", element: <NotFoundPage /> }] },
 ]);

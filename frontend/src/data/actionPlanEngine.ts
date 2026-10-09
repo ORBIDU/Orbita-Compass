@@ -11,9 +11,11 @@ import type {
 import { KEDINASAN_TESTS, TKA_REQUIRED } from "@/types/actionPlan";
 import { SNBT_SUBTESTS } from "@/types/dashboard";
 import { addDays, formatMonthYear, lastDayOfMonth, weekdayOf } from "@/lib/datetime";
-import { SELECTION_TIMELINE } from "./data/timeline";
+import { SELECTION_TIMELINE } from "./timeline";
 import { SESSION_SIZE, sessionMinutes } from "@/config/practice";
 
+// Sementara, dipakai juga di mode backend sampai endpoint Action Plan (/study-plan dan latihan harian, API_CONTRACT 11.1–11.2) ada.
+//
 // Simulasi "AI penyusun Action Plan" (aturan data nomor 4 di CLAUDE.md).
 // Aturannya sederhana:
 // - Latihan hanya muncul di hari belajar yang dipilih siswa, di dalam masa rencana.

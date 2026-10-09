@@ -1,8 +1,8 @@
 import type { Scholarship } from "@/types/beasiswa";
-import { SCHOLARSHIP_SAMPLES } from "./data/beasiswa";
+import { SCHOLARSHIP_SAMPLES } from "@/data/beasiswa";
 import { updateAccount } from "./db";
 import { requireAccount } from "./studentMock";
-import { delay } from "./delay";
+import { delay } from "@/lib/delay";
 
 // Tiruan endpoint beasiswa (usulan docs/API_CONTRACT.md bagian 10).
 

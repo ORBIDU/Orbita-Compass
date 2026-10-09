@@ -69,7 +69,8 @@ export default {
 
         // ── Landing & halaman publik (desain docs/design/landing) ──
         // Teks isi dan teks redup di latar terang
-        prose: { DEFAULT: "#4A5877", dim: "#6B7898", faint: "#9AA6C0" },
+        // dim digelapkan supaya teks kecil tetap ≥4,5:1 di putih dan latar abu/biru muda.
+        prose: { DEFAULT: "#4A5877", dim: "#5F6B8A", faint: "#9AA6C0" },
         // Garis dan border
         rim: { DEFAULT: "#DCE4F2", strong: "#C9D5EA", dash: "#9DB6E3", soft: "#E3E9F3", faint: "#EEF2F8", box: "#B8C4DB", upload: "#C2CFE6" },
         // Latar section dan permukaan
@@ -108,11 +109,13 @@ export default {
         },
         // Teks di latar navy (Final CTA dan footer)
         night: { light: "#F4F7FF", sub: "#C8D4EE", text: "#A9B8D9", dim: "#8394BC", chip: "#DCE6FF", line: "rgba(169, 184, 217, 0.18)", positive: "#7BE3A6", "positive-bg": "rgba(46, 204, 113, 0.18)" },
-        whatsapp: "#1FAF5A",
+        // Hijau WhatsApp yang cukup gelap untuk teks putih (5,4:1).
+        whatsapp: "#127A40",
         mascot,
 
         // ── Masuk & Daftar (desain docs/design/auth) ──
         // Input form: latar, border, placeholder, dan latar tombol pilih mode
+        // hint hanya untuk placeholder dan kontrol nonaktif (2,9:1), bukan teks yang harus dibaca.
         field: { bg: "#F8FAFD", rim: "#D5DEEE", hint: "#8A96B2", track: "#F0F4FA" },
         // Banner error dan border input yang salah
         alert: { bg: "#FDECEC", fg: "#B42318", rim: "#D92D20" },

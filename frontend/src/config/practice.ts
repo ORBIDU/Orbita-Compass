@@ -14,3 +14,9 @@ export const SECONDS_PER_QUESTION: Record<UjianKey, number> = { snbt: 90, tka: 1
 
 /** Perkiraan menit untuk satu sesi latihan. */
 export const sessionMinutes = (exam: UjianKey) => Math.ceil((SESSION_SIZE * SECONDS_PER_QUESTION[exam]) / 60);
+
+/**
+ * Batas sisa waktu subtes tryout (detik) yang diumumkan sekali ke pembaca
+ * layar. Batas yang lebih panjang dari durasi subtes dilewati.
+ */
+export const TIME_WARNING_SECONDS = [300, 60];

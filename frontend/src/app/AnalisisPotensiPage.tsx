@@ -18,6 +18,7 @@ import CompletenessCard from "@/components/analisis/CompletenessCard";
 import TestPanel from "@/components/analisis/test/TestPanel";
 import PrestasiPanel from "@/components/analisis/prestasi/PrestasiPanel";
 import RaporPanel from "@/components/analisis/rapor/RaporPanel";
+import { usePageTitle } from "@/lib/usePageTitle";
 
 const isTab = (v: string | null): v is AnalisisTab => ANALISIS_TABS.includes(v as AnalisisTab);
 
@@ -26,6 +27,7 @@ const isTab = (v: string | null): v is AnalisisTab => ANALISIS_TABS.includes(v a
  * sesuai docs/design/portal/Portal-Analisis*.dc.html dan SPEK bagian 6.
  */
 export default function AnalisisPotensiPage() {
+  usePageTitle(ANALISIS_HEADER.title);
   const { user } = useAuth();
   const { status, ready } = useStudentStatus();
   const [params, setParams] = useSearchParams();

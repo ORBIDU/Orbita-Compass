@@ -7,7 +7,7 @@ import {
   isStudyDay,
   practiceTitle,
   type PlanState,
-} from "../actionPlanEngine";
+} from "@/data/actionPlanEngine";
 
 // Rencana contoh akun demo, mengikuti docs/design/portal/Portal-ActionPlan.dc.html:
 // mulai Senin 14 September 2026, hari belajar Senin/Rabu/Jumat/Minggu,

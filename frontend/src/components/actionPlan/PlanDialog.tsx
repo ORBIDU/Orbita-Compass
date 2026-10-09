@@ -3,7 +3,7 @@ import { Loader2, Sparkles } from "lucide-react";
 import Dialog from "@/components/ui/Dialog";
 import { SelectField } from "@/components/ui/FormField";
 import { AP_CATEGORY_LABEL, AP_DIALOG } from "@/content/actionPlan";
-import { practicesPerWeek } from "@/mocks/actionPlanEngine";
+import { practicesPerWeek } from "@/data/actionPlanEngine";
 import {
   MAX_FOCUS,
   MAX_TKA_ELECTIVES,

@@ -1,5 +1,5 @@
 import type { PracticeLog } from "@/types/practice";
-import { gradeAttempt, newAttempt, sampleAnswers, tryoutSubjects, type TryoutAttempt } from "../practiceServer";
+import { gradeAttempt, newAttempt, sampleAnswers, tryoutSubjects, type TryoutAttempt } from "@/data/practiceServer";
 import { DEMO_PLAN_INPUT } from "./actionPlan";
 
 // Riwayat tryout contoh akun demo siswa (fokus SNBT + TKA), disusun dari

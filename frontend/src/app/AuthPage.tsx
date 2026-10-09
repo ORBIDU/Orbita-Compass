@@ -2,6 +2,8 @@ import { ACCOUNT_ACCESS } from "@/content/common";
 import { AUTH_MASUK, AUTH_PANEL } from "@/content/auth";
 import { whatsappLink } from "@/config/brand";
 import MasukForm from "@/components/auth/MasukForm";
+import { usePageTitle } from "@/lib/usePageTitle";
+import { PAGE_TITLES } from "@/content/common";
 
 /**
  * Halaman Masuk (/masuk). Tidak ada pendaftaran mandiri: akun dibuat setelah
@@ -9,6 +11,7 @@ import MasukForm from "@/components/auth/MasukForm";
  * menentukan halaman tujuan (atau /aktivasi untuk login pertama).
  */
 export default function AuthPage() {
+  usePageTitle(PAGE_TITLES.masuk);
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
