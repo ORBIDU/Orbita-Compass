@@ -26,7 +26,7 @@ export function LockedPlan() {
 /** Sudah tes, belum punya rencana: ajak mengatur rencana. */
 export function SetupHero({ onOpen }: { onOpen: () => void }) {
   return (
-    <section className="grid gap-6 overflow-hidden rounded-card-lg bg-portal-hero-sm px-5 py-7 sm:px-8 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-center lg:gap-10 lg:bg-portal-hero lg:px-11 lg:py-10">
+    <section className="on-dark grid gap-6 overflow-hidden rounded-card-lg bg-portal-hero-sm px-5 py-7 sm:px-8 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-center lg:gap-10 lg:bg-portal-hero lg:px-11 lg:py-10">
       <div className="flex flex-col gap-3.5">
         <h2 className="text-[22px] font-bold leading-tight text-night-light lg:text-[28px]">{AP_SETUP.title}</h2>
         <p className="max-w-[560px] text-sm leading-relaxed text-night-sub lg:text-[15px]">{AP_SETUP.body}</p>

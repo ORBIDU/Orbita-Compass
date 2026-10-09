@@ -20,7 +20,7 @@ export function activationStep(user: MeUser | null): ActivationStep | null {
 /** Halaman asal yang dibawa lewat `state` saat diminta login atau aktivasi (bukan /aktivasi itu sendiri). */
 export function fromState(state: unknown): string | undefined {
   const from = (state as { from?: string } | null)?.from;
-  return from === ROUTES.aktivasi ? undefined : from;
+  return from?.startsWith(ROUTES.aktivasi) ? undefined : from;
 }
 
 /**

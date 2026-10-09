@@ -41,7 +41,7 @@ export default function InfoSection({ section }: { section: InfoSectionData }) {
             {section.rows.map((r) => (
               <div key={r.label} className={`flex flex-col gap-[3px] border-b border-rim-faint py-3 ${r.full ? "sm:col-span-2" : ""}`}>
                 <dt className="text-xs font-medium text-prose-dim">{r.label}</dt>
-                <dd className={`text-[15px] tabular-nums ${r.value ? "font-medium text-space-2" : "italic text-field-hint"}`}>{r.value ?? EMPTY_VALUE}</dd>
+                <dd className={`text-[15px] tabular-nums ${r.value ? "font-medium text-space-2" : "italic text-prose-dim"}`}>{r.value ?? EMPTY_VALUE}</dd>
               </div>
             ))}
           </dl>

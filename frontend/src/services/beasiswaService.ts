@@ -1,10 +1,11 @@
 import type { Scholarship } from "@/types/beasiswa";
-import { mockGetSaved, mockListScholarships, mockSetSaved } from "@/mocks/beasiswaMock";
-import { SCHOLARSHIP_SAMPLES } from "@/mocks/data/beasiswa";
-import { delay } from "@/mocks/delay";
+import { SCHOLARSHIP_SAMPLES } from "@/data/beasiswa";
+import { delay } from "@/lib/delay";
 import { readLocal, writeLocal } from "@/lib/localStore";
-import { USE_MOCK } from "./config";
 import { getToken } from "./http";
+
+// Mode dummy: dimuat hanya di cabang USE_MOCK, jadi tidak ikut di build mode backend.
+const mock = () => import("@/mocks/beasiswaMock");
 
 // Backend belum punya katalog beasiswa maupun beasiswa tersimpan
 // (API_CONTRACT bagian 10). Katalog selalu memakai contoh data (diberi label
@@ -15,7 +16,7 @@ import { getToken } from "./http";
 export const SCHOLARSHIPS_ARE_SAMPLES = true;
 
 export async function listScholarships(): Promise<Scholarship[]> {
-  if (USE_MOCK) return (await mockListScholarships()).scholarships;
+  if (USE_MOCK) return (await (await mock()).mockListScholarships()).scholarships;
   await delay(150);
   return structuredClone(SCHOLARSHIP_SAMPLES);
 }
@@ -23,13 +24,13 @@ export async function listScholarships(): Promise<Scholarship[]> {
 const savedKey = (userId: string) => `orbita_beasiswa_saved_${userId}`;
 
 export async function getSavedScholarships(userId: string): Promise<string[]> {
-  if (USE_MOCK) return (await mockGetSaved(getToken())).ids;
+  if (USE_MOCK) return (await (await mock()).mockGetSaved(getToken())).ids;
   return readLocal<string[]>(savedKey(userId)) ?? [];
 }
 
 /** Simpan atau batalkan simpan satu beasiswa. Mengembalikan daftar terbaru. */
 export async function setScholarshipSaved(userId: string, id: string, saved: boolean): Promise<string[]> {
-  if (USE_MOCK) return (await mockSetSaved(getToken(), id, saved)).ids;
+  if (USE_MOCK) return (await (await mock()).mockSetSaved(getToken(), id, saved)).ids;
   const rest = (readLocal<string[]>(savedKey(userId)) ?? []).filter((x) => x !== id);
   const next = saved ? [...rest, id] : rest;
   writeLocal(savedKey(userId), next);

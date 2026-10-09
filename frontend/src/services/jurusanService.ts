@@ -2,8 +2,8 @@ import type { BidangKey, CampusGroup, CampusOffering, FitLabel, JurusanDetail, J
 import type { CompassAnalysis, MajorWithUniversity } from "@/types/backend";
 import type { CompassHighlights } from "@/types/dashboard";
 import type { CompassRecommendation, CompassResult, HiddenPath, PathGroup, PathKey } from "@/types/compass";
-import { FEATURED_SLUGS, JURUSAN_CATALOG } from "@/mocks/data/jurusan";
-import { delay } from "@/mocks/delay";
+import { FEATURED_SLUGS, JURUSAN_CATALOG } from "@/data/jurusan";
+import { delay } from "@/lib/delay";
 import { BIDANG } from "@/config/bidang";
 import { getMajors } from "./ptnService";
 import { getCompassResult } from "./compassService";

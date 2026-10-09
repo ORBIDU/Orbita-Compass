@@ -1,7 +1,7 @@
 import type { TimelineEvent } from "@/types/dashboard";
 import { toDateKey } from "@/lib/datetime";
-import { SELECTION_TIMELINE } from "@/mocks/data/timeline";
-import { delay } from "@/mocks/delay";
+import { SELECTION_TIMELINE } from "@/data/timeline";
+import { delay } from "@/lib/delay";
 
 /**
  * Timeline seleksi mulai bulan ini (maks. `limit` agenda). Jadwal perkiraan,

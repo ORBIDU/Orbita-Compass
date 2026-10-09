@@ -4,6 +4,8 @@ import { SNBT_BANK } from "./snbt";
 import { TKA_BANK } from "./tka";
 import { SKD_BANK } from "./skd";
 
+// Sementara, dipakai juga di mode backend sampai endpoint bank soal (API_CONTRACT 12.5) ada.
+//
 // CONTOH bank soal (75 soal). Semua paket tryout contoh memakai soal yang
 // sama; bank resmi harus punya soal berbeda per paket (API_CONTRACT 12.5).
 

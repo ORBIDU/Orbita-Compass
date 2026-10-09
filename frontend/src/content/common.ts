@@ -22,3 +22,26 @@ export const ACCOUNT_ACCESS = {
   /** Label tombol utama untuk tamu (membuka WhatsApp). */
   subscribe: "Berlangganan",
 };
+
+/** Halaman error (errorElement router) saat komponen crash atau file halaman gagal dimuat. */
+export const ERROR_PAGE = {
+  title: "Ada yang tidak beres di halaman ini",
+  body: "Coba muat ulang halaman. Kalau masih terjadi, kembali dulu lalu buka lagi beberapa saat kemudian.",
+  reload: "Muat ulang",
+  home: "Kembali ke beranda",
+  portal: "Kembali ke Dashboard",
+  updating: "Memuat versi terbaru...",
+  /** Hanya tampil di mode development. */
+  detail: "Detail error (hanya terlihat saat development)",
+};
+
+/** Judul tab browser untuk halaman yang tidak punya judul di content lain (lib/usePageTitle.ts). */
+export const PAGE_TITLES = {
+  dashboard: "Dashboard",
+  masuk: "Masuk",
+  aktivasi: "Aktivasi akun",
+  notFound: "Halaman tidak ditemukan",
+  error: "Terjadi kesalahan",
+  latihan: "Latihan",
+};
+

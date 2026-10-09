@@ -3,15 +3,6 @@ import type { SchoolProfile } from "@/types/profil";
 // Data diri contoh dari "pihak kurikulum sekolah" (mode dummy), mengikuti
 // docs/design/portal/Portal-Profil.dc.html. Bukan data asli siswa.
 
-export const EMPTY_SCHOOL_PROFILE: SchoolProfile = {
-  identity: { gender: null, birthPlace: null, birthDate: null, nis: null, nisn: null, religion: null },
-  address: { street: null, rt: null, rw: null, village: null, district: null, city: null, province: null, postalCode: null },
-  contact: { studentPhone: null, guardianPhone: null, fatherName: null, fatherJob: null, motherName: null, motherJob: null, guardianName: null },
-  family: { parentStatus: null, livingWith: null, fatherEducation: null, motherEducation: null, socioEconomic: null, educationAid: null, childOrder: null, siblingCount: null },
-  special: { specialNeeds: null, specialNeedsTypes: null, colorBlind: null, notes: null },
-  updatedAt: null,
-};
-
 /** Akun siswa@orbita.id: data lengkap. */
 export const SISWA_SCHOOL_PROFILE: SchoolProfile = {
   identity: { gender: "L", birthPlace: "Palembang", birthDate: "2009-05-15", nis: "2425001234", nisn: "0098765432", religion: "Islam" },

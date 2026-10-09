@@ -1,7 +1,8 @@
 import type { MajorsResponse, UniversitiesResponse } from "@/types/backend";
-import { mockGetMajors, mockGetUniversities } from "@/mocks/ptnMock";
-import { USE_MOCK } from "./config";
 import { request, toQuery } from "./http";
+
+// Mode dummy: dimuat hanya di cabang USE_MOCK, jadi tidak ikut di build mode backend.
+const mock = () => import("@/mocks/ptnMock");
 
 export interface MajorQuery {
   /** Saintek, Soshum, Vokasi, atau Kedinasan */
@@ -21,12 +22,12 @@ export interface UniversityQuery {
   limit?: number;
 }
 
-export function getMajors(query: MajorQuery = {}): Promise<MajorsResponse> {
-  if (USE_MOCK) return mockGetMajors(query);
+export async function getMajors(query: MajorQuery = {}): Promise<MajorsResponse> {
+  if (USE_MOCK) return (await mock()).mockGetMajors(query);
   return request<MajorsResponse>(`/ptn/majors${toQuery({ ...query })}`);
 }
 
-export function getUniversities(query: UniversityQuery = {}): Promise<UniversitiesResponse> {
-  if (USE_MOCK) return mockGetUniversities(query);
+export async function getUniversities(query: UniversityQuery = {}): Promise<UniversitiesResponse> {
+  if (USE_MOCK) return (await mock()).mockGetUniversities(query);
   return request<UniversitiesResponse>(`/ptn/universities${toQuery({ ...query })}`);
 }

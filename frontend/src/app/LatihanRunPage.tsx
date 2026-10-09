@@ -13,6 +13,8 @@ import type { CheckedAnswer, PracticeSessionView } from "@/types/soal";
 import PageLoader from "@/components/ui/PageLoader";
 import { ConfirmDialog, NumberPanel, RunError, RunLayout, RunNotice } from "@/components/pengerjaan/RunShell";
 import { Feedback, NumberGrid, OptionList, QuestionBody, RunHeader, mmss, useNow, type OptionState } from "@/components/pengerjaan/RunParts";
+import { usePageTitle } from "@/lib/usePageTitle";
+import { PAGE_TITLES } from "@/content/common";
 
 /**
  * Pengerjaan latihan (/portal/latihan/:id, atau /portal/latihan/bebas?ujian=&subtes=
@@ -29,6 +31,7 @@ export default function LatihanRunPage() {
   const grade = user?.profile?.grade ?? 12;
 
   const [view, setView] = useState<PracticeSessionView | null>(null);
+  usePageTitle(view?.title ?? PAGE_TITLES.latihan);
   const [error, setError] = useState<string | null>(null);
   const [answers, setAnswers] = useState<Record<string, CheckedAnswer>>({});
   const [index, setIndex] = useState(0);

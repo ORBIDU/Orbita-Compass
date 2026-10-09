@@ -1,5 +1,7 @@
 import type { BankQuestion } from "@/types/soal";
 
+// Sementara, dipakai juga di mode backend sampai endpoint bank soal (API_CONTRACT 12.5) ada.
+//
 // CONTOH SOAL TKA, 5 soal untuk 3 mapel wajib + Matematika Tingkat Lanjut dan
 // Fisika. Mapel pilihan lain belum punya soal contoh. Bukan bank soal resmi.
 // answer = indeks pilihan benar (0 = A).

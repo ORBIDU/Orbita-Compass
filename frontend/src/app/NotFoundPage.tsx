@@ -3,8 +3,11 @@ import { useAuth } from "@/context/AuthContext";
 import { ROUTES } from "@/config/navigation";
 import { ButtonLink } from "@/components/ui/Button";
 import EmptyState from "@/components/ui/EmptyState";
+import { usePageTitle } from "@/lib/usePageTitle";
+import { PAGE_TITLES } from "@/content/common";
 
 export default function NotFoundPage() {
+  usePageTitle(PAGE_TITLES.notFound);
   const { status } = useAuth();
   const loggedIn = status === "authenticated";
   return (

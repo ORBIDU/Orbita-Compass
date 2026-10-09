@@ -11,6 +11,7 @@ import { useJurusanFit } from "@/components/jurusan/useJurusanFit";
 import { CONTAINER } from "@/components/landing/primitives";
 import EmptyState from "@/components/ui/EmptyState";
 import PageLoader from "@/components/ui/PageLoader";
+import { usePageTitle } from "@/lib/usePageTitle";
 
 const SEARCH_DEBOUNCE_MS = 200;
 
@@ -21,6 +22,7 @@ const isBidang = (value: string | null): value is BidangKey => value !== null &&
  * Kata kunci dan bidang disimpan di URL (?q=&bidang=) supaya bisa dibagikan.
  */
 export default function JurusanListPage() {
+  usePageTitle(JURUSAN_LIST.title);
   const [params, setParams] = useSearchParams();
   const bidang = isBidang(params.get("bidang")) ? (params.get("bidang") as BidangKey) : null;
   const [search, setSearch] = useState(params.get("q") ?? "");

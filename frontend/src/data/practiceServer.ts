@@ -17,9 +17,11 @@ import { ApiError } from "@/services/http";
 import { formatWeekday, toDateKey } from "@/lib/datetime";
 import { PRACTICE_SERVER_MSG } from "@/content/pengerjaan";
 import type { PlanState } from "./actionPlanEngine";
-import { bankFor, findQuestion } from "./data/soal";
-import { TRYOUT_PACKAGES, tryoutItems } from "./data/tryout";
+import { bankFor, findQuestion } from "./soal";
+import { TRYOUT_PACKAGES, tryoutItems } from "./tryout";
 
+// Sementara, dipakai juga di mode backend sampai endpoint latihan dan tryout (API_CONTRACT 12.5–12.6) ada.
+//
 // "SERVER" SIMULASI untuk latihan dan tryout (API_CONTRACT 12.5–12.6).
 // Hanya file ini yang membaca kunci jawaban di bank. Halaman pengerjaan hanya
 // menerima PublicQuestion; kunci dan pembahasan dikirim setelah jawaban

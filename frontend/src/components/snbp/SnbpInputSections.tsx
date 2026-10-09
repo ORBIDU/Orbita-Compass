@@ -4,7 +4,7 @@ import { ROUTES } from "@/config/navigation";
 import { SNBP_ACHIEVEMENTS, SNBP_CHOICES, SNBP_RAPOR, SNBP_TKA } from "@/content/siapSnbp";
 import { formatScore } from "@/lib/rapor";
 import type { ChoiceSource, RaporSummary } from "@/lib/snbp";
-import { semesterRange } from "@/mocks/snbpEngine";
+import { semesterRange } from "@/data/snbpEngine";
 import { TKA_REQUIRED } from "@/types/actionPlan";
 import type { AchievementItem } from "@/types/analisis";
 import { MAX_SNBP_ACHIEVEMENTS, type SnbpCampus, type SnbpChoice } from "@/types/snbp";
@@ -40,7 +40,7 @@ export function RaporSection({ summary }: { summary: RaporSummary }) {
               >
                 <span className="text-xs text-prose-dim">{SNBP_RAPOR.semester(s.semester)}</span>
                 {s.average === null ? (
-                  <span className="text-[13px] font-semibold text-field-hint">{SNBP_RAPOR.missing}</span>
+                  <span className="text-[13px] font-semibold text-prose-dim">{SNBP_RAPOR.missing}</span>
                 ) : (
                   <span className="text-xl font-bold tabular-nums text-space-2">{formatScore(s.average)}</span>
                 )}

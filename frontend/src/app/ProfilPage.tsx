@@ -14,6 +14,7 @@ import IdentityCard from "@/components/profil/IdentityCard";
 import AccountCard from "@/components/profil/AccountCard";
 import InfoSection from "@/components/profil/InfoSection";
 import PasswordDialog from "@/components/profil/PasswordDialog";
+import { usePageTitle } from "@/lib/usePageTitle";
 
 /**
  * Profil (/portal/profil), sesuai docs/design/portal/Portal-Profil.dc.html.
@@ -21,6 +22,7 @@ import PasswordDialog from "@/components/profil/PasswordDialog";
  * mengubah nama panggilan, foto, dan password (SPEK bagian 11).
  */
 export default function ProfilPage() {
+  usePageTitle(PROFIL_HEADER.title);
   const { user, refreshUser } = useAuth();
   const profil = useAsync(() => (user ? getProfil(user) : Promise.reject(new Error("no user"))), [user?.id, user?.profile?.nickname, user?.avatarUrl], Boolean(user));
   const [pwOpen, setPwOpen] = useState(false);

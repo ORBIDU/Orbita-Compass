@@ -14,9 +14,9 @@ import {
 import { EXAM_COPY } from "@/content/siapUjian";
 import { formatMonthYear } from "@/lib/datetime";
 import { isSkdRelevant } from "@/lib/persiapan";
-import { SELECTION_TIMELINE } from "@/mocks/data/timeline";
-import { tryoutItems } from "@/mocks/data/tryout";
-import { tryoutSubjects } from "@/mocks/practiceServer";
+import { SELECTION_TIMELINE } from "@/data/timeline";
+import { tryoutItems } from "@/data/tryout";
+import { tryoutSubjects } from "@/data/practiceServer";
 import { SECONDS_PER_QUESTION, SESSION_SIZE } from "@/config/practice";
 import { getActionPlan, getPlanSettings } from "./actionPlanService";
 import { getCompassRecommendations } from "./jurusanService";

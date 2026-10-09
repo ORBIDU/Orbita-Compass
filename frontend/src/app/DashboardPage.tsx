@@ -15,6 +15,8 @@ import PerformanceCard from "@/components/dashboard/PerformanceCard";
 import CompassCard from "@/components/dashboard/CompassCard";
 import TimelineCard from "@/components/dashboard/TimelineCard";
 import ExploreCard from "@/components/dashboard/ExploreCard";
+import { usePageTitle } from "@/lib/usePageTitle";
+import { PAGE_TITLES } from "@/content/common";
 
 /**
  * Dashboard siswa (/portal), sesuai docs/design/portal/Portal-Dashboard*.dc.html
@@ -24,6 +26,7 @@ import ExploreCard from "@/components/dashboard/ExploreCard";
  * - aktif: semua terisi.
  */
 export default function DashboardPage() {
+  usePageTitle(PAGE_TITLES.dashboard);
   const { user } = useAuth();
   const { status, ready, isLocked } = useStudentStatus();
   // Tanggal dan sapaan diambil saat halaman dibuka.

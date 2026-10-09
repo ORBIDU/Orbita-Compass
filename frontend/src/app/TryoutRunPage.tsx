@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Flag } from "lucide-react";
 import { ROUTES, UJIAN_KEYS } from "@/config/navigation";
+import { TIME_WARNING_SECONDS } from "@/config/practice";
 import { LOAD_ERROR } from "@/content/common";
 import { EXAM_COPY } from "@/content/siapUjian";
 import { SESSION, TRYOUT_RUN, joinNames } from "@/content/pengerjaan";
@@ -13,6 +14,7 @@ import type { TryoutView } from "@/types/soal";
 import PageLoader from "@/components/ui/PageLoader";
 import { ConfirmDialog, NumberPanel, RunError, RunLayout, RunNotice } from "@/components/pengerjaan/RunShell";
 import { FlagChip, NumberGrid, OptionList, QuestionBody, RunHeader, mmss, useNow, type OptionState } from "@/components/pengerjaan/RunParts";
+import { usePageTitle } from "@/lib/usePageTitle";
 
 const examOf = (packageId: string): ExamId => {
   const prefix = packageId.split("-")[0] as ExamId;
@@ -35,6 +37,7 @@ export default function TryoutRunPage() {
   const exam = examOf(id);
 
   const [view, setView] = useState<TryoutView | null>(null);
+  usePageTitle(view ? `${view.name} ${EXAM_COPY[view.exam].short}` : null);
   const [error, setError] = useState<string | null>(null);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [flags, setFlags] = useState<string[]>([]);
@@ -97,6 +100,23 @@ export default function TryoutRunPage() {
   );
 
   const remaining = view?.current ? (new Date(view.current.deadline).getTime() - (now + offset.current)) / 1000 : 0;
+
+  // Pembaca layar diberi tahu sekali saat sisa waktu subtes melewati 5 menit
+  // dan 1 menit. Batas yang sudah lewat saat halaman dibuka tidak diumumkan.
+  const [timeAnnounce, setTimeAnnounce] = useState("");
+  const announced = useRef<{ section: string; marks: number[] } | null>(null);
+  useEffect(() => {
+    const c = view?.current;
+    if (!c) return;
+    if (announced.current?.section !== c.subject) {
+      announced.current = { section: c.subject, marks: TIME_WARNING_SECONDS.filter((m) => remaining <= m) };
+      return;
+    }
+    const mark = TIME_WARNING_SECONDS.find((m) => m < c.durationSec && remaining <= m && remaining > 0 && !announced.current!.marks.includes(m));
+    if (mark === undefined) return;
+    announced.current.marks.push(mark);
+    setTimeAnnounce(TRYOUT_RUN.timeLeftAnnounce(mark / 60));
+  }, [remaining, view]);
 
   // Waktu habis di layar → subtes dikumpulkan otomatis dengan jawaban yang tersimpan.
   useEffect(() => {
@@ -178,6 +198,9 @@ export default function TryoutRunPage() {
         <>
           {notice && <RunNotice>{notice}</RunNotice>}
           {saveError && <RunNotice tone="error">{TRYOUT_RUN.saveError}</RunNotice>}
+          <p aria-live="polite" className="sr-only">
+            {timeAnnounce}
+          </p>
         </>
       }
     >

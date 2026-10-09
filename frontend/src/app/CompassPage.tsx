@@ -10,7 +10,6 @@ import { useAsync } from "@/lib/useAsync";
 import { listAchievements } from "@/services/achievementService";
 import { ASESMEN } from "@/services/assessmentService";
 import { analyzeCompass, getInputsUpdatedAt, getTarget, setTarget } from "@/services/compassService";
-import { USE_MOCK } from "@/services/config";
 import { catalogEntry, getCompassRecommendations, getEducationPaths } from "@/services/jurusanService";
 import { getRapor } from "@/services/raporService";
 import { listScholarships } from "@/services/beasiswaService";
@@ -26,6 +25,7 @@ import RecommendationList, { targetKeyOf } from "@/components/compass/Recommenda
 import WhySection from "@/components/compass/WhySection";
 import ScholarshipSection from "@/components/compass/ScholarshipSection";
 import { EmptyCompass, LockedCompass } from "@/components/compass/CompassStates";
+import { usePageTitle } from "@/lib/usePageTitle";
 
 const MAX_RECOMMENDATIONS = 5;
 const longDate = (iso: string) => new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "long", year: "numeric" }).format(new Date(iso));
@@ -35,6 +35,7 @@ const longDate = (iso: string) => new Intl.DateTimeFormat("id-ID", { day: "numer
  * dan SPEK bagian 7. Status "baru" → terkunci dengan ajakan ke tes.
  */
 export default function CompassPage() {
+  usePageTitle(COMPASS_HEADER.title);
   const { user } = useAuth();
   const { status, ready } = useStudentStatus();
   const userId = user?.id ?? "";

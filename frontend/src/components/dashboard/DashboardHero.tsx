@@ -70,7 +70,7 @@ export default function DashboardHero({ now, nickname, kelas, status, plan }: Da
   }
 
   return (
-    <section className="relative overflow-hidden rounded-[22px] bg-portal-hero-sm px-5 py-[22px] lg:grid lg:min-h-[196px] lg:grid-cols-[minmax(0,1fr)_260px] lg:items-center lg:gap-6 lg:rounded-card-lg lg:bg-portal-hero lg:px-10 lg:py-8">
+    <section className="on-dark relative overflow-hidden rounded-[22px] bg-portal-hero-sm px-5 py-[22px] lg:grid lg:min-h-[196px] lg:grid-cols-[minmax(0,1fr)_260px] lg:items-center lg:gap-6 lg:rounded-card-lg lg:bg-portal-hero lg:px-10 lg:py-8">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden lg:block">
         {stars.map((s, i) => (
           <span

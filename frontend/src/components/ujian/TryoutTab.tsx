@@ -28,7 +28,7 @@ export default function TryoutTab({ overview }: { overview: ExamOverview }) {
             >
               <span
                 className={`flex h-11 w-11 items-center justify-center rounded-[14px] sm:h-12 sm:w-12 ${
-                  status === "done" ? "bg-tint-green-bg text-tint-green-fg" : status === "open" ? "bg-tint-blue-bg text-orbit-1" : "bg-rim-faint text-field-hint"
+                  status === "done" ? "bg-tint-green-bg text-tint-green-fg" : status === "open" ? "bg-tint-blue-bg text-orbit-1" : "bg-rim-faint text-prose-dim"
                 }`}
               >
                 {status === "done" ? (

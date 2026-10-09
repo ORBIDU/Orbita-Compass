@@ -17,12 +17,14 @@ import FilterPanel from "@/components/beasiswa/FilterPanel";
 import ScholarshipCard from "@/components/beasiswa/ScholarshipCard";
 import ScholarshipDialog from "@/components/beasiswa/ScholarshipDialog";
 import { useSavedScholarships } from "@/components/beasiswa/useSavedScholarships";
+import { usePageTitle } from "@/lib/usePageTitle";
 
 /**
  * Explore Beasiswa (/portal/beasiswa), sesuai docs/design/portal/Portal-Beasiswa.dc.html
  * dan SPEK bagian 8. Filter tersimpan di URL; data masih contoh.
  */
 export default function BeasiswaPage() {
+  usePageTitle(BEASISWA_HEADER.title);
   const { user } = useAuth();
   const { status, ready } = useStudentStatus();
   const userId = user?.id ?? "";
@@ -76,7 +78,7 @@ export default function BeasiswaPage() {
               </span>
             </nav>
             <h1 className="text-2xl font-bold leading-tight text-space-2 lg:text-[30px] lg:tracking-[-0.5px]">{BEASISWA_HEADER.title}</h1>
-            <p className="text-sm leading-relaxed text-prose lg:text-[15px]">{BEASISWA_HEADER.description}</p>
+            <p className="text-sm leading-relaxed text-prose lg:text-[15px]">{!tested ? BEASISWA_HEADER.descriptionBaru : matchUnavailable ? BEASISWA_HEADER.descriptionNoCompass : BEASISWA_HEADER.description}</p>
           </div>
           {SCHOLARSHIPS_ARE_SAMPLES && (
             <span className="flex items-center gap-2 self-start rounded-full bg-tint-orange-bg px-3.5 py-2 text-[13px] font-semibold text-tint-orange-fg lg:shrink-0 lg:self-auto">

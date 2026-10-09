@@ -9,12 +9,17 @@ import ActionPlanSection from "@/components/landing/sections/ActionPlanSection";
 import FaqSection from "@/components/landing/sections/FaqSection";
 import FinalCtaSection from "@/components/landing/sections/FinalCtaSection";
 import ConsultButton from "@/components/landing/ConsultButton";
+import { HOME_TITLE } from "@/lib/usePageTitle";
 
 /**
  * Beranda ORBIDU. Urutan section sesuai docs/SPEK_SISWA.md bagian 1.
  * Semua teks ada di src/content/landing.ts.
  */
 export default function LandingPage() {
+  // Beranda memakai judul lengkap dengan tagline.
+  useEffect(() => {
+    document.title = HOME_TITLE;
+  }, []);
   const { hash } = useLocation();
 
   // Dukung tautan /#faq, /#jurusan, dll. (mis. dari footer halaman lain).

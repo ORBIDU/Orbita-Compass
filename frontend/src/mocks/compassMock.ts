@@ -4,7 +4,7 @@ import { ApiError } from "@/services/http";
 import { updateAccount } from "./db";
 import { simulateCompass } from "./compassEngine";
 import { requireAccount } from "./studentMock";
-import { aiDelay, delay } from "./delay";
+import { aiDelay, delay } from "@/lib/delay";
 
 /** Tiruan POST /compass/analyze. */
 export async function mockAnalyzeCompass(token: string | null): Promise<CompassAnalyzeResponse> {

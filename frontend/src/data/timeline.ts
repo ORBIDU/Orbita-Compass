@@ -1,5 +1,7 @@
 import type { TimelineEvent } from "@/types/dashboard";
 
+// Sementara, dipakai juga di mode backend sampai endpoint timeline seleksi (API_CONTRACT 7.3) ada.
+//
 // Jadwal seleksi PERKIRAAN berdasarkan pola tahun-tahun sebelumnya.
 // Jadwal resmi mengikuti pengumuman SNPMB dan instansi terkait; perbarui
 // data ini setiap kali jadwal resmi keluar. Belum ada endpoint backend

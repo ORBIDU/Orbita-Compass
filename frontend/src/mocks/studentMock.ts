@@ -3,7 +3,7 @@ import type { StudentStatus } from "@/types/student";
 import { ApiError } from "@/services/http";
 import { accountFromToken, updateAccount, type MockAccount } from "./db";
 import { findMajor, findUniversity } from "./data/ptn";
-import { delay } from "./delay";
+import { delay } from "@/lib/delay";
 import { simulateCompass } from "./compassEngine";
 import { demoPlanState } from "./data/actionPlan";
 

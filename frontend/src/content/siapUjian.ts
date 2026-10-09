@@ -19,7 +19,6 @@ export interface ExamCopy {
   /** Chip jadwal; `{bulan}` diisi bulan perkiraan dari timeline seleksi. */
   schedule: (monthYear: string | null) => string;
   heading: (count: number) => string;
-  sessionSize: string;
   /** Format tryout; `minutes` dihitung dari jumlah soal dan detik per soal (config/practice.ts). */
   tryoutFormat: (minutes: number) => string;
   scaleNote: string;
@@ -34,7 +33,6 @@ export const EXAM_COPY: Record<ExamId, ExamCopy> = {
     short: "SNBT",
     schedule: (m) => (m ? `UTBK-SNBT, perkiraan ${m}` : "UTBK-SNBT, jadwal mengikuti SNPMB"),
     heading: () => "7 subtes UTBK-SNBT",
-    sessionSize: "20 soal",
     tryoutFormat: (m) => `7 subtes sesuai format UTBK-SNBT, sekitar ${duration(m)}.`,
     scaleNote: `Skor tryout ${BRAND.name} memakai skala 0–1000 sebagai perkiraan, tidak sama persis dengan skor resmi UTBK.`,
     scoreUnit: "skala 0–1000",
@@ -45,7 +43,6 @@ export const EXAM_COPY: Record<ExamId, ExamCopy> = {
     short: "TKA",
     schedule: (m) => (m ? `TKA SMA, perkiraan ${m}` : "TKA SMA, jadwal mengikuti Kemendikdasmen"),
     heading: (n) => (n > 3 ? `3 mapel wajib dan ${n - 3} mapel pilihan` : "3 mapel wajib"),
-    sessionSize: "15 soal",
     tryoutFormat: (m) => `Mapel wajib dan mapel pilihan yang kamu atur di Action Plan, sekitar ${duration(m)}.`,
     scaleNote: `Nilai tryout ${BRAND.name} memakai skala 0–100 sebagai perkiraan. Skala nilai resmi mengikuti sertifikat TKA.`,
     scoreUnit: "skala 0–100",
@@ -56,7 +53,6 @@ export const EXAM_COPY: Record<ExamId, ExamCopy> = {
     short: "SKD",
     schedule: () => "SKD, mengikuti jadwal tiap instansi",
     heading: () => "3 subtes SKD",
-    sessionSize: "20 soal",
     tryoutFormat: (m) => `TWK, TIU, dan TKP dalam satu sesi, sekitar ${duration(m)}.`,
     scaleNote: `Skor tryout ${BRAND.name} mengikuti susunan SKD dengan total maksimal 550 (TWK 150, TIU 175, TKP 225), sebagai latihan.`,
     scoreUnit: "maks. 550",
@@ -111,7 +107,8 @@ export const LATIHAN = {
     cta: { todo: "Kerjakan", in_progress: "Lanjutkan" },
     openPlan: "Buka Action Plan",
   },
-  sessionNote: (size: string) => `Satu sesi latihan berisi ${size}, dengan pembahasan setiap kali kamu menjawab.`,
+  /** Jumlah soal dari SESSION_SIZE (config/practice.ts). */
+  sessionNote: (size: number) => `Satu sesi latihan berisi ${size} soal, dengan pembahasan setiap kali kamu menjawab.`,
   answered: (n: number) => `${n} soal dikerjakan`,
   accuracy: (p: number) => `Akurasi ${p}%`,
   noData: "Belum ada latihan",
