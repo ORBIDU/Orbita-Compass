@@ -142,13 +142,13 @@ export const getPracticeQuestions = async (req: Request, res: Response) => {
       });
     }
 
+    // Questions returned WITHOUT answerIndex and explanation (Contract 1.5)
     const formattedQuestions = dbQuestions.map(q => ({
       id: q.id,
       category: q.category,
       subtest: q.subtest,
       question: q.question,
       options: typeof q.optionsJson === 'string' ? JSON.parse(q.optionsJson) : q.optionsJson,
-      answerIndex: q.answerIndex,
       difficultyWeight: q.difficultyWeight
     }));
 
@@ -161,7 +161,7 @@ export const getPracticeQuestions = async (req: Request, res: Response) => {
 
 export const submitPracticeAnswers = async (req: AuthRequest, res: Response) => {
   try {
-    if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
+    if (!req.user) return res.status(401).json({ error: 'Unauthorized', code: 'UNAUTHORIZED' });
 
     const { type, userAnswers } = req.body;
 
@@ -175,8 +175,35 @@ export const submitPracticeAnswers = async (req: AuthRequest, res: Response) => 
     const isSkd = testType === 'SKD';
     const maxScore = isSkd ? 550 : 1000;
 
-    const totalQuestions = isSkd ? 3 : 5;
-    const correctCount = typeof userAnswers === 'object' && userAnswers !== null ? Object.keys(userAnswers).length : 2;
+    // Fetch questions from DB to evaluate server-side
+    const answersObj = typeof userAnswers === 'object' && userAnswers !== null ? userAnswers : {};
+    const questionIds = Object.keys(answersObj);
+
+    let correctCount = 0;
+    const reviewItems: any[] = [];
+
+    if (questionIds.length > 0) {
+      const questions = await prisma.questionBank.findMany({
+        where: { id: { in: questionIds } }
+      });
+
+      for (const q of questions) {
+        const chosen = answersObj[q.id];
+        const isCorrect = chosen !== undefined && Number(chosen) === q.answerIndex;
+        if (isCorrect) correctCount++;
+
+        reviewItems.push({
+          questionId: q.id,
+          subtest: q.subtest,
+          chosenIndex: chosen !== undefined ? Number(chosen) : null,
+          answerIndex: q.answerIndex,
+          isCorrect,
+          explanation: `Jawaban benar: pilihan ke-${q.answerIndex + 1}.`
+        });
+      }
+    }
+
+    const totalQuestions = Math.max(1, questionIds.length);
     const calculatedScore = Math.min(maxScore, Math.round((correctCount / totalQuestions) * maxScore));
 
     const session = await prisma.tryoutSession.create({
@@ -191,11 +218,12 @@ export const submitPracticeAnswers = async (req: AuthRequest, res: Response) => 
     return res.status(201).json({
       message: 'Tryout submitted and score calculated successfully',
       result: {
-        session,
+        sessionId: session.id,
         totalScore: calculatedScore,
         maxScore,
         correctCount,
-        totalQuestions
+        totalQuestions,
+        answers: reviewItems
       }
     });
   } catch (error) {
