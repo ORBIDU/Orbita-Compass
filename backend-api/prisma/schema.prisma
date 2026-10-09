@@ -28,14 +28,19 @@ enum BookingStatus {
 
 // 1. Users table
 model User {
-  id           String          @id @default(uuid())
-  email        String          @unique
-  passwordHash String
-  name         String
-  role         Role            @default(STUDENT)
-  avatarUrl    String?
-  createdAt    DateTime        @default(now())
-  updatedAt    DateTime        @updatedAt
+  id                 String          @id @default(uuid())
+  email              String          @unique
+  passwordHash       String
+  name               String
+  role               Role            @default(STUDENT)
+  avatarUrl          String?
+  mustChangePassword Boolean         @default(false)
+  parentConsentAt    DateTime?
+  termsAcceptedAt    DateTime?
+  termsVersion       String?
+  subscriptionEndsAt DateTime?
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
 
   profile          StudentProfile?
   studentBookings  BkBooking[]     @relation("StudentBookings")
@@ -48,10 +53,11 @@ model StudentProfile {
   id            String      @id @default(uuid())
   userId        String      @unique
   user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  schoolName    String
-  grade         Int         // 10, 11, or 12
-  majorTrack    String      // IPA / IPS / Merdeka
-  city          String
+  nickname      String?
+  schoolName    String?
+  grade         Int?        // 10, 11, or 12
+  majorTrack    String?     // IPA / IPS / Merdeka
+  city          String?
   targetPtnId   String?
   targetPtn     University? @relation(fields: [targetPtnId], references: [id])
   targetMajorId String?
