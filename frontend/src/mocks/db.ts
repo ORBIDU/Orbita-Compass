@@ -13,13 +13,14 @@ import type { AsesmenAnswers, AsesmenDraft, AssessmentHistoryEntry } from "@/typ
 import type { CompassTarget } from "@/types/compass";
 import type { SnbpDraft } from "@/types/snbp";
 import type { SchoolProfile } from "@/types/profil";
-import { BUDI_SCHOOL_PROFILE, EMPTY_SCHOOL_PROFILE, SISWA_SCHOOL_PROFILE } from "./data/profil";
+import { BUDI_SCHOOL_PROFILE, SISWA_SCHOOL_PROFILE } from "./data/profil";
+import { EMPTY_SCHOOL_PROFILE } from "@/data/profilKosong";
 import { simulateCompass } from "./compassEngine";
-import type { PlanState } from "./actionPlanEngine";
+import type { PlanState } from "@/data/actionPlanEngine";
 import { demoPlanState } from "./data/actionPlan";
-import { EMPTY_PRACTICE_LOG } from "./data/tryout";
+import { EMPTY_PRACTICE_LOG } from "@/data/tryout";
 import { demoTryoutData } from "./data/practiceSeed";
-import type { PracticeSession, TryoutAttempt } from "./practiceServer";
+import type { PracticeSession, TryoutAttempt } from "@/data/practiceServer";
 
 // "Database" dummy untuk mode VITE_USE_MOCK=true. Disimpan di localStorage
 // supaya login dan perubahan data tetap ada setelah halaman di-refresh.

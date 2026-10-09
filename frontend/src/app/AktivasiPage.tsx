@@ -7,6 +7,8 @@ import { activationStep, fromState, portalTarget } from "@/lib/activation";
 import { saveConsents, setFirstPassword } from "@/services/authService";
 import PageLoader from "@/components/ui/PageLoader";
 import { ConsentForm, FirstPasswordForm } from "@/components/auth/ActivationForms";
+import { usePageTitle } from "@/lib/usePageTitle";
+import { PAGE_TITLES } from "@/content/common";
 
 /**
  * Aktivasi akun saat pertama masuk (/aktivasi, SPEK bagian 3): akun dibuat
@@ -16,6 +18,7 @@ import { ConsentForm, FirstPasswordForm } from "@/components/auth/ActivationForm
  * tidak pernah tampil (lib/activation.ts).
  */
 export default function AktivasiPage() {
+  usePageTitle(PAGE_TITLES.aktivasi);
   const { user, refreshUser, logout } = useAuth();
   const { status: studentStatus, ready } = useStudentStatus();
   const location = useLocation();

@@ -11,12 +11,14 @@ import { getPracticeResult } from "@/services/soalService";
 import PageLoader from "@/components/ui/PageLoader";
 import { PanelError } from "@/components/ui/PanelState";
 import ReviewList from "@/components/pengerjaan/ReviewList";
+import { usePageTitle } from "@/lib/usePageTitle";
 
 /** Hasil + pembahasan latihan (/portal/latihan/:id/hasil), Action Plan maupun latihan bebas. */
 export default function LatihanHasilPage() {
   const { id = "" } = useParams();
   const { user } = useAuth();
   const result = useAsync(() => getPracticeResult(user?.id ?? "", user?.profile?.grade ?? 12, id), [user?.id, id]);
+  usePageTitle(result.data ? HASIL.latihanTitle(result.data.title) : null);
 
   if (result.loading && !result.data) return <PageLoader />;
   if (result.error || !result.data) {
@@ -60,7 +62,7 @@ export default function LatihanHasilPage() {
           </div>
         </div>
 
-        <section aria-label={HASIL.accuracy} className="grid gap-3 rounded-card-lg bg-portal-hero-sm p-5 sm:grid-cols-3 sm:p-7 lg:bg-portal-hero">
+        <section aria-label={HASIL.accuracy} className="on-dark grid gap-3 rounded-card-lg bg-portal-hero-sm p-5 sm:grid-cols-3 sm:p-7 lg:bg-portal-hero">
           {[
             { label: HASIL.correct, value: HASIL.correctOf(r.correct, r.total) },
             { label: HASIL.unanswered, value: HASIL.unansweredValue(r.unanswered) },

@@ -12,7 +12,7 @@ export const SOON_LABEL = "Segera hadir";
  * tidak bisa diklik. Siap SKD selalu tampil; jika tidak relevan
  * (lib/persiapan.ts) diberi keterangan "Kurang selaras dengan profilmu".
  */
-export default function PersiapanList({ itemRole }: { itemRole?: "menuitem" }) {
+export default function PersiapanList() {
   const { mismatch } = useSkdRelevance();
   const items = PERSIAPAN_ITEMS;
   return (
@@ -42,7 +42,6 @@ export default function PersiapanList({ itemRole }: { itemRole?: "menuitem" }) {
           return (
             <div
               key={item.label}
-              role={itemRole}
               aria-disabled="true"
               className="flex min-h-14 cursor-not-allowed items-center gap-3 rounded-xl px-3 py-2 opacity-60"
             >
@@ -54,7 +53,6 @@ export default function PersiapanList({ itemRole }: { itemRole?: "menuitem" }) {
           <NavLink
             key={item.label}
             to={item.to}
-            role={itemRole}
             className={({ isActive }) =>
               `flex min-h-14 items-center gap-3 rounded-xl px-3 py-2 transition-colors ${isActive ? "bg-cloud" : "hover:bg-surface-soft"}`
             }

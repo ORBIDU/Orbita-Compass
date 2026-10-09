@@ -54,7 +54,9 @@ src/
 ├── router.tsx          ← peta semua URL
 ├── config/            ← brand.ts (nama, tagline, kontak), navigation.ts (URL & menu), bidang.ts
 ├── content/           ← teks halaman statis (beranda, FAQ)
-├── data/              ← asesmen.json: soal Gambaran Minat Bakat (masih placeholder)
+├── data/              ← data contoh dan simulasi yang dipakai KEDUA mode sampai endpoint-nya ada
+│                        (katalog jurusan, beasiswa, timeline, bank soal, paket tryout, penyusun
+│                        Action Plan, rasionalisasi SNBP, profil kosong) + asesmen.json
 ├── layouts/            ← kerangka halaman (portal, publik, auth)
 ├── routes/             ← penjaga halaman (wajib login, gembok status) + pembungkus halaman lama
 ├── components/
@@ -62,16 +64,17 @@ src/
 │   ├── landing/        ← header, section beranda, carousel, footer, tombol konsultasi
 │   ├── mascot/         ← MascotFigure (SVG) dan MascotSlot (maskot hero interaktif)
 │   ├── jurusan/        ← kartu dan sampul jurusan
-│   ├── auth/           ← form Masuk & Daftar, AuthVideoSlot
+│   ├── auth/           ← form Masuk, form Aktivasi akun, AuthVideoSlot
 │   ├── dashboard/      ← hero dan kartu Dashboard (rencana, performa, Compass, timeline)
 │   ├── analisis/       ← Analisis Potensi: tes, prestasi, rapor, kelengkapan profil
 │   ├── compass/        ← ORBIDU Compass: hero, rekomendasi + target, jalur, alasan, beasiswa
 │   ├── beasiswa/       ← Explore Beasiswa: filter, kartu, jendela detail, simpan
 │   ├── portal/         ← header, menu desktop, dropdown Persiapan, menu bawah HP
-│   └── dev/            ← panel Mode Demo
+│   └── dev/            ← panel Mode Demo, label versi demo, petunjuk akun demo (dimuat hanya di mode dummy)
 ├── context/            ← AuthContext (login) dan StudentStatusContext (status siswa)
 ├── services/           ← SATU-SATUNYA pintu data; memilih mock atau backend
-├── mocks/              ← data dummy dengan bentuk sama seperti respons backend
+├── mocks/              ← KHUSUS mode dummy: akun demo, data siswa contoh, "server" dummy;
+│                        tidak ikut di build mode backend (lihat "Aturan singkat")
 ├── types/              ← tipe data backend dan status siswa
 ├── lib/                ← fungsi bantu kecil
 ├── styles/             ← CSS dasar dan @font-face
@@ -83,6 +86,9 @@ src/
 
 - Warna, gradient, font, radius, dan bayangan hanya diambil dari token di `tailwind.config.js` (mis. `bg-gradient-orbit`, `text-ink`, `rounded-card`). Jangan menulis kode warna atau `fontFamily` langsung di komponen baru.
 - Komponen tidak mengambil data sendiri; selalu lewat `src/services/`.
+- `src/mocks/` khusus mode dummy dan **tidak boleh ikut di build mode backend**. Memuatnya hanya lewat `import()` di dalam `if (USE_MOCK)`, atau `USE_MOCK ? lazy(...) : null` untuk komponen (contoh: `PortalLayout` dan panel Mode Demo). `USE_MOCK` adalah konstanta global dari `vite.config.js`, tidak perlu diimpor.
+- Data contoh yang dipakai kedua mode karena endpoint-nya belum ada disimpan di `src/data/`, dengan catatan "Sementara, dipakai juga di mode backend sampai endpoint X ada". `src/data/` tidak boleh mengimpor dari `src/mocks/`.
+- Cara mengecek: `VITE_USE_MOCK=false npm run build -- --sourcemap`, lalu pastikan tidak ada file `src/mocks/` di daftar `sources` file `.map`.
 - Kebutuhan data yang belum ada di backend dicatat di `../docs/API_CONTRACT.md`.
 
 ## Deploy

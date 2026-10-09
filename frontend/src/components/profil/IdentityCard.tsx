@@ -133,7 +133,7 @@ export default function IdentityCard({ name, initials, subtitle, avatarUrl, nick
         {!editing ? (
           <>
             <div className="flex items-center justify-between gap-2.5">
-              <span className={`text-base font-semibold ${nickname ? "text-space-2" : "italic text-field-hint"}`}>{nickname ?? IDENTITY.nickEmpty}</span>
+              <span className={`text-base font-semibold ${nickname ? "text-space-2" : "italic text-prose-dim"}`}>{nickname ?? IDENTITY.nickEmpty}</span>
               <button
                 type="button"
                 onClick={() => {

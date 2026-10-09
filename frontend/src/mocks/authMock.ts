@@ -3,7 +3,7 @@ import { ApiError } from "@/services/http";
 import { AKTIVASI } from "@/content/auth";
 import { findAccountByEmail, mockTokenFor, updateAccount, type MockAccount } from "./db";
 import { buildProfileDetail, requireAccount } from "./studentMock";
-import { delay } from "./delay";
+import { delay } from "@/lib/delay";
 
 function toLoginUser(account: MockAccount): LoginUser {
   return {

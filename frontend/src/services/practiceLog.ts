@@ -1,8 +1,9 @@
 import type { PracticeLog } from "@/types/practice";
-import { mockGetPracticeLog } from "@/mocks/practiceMock";
 import { readLocal } from "@/lib/localStore";
-import { USE_MOCK } from "./config";
 import { getToken } from "./http";
+
+// Mode dummy: dimuat hanya di cabang USE_MOCK, jadi tidak ikut di build mode backend.
+const mock = () => import("@/mocks/practiceMock");
 
 // Penyimpanan riwayat latihan bebas dan tryout (API_CONTRACT 12.4). Dipisah
 // dari practiceService supaya actionPlanService bisa membacanya tanpa saling impor.
@@ -13,6 +14,6 @@ import { getToken } from "./http";
 export const logKey = (userId: string) => `orbita_practice_${userId}`;
 
 export async function getPracticeLog(userId: string): Promise<PracticeLog> {
-  if (USE_MOCK) return mockGetPracticeLog(getToken());
+  if (USE_MOCK) return (await mock()).mockGetPracticeLog(getToken());
   return readLocal<PracticeLog>(logKey(userId)) ?? { free: [], tryouts: [] };
 }

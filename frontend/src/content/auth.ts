@@ -40,16 +40,6 @@ export const AUTH_FORGOT = {
   cta: `Chat WhatsApp ${BRAND.name}`,
 };
 
-/** Petunjuk akun demo, hanya tampil di mode dummy (VITE_USE_MOCK=true). */
-export const AUTH_DEMO_HINT = {
-  label: "Mode dummy · akun demo",
-  password: "password123",
-  accounts: [
-    { email: "siswa@orbita.id", note: "siswa aktif" },
-    { email: "dimas@orbita.id", note: "login pertama" },
-  ],
-};
-
 /**
  * Aktivasi akun saat pertama masuk (/aktivasi): ganti password awal dari admin,
  * lalu dua persetujuan. Syarat & Ketentuan dan Kebijakan Privasi belum punya

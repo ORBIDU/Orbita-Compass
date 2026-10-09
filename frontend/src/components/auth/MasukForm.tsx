@@ -1,14 +1,16 @@
-import { useId, useRef, useState, type FormEvent } from "react";
+import { lazy, Suspense, useId, useRef, useState, type FormEvent } from "react";
 import { MessageCircle } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { ApiError } from "@/services/http";
-import { USE_MOCK } from "@/services/config";
 import { whatsappLink } from "@/config/brand";
-import { AUTH_DEMO_HINT, AUTH_ERRORS, AUTH_FIELDS, AUTH_FORGOT, AUTH_MASUK } from "@/content/auth";
+import { AUTH_ERRORS, AUTH_FIELDS, AUTH_FORGOT, AUTH_MASUK } from "@/content/auth";
 import { TextField } from "@/components/ui/FormField";
 import AuthAlert from "./AuthAlert";
 import SubmitButton from "./SubmitButton";
 import { compact, emailError } from "./validation";
+
+// Petunjuk akun demo hanya ada di mode dummy (dimuat terpisah, tidak ikut di build mode backend).
+const DemoAccountsHint = USE_MOCK ? lazy(() => import("@/components/dev/DemoAccountsHint")) : null;
 
 type Field = "email" | "password";
 type Errors = Partial<Record<Field, string>>;
@@ -128,19 +130,10 @@ export default function MasukForm() {
 
       <SubmitButton loading={submitting} label={AUTH_MASUK.submit} loadingLabel={AUTH_MASUK.submitting} />
 
-      {USE_MOCK && (
-        <div className="flex flex-col gap-1 rounded-xl bg-surface-soft px-4 py-2.5 text-center text-xs text-prose">
-          <p>
-            {AUTH_DEMO_HINT.label}, password <span className="font-semibold text-space-1">{AUTH_DEMO_HINT.password}</span>
-          </p>
-          <ul className="flex flex-col gap-0.5">
-            {AUTH_DEMO_HINT.accounts.map((a) => (
-              <li key={a.email}>
-                <span className="font-semibold text-space-1">{a.email}</span> ({a.note})
-              </li>
-            ))}
-          </ul>
-        </div>
+      {DemoAccountsHint && (
+        <Suspense fallback={null}>
+          <DemoAccountsHint />
+        </Suspense>
       )}
     </form>
   );

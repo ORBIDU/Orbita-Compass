@@ -33,7 +33,7 @@ export default function AuthVideoSlot({ variant, className = "", children }: Aut
   const bg = variant === "panel" ? "bg-auth-glow" : "bg-auth-glow-sm";
 
   return (
-    <div className={`relative overflow-hidden ${bg} ${className}`}>
+    <div className={`on-dark relative overflow-hidden ${bg} ${className}`}>
       <div aria-hidden="true" className="absolute inset-0">
         {playVideo ? (
           <video

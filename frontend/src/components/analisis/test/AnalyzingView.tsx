@@ -43,7 +43,7 @@ export default function AnalyzingView({ step, error, onRetry, onBack }: Analyzin
           const done = i < step;
           const current = i === step && !error;
           return (
-            <li key={label} className={`flex items-center gap-2.5 text-sm ${done ? "text-space-1" : current ? "font-semibold text-space-2" : "text-field-hint"}`}>
+            <li key={label} className={`flex items-center gap-2.5 text-sm ${done ? "text-space-1" : current ? "font-semibold text-space-2" : "text-prose-dim"}`}>
               {done ? (
                 <span className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full bg-tint-green-fg text-white">
                   <Check size={12} strokeWidth={3.4} aria-hidden="true" />

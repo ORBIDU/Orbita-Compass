@@ -1,5 +1,7 @@
 import type { Scholarship } from "@/types/beasiswa";
 
+// Sementara, dipakai juga di mode backend sampai endpoint katalog beasiswa (API_CONTRACT 10.1) ada.
+//
 // CONTOH DATA beasiswa, mengikuti docs/design/portal/Portal-Beasiswa.dc.html.
 // Ditampilkan dengan label "Contoh data" sampai data resmi dari tim tersedia
 // (docs/API_CONTRACT.md bagian 10). Isinya gambaran umum jenis beasiswa,

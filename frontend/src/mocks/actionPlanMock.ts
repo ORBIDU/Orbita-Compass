@@ -1,7 +1,7 @@
-import type { PlanState } from "./actionPlanEngine";
+import type { PlanState } from "@/data/actionPlanEngine";
 import { updateAccount } from "./db";
 import { requireAccount } from "./studentMock";
-import { delay } from "./delay";
+import { delay } from "@/lib/delay";
 
 // Tiruan penyimpanan Action Plan (docs/API_CONTRACT.md bagian 11). Penyusunan
 // latihannya ada di actionPlanEngine.ts dan dipanggil dari actionPlanService.

@@ -1,5 +1,7 @@
 import type { BidangKey, Career, JalurKey, JurusanDetail } from "@/types/jurusan";
 
+// Sementara, dipakai juga di mode backend sampai endpoint katalog jurusan (API_CONTRACT 6.1–6.2) ada.
+//
 // CONTOH DATA. Katalog jurusan dikelompokkan per nama jurusan.
 // Sumber: JurusanPage lama (dipindah ke sini) dan desain docs/design/landing.
 // Sengaja TIDAK dipindah dari halaman lama: persentase "match", perkiraan gaji,

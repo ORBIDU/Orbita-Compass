@@ -1,4 +1,7 @@
-/** Jeda buatan supaya mode dummy terasa seperti memanggil server. */
+/**
+ * Jeda buatan supaya mode dummy dan simulasi AI (src/data/) terasa seperti
+ * memanggil server.
+ */
 export function delay(ms = 300): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }

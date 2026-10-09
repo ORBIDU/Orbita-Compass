@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Check, FlaskConical, Loader2, RotateCcw, X } from "lucide-react";
-import { USE_MOCK } from "@/services/config";
 import { resetMockDb } from "@/mocks/db";
 import { useAuth } from "@/context/AuthContext";
 import { useStudentStatus } from "@/context/StudentStatusContext";
@@ -14,7 +13,7 @@ const STATUS_HINT: Record<StudentStatus, string> = {
 
 /**
  * Panel kecil untuk berpindah status siswa dan melihat semua kondisi halaman.
- * Hanya muncul saat VITE_USE_MOCK=true dan yang login adalah siswa.
+ * Hanya dimuat saat VITE_USE_MOCK=true (PortalLayout) dan tampil untuk siswa.
  */
 export default function DemoModePanel() {
   const { user } = useAuth();
@@ -23,7 +22,7 @@ export default function DemoModePanel() {
   const [pending, setPending] = useState<StudentStatus | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  if (!USE_MOCK || !user || status === null) return null;
+  if (!user || status === null) return null;
 
   async function choose(next: StudentStatus) {
     if (next === status || pending) return;

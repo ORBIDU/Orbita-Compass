@@ -1,11 +1,12 @@
 import asesmenJson from "@/data/asesmen.json";
 import type { MeUser } from "@/types/backend";
 import type { AsesmenAnswers, AsesmenDoc, AsesmenDraft, AssessmentSummary } from "@/types/analisis";
-import { mockGetAssessmentRecord, mockGetDraft, mockSaveDraft, mockSubmitAssessment } from "@/mocks/analisisMock";
 import { scoreAnswers } from "@/lib/asesmen";
 import { readLocal, writeLocal } from "@/lib/localStore";
-import { USE_MOCK } from "./config";
 import { getToken, request } from "./http";
+
+// Mode dummy: dimuat hanya di cabang USE_MOCK, jadi tidak ikut di build mode backend.
+const mock = () => import("@/mocks/analisisMock");
 
 /** Soal Gambaran Minat Bakat. Masih PLACEHOLDER sampai soal final dari Bu Putri masuk. */
 export const ASESMEN = asesmenJson as AsesmenDoc;
@@ -18,13 +19,13 @@ const answersKey = (userId: string) => `orbita_asesmen_answers_${userId}`;
 
 /** Jawaban yang belum dikirim. null = belum pernah mengisi. */
 export async function getDraft(userId: string): Promise<AsesmenDraft | null> {
-  if (USE_MOCK) return mockGetDraft(getToken());
+  if (USE_MOCK) return (await mock()).mockGetDraft(getToken());
   return readLocal<AsesmenDraft>(draftKey(userId));
 }
 
 /** Simpan otomatis jawaban (dipanggil setiap jawaban berubah). */
 export async function saveDraft(userId: string, answers: AsesmenAnswers, sectionIndex: number): Promise<AsesmenDraft> {
-  if (USE_MOCK) return mockSaveDraft(getToken(), answers, sectionIndex);
+  if (USE_MOCK) return (await mock()).mockSaveDraft(getToken(), answers, sectionIndex);
   const draft: AsesmenDraft = { answers, sectionIndex, savedAt: new Date().toISOString() };
   writeLocal(draftKey(userId), draft);
   return draft;
@@ -37,7 +38,7 @@ export async function saveDraft(userId: string, answers: AsesmenAnswers, section
 export async function submitAssessment(userId: string, answers: AsesmenAnswers): Promise<void> {
   const scores = scoreAnswers(ASESMEN, answers);
   if (USE_MOCK) {
-    await mockSubmitAssessment(getToken(), scores, answers);
+    await (await mock()).mockSubmitAssessment(getToken(), scores, answers);
     return;
   }
   await request("/assessment", { method: "POST", body: scores });
@@ -52,7 +53,7 @@ export async function submitAssessment(userId: string, answers: AsesmenAnswers):
  */
 export async function getAssessmentSummary(user: MeUser): Promise<AssessmentSummary | null> {
   if (USE_MOCK) {
-    const record = await mockGetAssessmentRecord(getToken());
+    const record = await (await mock()).mockGetAssessmentRecord(getToken());
     return record.latest ? { ...record.latest, previous: record.previous } : null;
   }
   const assessment = user.profile?.assessment;

@@ -1,12 +1,15 @@
-import { Suspense, useCallback } from "react";
+import { lazy, Suspense, useCallback } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { toDisplayUser } from "@/lib/user";
 import { ROUTES } from "@/config/navigation";
 import PortalHeader from "@/components/portal/PortalHeader";
 import BottomNav from "@/components/portal/BottomNav";
-import DemoModePanel from "@/components/dev/DemoModePanel";
 import PageLoader from "@/components/ui/PageLoader";
+
+// Panel Mode Demo hanya ada di mode dummy. Dimuat terpisah di cabang USE_MOCK
+// supaya panel dan data dummy (src/mocks/) tidak ikut di build mode backend.
+const DemoModePanel = USE_MOCK ? lazy(() => import("@/components/dev/DemoModePanel")) : null;
 
 /**
  * Kerangka semua halaman portal (docs/design/portal): header di atas, isi
@@ -37,7 +40,11 @@ export default function PortalLayout() {
         </Suspense>
       </main>
       <BottomNav />
-      <DemoModePanel />
+      {DemoModePanel && (
+        <Suspense fallback={null}>
+          <DemoModePanel />
+        </Suspense>
+      )}
     </div>
   );
 }

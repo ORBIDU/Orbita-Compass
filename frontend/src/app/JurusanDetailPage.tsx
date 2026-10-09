@@ -31,6 +31,7 @@ import { CONTAINER } from "@/components/landing/primitives";
 import { ButtonLink } from "@/components/ui/Button";
 import EmptyState from "@/components/ui/EmptyState";
 import PageLoader from "@/components/ui/PageLoader";
+import { usePageTitle } from "@/lib/usePageTitle";
 
 // Ikon dan warna kotak ikon prospek karier (warna berputar seperti desain).
 const CAREER_ICON: Record<CareerIcon, LucideIcon> = {
@@ -88,7 +89,7 @@ function FitCta({ jurusan, fit }: { jurusan: JurusanDetail; fit: FitLabel | unde
   // Tamu: tidak ada pendaftaran mandiri, jadi ajak berlangganan (WhatsApp) atau masuk.
   if (!loggedIn) {
     return (
-      <div className="relative flex flex-col gap-3 overflow-hidden rounded-[20px] bg-gradient-to-b from-space-1 to-space-2 p-5 sm:p-6">
+      <div className="on-dark relative flex flex-col gap-3 overflow-hidden rounded-[20px] bg-gradient-to-b from-space-1 to-space-2 p-5 sm:p-6">
         <p className="font-accent text-[26px] font-bold leading-[1.1] text-sun-2">{T.cta.accent}</p>
         <p className="text-[15px] leading-[1.65] text-night-sub">{T.cta.guestBody(jurusan.name)}</p>
         <a href={whatsappLink("berlangganan")} target="_blank" rel="noopener noreferrer" className={buttonClass}>
@@ -119,7 +120,7 @@ function FitCta({ jurusan, fit }: { jurusan: JurusanDetail; fit: FitLabel | unde
   }
 
   return (
-    <div className="relative flex flex-col gap-3 overflow-hidden rounded-[20px] bg-gradient-to-b from-space-1 to-space-2 p-5 sm:p-6">
+    <div className="on-dark relative flex flex-col gap-3 overflow-hidden rounded-[20px] bg-gradient-to-b from-space-1 to-space-2 p-5 sm:p-6">
       <p className="font-accent text-[26px] font-bold leading-[1.1] text-sun-2">{T.cta.accent}</p>
       <p className="text-[15px] leading-[1.65] text-night-sub">{body}</p>
       <Link to={to} className={buttonClass}>
@@ -133,6 +134,7 @@ function FitCta({ jurusan, fit }: { jurusan: JurusanDetail; fit: FitLabel | unde
 export default function JurusanDetailPage() {
   const { slug = "" } = useParams();
   const [detail, setDetail] = useState<JurusanDetail | null | undefined>(undefined);
+  usePageTitle(detail ? detail.name : detail === null ? T.notFoundTitle : null);
   const { status: authStatus } = useAuth();
   const fit = useJurusanFit();
   const scrollRef = useRef<HTMLDivElement>(null);

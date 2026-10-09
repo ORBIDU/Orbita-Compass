@@ -15,9 +15,11 @@ export function RequireAuth() {
   const { status, user } = useAuth();
   const location = useLocation();
   if (status === "loading") return <PageLoader fullscreen label={`Memuat ${BRAND.name}...`} />;
-  if (status === "guest") return <Navigate to={ROUTES.masuk} replace state={{ from: location.pathname }} />;
+  // Halaman asal ikut ?query (mis. ?tab=performance), supaya kembali ke tempat yang sama.
+  const from = location.pathname + location.search;
+  if (status === "guest") return <Navigate to={ROUTES.masuk} replace state={{ from }} />;
   if (activationStep(user) && location.pathname !== ROUTES.aktivasi) {
-    return <Navigate to={ROUTES.aktivasi} replace state={{ from: location.pathname }} />;
+    return <Navigate to={ROUTES.aktivasi} replace state={{ from }} />;
   }
   return <Outlet />;
 }

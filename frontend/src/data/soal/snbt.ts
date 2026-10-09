@@ -1,5 +1,7 @@
 import type { BankQuestion } from "@/types/soal";
 
+// Sementara, dipakai juga di mode backend sampai endpoint bank soal (API_CONTRACT 12.5) ada.
+//
 // CONTOH SOAL SNBT, 5 soal per subtes. Bukan bank soal resmi (menunggu tim
 // data). Semua paket tryout contoh memakai soal yang sama.
 // answer = indeks pilihan benar (0 = A).

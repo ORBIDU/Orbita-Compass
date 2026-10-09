@@ -12,6 +12,7 @@ import type { TryoutReport } from "@/types/soal";
 import PageLoader from "@/components/ui/PageLoader";
 import { PanelError } from "@/components/ui/PanelState";
 import ReviewList from "@/components/pengerjaan/ReviewList";
+import { usePageTitle } from "@/lib/usePageTitle";
 
 /**
  * Subtes terendah dan terkuat (relatif terhadap skor maksimum), dihitung dari
@@ -32,6 +33,7 @@ export default function LaporanPage() {
   const { id = "" } = useParams();
   const { user } = useAuth();
   const report = useAsync(() => getTryoutReport(user?.id ?? "", id), [user?.id, id]);
+  usePageTitle(report.data ? LAPORAN.title(report.data.name, EXAM_COPY[report.data.exam].short) : null);
 
   if (report.loading && !report.data) return <PageLoader />;
   if (report.error || !report.data) {
@@ -79,7 +81,7 @@ export default function LaporanPage() {
           </Link>
         </div>
 
-        <section aria-label={LAPORAN.scoreLabel[r.exam]} className="grid gap-6 rounded-card-lg bg-portal-hero-sm p-5 sm:p-7 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-center lg:gap-9 lg:bg-portal-hero lg:px-8">
+        <section aria-label={LAPORAN.scoreLabel[r.exam]} className="on-dark grid gap-6 rounded-card-lg bg-portal-hero-sm p-5 sm:p-7 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-center lg:gap-9 lg:bg-portal-hero lg:px-8">
           <div className="flex flex-col gap-1.5">
             <span className="text-sm text-night-text">{LAPORAN.scoreLabel[r.exam]}</span>
             <span className="flex items-baseline gap-3">

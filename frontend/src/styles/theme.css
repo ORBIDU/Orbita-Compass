@@ -73,11 +73,15 @@
 }
 
 /*
- * Halaman publik (landing, /jurusan, auth) dan portal: cincin fokus kuning
- * agar jelas terlihat saat navigasi dengan keyboard, sesuai desain
+ * Cincin fokus saat navigasi dengan keyboard (halaman publik dan portal).
+ * Latar terang: biru orbit-1 (kontras 4,9:1 di putih; kuning hanya 2:1).
+ * Area navy diberi kelas `on-dark`: kuning sun-2 (7,8:1), sesuai desain
  * docs/design/landing dan docs/design/portal.
  */
-:is(.public-site, .portal-site) :is(a, button, input, [tabindex]):focus-visible {
-  outline: 3px solid theme("colors.sun-2");
+:is(.public-site, .portal-site) :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid theme("colors.orbit-1");
   outline-offset: 3px;
+}
+:is(.public-site, .portal-site) .on-dark :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline-color: theme("colors.sun-2");
 }
