@@ -7,6 +7,7 @@
     "dev:fe": "npm run dev --prefix frontend",
     "dev:be": "npm run dev --prefix backend-api",
     "dev:ai": "python ai-engine/main.py",
+    "build": "npm --prefix backend-api install && npx --prefix backend-api prisma db push --skip-generate || true && npm --prefix backend-api run prisma:generate && npm --prefix backend-api run build && npm --prefix frontend install && npm --prefix frontend run build",
     "build:fe": "npm run build --prefix frontend",
     "build:be": "npm run build --prefix backend-api"
   },
