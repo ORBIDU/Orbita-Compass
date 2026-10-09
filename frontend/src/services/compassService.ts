@@ -1,15 +1,16 @@
 import type { CompassAnalysis, CompassAnalyzeResponse, CompassResultResponse } from "@/types/backend";
 import type { CompassTarget } from "@/types/compass";
-import { mockAnalyzeCompass, mockGetCompassResult, mockGetInputsUpdatedAt, mockGetTarget, mockSetTarget } from "@/mocks/compassMock";
 import { readLocal, writeLocal } from "@/lib/localStore";
-import { USE_MOCK } from "./config";
 import { getToken, request } from "./http";
 import { getProfile } from "./studentService";
+
+// Mode dummy: dimuat hanya di cabang USE_MOCK, jadi tidak ikut di build mode backend.
+const mock = () => import("@/mocks/compassMock");
 
 /** Hasil analisis Compass terakhir, atau null jika belum pernah dianalisis. */
 export async function getCompassResult(): Promise<CompassAnalysis | null> {
   const data = USE_MOCK
-    ? await mockGetCompassResult(getToken())
+    ? await (await mock()).mockGetCompassResult(getToken())
     : await request<CompassResultResponse>("/compass/result");
   return data.analysis;
 }
@@ -17,7 +18,7 @@ export async function getCompassResult(): Promise<CompassAnalysis | null> {
 /** Menjalankan analisis Compass baru. Di mode dummy memakan waktu 2–3 detik. */
 export async function analyzeCompass(): Promise<CompassAnalysis> {
   const data = USE_MOCK
-    ? await mockAnalyzeCompass(getToken())
+    ? await (await mock()).mockAnalyzeCompass(getToken())
     : await request<CompassAnalyzeResponse>("/compass/analyze", { method: "POST" });
   return data.analysis;
 }
@@ -31,13 +32,13 @@ export async function analyzeCompass(): Promise<CompassAnalysis> {
 const targetKey = (userId: string) => `orbita_compass_target_${userId}`;
 
 export async function getTarget(userId: string): Promise<CompassTarget | null> {
-  if (USE_MOCK) return (await mockGetTarget(getToken())).target;
+  if (USE_MOCK) return (await (await mock()).mockGetTarget(getToken())).target;
   return readLocal<CompassTarget>(targetKey(userId));
 }
 
 /** null = hapus target. */
 export async function setTarget(userId: string, target: { slug: string | null; name: string } | null): Promise<CompassTarget | null> {
-  if (USE_MOCK) return (await mockSetTarget(getToken(), target)).target;
+  if (USE_MOCK) return (await (await mock()).mockSetTarget(getToken(), target)).target;
   const next: CompassTarget | null = target ? { ...target, setAt: new Date().toISOString() } : null;
   writeLocal(targetKey(userId), next);
   return next;
@@ -53,7 +54,7 @@ export async function setTarget(userId: string, target: { slug: string | null; n
  * prestasi yang dihapus belum terdeteksi.
  */
 export async function getInputsUpdatedAt(): Promise<string | null> {
-  if (USE_MOCK) return (await mockGetInputsUpdatedAt(getToken())).inputsUpdatedAt;
+  if (USE_MOCK) return (await (await mock()).mockGetInputsUpdatedAt(getToken())).inputsUpdatedAt;
   const profile = await getProfile();
   const dates = [
     profile.assessment?.updatedAt,

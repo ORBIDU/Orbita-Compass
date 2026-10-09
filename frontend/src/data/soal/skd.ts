@@ -1,5 +1,7 @@
 import type { BankQuestion } from "@/types/soal";
 
+// Sementara, dipakai juga di mode backend sampai endpoint bank soal (API_CONTRACT 12.5) ada.
+//
 // CONTOH SOAL SKD, 5 soal per tes. Bukan bank soal resmi.
 // TWK dan TIU: satu jawaban benar. TKP: setiap pilihan bernilai 1–5 poin
 // (seperti SKD asli); `answer` = pilihan dengan poin 5.

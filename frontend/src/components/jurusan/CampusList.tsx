@@ -3,7 +3,6 @@ import { MapPin } from "lucide-react";
 import type { CampusGroup, CampusOffering, JurusanDetail } from "@/types/jurusan";
 import { CAMPUS_GROUPS, JURUSAN_DETAIL } from "@/content/jurusan";
 import { getCampusesForJurusan } from "@/services/jurusanService";
-import { USE_MOCK } from "@/services/config";
 
 const T = JURUSAN_DETAIL.campus;
 const INITIAL_VISIBLE = 5;

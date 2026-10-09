@@ -137,6 +137,11 @@ Pengguna ORBIDU siswa SMA yang sebagian besar belum dewasa, jadi persetujuan per
 - Belum ada endpoint lupa/reset password. Sementara, "Lupa password?" di halaman Masuk mengarahkan ke WhatsApp ORBIDU dan tim mereset manual. Setelah reset manual oleh admin, akun sebaiknya kembali diberi `mustChangePassword: true` (bagian 14.2).
 - **Usulan:** `POST /auth/forgot-password` `{ "email": "..." }` → selalu `200` (tidak membocorkan email terdaftar atau tidak), lalu `POST /auth/reset-password` `{ "token": "...", "password": "..." }` dengan token sekali pakai yang kedaluwarsa.
 
+### 2.6 Token kedaluwarsa dikirim sebagai 403 🟡
+- Middleware `auth.ts` mengirim `403 { "error": "Invalid or expired token" }` untuk token yang tidak valid atau kedaluwarsa, padahal itu artinya **belum terautentikasi** (seharusnya `401`). `403` sebaiknya hanya untuk "sudah login tetapi tidak berhak".
+- **Dibutuhkan:** token tidak valid/kedaluwarsa → `401`. Pakai `403` hanya untuk akses yang ditolak karena peran atau kepemilikan data (bagian 1.3–1.4).
+- **Frontend sementara:** `http.ts` menganggap `401` **dan** `403` dengan pesan `Invalid or expired token`/`Access token required` sebagai sesi berakhir: token dihapus, siswa dibawa ke `/masuk` dengan pesan "Sesimu sudah berakhir", lalu kembali ke halaman tadi (termasuk `?query`) setelah masuk lagi. `403` lain tampil "Kamu tidak punya akses ke bagian ini."
+
 ---
 
 ## 3. Status siswa dan riwayat asesmen
@@ -234,7 +239,7 @@ Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
 
 ## 6. Katalog jurusan (Fase 2)
 
-Frontend menampilkan jurusan **per nama jurusan** (mis. "Informatika"), bukan per kampus seperti `GET /ptn/majors`. Sementara katalognya ada di `frontend/src/mocks/data/jurusan.ts` dan dipakai di mode dummy maupun backend (`services/jurusanService.ts`). Tipe lengkapnya: `frontend/src/types/jurusan.ts`.
+Frontend menampilkan jurusan **per nama jurusan** (mis. "Informatika"), bukan per kampus seperti `GET /ptn/majors`. Sementara katalognya ada di `frontend/src/data/jurusan.ts` dan dipakai di mode dummy maupun backend (`services/jurusanService.ts`). Tipe lengkapnya: `frontend/src/types/jurusan.ts`.
 
 ### 6.1 Daftar jurusan 🔴
 
@@ -336,7 +341,7 @@ GET /practice/summary
 - Baris SKD hanya tampil jika Siap SKD relevan (12.4) atau sudah ada hasil SKD.
 
 ### 7.3 Timeline seleksi 🔴
-Jadwal sekarang disimpan di `frontend/src/mocks/data/timeline.ts` sebagai **perkiraan** dan harus diedit manual tiap tahun.
+Jadwal sekarang disimpan di `frontend/src/data/timeline.ts` sebagai **perkiraan** dan harus diedit manual tiap tahun.
 
 ```
 GET /timeline?from=2026-10
@@ -439,7 +444,7 @@ Tombol "Perbarui analisis" hanya aktif jika data masukan (tes, prestasi, rapor) 
 Dipakai `/portal/beasiswa` dan bagian beasiswa di Compass (SPEK bagian 8). Service: `frontend/src/services/beasiswaService.ts`; bentuk data: `frontend/src/types/beasiswa.ts`.
 
 ### 10.1 Katalog beasiswa 🔴
-Sementara frontend memakai contoh data `frontend/src/mocks/data/beasiswa.ts` (di mode dummy maupun backend), diberi label "Contoh data".
+Sementara frontend memakai contoh data `frontend/src/data/beasiswa.ts` (di mode dummy maupun backend), diberi label "Contoh data".
 
 ```
 GET /scholarships
@@ -481,7 +486,7 @@ Dipakai `/portal/action-plan` dan kartu "Rencana hari ini" di Dashboard (SPEK ba
 
 **Kenapa `/action-plans` tidak dipakai:** endpoint itu berisi tugas manual (`title`, `description`, `dueDate`, `completed`), sedangkan Action Plan sekarang hanya berisi latihan soal yang disusun AI per hari belajar, lengkap dengan jumlah soal, progres, dan skor. Endpoint lama dibiarkan (tidak diubah).
 
-**Sementara:** mode dummy menyimpan di data dummy akun; mode backend menyimpan di browser (`localStorage`, kunci `orbita_action_plan_<userId>`), jadi tidak terbawa ke perangkat lain. Penyusun latihan masih simulasi di frontend (`frontend/src/mocks/actionPlanEngine.ts`).
+**Sementara:** mode dummy menyimpan di data dummy akun; mode backend menyimpan di browser (`localStorage`, kunci `orbita_action_plan_<userId>`), jadi tidak terbawa ke perangkat lain. Penyusun latihan masih simulasi di frontend (`frontend/src/data/actionPlanEngine.ts`).
 
 ### 11.1 Pengaturan rencana 🔴
 ```
@@ -571,7 +576,7 @@ SnbpDraft = {
 - **Sementara:** mode dummy menyimpan di data dummy; mode backend menyimpan di browser (`localStorage`, kunci `orbita_snbp_<userId>`).
 
 ### 12.2 Rasionalisasi SNBP 🔴
-`GET /ptn/rationalization` yang ada belum dipakai karena hanya menghitung rata-rata rapor + bonus prestasi untuk satu target, tanpa pilihan prodi, nilai TKA, dan prestasi terpilih. Sementara frontend memakai simulasi (`frontend/src/mocks/snbpEngine.ts`, ditandai "Cara hitung sementara") di kedua mode.
+`GET /ptn/rationalization` yang ada belum dipakai karena hanya menghitung rata-rata rapor + bonus prestasi untuk satu target, tanpa pilihan prodi, nilai TKA, dan prestasi terpilih. Sementara frontend memakai simulasi (`frontend/src/data/snbpEngine.ts`, ditandai "Cara hitung sementara") di kedua mode.
 
 ```
 POST /snbp/rationalization
@@ -634,9 +639,9 @@ GET /tryouts?exam=snbt
 - Halaman Siap tidak menampilkan perbandingan dengan "skor target jurusan" karena datanya tidak ada.
 
 ### 12.5 Bank soal dan sesi latihan 🔴
-Dipakai `/portal/latihan/:id` dan `/portal/latihan/:id/hasil`. Service: `frontend/src/services/soalService.ts`; "server" simulasi: `frontend/src/mocks/practiceServer.ts`; bentuk data: `frontend/src/types/soal.ts`.
+Dipakai `/portal/latihan/:id` dan `/portal/latihan/:id/hasil`. Service: `frontend/src/services/soalService.ts`; "server" simulasi: `frontend/src/data/practiceServer.ts`; bentuk data: `frontend/src/types/soal.ts`.
 
-**Sementara:** bank soal contoh 75 soal di `frontend/src/mocks/data/soal/` (diberi label "Contoh soal"). **Semua paket tryout contoh memakai soal yang sama; bank resmi harus punya soal berbeda per paket.** Satu sesi latihan berisi 5 soal (`SESSION_SIZE`). Mode dummy menyimpan sesi di data dummy; mode backend di browser (`orbita_sessions_<userId>`). Di mode dummy bank contoh ikut terunduh browser (tidak ada server); jaminan kunci tidak bocor baru ada di backend.
+**Sementara:** bank soal contoh 75 soal di `frontend/src/data/soal/` (diberi label "Contoh soal"). **Semua paket tryout contoh memakai soal yang sama; bank resmi harus punya soal berbeda per paket.** Satu sesi latihan berisi 5 soal (`SESSION_SIZE`). Mode dummy menyimpan sesi di data dummy; mode backend di browser (`orbita_sessions_<userId>`). Di mode dummy bank contoh ikut terunduh browser (tidak ada server); jaminan kunci tidak bocor baru ada di backend.
 
 ```
 POST /practice-sessions

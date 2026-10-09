@@ -167,7 +167,7 @@ export default function RaporPanel({ state }: { state: AsyncState<RaporData> }) 
                         </span>
                         <span className="text-xs text-prose-dim">{RAPOR.kelasYear(`Kelas ${kelas}`, s.schoolYear)}</span>
                       </div>
-                      <span className={`shrink-0 text-right font-bold tabular-nums ${has ? "text-xl text-space-2" : "text-sm text-field-hint"}`}>{avgText(s)}</span>
+                      <span className={`shrink-0 text-right font-bold tabular-nums ${has ? "text-xl text-space-2" : "text-sm text-prose-dim"}`}>{avgText(s)}</span>
                     </div>
                     {has && (
                       <div className="flex items-center justify-between gap-3 lg:hidden">
@@ -185,7 +185,7 @@ export default function RaporPanel({ state }: { state: AsyncState<RaporData> }) 
                       <span>{kelas}</span>
                       <span>{s.schoolYear}</span>
                       <span className="tabular-nums">{has ? s.subjects.length : "–"}</span>
-                      <span className={`font-bold tabular-nums ${has ? "" : "text-field-hint"}`}>{avgText(s)}</span>
+                      <span className={`font-bold tabular-nums ${has ? "" : "text-prose-dim"}`}>{avgText(s)}</span>
                       <span className="flex justify-end">{has && <DetailToggle open={isOpen} onClick={() => toggle(s.semester)} controls={detailId} />}</span>
                     </div>
 

@@ -1,8 +1,8 @@
 import type { PracticeLog } from "@/types/practice";
 import { updateAccount, type MockAccount } from "./db";
 import { requireAccount } from "./studentMock";
-import { delay } from "./delay";
-import type { PracticeStore } from "./practiceServer";
+import { delay } from "@/lib/delay";
+import type { PracticeStore } from "@/data/practiceServer";
 
 // Tiruan penyimpanan latihan dan tryout per akun (API_CONTRACT 12.4–12.6).
 // Logika "server"-nya ada di practiceServer.ts dan dipakai lewat mockPracticeStore.

@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { MeUser } from "@/types/backend";
 import * as authService from "@/services/authService";
-import { ApiError } from "@/services/http";
+import { ApiError, SESSION_EXPIRED_EVENT, SESSION_EXPIRED_MESSAGE } from "@/services/http";
 
 /** loading = sedang memeriksa sesi yang tersimpan saat halaman dibuka. */
 export type AuthStatus = "loading" | "authenticated" | "guest";
@@ -28,6 +28,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     authService.logout();
     setUser(null);
     setStatus("guest");
+  }, []);
+
+  // Sesi berakhir di tengah pemakaian (token sudah dihapus http.ts): keluar dan
+  // beri tahu siswa di halaman Masuk. RequireAuth mengingat halaman asalnya.
+  useEffect(() => {
+    function onExpired() {
+      setUser(null);
+      setStatus("guest");
+      setSessionError(SESSION_EXPIRED_MESSAGE);
+    }
+    window.addEventListener(SESSION_EXPIRED_EVENT, onExpired);
+    return () => window.removeEventListener(SESSION_EXPIRED_EVENT, onExpired);
   }, []);
 
   // Pulihkan sesi dari token yang tersimpan, supaya refresh halaman tidak membuat logout.

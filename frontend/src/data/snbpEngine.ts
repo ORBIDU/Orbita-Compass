@@ -2,6 +2,8 @@ import { SNBP_FACTORS, SNBP_RESULT, SNBP_STRATEGY } from "@/content/siapSnbp";
 import { formatScore } from "@/lib/rapor";
 import type { SnbpCategory, SnbpChoiceResult, SnbpFactor, SnbpInput, SnbpResult } from "@/types/snbp";
 
+// Sementara, dipakai juga di mode backend sampai endpoint POST /snbp/rationalization (API_CONTRACT 12.2) ada.
+//
 // SIMULASI SEMENTARA rasionalisasi SNBP (aturan data nomor 4 di CLAUDE.md),
 // menunggu rumus resmi dari tim. Hanya memakai data yang benar-benar ada:
 // rata-rata dan tren rapor, mapel pendukung prodi, prestasi terpilih, dan

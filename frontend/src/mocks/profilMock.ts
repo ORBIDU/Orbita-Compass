@@ -3,7 +3,7 @@ import { ApiError } from "@/services/http";
 import { PASSWORD_DIALOG } from "@/content/profil";
 import { updateAccount } from "./db";
 import { requireAccount } from "./studentMock";
-import { delay } from "./delay";
+import { delay } from "@/lib/delay";
 
 // Tiruan data Profil (API_CONTRACT bagian 13). Data diri dari sekolah hanya
 // bisa dibaca; siswa hanya mengubah nama panggilan, foto, dan password.

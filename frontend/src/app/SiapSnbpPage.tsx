@@ -8,7 +8,7 @@ import { formatShortDate } from "@/lib/datetime";
 import { formatScore } from "@/lib/rapor";
 import { defaultFirstChoice, summarizeRapor } from "@/lib/snbp";
 import { useAsync } from "@/lib/useAsync";
-import { semesterRange } from "@/mocks/snbpEngine";
+import { semesterRange } from "@/data/snbpEngine";
 import { listAchievements } from "@/services/achievementService";
 import { getPlanSettings } from "@/services/actionPlanService";
 import { getTarget } from "@/services/compassService";
@@ -22,6 +22,7 @@ import { PanelError, PanelSkeleton } from "@/components/ui/PanelState";
 import { EligibleBar, StepIndicator, type SnbpStep } from "@/components/snbp/SnbpShared";
 import { AchievementSection, ChoiceSection, RaporSection, TkaSection, parseTka } from "@/components/snbp/SnbpInputSections";
 import { CompletenessCard, ResultStep, ReviewStep, type CheckRow } from "@/components/snbp/SnbpSteps";
+import { usePageTitle } from "@/lib/usePageTitle";
 
 const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 
@@ -31,6 +32,7 @@ const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1
  * Aman/Waspada/Berisiko dari simulasi sementara (mocks/snbpEngine.ts).
  */
 export default function SiapSnbpPage() {
+  usePageTitle(SNBP_HEADER.title);
   const { user, refreshUser } = useAuth();
   const userId = user?.id ?? "";
   const grade = user?.profile?.grade ?? 12;

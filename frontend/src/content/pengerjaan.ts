@@ -71,6 +71,8 @@ export const TRYOUT_RUN = {
   sub: (i: number, n: number, name: string) => `Subtes ${i} dari ${n}: ${name}`,
   timerLabel: "Sisa waktu",
   timerAria: (m: number, s: number) => `Sisa waktu subtes ${m} menit ${s} detik`,
+  /** Diumumkan ke pembaca layar (aria-live) saat melewati batas di config/practice.ts. */
+  timeLeftAnnounce: (minutes: number) => `Sisa waktu subtes ${minutes} menit.`,
   finishSection: "Selesaikan subtes",
   flag: "Ragu-ragu",
   flagged: "Ditandai ragu-ragu",
@@ -130,7 +132,7 @@ export const LAPORAN = {
   cols: { subject: "Subtes", correct: "Benar", score: "Skor" },
   lowest: "Terendah",
   focusTitle: "Fokus berikutnya",
-  focusWeak: (names: string) => `${names} masih paling rendah di tryout ini. Action Plan memberi porsi latihan lebih untuk subtes dengan skor terendah.`,
+  focusWeak: (names: string) => `${names} masih paling rendah di tryout ini, jadi bisa jadi prioritas latihanmu berikutnya.`,
   focusStrong: (names: string) => `${names} sudah kuat. Pertahankan dengan latihan rutin.`,
   focusCta: "Lihat Action Plan",
   reviewTitle: "Pembahasan soal",

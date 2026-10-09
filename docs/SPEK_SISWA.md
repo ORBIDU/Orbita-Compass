@@ -139,7 +139,7 @@ Acuan desain: `docs/design/portal/Portal-Compass.dc.html`. Teks di `frontend/src
 
 ## 8. Explore Beasiswa (`/portal/beasiswa`)
 Acuan desain: `docs/design/portal/Portal-Beasiswa.dc.html`. Teks di `frontend/src/content/beasiswa.ts`. Menu ORBIDU Compass ikut aktif di halaman ini (breadcrumb Dashboard › ORBIDU Compass › Explore Beasiswa).
-- **Data**: contoh data di `frontend/src/mocks/data/beasiswa.ts` (6 jenis beasiswa), dengan label "Contoh data, menunggu data resmi dari tim" di halaman. Situs resmi yang belum pasti ditandai "BELUM DIPASTIKAN".
+- **Data**: contoh data di `frontend/src/data/beasiswa.ts` (6 jenis beasiswa), dengan label "Contoh data, menunggu data resmi dari tim" di halaman. Situs resmi yang belum pasti ditandai "BELUM DIPASTIKAN".
 - **Filter** (panel kiri di desktop; tombol "Filter" yang membuka lembar dari bawah di HP, dengan tombol "Lihat N beasiswa"):
   - "Cocok dengan jalurku" (switch), jenjang (S1, D3/D4), lokasi kuliah (dalam/luar negeri), jenis bantuan (biaya kuliah penuh/sebagian, biaya hidup, ikatan dinas), dan "Hanya yang disimpan". Setiap pilihan menampilkan jumlah hasilnya.
   - Pencarian nama beasiswa atau penyelenggara, jumlah hasil, "Atur ulang", dan empty state "Belum ada beasiswa yang cocok dengan filtermu".
@@ -175,7 +175,7 @@ Acuan desain: `docs/design/portal/Portal-ActionPlan.dc.html`. Teks di `frontend/
   - Kalau TKA dipilih: **mapel pilihan TKA** (maks. 2) dipilih siswa sendiri dari daftar mapel pilihan TKA. Saran awal (label "Saran") diambil dari mapel pendukung jurusan rekomendasi Compass, lalu nilai rapor tertinggi; keputusan tetap di siswa.
   - Hari belajar (jumlah per minggu dihitung otomatis), durasi (sampai UTBK-SNBT/TKA dengan bulan perkiraan dari timeline seleksi Dashboard, 4 minggu, atau 8 minggu), waktu belajar per hari (30/60/90 menit), dan perkiraan jumlah latihan per minggu.
   - Rencana pertama berlaku mulai hari ini. Rencana yang diatur ulang berlaku mulai besok: hari ini dan riwayat hari yang sudah lewat tidak berubah.
-- **Penyusun latihan (simulasi AI, `frontend/src/mocks/actionPlanEngine.ts`)**:
+- **Penyusun latihan (simulasi AI, `frontend/src/data/actionPlanEngine.ts`)**:
   - 30/60/90 menit → 2/3/4 latihan per hari belajar. Kategori bergiliran di antara fokus.
   - Subtes/mapel dipilih acak berbobot (1 − skor)², jadi skor terendah dapat porsi lebih. Skor diambil dari hasil latihan di rencana; kalau belum ada, dari tryout SNBT terakhir atau nilai rapor; kalau belum ada juga, dianggap sama.
   - Acaknya tetap per tanggal (isi tidak berubah saat halaman dibuka ulang). Hari ini dan hari yang sudah lewat dibekukan; hari yang akan datang menyesuaikan hasil terbaru.
@@ -194,7 +194,7 @@ Acuan desain: `docs/design/portal/Portal-SiapSNBP.dc.html`, `Portal-SiapUjian.dc
   - B. Nilai TKA opsional (0–100): mapel wajib + mapel pilihan dari pengaturan Action Plan.
   - C. Prestasi maks. 3 dari `achievementService`; prestasi tanpa sertifikat ditandai.
   - D. Pilihan prodi 1 (wajib) dan 2 (opsional) dari kampus PTN Akademik, PTN Vokasi, dan PTKIN (`ptnService`), dengan catatan bahwa peserta SNBP mengikuti ketentuan resmi SNPMB. Pilihan 1 terisi dari target prodi di profil → target jurusan Compass → kosong, dengan label sumbernya.
-- **Hasil** per pilihan: Aman / Waspada / Berisiko (tanpa persentase), faktor naik/turun hanya dari data yang ada, strategi dan saran, "Jadikan target prodi" (`PUT /profile`), catatan "Ini estimasi, bukan jaminan" wajib tampil. Simulasi penilaian sementara di `frontend/src/mocks/snbpEngine.ts`; daya tampung dan keketatan prodi belum dihitung (API_CONTRACT 12.2).
+- **Hasil** per pilihan: Aman / Waspada / Berisiko (tanpa persentase), faktor naik/turun hanya dari data yang ada, strategi dan saran, "Jadikan target prodi" (`PUT /profile`), catatan "Ini estimasi, bukan jaminan" wajib tampil. Simulasi penilaian sementara di `frontend/src/data/snbpEngine.ts`; daya tampung dan keketatan prodi belum dihitung (API_CONTRACT 12.2).
 
 ### Siap SNBT, Siap TKA, Siap SKD (`/portal/persiapan/:ujian?tab=latihan|tryout|performance`)
 Satu template (`SiapUjianPage`), konfigurasi per ujian di `content/siapUjian.ts`:
@@ -212,7 +212,7 @@ Satu template (`SiapUjianPage`), konfigurasi per ujian di `content/siapUjian.ts`
   - Timer dihitung dari deadline yang disimpan saat subtes dimulai, jadi refresh atau menutup halaman tidak mereset waktu. Subtes yang waktunya habis saat halaman ditutup langsung dikumpulkan saat dibuka lagi. Waktu subtes berikutnya mulai saat subtes itu dibuka.
   - Jawaban dan ragu-ragu tersimpan otomatis setiap berubah.
   - Paket terkunci ditolak dan diarahkan ke tab Tryout dengan pesannya; paket yang sudah selesai diarahkan ke laporan.
-- **Kunci jawaban** tidak pernah ada di data soal yang dikirim ke halaman pengerjaan. Penilaian dilakukan "server" (`frontend/src/mocks/practiceServer.ts`), seperti seharusnya di backend (API_CONTRACT 12.5–12.6).
+- **Kunci jawaban** tidak pernah ada di data soal yang dikirim ke halaman pengerjaan. Penilaian dilakukan "server" (`frontend/src/data/practiceServer.ts`), seperti seharusnya di backend (API_CONTRACT 12.5–12.6).
 - HP: nomor soal dibuka lewat tombol "Nomor soal" (bottom sheet).
 
 ### Hasil latihan dan laporan tryout
@@ -223,7 +223,7 @@ Satu template (`SiapUjianPage`), konfigurasi per ujian di `content/siapUjian.ts`
 `practiceService` + `soalService`: hasil latihan Action Plan memperbarui latihan itu di Action Plan; latihan bebas dan tryout masuk riwayat latihan. Dari sumber yang sama dihitung progres Action Plan, akurasi dan tryout di Siap SNBT/TKA/SKD, kartu Performa Dashboard, dan bobot subtes terlemah di Action Plan.
 
 ### Data contoh
-- Bank soal contoh 75 soal di `frontend/src/mocks/data/soal/` (SNBT 5 × 7 subtes, TKA 5 × 3 mapel wajib + Matematika Tingkat Lanjut dan Fisika, SKD 5 × 3 tes; TKP dinilai 1–5 poin per pilihan). Mapel pilihan TKA lain tampil "Soal contoh untuk mapel ini belum tersedia".
+- Bank soal contoh 75 soal di `frontend/src/data/soal/` (SNBT 5 × 7 subtes, TKA 5 × 3 mapel wajib + Matematika Tingkat Lanjut dan Fisika, SKD 5 × 3 tes; TKP dinilai 1–5 poin per pilihan). Mapel pilihan TKA lain tampil "Soal contoh untuk mapel ini belum tersedia".
 - Satu sesi latihan berisi 5 soal (`SESSION_SIZE` di `frontend/src/config/practice.ts`); durasi per soal per ujian di file yang sama (SNBT 90 detik, TKA 120 detik, SKD 60 detik).
 - Semua paket tryout contoh memakai soal yang sama. Riwayat contoh (Action Plan dan Tryout Diagnostik/#1) disusun dari jawaban atas bank contoh, jadi pembahasannya bisa dibuka.
 
@@ -268,9 +268,9 @@ Hal yang sengaja ditunda dan wajib dibereskan sebelum ORBIDU dipakai siswa:
 - Backend menyimpan persetujuan orang tua/wali beserta waktunya (`docs/API_CONTRACT.md` bagian 2.4).
 - Ganti soal placeholder di `frontend/src/data/asesmen.json` dengan 42 soal final dari Bu Putri (ubah `status` menjadi `"final"`), lalu pastikan jumlah bagian/soal yang disebut di beranda (`frontend/src/content/landing.ts`), FAQ, dan Dashboard ("7 bagian, bisa dicicil") sesuai.
 - Penilaian skor 5 dimensi dipindah ke backend dan disetujui Bu Putri (`docs/API_CONTRACT.md` bagian 3.4). Sebelum itu, rekomendasi Compass dari tes hanya untuk demo.
-- Ganti contoh data beasiswa (`frontend/src/mocks/data/beasiswa.ts`) dengan data resmi dari tim, cek ulang alamat situs resmi (KIP Kuliah bertanda "BELUM DIPASTIKAN"), lalu hapus label "Contoh data" (`SCHOLARSHIPS_ARE_SAMPLES`).
+- Ganti contoh data beasiswa (`frontend/src/data/beasiswa.ts`) dengan data resmi dari tim, cek ulang alamat situs resmi (KIP Kuliah bertanda "BELUM DIPASTIKAN"), lalu hapus label "Contoh data" (`SCHOLARSHIPS_ARE_SAMPLES`).
 - Action Plan memakai endpoint backend (`docs/API_CONTRACT.md` bagian 11), bukan penyimpanan browser, supaya rencana dan progres latihan terbawa ke perangkat lain.
-- Ganti bank soal contoh (`frontend/src/mocks/data/soal/`) dengan bank soal resmi dari tim data: soal berbeda per paket tryout, cukup untuk sesi 20 soal (SNBT/SKD) dan 15 soal (TKA), lalu kembalikan `SESSION_SIZE` dan hapus label "Contoh soal".
+- Ganti bank soal contoh (`frontend/src/data/soal/`) dengan bank soal resmi dari tim data: soal berbeda per paket tryout, cukup untuk sesi 20 soal (SNBT/SKD) dan 15 soal (TKA), lalu kembalikan `SESSION_SIZE` dan hapus label "Contoh soal".
 - Rumus rasionalisasi SNBP dan skor tryout (sekarang perkiraan sementara) disetujui tim, dan latihan/tryout memakai endpoint backend (API_CONTRACT 12.5–12.6) supaya kunci jawaban tidak pernah ada di browser.
 - Data kondisi keluarga dan kondisi khusus di Profil baru boleh diisi data asli siswa setelah celah keamanan di `BACKEND_MAP.md` bagian 6 ditutup (endpoint admin terbuka tanpa cek peran, `passwordHash` terkirim di respons). Lihat `docs/API_CONTRACT.md` bagian 13.4.
 - Profil memakai endpoint backend untuk nama panggilan, foto, dan ganti password (`docs/API_CONTRACT.md` bagian 13.3), bukan penyimpanan browser.

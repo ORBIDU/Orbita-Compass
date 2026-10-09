@@ -73,7 +73,7 @@ export default function CompletenessCard({ pct, items, hint }: CompletenessCardP
             <li key={item.key} className={`flex items-center gap-2 text-[13px] ${MARK[item.kind].text}`}>
               <Mark kind={item.kind} />
               <span className="min-w-0 flex-1">{item.text}</span>
-              <span className="shrink-0 text-xs tabular-nums text-field-hint">
+              <span className="shrink-0 text-xs tabular-nums text-prose-dim">
                 {formatPoints(item.earned)}/{item.max}
               </span>
             </li>

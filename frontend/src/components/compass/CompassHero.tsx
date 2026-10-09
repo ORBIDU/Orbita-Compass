@@ -48,7 +48,7 @@ export default function CompassHero({ bidang, fit, summary, aspects, assessment 
   return (
     <section
       aria-labelledby="compass-arah"
-      className="relative grid gap-6 overflow-hidden rounded-card-lg bg-portal-hero-sm px-5 py-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-center lg:gap-10 lg:bg-portal-hero lg:px-9 lg:py-8"
+      className="on-dark relative grid gap-6 overflow-hidden rounded-card-lg bg-portal-hero-sm px-5 py-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-center lg:gap-10 lg:bg-portal-hero lg:px-9 lg:py-8"
     >
       <div className="flex flex-col gap-3">
         <span className="text-[13px] font-semibold text-night-text">{COMPASS_HERO.eyebrow}</span>

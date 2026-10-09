@@ -2,8 +2,8 @@ import type { SnbpDraft, SnbpInput, SnbpResult } from "@/types/snbp";
 import { ApiError } from "@/services/http";
 import { updateAccount } from "./db";
 import { requireAccount } from "./studentMock";
-import { aiDelay, delay } from "./delay";
-import { rationalizeSnbp } from "./snbpEngine";
+import { aiDelay, delay } from "@/lib/delay";
+import { rationalizeSnbp } from "@/data/snbpEngine";
 import { findMajor } from "./data/ptn";
 
 // Tiruan data Siap SNBP (docs/API_CONTRACT.md bagian 12).

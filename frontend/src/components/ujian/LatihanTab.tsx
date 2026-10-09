@@ -4,6 +4,7 @@ import { ROUTES } from "@/config/navigation";
 import { EXAM_COPY, LATIHAN, SUBJECT_DESC, SUBJECT_DESC_FALLBACK } from "@/content/siapUjian";
 import { formatDayName } from "@/lib/datetime";
 import type { ExamOverview } from "@/types/practice";
+import { SESSION_SIZE } from "@/config/practice";
 
 /** Kartu latihan Action Plan hari ini untuk ujian ini. */
 function TodayCard({ overview }: { overview: ExamOverview }) {
@@ -76,7 +77,7 @@ export default function LatihanTab({ overview }: { overview: ExamOverview }) {
 
       <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
         <h2 className="text-lg font-bold text-space-2">{copy.heading(overview.subjects.length)}</h2>
-        <span className="text-[13px] text-prose">{LATIHAN.sessionNote(copy.sessionSize)}</span>
+        <span className="text-[13px] text-prose">{LATIHAN.sessionNote(SESSION_SIZE)}</span>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4">

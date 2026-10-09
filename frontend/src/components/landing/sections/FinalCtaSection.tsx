@@ -21,7 +21,7 @@ export default function FinalCtaSection() {
 
   // pb ekstra di HP supaya baris terakhir footer tidak tertutup tombol konsultasi.
   return (
-    <section className="relative overflow-hidden bg-night-glow pb-32 pt-[72px] lg:pb-14 lg:pt-[110px]">
+    <section className="on-dark relative overflow-hidden bg-night-glow pb-32 pt-[72px] lg:pb-14 lg:pt-[110px]">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         {stars.map((s, i) => (
           <span

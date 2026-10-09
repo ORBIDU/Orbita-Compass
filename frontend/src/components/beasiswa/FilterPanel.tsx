@@ -31,14 +31,14 @@ function Checkbox({ label, count, checked, onToggle }: { label: string; count: n
       <input type="checkbox" checked={checked} onChange={onToggle} className="peer sr-only" />
       <span
         aria-hidden="true"
-        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 peer-focus-visible:outline-sun-2 ${
+        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 peer-focus-visible:outline-orbit-1 ${
           checked ? "border-orbit-1 bg-orbit-1 text-white" : "border-rim-box bg-white"
         }`}
       >
         {checked && <Check size={12} strokeWidth={3.4} />}
       </span>
       <span className="flex-1">{label}</span>
-      <span className="text-xs tabular-nums text-field-hint">{count}</span>
+      <span className="text-xs tabular-nums text-prose-dim">{count}</span>
     </label>
   );
 }
@@ -112,10 +112,10 @@ export default function FilterPanel({ filters, counts, savedCount, matchUnavaila
         <Bookmark
           size={18}
           aria-hidden="true"
-          className={`shrink-0 text-orbit-1 peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-sun-2 ${filters.savedOnly ? "fill-orbit-1" : ""}`}
+          className={`shrink-0 text-orbit-1 peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-orbit-1 ${filters.savedOnly ? "fill-orbit-1" : ""}`}
         />
         <span className="flex-1">{FILTERS.saved}</span>
-        <span className="text-xs tabular-nums text-field-hint">{savedCount}</span>
+        <span className="text-xs tabular-nums text-prose-dim">{savedCount}</span>
       </label>
     </div>
   );

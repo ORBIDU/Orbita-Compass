@@ -169,7 +169,7 @@ export default function AchievementDialog({ editing, kind, fullSupport, onClose,
                 }}
                 onDragLeave={() => setDragging(false)}
                 onDrop={onDrop}
-                className={`relative flex min-h-[104px] cursor-pointer flex-col items-center justify-center gap-1.5 rounded-[14px] border-[1.5px] border-dashed p-4 text-center transition-colors focus-within:outline focus-within:outline-[3px] focus-within:outline-offset-2 focus-within:outline-sun-2 ${
+                className={`relative flex min-h-[104px] cursor-pointer flex-col items-center justify-center gap-1.5 rounded-[14px] border-[1.5px] border-dashed p-4 text-center transition-colors focus-within:outline focus-within:outline-[3px] focus-within:outline-offset-2 focus-within:outline-orbit-1 ${
                   dragging ? "border-orbit-1 bg-surface-blue" : "border-rim-upload bg-field-bg"
                 }`}
               >
