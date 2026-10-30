@@ -14,8 +14,9 @@ export type LandingSection = "masalah" | "kenali" | "compass" | "jurusan" | "act
  * halaman portal terkait.
  */
 export function useLandingNav() {
-  const { status } = useAuth();
+  const { status, user } = useAuth();
   const loggedIn = status === "authenticated";
+  const portalTo = user?.role === "WALI_KELAS" ? ROUTES.walikelas : ROUTES.portal;
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const reduced = useReducedMotion();
@@ -39,6 +40,7 @@ export function useLandingNav() {
 
   return {
     loggedIn,
+    portalTo,
     scrollTo,
     /** "Berlangganan": WhatsApp dengan pesan template (brand.ts). */
     subscribeHref: whatsappLink("berlangganan"),

@@ -8,7 +8,7 @@ const BTN = "flex h-11 items-center rounded-xl px-4 text-sm font-semibold transi
 
 /** Header halaman publik tanpa navbar: logo, Berlangganan (WhatsApp), dan Masuk. */
 export default function LandingHeader({ className = "" }: { className?: string }) {
-  const { loggedIn, subscribeHref } = useLandingNav();
+  const { loggedIn, portalTo, subscribeHref } = useLandingNav();
   return (
     <header className={`relative z-10 flex h-16 items-center justify-between gap-3 lg:h-24 ${className}`}>
       <Link to={ROUTES.landing} aria-label={HEADER.logoLabel} className="shrink-0">
@@ -17,7 +17,7 @@ export default function LandingHeader({ className = "" }: { className?: string }
       </Link>
       <div className="flex items-center gap-2 sm:gap-2.5">
         {loggedIn ? (
-          <Link to={ROUTES.portal} className={`${BTN} bg-orbit-1 text-white hover:bg-orbit-1/90`}>
+          <Link to={portalTo} className={`${BTN} bg-orbit-1 text-white hover:bg-orbit-1/90`}>
             {HEADER.bukaPortal}
           </Link>
         ) : (
