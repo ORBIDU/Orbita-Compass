@@ -3,7 +3,7 @@
 // mengikuti tipe ini supaya saklar VITE_USE_MOCK tidak mengubah tampilan.
 // Tanggal dikirim sebagai string ISO karena lewat JSON.
 
-export type Role = "STUDENT" | "BK_TEACHER" | "ADMIN";
+export type Role = "STUDENT" | "BK_TEACHER" | "ADMIN" | "WALI_KELAS";
 export type AlignmentStatus = "ALIGNED" | "PARTIAL" | "MISALIGNED";
 
 export interface StudentProfile {
