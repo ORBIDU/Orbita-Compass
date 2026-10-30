@@ -1,0 +1,114 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://static.figma.com/font/Poppins-Regular_6') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('https://static.figma.com/font/Poppins-Medium_6') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('https://static.figma.com/font/Poppins-SemiBold_6') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://static.figma.com/font/Poppins-Bold_6') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('https://static.figma.com/font/Poppins-Bold_6') format('woff2');
+}
+
+@theme {
+  --font-sans: 'Poppins', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #F8FAFC;
+  margin: 0;
+}
+
+/* Design tokens */
+:root {
+  --navy:       #0F1E36;
+  --navy-mid:   #162844;
+  --navy-soft:  #1E3A5F;
+  --sky:        #00A3E0;
+  --cyan:       #00B4D8;
+  --cyan-light: #00C8E8;
+  --orange:     #FF8C00;
+  --yellow:     #FFB700;
+  --gold:       #D4900A;
+  --ice:        #F8FAFC;
+  --green:      #00C46A;
+  --red:        #FF4D4D;
+  --border:     #E2E8F0;
+  --text-main:  #0F1E36;
+  --text-mid:   #475569;
+  --text-muted: #94A3B8;
+}
+
+.font-pecita { font-family: 'Poppins', sans-serif; font-style: italic; }
+
+/* Orbital ring background rendered as SVG component in App.tsx */
+
+/* Card shadows */
+.card      { background: #fff; border-radius: 16px; box-shadow: 0 2px 16px rgba(15,30,54,.07), 0 1px 4px rgba(15,30,54,.04); }
+.card-sm   { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(15,30,54,.06); }
+.card-lift { transition: box-shadow .2s, transform .2s; }
+.card-lift:hover { box-shadow: 0 8px 32px rgba(15,30,54,.12); transform: translateY(-2px); }
+
+/* Gradient helpers */
+.grad-sky    { background: linear-gradient(135deg, #00A3E0 0%, #00B4D8 60%, #00C8E8 100%); }
+.grad-orange { background: linear-gradient(135deg, #FF8C00 0%, #FFB700 100%); }
+.grad-navy   { background: linear-gradient(135deg, #0F1E36 0%, #162844 100%); }
+
+/* Scrollbar */
+* { scrollbar-width: thin; scrollbar-color: rgba(0,163,224,.25) transparent; }
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-thumb { background: rgba(0,163,224,.25); border-radius: 2px; }
+
+/* Progress bar */
+.progress-track { height: 6px; border-radius: 3px; background: #EFF6FF; overflow: hidden; }
+.progress-fill  { height: 100%; border-radius: 3px; background: linear-gradient(90deg,#00A3E0,#00B4D8); transition: width .6s ease; }
+
+/* Table row hover */
+.tr-hover { transition: background .15s; }
+.tr-hover:hover { background: #F8FAFC; }
+
+/* Animated pulse dot */
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: .6; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+.live-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid #00C46A;
+  animation: pulse-ring 1.6s ease-out infinite;
+}
+
+/* Wizard step connector */
+.step-connector { flex: 1; height: 2px; margin: 0 6px; margin-bottom: 18px; transition: background .3s; }
