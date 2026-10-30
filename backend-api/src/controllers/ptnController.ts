@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { prisma } from '../config/prisma';
 import { AuthRequest } from '../middleware/auth';
+import { generateQuestions, getBlueprintTaxonomy } from '../services/aiQuestionService';
 
 export const getUniversities = async (req: Request, res: Response) => {
   try {
@@ -118,27 +119,71 @@ export const getRationalization = async (req: AuthRequest, res: Response) => {
   }
 };
 
+export const getQuestionBlueprints = async (req: Request, res: Response) => {
+  try {
+    const taxonomy = getBlueprintTaxonomy();
+    return res.json({
+      success: true,
+      totalSubtests: taxonomy.length,
+      blueprints: taxonomy
+    });
+  } catch (error) {
+    console.error('getQuestionBlueprints error:', error);
+    return res.status(500).json({ error: 'Failed to retrieve question blueprints' });
+  }
+};
+
+export const generateAIQuestions = async (req: Request, res: Response) => {
+  try {
+    const { category = 'snbt', subtest, topic, count = 5, difficulty = 'medium', saveToBank = false } = req.body;
+    const result = await generateQuestions({
+      category: String(category),
+      subtest: subtest ? String(subtest) : undefined,
+      topic: topic ? String(topic) : undefined,
+      count: Number(count),
+      difficulty: difficulty as 'easy' | 'medium' | 'hard',
+      saveToBank: Boolean(saveToBank)
+    });
+
+    return res.json(result);
+  } catch (error) {
+    console.error('generateAIQuestions error:', error);
+    return res.status(500).json({ error: 'Failed to generate questions with AI' });
+  }
+};
+
 export const getPracticeQuestions = async (req: Request, res: Response) => {
   try {
-    const { category, campus } = req.query;
-    const catLower = String(category || 'utbk').toLowerCase();
+    const { category, campus, subtest, limit = 10 } = req.query;
+    const catLower = String(category || 'snbt').toLowerCase();
     const campusStr = campus ? String(campus).trim() : null;
+    const subtestStr = subtest ? String(subtest).trim() : null;
+    const limitNum = Math.min(100, Math.max(1, Number(limit) || 10));
 
-    const whereCondition: any = { category: catLower };
+    const whereCondition: any = {};
+    if (catLower === 'snbt' || catLower === 'utbk') {
+      whereCondition.category = { in: ['snbt', 'utbk'] };
+    } else {
+      whereCondition.category = catLower;
+    }
+
     if (catLower === 'mandiri' && campusStr) {
       whereCondition.subtest = { contains: campusStr, mode: 'insensitive' };
+    } else if (subtestStr) {
+      whereCondition.subtest = { contains: subtestStr, mode: 'insensitive' };
     }
 
     let dbQuestions = await prisma.questionBank.findMany({
       where: whereCondition,
+      take: limitNum,
       orderBy: { createdAt: 'asc' }
     });
 
-    // Fallback if category is tka or mandiri and no specific db records match
-    if (dbQuestions.length === 0 && (catLower === 'tka' || catLower === 'mandiri')) {
+    // Fallback if specific subtest or category not yet in DB
+    if (dbQuestions.length === 0) {
       dbQuestions = await prisma.questionBank.findMany({
-        where: { category: 'utbk' },
-        take: 5
+        where: { category: { in: ['snbt', 'utbk'] } },
+        take: limitNum
       });
     }
 
@@ -147,12 +192,19 @@ export const getPracticeQuestions = async (req: Request, res: Response) => {
       id: q.id,
       category: q.category,
       subtest: q.subtest,
+      topic: q.topic || undefined,
       question: q.question,
       options: typeof q.optionsJson === 'string' ? JSON.parse(q.optionsJson) : q.optionsJson,
       difficultyWeight: q.difficultyWeight
     }));
 
-    return res.json({ category: catLower, campus: campusStr || 'Semua Kampus', questions: formattedQuestions });
+    return res.json({
+      category: catLower,
+      subtest: subtestStr || 'Semua Subtes',
+      campus: campusStr || 'Semua Kampus',
+      total: formattedQuestions.length,
+      questions: formattedQuestions
+    });
   } catch (error) {
     console.error('getPracticeQuestions error:', error);
     return res.status(500).json({ error: 'Failed to fetch practice questions' });
@@ -195,10 +247,11 @@ export const submitPracticeAnswers = async (req: AuthRequest, res: Response) => 
         reviewItems.push({
           questionId: q.id,
           subtest: q.subtest,
+          topic: q.topic || undefined,
           chosenIndex: chosen !== undefined ? Number(chosen) : null,
           answerIndex: q.answerIndex,
           isCorrect,
-          explanation: `Jawaban benar: pilihan ke-${q.answerIndex + 1}.`
+          explanation: q.explanation || `Jawaban benar: pilihan ke-${q.answerIndex + 1}.`
         });
       }
     }
