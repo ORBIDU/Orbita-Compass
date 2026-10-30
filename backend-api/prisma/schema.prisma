@@ -216,11 +216,14 @@ model ActionPlanItem {
 // 13. Practice Question Bank
 model QuestionBank {
   id               String   @id @default(uuid())
-  category         String   // utbk / skd
+  category         String   // utbk / snbt / skd / tka
   subtest          String   // Penalaran Umum, TWK, TIU, TKP, dll.
+  topic            String?
   question         String
   optionsJson      String   // JSON string of options array
   answerIndex      Int
+  explanation      String?
+  source           String?
   difficultyWeight Float    @default(1.0)
   createdAt        DateTime @default(now())
 }
