@@ -23,7 +23,7 @@ export const getTeachers = async (req: Request, res: Response) => {
 
 export const createBooking = async (req: AuthRequest, res: Response) => {
   try {
-    if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
+    if (!req.user) return res.status(401).json({ error: 'Unauthorized', code: 'UNAUTHORIZED' });
 
     const { teacherId, bookingDate, timeSlot, topic, notes } = req.body;
 
@@ -52,12 +52,19 @@ export const createBooking = async (req: AuthRequest, res: Response) => {
 
 export const getBookings = async (req: AuthRequest, res: Response) => {
   try {
-    if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
+    if (!req.user) return res.status(401).json({ error: 'Unauthorized', code: 'UNAUTHORIZED' });
 
     const isTeacher = req.user.role === 'BK_TEACHER';
+    const isAdmin = req.user.role === 'ADMIN';
+
+    const where = isAdmin
+      ? {}
+      : isTeacher
+      ? { teacherId: req.user.id }
+      : { studentId: req.user.id };
 
     const bookings = await prisma.bkBooking.findMany({
-      where: isTeacher ? { teacherId: req.user.id } : { studentId: req.user.id },
+      where,
       include: {
         student: { select: { id: true, name: true, email: true } },
         teacher: { select: { id: true, name: true, email: true } }
@@ -72,12 +79,22 @@ export const getBookings = async (req: AuthRequest, res: Response) => {
   }
 };
 
+// Check Ownership on Update Booking Status (Contract 1.4)
 export const updateBookingStatus = async (req: AuthRequest, res: Response) => {
   try {
-    if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
+    if (!req.user) return res.status(401).json({ error: 'Unauthorized', code: 'UNAUTHORIZED' });
 
     const { id } = req.params;
     const { status, teacherNotes } = req.body; // CONFIRMED, COMPLETED, CANCELLED
+
+    const booking = await prisma.bkBooking.findUnique({ where: { id } });
+    if (!booking) return res.status(404).json({ error: 'Booking not found' });
+
+    // Only the teacher, student, or admin can update
+    const isOwner = booking.studentId === req.user.id || booking.teacherId === req.user.id || req.user.role === 'ADMIN';
+    if (!isOwner) {
+      return res.status(403).json({ error: 'Kamu tidak berhak mengubah booking ini', code: 'FORBIDDEN' });
+    }
 
     const updateData: any = {};
     if (status) updateData.status = status;
@@ -95,11 +112,20 @@ export const updateBookingStatus = async (req: AuthRequest, res: Response) => {
   }
 };
 
+// Check Ownership on Delete Booking (Contract 1.4)
 export const deleteBooking = async (req: AuthRequest, res: Response) => {
   try {
-    if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
+    if (!req.user) return res.status(401).json({ error: 'Unauthorized', code: 'UNAUTHORIZED' });
 
     const { id } = req.params;
+
+    const booking = await prisma.bkBooking.findUnique({ where: { id } });
+    if (!booking) return res.status(404).json({ error: 'Booking not found' });
+
+    const isOwner = booking.studentId === req.user.id || booking.teacherId === req.user.id || req.user.role === 'ADMIN';
+    if (!isOwner) {
+      return res.status(403).json({ error: 'Kamu tidak berhak menghapus booking ini', code: 'FORBIDDEN' });
+    }
 
     await prisma.bkBooking.delete({
       where: { id }

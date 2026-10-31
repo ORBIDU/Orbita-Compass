@@ -43,7 +43,14 @@ export function toDisplayUser(user: MeUser): DisplayUser {
   if (user.profile) {
     kelas = formatKelas(user.profile.grade);
   } else {
-    kelas = user.role === "BK_TEACHER" ? "Guru BK" : user.role === "ADMIN" ? "Administrator" : "";
+    kelas =
+      user.role === "BK_TEACHER"
+        ? "Guru BK"
+        : user.role === "ADMIN"
+        ? "Administrator"
+        : user.role === "WALI_KELAS"
+        ? "Wali Kelas XI IPA 2"
+        : "";
   }
 
   return {

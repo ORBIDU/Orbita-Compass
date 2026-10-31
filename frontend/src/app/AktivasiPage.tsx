@@ -37,6 +37,7 @@ export default function AktivasiPage() {
   }, [step]);
 
   if (!step) {
+    if (user?.role === "WALI_KELAS") return <Navigate to={ROUTES.walikelas} replace />;
     if (user?.role === "STUDENT" && !ready) return <PageLoader label="Menyiapkan portal..." />;
     return <Navigate to={portalTarget(studentStatus, from)} replace />;
   }

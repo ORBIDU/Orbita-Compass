@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { prisma } from '../config/prisma';
 import { AuthRequest } from '../middleware/auth';
+import { generateQuestions, getBlueprintTaxonomy } from '../services/aiQuestionService';
 
 export const getUniversities = async (req: Request, res: Response) => {
   try {
@@ -118,41 +119,92 @@ export const getRationalization = async (req: AuthRequest, res: Response) => {
   }
 };
 
+export const getQuestionBlueprints = async (req: Request, res: Response) => {
+  try {
+    const taxonomy = getBlueprintTaxonomy();
+    return res.json({
+      success: true,
+      totalSubtests: taxonomy.length,
+      blueprints: taxonomy
+    });
+  } catch (error) {
+    console.error('getQuestionBlueprints error:', error);
+    return res.status(500).json({ error: 'Failed to retrieve question blueprints' });
+  }
+};
+
+export const generateAIQuestions = async (req: Request, res: Response) => {
+  try {
+    const { category = 'snbt', subtest, topic, count = 5, difficulty = 'medium', saveToBank = false } = req.body;
+    const result = await generateQuestions({
+      category: String(category),
+      subtest: subtest ? String(subtest) : undefined,
+      topic: topic ? String(topic) : undefined,
+      count: Number(count),
+      difficulty: difficulty as 'easy' | 'medium' | 'hard',
+      saveToBank: Boolean(saveToBank)
+    });
+
+    return res.json(result);
+  } catch (error) {
+    console.error('generateAIQuestions error:', error);
+    return res.status(500).json({ error: 'Failed to generate questions with AI' });
+  }
+};
+
 export const getPracticeQuestions = async (req: Request, res: Response) => {
   try {
-    const { category, campus } = req.query;
-    const catLower = String(category || 'utbk').toLowerCase();
+    const { category, campus, subtest, limit = 10 } = req.query;
+    const catLower = String(category || 'snbt').toLowerCase();
     const campusStr = campus ? String(campus).trim() : null;
+    const subtestStr = subtest ? String(subtest).trim() : null;
+    const limitNum = Math.min(100, Math.max(1, Number(limit) || 10));
 
-    const whereCondition: any = { category: catLower };
+    const whereCondition: any = {};
+    if (catLower === 'snbt' || catLower === 'utbk') {
+      whereCondition.category = { in: ['snbt', 'utbk'] };
+    } else {
+      whereCondition.category = catLower;
+    }
+
     if (catLower === 'mandiri' && campusStr) {
       whereCondition.subtest = { contains: campusStr, mode: 'insensitive' };
+    } else if (subtestStr) {
+      whereCondition.subtest = { contains: subtestStr, mode: 'insensitive' };
     }
 
     let dbQuestions = await prisma.questionBank.findMany({
       where: whereCondition,
+      take: limitNum,
       orderBy: { createdAt: 'asc' }
     });
 
-    // Fallback if category is tka or mandiri and no specific db records match
-    if (dbQuestions.length === 0 && (catLower === 'tka' || catLower === 'mandiri')) {
+    // Fallback if specific subtest or category not yet in DB
+    if (dbQuestions.length === 0) {
       dbQuestions = await prisma.questionBank.findMany({
-        where: { category: 'utbk' },
-        take: 5
+        where: { category: { in: ['snbt', 'utbk'] } },
+        take: limitNum
       });
     }
 
+    // Questions returned WITHOUT answerIndex and explanation (Contract 1.5)
     const formattedQuestions = dbQuestions.map(q => ({
       id: q.id,
       category: q.category,
       subtest: q.subtest,
+      topic: q.topic || undefined,
       question: q.question,
       options: typeof q.optionsJson === 'string' ? JSON.parse(q.optionsJson) : q.optionsJson,
-      answerIndex: q.answerIndex,
       difficultyWeight: q.difficultyWeight
     }));
 
-    return res.json({ category: catLower, campus: campusStr || 'Semua Kampus', questions: formattedQuestions });
+    return res.json({
+      category: catLower,
+      subtest: subtestStr || 'Semua Subtes',
+      campus: campusStr || 'Semua Kampus',
+      total: formattedQuestions.length,
+      questions: formattedQuestions
+    });
   } catch (error) {
     console.error('getPracticeQuestions error:', error);
     return res.status(500).json({ error: 'Failed to fetch practice questions' });
@@ -161,7 +213,7 @@ export const getPracticeQuestions = async (req: Request, res: Response) => {
 
 export const submitPracticeAnswers = async (req: AuthRequest, res: Response) => {
   try {
-    if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
+    if (!req.user) return res.status(401).json({ error: 'Unauthorized', code: 'UNAUTHORIZED' });
 
     const { type, userAnswers } = req.body;
 
@@ -175,8 +227,36 @@ export const submitPracticeAnswers = async (req: AuthRequest, res: Response) => 
     const isSkd = testType === 'SKD';
     const maxScore = isSkd ? 550 : 1000;
 
-    const totalQuestions = isSkd ? 3 : 5;
-    const correctCount = typeof userAnswers === 'object' && userAnswers !== null ? Object.keys(userAnswers).length : 2;
+    // Fetch questions from DB to evaluate server-side
+    const answersObj = typeof userAnswers === 'object' && userAnswers !== null ? userAnswers : {};
+    const questionIds = Object.keys(answersObj);
+
+    let correctCount = 0;
+    const reviewItems: any[] = [];
+
+    if (questionIds.length > 0) {
+      const questions = await prisma.questionBank.findMany({
+        where: { id: { in: questionIds } }
+      });
+
+      for (const q of questions) {
+        const chosen = answersObj[q.id];
+        const isCorrect = chosen !== undefined && Number(chosen) === q.answerIndex;
+        if (isCorrect) correctCount++;
+
+        reviewItems.push({
+          questionId: q.id,
+          subtest: q.subtest,
+          topic: q.topic || undefined,
+          chosenIndex: chosen !== undefined ? Number(chosen) : null,
+          answerIndex: q.answerIndex,
+          isCorrect,
+          explanation: q.explanation || `Jawaban benar: pilihan ke-${q.answerIndex + 1}.`
+        });
+      }
+    }
+
+    const totalQuestions = Math.max(1, questionIds.length);
     const calculatedScore = Math.min(maxScore, Math.round((correctCount / totalQuestions) * maxScore));
 
     const session = await prisma.tryoutSession.create({
@@ -191,11 +271,12 @@ export const submitPracticeAnswers = async (req: AuthRequest, res: Response) => 
     return res.status(201).json({
       message: 'Tryout submitted and score calculated successfully',
       result: {
-        session,
+        sessionId: session.id,
         totalScore: calculatedScore,
         maxScore,
         correctCount,
-        totalQuestions
+        totalQuestions,
+        answers: reviewItems
       }
     });
   } catch (error) {

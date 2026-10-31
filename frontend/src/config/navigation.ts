@@ -39,6 +39,10 @@ export const ROUTES = {
   tryout: (packageId: string) => `/portal/tryout/${packageId}`,
   laporan: (packageId: string) => `/portal/tryout/${packageId}/laporan`,
   profil: "/portal/profil",
+  // ── Portal Wali Kelas ──────────────────────────────────────────────────────
+  walikelas: "/walikelas",
+  walikelasSiswa: "/walikelas/siswa",
+  walikelasDetailSiswa: (id: number | string) => `/walikelas/siswa/${id}`,
 } as const;
 
 export type UjianKey = "tka" | "snbt" | "skd";

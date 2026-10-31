@@ -6,7 +6,7 @@ import AdaptiveLayout from "@/layouts/AdaptiveLayout";
 import PageLoader from "@/components/ui/PageLoader";
 // Tidak lazy: halaman error harus tetap bisa tampil walau file halaman lain gagal dimuat.
 import ErrorPage from "@/app/ErrorPage";
-import { DaftarRedirect, GuestOnly, RequireAuth } from "@/routes/guards";
+import { DaftarRedirect, GuestOnly, RequireAuth, RequireWali } from "@/routes/guards";
 
 const LandingPage = lazy(() => import("@/app/LandingPage"));
 const ProfilPage = lazy(() => import("@/app/ProfilPage"));
@@ -27,6 +27,12 @@ const LaporanPage = lazy(() => import("@/app/LaporanPage"));
 const NotFoundPage = lazy(() => import("@/app/NotFoundPage"));
 const JurusanListPage = lazy(() => import("@/app/JurusanListPage"));
 const JurusanDetailPage = lazy(() => import("@/app/JurusanDetailPage"));
+
+// Portal Wali Kelas
+const WaliLayout = lazy(() => import("@/layouts/WaliLayout"));
+const WaliDashboardPage = lazy(() => import("@/app/wali/WaliDashboardPage"));
+const WaliStudentListPage = lazy(() => import("@/app/wali/WaliStudentListPage"));
+const WaliStudentDetailPage = lazy(() => import("@/app/wali/WaliStudentDetailPage"));
 
 /** Landing tidak memakai layout, jadi butuh Suspense sendiri. */
 const withSuspense = (node: ReactNode) => <Suspense fallback={<PageLoader fullscreen />}>{node}</Suspense>;
@@ -100,6 +106,27 @@ export const router = createBrowserRouter([
           // Pengerjaan soal tampil tanpa menu portal (hasil dan laporan tetap di dalam portal).
           { path: "/portal/latihan/:id", element: withSuspense(<LatihanRunPage />) },
           { path: "/portal/tryout/:id", element: withSuspense(<TryoutRunPage />) },
+        ],
+      },
+
+      // ── Portal Wali Kelas (wajib login) ─────────────────────────────────────
+      {
+        element: <RequireWali />,
+        children: [
+          {
+            path: "/walikelas",
+            element: <WaliLayout />,
+            children: [
+              {
+                errorElement: <ErrorPage inLayout />,
+                children: [
+                  { index: true, element: <WaliDashboardPage /> },
+                  { path: "siswa", element: <WaliStudentListPage /> },
+                  { path: "siswa/:id", element: <WaliStudentDetailPage /> },
+                ],
+              },
+            ],
+          },
         ],
       },
 

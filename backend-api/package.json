@@ -9,7 +9,9 @@
     "dev": "nodemon --exec ts-node src/server.ts",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "db:seed": "ts-node prisma/seed.ts"
+    "db:seed": "ts-node prisma/seed.ts",
+    "db:seed:questions": "ts-node prisma/seed_questions.ts",
+    "extract:soal": "python3 scripts/extract_soal_archive.py"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
