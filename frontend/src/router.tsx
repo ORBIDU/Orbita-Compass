@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import PortalLayout from "@/layouts/PortalLayout";
 import AuthLayout from "@/layouts/AuthLayout";
 import AdaptiveLayout from "@/layouts/AdaptiveLayout";
+import PublicLayout from "@/layouts/PublicLayout";
 import PageLoader from "@/components/ui/PageLoader";
 // Tidak lazy: halaman error harus tetap bisa tampil walau file halaman lain gagal dimuat.
 import ErrorPage from "@/app/ErrorPage";
@@ -34,7 +35,7 @@ const WaliDashboardPage = lazy(() => import("@/app/wali/WaliDashboardPage"));
 const WaliStudentListPage = lazy(() => import("@/app/wali/WaliStudentListPage"));
 const WaliStudentDetailPage = lazy(() => import("@/app/wali/WaliStudentDetailPage"));
 
-/** Landing tidak memakai layout, jadi butuh Suspense sendiri. */
+/** Halaman tanpa layout (pengerjaan soal) butuh Suspense sendiri. */
 const withSuspense = (node: ReactNode) => <Suspense fallback={<PageLoader fullscreen />}>{node}</Suspense>;
 
 // Peta halaman sesuai docs/SPEK_SISWA.md.
@@ -46,7 +47,8 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       // ── Publik ──────────────────────────────────────────────────────────────
-      { path: "/", element: withSuspense(<LandingPage />) },
+      // Beranda selalu memakai layout publik, juga untuk siswa yang sudah masuk.
+      { element: <PublicLayout />, children: [{ path: "/", element: <LandingPage />, errorElement: <ErrorPage inLayout /> }] },
       {
         // Satu halaman untuk tamu dan siswa: layout mengikuti status login.
         path: "/jurusan",

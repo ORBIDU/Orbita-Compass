@@ -11,7 +11,7 @@ Struktur repo:
 - `docs/SPEK_SISWA.md` → spesifikasi lengkap sisi siswa. Baca bagian yang relevan sebelum mengerjakan halaman.
 - `docs/API_CONTRACT.md` → kebutuhan frontend ke backend yang belum ada atau belum aman.
 - `docs/AUDIT_FRONTEND.md` → hasil audit Fase 0 dan rencana Fase 1.
-- `docs/design/` → referensi desain (format .dc.html). Baca README di tiap folder.
+- `docs/design/` → referensi desain (format .dc.html, kecuali `publik/` berupa pratinjau JPG dari Figma). Baca README di tiap folder.
 
 Pemilik frontend: Maulana (vibe coder). Jelaskan setiap perubahan dengan bahasa Indonesia yang sederhana.
 
@@ -50,4 +50,4 @@ Font:
 - Poppins: font utama untuk semua teks.
 - Pecita: font aksen, hanya untuk 1–3 kata penekanan (misalnya di hero). Di-host sendiri di `frontend/src/assets/fonts/`. Selama filenya belum ada, cadangannya Caveat (Google Fonts).
 
-Gaya: kartu putih dengan sudut membulat besar (16–24px), bayangan lembut, ikon sederhana. Portal siswa bertema terang; landing dan auth bertema navy gelap.
+Gaya: kartu putih dengan sudut membulat besar (16–24px), bayangan lembut, ikon sederhana. Portal siswa dan situs publik bertema terang (situs publik punya beberapa section navy, mis. CTA penutup dan footer); auth bertema navy gelap. Acuan situs publik: `docs/design/publik/`.

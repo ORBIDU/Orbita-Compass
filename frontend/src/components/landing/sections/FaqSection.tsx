@@ -24,7 +24,7 @@ export default function FaqSection() {
   const group = FAQ.groups[category];
 
   return (
-    <section id="faq" className={`scroll-mt-4 bg-surface-soft ${SECTION_Y}`}>
+    <section id="faq" className={`scroll-mt-16 lg:scroll-mt-20 bg-surface-soft ${SECTION_Y}`}>
       <div className={`${CONTAINER} flex flex-col gap-6 lg:grid lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] lg:items-start lg:gap-14 xl:grid-cols-[400px_720px] xl:gap-20`}>
         <div className="flex flex-col gap-3 lg:gap-[18px]">
           <H2>{FAQ.title}</H2>

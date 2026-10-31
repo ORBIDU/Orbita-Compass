@@ -8,12 +8,12 @@ import JurusanSection from "@/components/landing/sections/JurusanSection";
 import ActionPlanSection from "@/components/landing/sections/ActionPlanSection";
 import FaqSection from "@/components/landing/sections/FaqSection";
 import FinalCtaSection from "@/components/landing/sections/FinalCtaSection";
-import ConsultButton from "@/components/landing/ConsultButton";
 import { HOME_TITLE } from "@/lib/usePageTitle";
 
 /**
  * Beranda ORBIDU. Urutan section sesuai docs/SPEK_SISWA.md bagian 1.
- * Semua teks ada di src/content/landing.ts.
+ * Semua teks ada di src/content/landing.ts. Header, footer, dan tombol
+ * konsultasi dari PublicLayout.
  */
 export default function LandingPage() {
   // Beranda memakai judul lengkap dengan tagline.
@@ -35,18 +35,15 @@ export default function LandingPage() {
   }, [hash]);
 
   return (
-    <div className="public-site min-h-dvh overflow-x-clip bg-white font-sans text-space-2">
-      <main>
-        <HeroSection />
-        <ProblemSection />
-        <KenaliSection />
-        <CompassSection />
-        <JurusanSection />
-        <ActionPlanSection />
-        <FaqSection />
-        <FinalCtaSection />
-      </main>
-      <ConsultButton />
+    <div className="font-sans text-space-2">
+      <HeroSection />
+      <ProblemSection />
+      <KenaliSection />
+      <CompassSection />
+      <JurusanSection />
+      <ActionPlanSection />
+      <FaqSection />
+      <FinalCtaSection />
     </div>
   );
 }

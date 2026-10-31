@@ -1,4 +1,5 @@
-import { BRAND } from "@/config/brand";
+import { BRAND, type WhatsAppTopic } from "@/config/brand";
+import { ROUTES } from "@/config/navigation";
 import { ACCOUNT_ACCESS } from "./common";
 
 // Semua teks beranda, mengikuti desain docs/design/landing/Home-*.dc.html.
@@ -17,11 +18,28 @@ export const STEPS = {
 } as const;
 
 export const HEADER = {
-  /** Tamu: membuka WhatsApp (tidak ada pendaftaran mandiri). */
+  /** Tamu: membuka WhatsApp (tidak ada pendaftaran mandiri; desain menulis "Daftar"). */
   berlangganan: ACCOUNT_ACCESS.subscribe,
   masuk: "Masuk",
   bukaPortal: "Buka Portal",
   logoLabel: `${B}, ke beranda`,
+};
+
+/**
+ * Menu navbar halaman publik (desain docs/design/publik).
+ * Untuk Sekolah dan Latihan Soal ditambahkan saat halamannya dibuat (Tahap 10D),
+ * halaman FAQ di Tahap 10E (sementara menuju section FAQ di beranda).
+ * Tentang Kami menunggu desain.
+ */
+export const NAV = {
+  label: "Menu utama",
+  open: "Buka menu",
+  close: "Tutup menu",
+  items: [
+    { label: "Beranda", to: ROUTES.landing },
+    { label: "Eksplor Jurusan", to: ROUTES.jurusan },
+    { label: "FAQ", to: `${ROUTES.landing}#faq` },
+  ],
 };
 
 export const HERO = {
@@ -176,26 +194,31 @@ export const FINAL_CTA = {
   cta: `Hadirkan ${B} di Sekolahmu`,
 };
 
+export type FooterLink = { label: string; to: string } | { label: string; whatsapp: WhatsAppTopic };
+
 export const FOOTER = {
-  description: `${BRAND.tagline}. Pendampingan perencanaan pendidikan untuk siswa SMA kelas X sampai XII.`,
-  explore: {
-    title: "Jelajahi",
-    // "Untuk Sekolah" dan "Tentang Kami" disembunyikan sampai halamannya dibuat.
-    links: [
-      { label: "Beranda", target: "beranda" },
-      { label: "Explore Jurusan", target: "jurusan" },
-      { label: "FAQ", target: "faq" },
-    ] as const,
-  },
-  account: {
-    title: "Akun",
-    links: [
-      { label: "Masuk", target: "masuk" },
-      { label: ACCOUNT_ACCESS.subscribe, target: "berlangganan" },
-    ] as const,
-  },
-  contactTitle: "Hubungi kami",
-  copyright: (year: number) => `© ${year} ${B}`,
+  description: "Smart companion untuk membantu siswa memahami diri, menemukan arah, dan mengambil langkah menuju masa depan.",
+  // Tujuan link Perjalanan mengikuti section beranda; disesuaikan lagi di Tahap 10B.
+  // "Untuk Sekolah" ditambahkan di Tahap 10D, "Hubungi Kami" pindah ke /faq di Tahap 10E.
+  columns: [
+    {
+      title: "Perjalanan",
+      links: [
+        { label: "Cara kerja", to: `${ROUTES.landing}#kenali` },
+        { label: BRAND.compassName, to: `${ROUTES.landing}#compass` },
+        { label: "Action Plan", to: `${ROUTES.landing}#action-plan` },
+      ],
+    },
+    {
+      title: "Kolaborasi",
+      links: [
+        { label: "FAQ", to: `${ROUTES.landing}#faq` },
+        { label: "Hubungi Kami", whatsapp: "faq" },
+      ],
+    },
+  ] satisfies { title: string; links: FooterLink[] }[],
+  copyright: (year: number) => `© ${year} ${B}. Hak cipta dilindungi.`,
+  location: BRAND.location,
 };
 
 export const CONSULT = {

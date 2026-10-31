@@ -1,5 +1,4 @@
 import { HERO } from "@/content/landing";
-import LandingHeader from "../LandingHeader";
 import HeroVisual from "../HeroVisual";
 import { CONTAINER, PillButton, PillExternal, PillLink } from "../primitives";
 import { useLandingNav } from "../useLandingNav";
@@ -8,10 +7,8 @@ export default function HeroSection() {
   const { loggedIn, portalTo, subscribeHref, scrollTo } = useLandingNav();
 
   return (
-    <section className="relative overflow-hidden bg-hero-glow pb-14 lg:pb-20">
+    <section className="relative overflow-hidden bg-hero-glow pb-14 pt-4 lg:pb-20 lg:pt-8">
       <div className={CONTAINER}>
-        <LandingHeader />
-
         <div className="flex flex-col lg:mt-2 lg:grid lg:grid-cols-[minmax(0,600px)_minmax(0,560px)] lg:items-center lg:gap-10">
           {/* Di HP visual tampil di atas teks, di desktop di kanan. */}
           <HeroVisual className="-mx-5 w-[calc(100%+2.5rem)] self-center sm:mx-auto sm:w-full sm:max-w-[520px] lg:order-2 lg:max-w-none" />

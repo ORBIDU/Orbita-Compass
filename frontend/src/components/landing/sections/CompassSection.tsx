@@ -29,7 +29,7 @@ export default function CompassSection() {
   const { profile, options, paths } = COMPASS;
 
   return (
-    <section id="compass" className={`scroll-mt-4 bg-white ${SECTION_Y}`}>
+    <section id="compass" className={`scroll-mt-16 lg:scroll-mt-20 bg-white ${SECTION_Y}`}>
       <div className={`${CONTAINER} flex flex-col gap-7 lg:items-center lg:gap-14`}>
         <div className="flex max-w-[780px] flex-col gap-3.5 lg:items-center lg:gap-[18px] lg:text-center">
           <StepChip no={COMPASS.step.no} label={COMPASS.step.label} className="self-start lg:self-center" />

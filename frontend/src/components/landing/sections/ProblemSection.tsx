@@ -34,7 +34,7 @@ export default function ProblemSection() {
   const { scrollTo } = useLandingNav();
 
   return (
-    <section id="masalah" className={`scroll-mt-4 bg-white ${SECTION_Y}`}>
+    <section id="masalah" className={`scroll-mt-16 lg:scroll-mt-20 bg-white ${SECTION_Y}`}>
       <div className={`${CONTAINER} flex flex-col items-center gap-7 lg:gap-14`}>
         <H2 className="text-center">{PROBLEM.title}</H2>
 

@@ -27,7 +27,7 @@ export default function JurusanSection() {
   }, []);
 
   return (
-    <section id="jurusan" className={`scroll-mt-4 overflow-hidden bg-surface-soft ${SECTION_Y}`}>
+    <section id="jurusan" className={`scroll-mt-16 lg:scroll-mt-20 overflow-hidden bg-surface-soft ${SECTION_Y}`}>
       <div className={`${CONTAINER} flex flex-col gap-6 lg:gap-10`}>
         <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
           <div className="flex max-w-[700px] flex-col gap-3.5 lg:gap-[18px]">

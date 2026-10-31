@@ -81,7 +81,7 @@ export default function ActionPlanSection() {
   const { actionPlanTo } = useLandingNav();
 
   return (
-    <section id="action-plan" className={`scroll-mt-4 bg-white ${SECTION_Y}`}>
+    <section id="action-plan" className={`scroll-mt-16 lg:scroll-mt-20 bg-white ${SECTION_Y}`}>
       <div className={`${CONTAINER} flex flex-col gap-7 lg:grid lg:grid-cols-2 lg:items-center lg:gap-14 xl:grid-cols-[640px_480px] xl:gap-20`}>
         {/* Di HP teks lebih dulu, di desktop kartu di kiri. */}
         <div className="flex flex-col gap-3.5 lg:order-2 lg:gap-[18px]">

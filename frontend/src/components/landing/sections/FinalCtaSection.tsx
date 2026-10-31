@@ -4,7 +4,6 @@ import { FINAL_CTA } from "@/content/landing";
 import { whatsappLink } from "@/config/brand";
 import { makeStars } from "@/lib/stars";
 import MascotFigure from "@/components/mascot/MascotFigure";
-import SiteFooter from "../SiteFooter";
 import { CONTAINER, ExternalLink, pillClasses } from "../primitives";
 
 const DOTS = [
@@ -15,13 +14,12 @@ const DOTS = [
   [260, 182],
 ];
 
-/** Ajakan penutup + footer, di atas latar navy berbintang. */
+/** Ajakan penutup di atas latar navy berbintang (footer ada di PublicLayout). */
 export default function FinalCtaSection() {
   const stars = useMemo(() => makeStars(56, 29), []);
 
-  // pb ekstra di HP supaya baris terakhir footer tidak tertutup tombol konsultasi.
   return (
-    <section className="on-dark relative overflow-hidden bg-night-glow pb-32 pt-[72px] lg:pb-14 lg:pt-[110px]">
+    <section className="on-dark relative overflow-hidden bg-night-glow py-[72px] lg:py-[110px]">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         {stars.map((s, i) => (
           <span
@@ -32,7 +30,7 @@ export default function FinalCtaSection() {
         ))}
       </div>
 
-      <div className={`${CONTAINER} relative flex flex-col gap-[72px] lg:gap-[110px]`}>
+      <div className={`${CONTAINER} relative flex flex-col`}>
         <div className="flex max-w-[780px] flex-col items-center gap-3.5 self-center text-center lg:gap-[18px]">
           <svg viewBox="0 0 360 250" aria-hidden="true" className="w-[260px] overflow-visible lg:w-[360px]">
             <g transform="rotate(-12 180 130)">
@@ -67,8 +65,6 @@ export default function FinalCtaSection() {
             <ArrowRight size={20} strokeWidth={2.2} aria-hidden="true" />
           </ExternalLink>
         </div>
-
-        <SiteFooter />
       </div>
     </section>
   );

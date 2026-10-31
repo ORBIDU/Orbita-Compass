@@ -27,25 +27,34 @@ Publik: `/` Landing, `/jurusan` Explore Jurusan, `/jurusan/:slug` Detail Jurusan
 Portal (wajib login): `/portal` Dashboard, `/portal/analisis-potensi`, `/portal/compass`, `/portal/beasiswa`, `/portal/action-plan`, `/portal/persiapan/snbp`, `/portal/persiapan/:ujian` (tka, snbt, skd), `/portal/profil`.
 Kalau route yang sudah ada berbeda, usulkan penyesuaiannya di Fase 0.
 
-## 1. Landing (`/`)
-Acuan desain: `docs/design/landing/Home-Desktop.dc.html` (1440px) dan `Home-Mobile.dc.html` (390px). Teks mengikuti desain persis dan disimpan di `frontend/src/content/landing.ts`, bukan di komponen. Nama, tagline, dan kontak diambil dari `frontend/src/config/brand.ts`.
-- Nama brand **ORBIDU**, tagline "The Smart Way to Shape Your Future". Nomor WhatsApp, email, Instagram, dan LinkedIn masih ditandai "BELUM DIPASTIKAN" di `brand.ts` dan wajib dicek sebelum rilis.
-- Header tanpa navbar: logo di kiri, tombol **Berlangganan** (WhatsApp, pesan template `berlangganan` di `brand.ts`) dan **Masuk** di kanan. Kalau sudah login, keduanya diganti satu tombol "Buka Portal".
-- Urutan section:
-  1. **Hero**: "Hi, Bifriends!" (font aksen), judul, subjudul, CTA **"Berlangganan"** (tamu → WhatsApp; sudah login → "Buka Portal" ke `/portal`) dan "Kenali ORBIDU" (scroll ke section Masalah). Visual planet berbintang, orbit, lima chip langkah, dan maskot. Di bawahnya deretan logo kampus (masih placeholder).
-  2. **Masalah**: "Masih bingung harus mulai dari mana?" dengan enam gelembung pertanyaan, lalu "Tenang, Bifriends!".
-  3. **Kenali Dirimu** (1 Potensi): CTA "Kenali Dirimu" (tamu → `/masuk`, sudah login → `/portal/analisis-potensi`).
-  4. **ORBIDU Compass** (2 Arah): Profil → Pilihan untuk dieksplorasi → Jalur yang bisa ditempuh.
-  5. **Eksplorasi Pilihan** (3 Pilihan): carousel kartu jurusan dan tombol "Lihat Jurusan Lainnya" → `/jurusan`.
-  6. **Action Plan** (4 Persiapan): CTA "Mulai Action Plan" (tamu → `/masuk`, sudah login → `/portal/action-plan`).
-  7. **FAQ**: tiga kategori (Tentang ORBIDU, Untuk Bifriends, Untuk Sekolah) + tombol "Tanya lewat WhatsApp". "Bagaimana cara mendapatkan akun ORBIDU?" dijawab dengan teks `ACCOUNT_ACCESS` yang sama dengan halaman Masuk.
-  8. **Final CTA** "Ready to find your orbit, Bifriends?" + tombol "Hadirkan ORBIDU di Sekolahmu" (WhatsApp), lalu **footer**.
-- Footer: Jelajahi (Beranda, Explore Jurusan, FAQ), Akun (Masuk, Berlangganan), Hubungi kami (email, Instagram, LinkedIn, lokasi), © tahun berjalan (otomatis). Link "Untuk Sekolah" dan "Tentang Kami" disembunyikan sampai halamannya dibuat.
-- Tombol **"Ayo konsultasi!"** dengan maskot melompat menempel di pojok kanan bawah layar (`position: fixed`) di semua halaman publik (beranda, `/jurusan`, `/jurusan/:slug`) dan membuka WhatsApp. Tidak tampil di halaman Masuk/Aktivasi dan portal.
-- **Carousel jurusan** digeser dengan tombol panah dan swipe, tanpa scrollbar horizontal maupun vertikal yang terlihat. Desktop: 4 kartu per halaman. HP: 1 kartu dengan sebagian kartu berikutnya terlihat. Kartu membuka `/jurusan/:slug`.
-- **MascotSlot**: maskot hero versi SVG dari desain. Desktop: mata mengikuti kursor. HP: menoleh ke titik sentuhan. Semua animasi mati jika `prefers-reduced-motion`. Nanti diganti model 3D tanpa mengubah halaman.
-- Font aksen Pecita, dengan Caveat sebagai cadangan sampai file Pecita tersedia.
-- Tidak boleh ada scroll horizontal. Dicek di lebar 360px, 768px, dan 1440px.
+## 1. Situs publik (Fase 10)
+Acuan desain: `docs/design/publik/` (Beranda, Untuk Sekolah, Eksplor Jurusan, Latihan Soal, FAQ; desktop 1728px, pratinjau JPG). Menggantikan `docs/design/landing/Home-*.dc.html`. Teks di `frontend/src/content/landing.ts`; nama, tagline, dan kontak dari `frontend/src/config/brand.ts`.
+
+### Keputusan Fase 10
+- **Navbar** di semua halaman publik (`PublicHeader`): logo, menu di tengah (Beranda, Untuk Sekolah, Eksplor Jurusan, Latihan Soal, FAQ), **Masuk** + **Berlangganan** di kanan. Kalau sudah login, keduanya diganti "Buka Portal" (wali kelas ke `/walikelas`). Di bawah lebar `lg` menu pindah ke panel hamburger.
+  - Menu hanya tampil kalau halamannya sudah ada. **Tentang Kami** disembunyikan sampai desainnya ada.
+- Tombol **"Daftar"** di desain diganti **"Berlangganan"** (WhatsApp). Tidak ada pendaftaran mandiri.
+- Semua teks memakai **Poppins** (desain memakai Plus Jakarta Sans dan Inter di beberapa bagian).
+- Desain HP belum ada; tampilan HP disusun dari desain desktop. Tetap dicek di 360px, 768px, 1440px tanpa scroll horizontal.
+- **Footer** (`PublicFooter`): deskripsi, kolom Perjalanan dan Kolaborasi, © tahun berjalan (otomatis), lokasi dari `brand.ts`.
+- Angka jumlah PTN/PTS di kartu jurusan hanya tampil kalau dihitung dari data kampus asli.
+- Teks yang tidak sesuai kondisi produk diganti: klaim "Sumber Terpercaya & Teruji" selama bank soal masih contoh, nama lama "ORBITA", "Latihan Soal Mandiri" diberi label "Segera hadir".
+- Form "Kirim Pesan" di FAQ dikirim lewat WhatsApp (pesan terisi otomatis) sampai backend punya endpoint pesan (catat di `docs/API_CONTRACT.md`).
+- Tombol **"Ayo konsultasi!"** tetap menempel di pojok kanan bawah semua halaman publik (tidak ada di desain), tidak tampil di Masuk/Aktivasi dan portal.
+- Hero Beranda: dua meteor jatuh diagonal berulang (keluar dari hero lalu muncul lagi dari atas), jeda dan kecepatan berbeda. Semua animasi mati jika `prefers-reduced-motion`.
+
+### Tahapan
+- [x] 10A — Fondasi: desain disimpan, navbar + menu HP, footer baru, beranda masuk `PublicLayout`.
+- [ ] 10B — Beranda sesuai desain baru (hero terang + meteor, Masalah, "Tenang Bifriends, ada ORBIDU", 3 kartu Perjalanan, CTA penutup).
+- [ ] 10C — Eksplor Jurusan (`/jurusan`) sesuai desain.
+- [ ] 10D — Untuk Sekolah (`/untuk-sekolah`) dan Latihan Soal (`/latihan-soal`).
+- [ ] 10E — FAQ (`/faq`) dan Hubungi Kami.
+
+### Aturan lama yang tetap berlaku
+- **Carousel jurusan** digeser dengan tombol panah dan swipe, tanpa scrollbar yang terlihat. Kartu membuka `/jurusan/:slug`.
+- **MascotSlot**: maskot versi SVG. Desktop: mata mengikuti kursor. HP: menoleh ke titik sentuhan. Nanti diganti model 3D tanpa mengubah halaman.
+- Nomor WhatsApp, email, Instagram, LinkedIn, dan lokasi bertanda "BELUM DIPASTIKAN" di `brand.ts` wajib dicek sebelum rilis.
+- "Bagaimana cara mendapatkan akun ORBIDU?" dijawab dengan teks `ACCOUNT_ACCESS` yang sama dengan halaman Masuk.
 
 ## 2. Explore Jurusan (`/jurusan`, publik) dan Detail Jurusan (`/jurusan/:slug`)
 Acuan desain detail: `docs/design/landing/Jurusan-Detail.dc.html` (desktop).
@@ -258,6 +267,7 @@ Acuan desain: `docs/design/portal/Portal-Profil.dc.html`. Teks di `frontend/src/
 - [x] Fase 7 — Persiapan
 - [x] Fase 8 — Profil
 - [x] Fase 9 — Finishing: cek tampilan HP, empty state, konsistensi angka antarhalaman, rapikan API_CONTRACT.md (Tahap 9A: build backend bersih, halaman error, sesi berakhir, kontras, judul tab; Tahap 9B: konsistensi teks, aset, bersih-bersih kode)
+- [ ] Fase 10 — Situs publik baru (lihat bagian 1, Tahapan)
 
 ## Sebelum rilis
 Hal yang sengaja ditunda dan wajib dibereskan sebelum ORBIDU dipakai siswa:

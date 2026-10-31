@@ -76,7 +76,7 @@ export default function KenaliSection() {
   const { kenaliTo } = useLandingNav();
 
   return (
-    <section id="kenali" className={`scroll-mt-4 bg-surface-soft ${SECTION_Y}`}>
+    <section id="kenali" className={`scroll-mt-16 lg:scroll-mt-20 bg-surface-soft ${SECTION_Y}`}>
       <div className={`${CONTAINER} flex flex-col gap-7 lg:grid lg:grid-cols-2 lg:items-center lg:gap-14 xl:grid-cols-[480px_640px] xl:gap-20`}>
         <div className="flex flex-col gap-3.5 lg:gap-[18px]">
           <StepChip no={KENALI.step.no} label={KENALI.step.label} className="self-start" />
