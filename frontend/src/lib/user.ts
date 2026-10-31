@@ -49,7 +49,7 @@ export function toDisplayUser(user: MeUser): DisplayUser {
         : user.role === "ADMIN"
         ? "Administrator"
         : user.role === "WALI_KELAS"
-        ? "Wali Kelas XI IPA 2"
+        ? "Wali Kelas"
         : "";
   }
 

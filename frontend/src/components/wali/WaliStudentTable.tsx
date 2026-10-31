@@ -90,6 +90,7 @@ export default function WaliStudentTable({ students }: WaliStudentTableProps) {
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
                     <Avatar
+                      src={null}
                       initials={student.nama.slice(0, 2).toUpperCase()}
                       className={`h-9 w-9 text-xs font-bold text-white ${
                         student.jk === "L" ? "bg-orbit-1" : "bg-sun-1"

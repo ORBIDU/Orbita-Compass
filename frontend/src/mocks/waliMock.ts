@@ -1,3 +1,4 @@
+import { BRAND } from "@/config/brand";
 import type {
   WaliDashboardData,
   StudentSummary,
@@ -47,7 +48,7 @@ export const MOCK_WALI_DASHBOARD: WaliDashboardData = {
     totalCount: 36,
   },
   aiInsight: {
-    title: "Orbita AI Insight Kelas",
+    title: `${BRAND.name} AI Insight Kelas`,
     body: "Sebagian besar siswa menunjukkan perkembangan akademik yang stabil. Sebanyak 18 siswa mengalami peningkatan lebih dari 5 poin, sedangkan 4 siswa mengalami penurunan selama dua semester berturut-turut sehingga disarankan mendapatkan pendampingan lebih lanjut dari Guru BK.",
     highlightCountUp: 18,
     highlightCountDown: 4,

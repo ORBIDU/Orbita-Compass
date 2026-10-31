@@ -21,8 +21,8 @@ export default function WaliHero({ wali, totalStudents = 36 }: WaliHeroProps) {
             key={i}
             className="absolute rounded-full bg-white opacity-40"
             style={{
-              top: `${s.top}%`,
-              left: `${s.left}%`,
+              top: `${s.y}%`,
+              left: `${s.x}%`,
               width: `${s.size}px`,
               height: `${s.size}px`,
             }}

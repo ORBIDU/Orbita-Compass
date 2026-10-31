@@ -1,14 +1,16 @@
 import { useState, useMemo } from "react";
 import { Search, Download, UploadCloud, Users } from "lucide-react";
 import { useAsync } from "@/lib/useAsync";
-import { getWaliStudents } from "@/services/waliService";
+import { getWaliProfile, getWaliStudents } from "@/services/waliService";
 import PageLoader from "@/components/ui/PageLoader";
+import { PanelError } from "@/components/ui/PanelState";
 import EmptyState from "@/components/ui/EmptyState";
 import WaliStudentTable from "@/components/wali/WaliStudentTable";
 import WaliImportModal from "@/components/wali/WaliImportModal";
 
 export default function WaliStudentListPage() {
-  const { data: students, loading, reload } = useAsync(() => getWaliStudents(), []);
+  const { data: students, loading, error, reload } = useAsync(() => getWaliStudents(), []);
+  const { data: wali } = useAsync(() => getWaliProfile(), []);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [isImportOpen, setIsImportOpen] = useState(false);
@@ -25,6 +27,13 @@ export default function WaliStudentListPage() {
     });
   }, [students, search, statusFilter]);
 
+  if (error) {
+    return (
+      <div className="mx-auto w-full max-w-[1240px] px-4 pt-6 sm:px-6 lg:px-8">
+        <PanelError onRetry={reload} />
+      </div>
+    );
+  }
   if (loading || !students) return <PageLoader fullscreen />;
 
   return (
@@ -37,7 +46,7 @@ export default function WaliStudentListPage() {
               Pusat Data Siswa
             </h1>
             <p className="mt-1 text-sm text-prose-dim">
-              Kelola data profil, rapor akademik, dan capaian siswa kelas XI IPA 2
+              Kelola data profil, rapor akademik, dan capaian siswa{wali?.kelas ? ` kelas ${wali.kelas}` : ""}
             </p>
           </div>
 
@@ -117,6 +126,7 @@ export default function WaliStudentListPage() {
         {/* Modal Impor */}
         <WaliImportModal
           isOpen={isImportOpen}
+          kelas={wali?.kelas}
           onClose={() => setIsImportOpen(false)}
           onSuccess={() => {
             reload();

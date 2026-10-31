@@ -1,11 +1,23 @@
 import type {
   WaliDashboardData,
+  WaliTeacherProfile,
   StudentSummary,
   StudentDetail,
 } from "@/types/wali";
 import { delay } from "@/lib/delay";
 
 const mock = () => import("@/mocks/waliMock");
+
+/**
+ * Profil wali kelas yang sedang masuk (kelas, NIP, semester aktif) untuk header.
+ */
+export async function getWaliProfile(): Promise<WaliTeacherProfile> {
+  if (USE_MOCK) {
+    const m = await mock();
+    return m.MOCK_WALI_PROFILE;
+  }
+  throw new Error("Endpoint backend /walikelas/profile belum tersedia.");
+}
 
 /**
  * Mengambil ringkasan dashboard untuk Wali Kelas (KPI, grafik distribusi, tren, dsb.)

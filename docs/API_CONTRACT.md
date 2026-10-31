@@ -31,6 +31,7 @@ diberi catatan lain. Detail tiap baris ada di bagian yang disebut.
 | 12 | Persiapan: Siap SNBP, rasionalisasi, riwayat latihan, bank soal, tryout | 🔴 | Naufal + tim data (bank soal); rumus disetujui tim |
 | 13 | Profil: data diri dari sekolah, hak ubah siswa, nama panggilan/foto/password | 🔴 | Naufal + sekolah |
 | 14 | Akun berlangganan: admin membuat akun, wajib ganti password awal | 🔴 | Naufal |
+| 15 | Portal Wali Kelas: peran `WALI_KELAS`, profil wali, dashboard kelas, daftar dan detail siswa, impor rapor | 🔴 | Naufal |
 
 ---
 
@@ -77,6 +78,12 @@ Hasil pengecekan kode backend (2026-09-28):
 - `GET /ptn/practice/questions` mengirim `answerIndex`.
 - **Dibutuhkan:** soal dikirim tanpa kunci. Penilaian dan pembahasan dikirim oleh backend **setelah** jawaban disubmit (lihat 5.2).
 - **Frontend:** tidak pernah menampilkan kunci sebelum soal disubmit. Halaman pengerjaan hanya menerima soal tanpa kunci; bentuk endpoint pengganti di bagian 12.5–12.6. Sementara `GET /ptn/practice/questions` tidak dipakai.
+- **Update PR #6 (Naufal):** `GET /ptn/practice/questions` sudah tidak mengirim `answerIndex`, tetapi kunci jawaban masih bisa diambil lewat endpoint baru di 1.6.
+
+### 1.6 Endpoint pembuat soal AI terbuka untuk umum 🔴
+- `POST /ptn/practice/generate-ai` (dari PR #6) bisa dipanggil **tanpa login**. Responsnya berisi soal lengkap dengan `answerIndex` dan `explanation`, termasuk soal yang diambil dari arsip bank soal (`master_questions.json`) saat Gemini tidak dipakai. Dengan `saveToBank: true`, siapa pun juga bisa menambah soal ke tabel `QuestionBank`, dan setiap panggilan bisa memakai kuota Gemini.
+- **Dibutuhkan:** `authenticateToken` + `requireRole("ADMIN")` (atau peran tim konten) di endpoint ini. `GET /ptn/practice/blueprints` boleh tetap publik kalau isinya hanya taksonomi tanpa contoh soal berkunci.
+- **Frontend:** tidak memakai endpoint ini.
 
 ---
 
@@ -818,3 +825,24 @@ POST /admin/students/bulk             ← file CSV/Excel: name, email, schoolNam
 - Setelah admin mereset password (bagian 2.5), `mustChangePassword` kembali `true`.
 - **Frontend:** halaman Aktivasi langkah 1. Selama `/auth/me` belum mengirim `mustChangePassword`, langkah ini dilewati di mode backend.
 
+---
+
+## 15. Portal Wali Kelas (`/walikelas`)
+
+Dibuat di PR #7 (akira4n). Sementara hanya berjalan di mode dummy: `frontend/src/services/waliService.ts` memakai `frontend/src/mocks/waliMock.ts`, dan di mode backend setiap fungsi melempar error "Endpoint backend … belum tersedia" (halaman menampilkan pesan gagal memuat). Bentuk data mengikuti `frontend/src/types/wali.ts`.
+
+### 15.1 Peran `WALI_KELAS` 🔴
+- Enum `Role` di `schema.prisma` baru berisi `STUDENT`, `BK_TEACHER`, `ADMIN`. Frontend sudah mengenal `WALI_KELAS` (`types/backend.ts`) dan mengarahkannya ke `/walikelas` setelah masuk.
+- **Dibutuhkan:** tambah `WALI_KELAS` ke enum `Role`, plus relasi wali ↔ kelas (satu wali memegang satu kelas di satu tahun ajaran), supaya setiap endpoint di bawah hanya mengembalikan siswa di kelasnya sendiri (cek kepemilikan, lihat 1.4).
+
+### 15.2 Endpoint yang dibutuhkan 🔴
+Semua wajib `authenticateToken` + `requireRole("WALI_KELAS")`.
+```
+GET  /walikelas/profile        → WaliTeacherProfile   { id, name, nip, kelas, semester, tahunAjaran, avatarUrl?, initials }
+GET  /walikelas/dashboard      → WaliDashboardData    (KPI, distribusi nilai, tren semester, kelengkapan profil, catatan BK)
+GET  /walikelas/students       → StudentSummary[]
+GET  /walikelas/students/:id   → StudentDetail        (404 kalau siswa bukan di kelas wali ini)
+POST /profile/rapor/import-excel  (multipart: file, semester, tahunAjaran) → { "success": true, "count": 36 }
+```
+- `import-excel` sudah ada, tetapi sejak PR #6 hanya untuk `ADMIN` dan `BK_TEACHER`. Kalau wali kelas yang mengimpor rapor, `WALI_KELAS` perlu ditambahkan dan dibatasi ke siswa di kelasnya.
+- `initials` boleh dihitung di frontend dari `name`; kirim `null` untuk kolom yang belum ada, jangan nilai contoh.

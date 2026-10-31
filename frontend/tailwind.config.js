@@ -61,7 +61,9 @@ export default {
           DEFAULT: "#E5E7EB",
           soft: "rgba(0, 0, 0, 0.08)",
         },
-        // Warna status (validasi)
+        // Warna status (validasi, KPI dan status impor portal Wali Kelas)
+        success: "#22C55E",
+        warning: "#F1AD00",
         danger: "#EF4444",
 
         // ── Landing & halaman publik (desain docs/design/landing) ──
@@ -90,7 +92,7 @@ export default {
           "orange-rim": "#FFB066", "orange-ink": "#7A3300", "orange-line": "#FFD2AD",
           "green-bg": "#E3F5EC", "green-fg": "#0A7A45",
           "navy-bg": "#E9ECF4", "navy-fg": "#15234D",
-          "amber-fg": "#8A5A00",
+          "amber-bg": "#FFF1CC", "amber-fg": "#8A5A00",
           // Action Plan: kategori Kedinasan, tanggal terjadwal, dan tanggal hari ini yang dipilih
           "purple-bg": "#EFEBFB", "purple-fg": "#5B3FC4", "purple-dot": "#6B4FD1",
           "amber-soft": "#FFF4D6",
