@@ -21,7 +21,7 @@ const brand = {
 
 // Warna ilustrasi maskot dan planet (dipakai SVG lewat kelas fill-/stroke-/stop-).
 const mascot = {
-  // light/dark/glow dipakai lewat theme() di gradien SVG (MascotFigure, HeroVisual, AuthVideoSlot).
+  // light/dark/glow dipakai lewat theme() di gradien SVG (MascotFigure, AuthVideoSlot).
   light: "#8CC8FF",
   mid: "#1F7BFF",
   dark: "#0445B8",
@@ -128,12 +128,9 @@ export default {
         // Versi horizontal untuk tombol CTA dan progress bar
         "gradient-sun-x": gradientX(brand["sun-1"], brand["sun-2"]),
         "gradient-orbit-x": gradientX(brand["orbit-1"], brand["orbit-2"]),
-        // Latar hero beranda
-        "hero-glow":
-          "radial-gradient(760px 600px at 74% 40%, rgba(9,101,250,0.11), rgba(9,101,250,0) 70%), radial-gradient(420px 320px at 94% 84%, rgba(255,112,0,0.10), rgba(255,112,0,0) 70%), linear-gradient(180deg, #F2F6FF 0%, #FFFFFF 100%)",
-        // Latar Final CTA + footer
-        "night-glow":
-          "radial-gradient(760px 460px at 50% 12%, rgba(9,101,250,0.30), rgba(9,101,250,0) 70%), linear-gradient(180deg, #15234D 0%, #101A33 100%)",
+        // Beranda Fase 10 (docs/design/publik): section Masalah dan garis buku tulis di "Tenang"
+        "masalah-glow": "linear-gradient(180deg, #FFFFFF 0%, #E3EEFB 100%)",
+        "buku-garis": "repeating-linear-gradient(180deg, transparent 0 36px, #DCEBFA 36px 38px)",
         // Panel video auth: desktop (kiri 65%) dan banner HP
         "auth-glow":
           "radial-gradient(620px 520px at 50% 46%, rgba(9,101,250,0.34), rgba(9,101,250,0) 70%), radial-gradient(360px 300px at 82% 82%, rgba(255,112,0,0.12), rgba(255,112,0,0) 70%), linear-gradient(180deg, #15234D 0%, #101A33 100%)",
@@ -146,8 +143,6 @@ export default {
           "radial-gradient(260px 200px at 90% 20%, rgba(9,101,250,0.4), rgba(9,101,250,0) 70%), linear-gradient(140deg, #15234D 0%, #101A33 100%)",
         // Sorotan bidang di kartu ORBIDU Compass
         "compass-soft": "linear-gradient(120deg, #EEF4FF, #E4F6FB)",
-        // Piringan planet di belakang maskot
-        planet: "radial-gradient(circle at 45% 40%, #22397A 0%, #15234D 55%, #0C1530 100%)",
       },
       fontFamily: {
         // Font utama untuk semua teks
@@ -173,10 +168,8 @@ export default {
         soft: "0 16px 36px rgba(16, 26, 51, 0.08)",
         lift: "0 24px 50px rgba(16, 26, 51, 0.12)",
         chip: "0 8px 20px rgba(16, 26, 51, 0.08)",
-        float: "0 8px 22px rgba(16, 26, 51, 0.18)",
         bubble: "0 12px 30px rgba(16, 26, 51, 0.16)",
         sun: "0 14px 30px rgba(255, 112, 0, 0.25)",
-        planet: "0 40px 90px rgba(21, 35, 77, 0.30)",
         // Tombol mode aktif (Masuk/Daftar)
         tab: "0 4px 12px rgba(16, 26, 51, 0.10)",
         // Menu bawah portal di HP
@@ -196,7 +189,6 @@ export default {
         "ob-blink": { "0%, 92%, 100%": { transform: "scaleY(1)" }, "94%": { transform: "scaleY(0.08)" }, "96%": { transform: "scaleY(1)" } },
         "ob-flow": { to: { strokeDashoffset: "-480" } },
         "ob-twinkle": { "0%, 100%": { opacity: "0.3", transform: "scale(0.7)" }, "50%": { opacity: "1", transform: "scale(1.15)" } },
-        "ob-bob": { "0%, 100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-6px)" } },
         "ob-hop": {
           "0%, 55%, 100%": { transform: "translateY(0)" },
           "15%": { transform: "translateY(-18px)" },
@@ -209,7 +201,6 @@ export default {
         "ob-blink": "ob-blink 5.5s infinite",
         "ob-flow": "ob-flow 18s linear infinite",
         "ob-twinkle": "ob-twinkle 4.2s ease-in-out infinite",
-        "ob-bob": "ob-bob 7s ease-in-out infinite",
         "ob-hop": "ob-hop 2.6s ease-in-out infinite",
       },
     },

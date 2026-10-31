@@ -2,16 +2,14 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import HeroSection from "@/components/landing/sections/HeroSection";
 import ProblemSection from "@/components/landing/sections/ProblemSection";
-import KenaliSection from "@/components/landing/sections/KenaliSection";
-import CompassSection from "@/components/landing/sections/CompassSection";
-import JurusanSection from "@/components/landing/sections/JurusanSection";
-import ActionPlanSection from "@/components/landing/sections/ActionPlanSection";
+import TenangSection from "@/components/landing/sections/TenangSection";
+import PerjalananSection from "@/components/landing/sections/PerjalananSection";
 import FaqSection from "@/components/landing/sections/FaqSection";
 import FinalCtaSection from "@/components/landing/sections/FinalCtaSection";
 import { HOME_TITLE } from "@/lib/usePageTitle";
 
 /**
- * Beranda ORBIDU. Urutan section sesuai docs/SPEK_SISWA.md bagian 1.
+ * Beranda ORBIDU (docs/design/publik/Beranda-Desktop.jpg, SPEK bagian 1).
  * Semua teks ada di src/content/landing.ts. Header, footer, dan tombol
  * konsultasi dari PublicLayout.
  */
@@ -22,7 +20,7 @@ export default function LandingPage() {
   }, []);
   const { hash } = useLocation();
 
-  // Dukung tautan /#faq, /#jurusan, dll. (mis. dari footer halaman lain).
+  // Dukung tautan /#faq, /#perjalanan, dll. (mis. dari navbar dan footer).
   useEffect(() => {
     if (!hash) {
       window.scrollTo(0, 0);
@@ -38,10 +36,9 @@ export default function LandingPage() {
     <div className="font-sans text-space-2">
       <HeroSection />
       <ProblemSection />
-      <KenaliSection />
-      <CompassSection />
-      <JurusanSection />
-      <ActionPlanSection />
+      <TenangSection />
+      <PerjalananSection />
+      {/* Sementara di beranda sampai halaman /faq jadi (Tahap 10E). */}
       <FaqSection />
       <FinalCtaSection />
     </div>

@@ -2,20 +2,11 @@ import { BRAND, type WhatsAppTopic } from "@/config/brand";
 import { ROUTES } from "@/config/navigation";
 import { ACCOUNT_ACCESS } from "./common";
 
-// Semua teks beranda, mengikuti desain docs/design/landing/Home-*.dc.html.
+// Semua teks beranda dan kerangka halaman publik, mengikuti desain docs/design/publik.
 // Komponen hanya menampilkan isi file ini; ubah teks di sini, bukan di komponen.
 
 const B = BRAND.name;
 const HI = BRAND.audience;
-
-/** Lima langkah perjalanan, dipakai di chip hero dan badge tiap section. */
-export const STEPS = {
-  potensi: { no: 1, label: "Potensi" },
-  arah: { no: 2, label: "Arah" },
-  pilihan: { no: 3, label: "Pilihan" },
-  persiapan: { no: 4, label: "Persiapan" },
-  langkah: { no: 5, label: "Langkah" },
-} as const;
 
 export const HEADER = {
   /** Tamu: membuka WhatsApp (tidak ada pendaftaran mandiri; desain menulis "Daftar"). */
@@ -43,108 +34,71 @@ export const NAV = {
 };
 
 export const HERO = {
-  greeting: `Hi, ${HI}!`,
-  title: "Setiap siswa punya orbitnya sendiri.",
-  subtitle: "Kenali potensimu, temukan arah pendidikanmu, dan mulai langkahmu menuju tujuan yang ingin kamu capai.",
-  /** Tamu: "Berlangganan" (WhatsApp). Siswa yang sudah masuk: "Buka Portal". */
-  primaryCta: ACCOUNT_ACCESS.subscribe,
+  titleTop: "Temukan potensi diri,",
+  titleBottom: "Raih mimpi sepenuh hati",
+  subtitle: "Platform pendampingan pendidikan terarah bagi siswa SMA untuk mengeksplorasi pilihan terbaik dan mewujudkan masa depan.",
+  /** Tamu: WhatsApp pesan "sekolah". Sudah masuk: "Buka Portal". */
+  primaryCta: "Daftarin Sekolah",
   primaryCtaLoggedIn: "Buka Portal",
-  secondaryCta: `Kenali ${B}`,
-  campusCaption: "Jelajahi program studi dari berbagai kampus di dalam dan luar negeri",
-  /** PLACEHOLDER: logo kampus belum tersedia. */
-  campusLogos: ["[Logo UNSRI]", "[Logo PTN]", "[Logo PTN]", "[Logo PTN]", "[Logo PTLN]", "[Logo PTLN]"],
+  /** Scroll ke section Masalah. */
+  secondaryCta: `Jelajahi ${B}`,
+  schoolAlt: "Ilustrasi gedung sekolah dengan logo beberapa kampus",
 };
 
 export const PROBLEM = {
   title: "Masih bingung harus mulai dari mana?",
-  /** Urutan sama dengan desain. `tone` menentukan warna gelembung. */
+  /** Urutan dan bentuk gelembung sama dengan desain. */
   bubbles: [
-    { text: "“Aku sebenernya gatau punya potensi di bidang apa…”", tone: "blue" },
-    { text: "“Kalau aku suka ini, berarti jurusannya apa?”", tone: "peach" },
-    { text: "“Kalau nanti ternyata nggak cocok gimana?”", tone: "blue" },
-    { text: "“PTN, PTS, Kedinasan, atau PTLN, ya? Kok pilihannya banyak banget...”", tone: "peach" },
-    { text: "“Terus, aku harus siapin apa dulu?”", tone: "blue" },
-    { text: "“Duh... mulai dari mana, ya? :(”", tone: "outline" },
+    { text: "PTN, PTS, Kedinasan, atau PTLN, ya? Kok pilihannya banyak banget...", shape: "box", tail: "right" },
+    { text: "Masih bingung harus mulai dari mana :(", shape: "oval", tail: "right" },
+    { text: "Aku gatau potensi-ku di bidang apa...", shape: "oval", tail: "left" },
+    { text: "Kalau aku suka ini, berarti jurusannya apa yaa?", shape: "box", tail: "left" },
   ] as const,
-  reassurance: `Tenang, ${HI}!`,
-  heading: "Kamu nggak harus punya semua jawabannya sekarang.",
-  body: `${B} membantumu mengenali diri, menemukan arah pendidikan, mengeksplorasi pilihan, dan mengambil langkah yang lebih terarah.`,
-  nextLabel: "Lanjut ke bagian Kenali Dirimu",
 };
 
-export const KENALI = {
-  step: STEPS.potensi,
-  title: "Semuanya dimulai dari mengenal dirimu.",
-  body: "Setiap siswa punya minat, kemampuan, pengalaman, dan hal-hal yang membuatnya unik. Gambaran Minat Bakat membantu kamu mengenali potensi dan hal-hal yang paling menonjol dalam dirimu.",
-  cta: "Kenali Dirimu",
-  profile: { title: "Profil kamu", subtitle: "Kelas X SMA", progressLabel: "Gambaran Minat Bakat", progressValue: "5 dari 7 bagian", progressPct: 71 },
+export const TENANG = {
+  lead: `Tenang ${HI}, ada`,
+  points: ["Membantumu mengenali diri,", "Menemukan arah pendidikan,", "Mengeksplorasi pilihan,", "Mengambil langkah yang lebih terarah"],
+};
+
+export const PERJALANAN = {
+  badge: `Perjalananmu di ${B}`,
+  title: "Dari bingung menjadi lebih yakin",
+  body: "Tiga tahap sederhana untuk membantumu memahami diri, melihat kemungkinan, lalu bergerak dengan rencana yang lebih terarah.",
+  link: "Pelajari tahap ini",
+  /** `to`: tujuan link (lihat useLandingNav: tamu ke Masuk, siswa ke portal). */
   cards: [
-    { key: "minat", title: "Minat", tone: "orange", chips: ["Teknologi", "Desain", "Bisnis"] },
-    { key: "potensi", title: "Potensi", tone: "blue", chips: ["Analitis", "Kreatif", "Problem Solving"] },
-    { key: "kemampuan", title: "Kemampuan", tone: "teal", chips: ["Komunikasi", "Digital", "Data"] },
+    {
+      no: "01",
+      kicker: "Kenali Diri",
+      title: "Temukan kekuatan unikmu",
+      // Desain menyebut "gaya belajar"; tes ORBIDU mengukur minat dan bakat, jadi disesuaikan.
+      body: "Pahami minat, bakat, dan potensimu melalui tes yang terasa ringan dan relevan.",
+      to: "kenali",
+      tone: "blue",
+    },
+    {
+      no: "02",
+      kicker: "Jelajahi Pilihan",
+      title: "Lihat jurusan lebih dekat",
+      body: "Kenali berbagai bidang studi dan hubungkan setiap pilihan dengan dirimu, bukan sekadar tren.",
+      to: "jurusan",
+      tone: "orange",
+    },
+    {
+      no: "03",
+      kicker: "Susun Langkah",
+      title: "Bangun peta perjalananmu",
+      body: "Ubah tujuan besar menjadi langkah-langkah nyata yang dapat kamu mulai dari sekarang.",
+      to: "action-plan",
+      tone: "green",
+    },
   ] as const,
-  reflection: { title: "Refleksi", note: "Hal yang ingin aku kembangkan…" },
 };
 
-export const COMPASS = {
-  step: STEPS.arah,
-  title: "Dari mengenal diri, lalu temukan arahmu.",
-  body: `Kamu punya banyak hal yang membentuk dirimu. ${BRAND.compassName} membantu melihat semuanya sebagai satu kesatuan untuk menemukan pilihan pendidikan yang sesuai untuk kamu eksplorasi. Mulai dari program studi hingga berbagai jalur pendidikan!`,
-  profile: {
-    title: "Profil kamu",
-    rows: [
-      ["Minat", "Teknologi"],
-      ["Potensi", "Analitis"],
-      ["Akademik", "Matematika stabil"],
-      ["Prestasi", "2 lomba"],
-    ] as const,
-  },
-  options: {
-    title: "Pilihan untuk dieksplorasi",
-    badge: "Contoh hasil",
-    badgeShort: "Contoh",
-    items: [
-      { name: "Sistem Informasi", fit: "Sangat sesuai", strong: true, reason: "Karena minat teknologimu kuat dan nilai matematikamu stabil." },
-      { name: "Statistika", fit: "Sesuai", strong: false, reason: "Karena potensi analitismu menonjol." },
-      { name: "Desain Komunikasi Visual", fit: "Sesuai", strong: false, reason: "Karena minat desain dan kemampuan digitalmu." },
-    ] as const,
-  },
-  paths: {
-    title: "Jalur yang bisa ditempuh",
-    items: [
-      { key: "ptn", name: "PTN", desc: "SNBP, SNBT, dan Mandiri" },
-      { key: "pts", name: "PTS", desc: "Seleksi masing-masing kampus" },
-      { key: "kedinasan", name: "Kedinasan", desc: "SKD dan tes lanjutan" },
-      { key: "ptln", name: "PTLN", desc: "Seleksi dan beasiswa luar negeri" },
-    ] as const,
-  },
-};
-
+/** Dipakai kartu jurusan di /jurusan. */
 export const JURUSAN_SECTION = {
-  step: STEPS.pilihan,
-  title: "Lalu, jelajahi pilihanmu.",
-  body: "Kenali apa yang dipelajari di setiap program studi, mapel yang mendukung, dan jalur masuknya sebelum kamu memutuskan.",
-  moreCta: "Lihat Jurusan Lainnya",
-  prevLabel: "Jurusan sebelumnya",
-  nextLabel: "Jurusan berikutnya",
   photoPlaceholder: "Foto jurusan",
-  empty: "Daftar jurusan belum bisa dimuat. Coba muat ulang halaman.",
-};
-
-export const ACTION_PLAN = {
-  step: STEPS.persiapan,
-  title: "Dari menemukan arah, lalu mulai langkahmu.",
-  body: `Setelah menemukan pilihan pendidikan yang sesuai, ${B} membantu kamu menentukan apa yang perlu dipersiapkan dan langkah yang bisa dilakukan untuk mencapainya.`,
-  cta: "Mulai Action Plan",
-  flow: ["Goal", "Langkah", "Prioritas", "Progress"],
-  goal: { label: "Goal", value: "Lolos SNBT di Sistem Informasi" },
-  tasks: [
-    { text: "Pahami struktur soal SNBT", status: "done", label: "Selesai" },
-    { text: "Latihan 20 soal Penalaran Matematika", status: "done", label: "Selesai" },
-    { text: "Ikut Tryout #1 dan bahas hasilnya", status: "high", label: "Prioritas tinggi" },
-    { text: "Perbaiki subtes yang paling lemah", status: "medium", label: "Prioritas sedang" },
-  ] as const,
-  progress: { label: "Progress", value: "2 dari 4 langkah selesai", pct: 50 },
 };
 
 export interface FaqGroup {
@@ -188,25 +142,27 @@ export const FAQ = {
 };
 
 export const FINAL_CTA = {
-  title: `Ready to find your orbit, ${HI}?`,
-  subtitle: "Kenali dirimu. Temukan arahmu. Mulai langkahmu.",
-  hashtag: BRAND.hashtag,
-  cta: `Hadirkan ${B} di Sekolahmu`,
+  kicker: BRAND.tagline,
+  titleTop: "Setiap mimpi punya jalurnya.",
+  titleBottom: `Temukan orbitmu bersama ${B}.`,
+  subtitle: "Mulai dari memahami diri. Bergerak dengan arah. Bertumbuh melalui setiap langkah.",
+  /** Tamu: WhatsApp berlangganan. Sudah masuk: ke portal. */
+  cta: "Mulai Perjalanan",
+  ctaLoggedIn: "Buka Portal",
 };
 
 export type FooterLink = { label: string; to: string } | { label: string; whatsapp: WhatsAppTopic };
 
 export const FOOTER = {
   description: "Smart companion untuk membantu siswa memahami diri, menemukan arah, dan mengambil langkah menuju masa depan.",
-  // Tujuan link Perjalanan mengikuti section beranda; disesuaikan lagi di Tahap 10B.
   // "Untuk Sekolah" ditambahkan di Tahap 10D, "Hubungi Kami" pindah ke /faq di Tahap 10E.
   columns: [
     {
       title: "Perjalanan",
       links: [
-        { label: "Cara kerja", to: `${ROUTES.landing}#kenali` },
-        { label: BRAND.compassName, to: `${ROUTES.landing}#compass` },
-        { label: "Action Plan", to: `${ROUTES.landing}#action-plan` },
+        { label: "Cara kerja", to: `${ROUTES.landing}#tenang` },
+        { label: BRAND.compassName, to: `${ROUTES.landing}#perjalanan` },
+        { label: "Action Plan", to: `${ROUTES.landing}#perjalanan` },
       ],
     },
     {

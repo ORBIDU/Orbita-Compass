@@ -42,17 +42,18 @@ Acuan desain: `docs/design/publik/` (Beranda, Untuk Sekolah, Eksplor Jurusan, La
 - Form "Kirim Pesan" di FAQ dikirim lewat WhatsApp (pesan terisi otomatis) sampai backend punya endpoint pesan (catat di `docs/API_CONTRACT.md`).
 - Tombol **"Ayo konsultasi!"** tetap menempel di pojok kanan bawah semua halaman publik (tidak ada di desain), tidak tampil di Masuk/Aktivasi dan portal.
 - Hero Beranda: dua meteor jatuh diagonal berulang (keluar dari hero lalu muncul lagi dari atas), jeda dan kecepatan berbeda. Semua animasi mati jika `prefers-reduced-motion`.
+- Ilustrasi beranda diambil dari SVG desain ke `frontend/src/assets/publik/` (panel angkasa + meteor sebagai SVG, gedung sekolah + logo kampus sebagai WebP, siswa bingung sebagai SVG). Teks tetap HTML. Gelembung pertanyaan di HP disusun dalam grid di atas ilustrasi.
+- Lebar isi halaman publik mengikuti desain: margin tepi ±3,7% (maks. 64px), lebar isi maks. 1600px (`CONTAINER` di `components/landing/primitives.tsx`).
 
 ### Tahapan
 - [x] 10A — Fondasi: desain disimpan, navbar + menu HP, footer baru, beranda masuk `PublicLayout`.
-- [ ] 10B — Beranda sesuai desain baru (hero terang + meteor, Masalah, "Tenang Bifriends, ada ORBIDU", 3 kartu Perjalanan, CTA penutup).
+- [x] 10B — Beranda sesuai desain baru (hero terang + meteor, Masalah, "Tenang Bifriends, ada ORBIDU", 3 kartu Perjalanan, CTA penutup). Section FAQ lama tetap di beranda sampai `/faq` jadi (10E). Carousel jurusan dan section Kenali/Compass/Action Plan lama dihapus.
 - [ ] 10C — Eksplor Jurusan (`/jurusan`) sesuai desain.
 - [ ] 10D — Untuk Sekolah (`/untuk-sekolah`) dan Latihan Soal (`/latihan-soal`).
 - [ ] 10E — FAQ (`/faq`) dan Hubungi Kami.
 
 ### Aturan lama yang tetap berlaku
-- **Carousel jurusan** digeser dengan tombol panah dan swipe, tanpa scrollbar yang terlihat. Kartu membuka `/jurusan/:slug`.
-- **MascotSlot**: maskot versi SVG. Desktop: mata mengikuti kursor. HP: menoleh ke titik sentuhan. Nanti diganti model 3D tanpa mengubah halaman.
+- **MascotSlot** (hero beranda): maskot versi SVG. Desktop: mata mengikuti kursor. HP: menoleh ke titik sentuhan. Nanti diganti model 3D tanpa mengubah halaman.
 - Nomor WhatsApp, email, Instagram, LinkedIn, dan lokasi bertanda "BELUM DIPASTIKAN" di `brand.ts` wajib dicek sebelum rilis.
 - "Bagaimana cara mendapatkan akun ORBIDU?" dijawab dengan teks `ACCOUNT_ACCESS` yang sama dengan halaman Masuk.
 

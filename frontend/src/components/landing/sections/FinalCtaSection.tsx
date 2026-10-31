@@ -1,70 +1,44 @@
-import { useMemo } from "react";
-import { ArrowRight } from "lucide-react";
 import { FINAL_CTA } from "@/content/landing";
-import { whatsappLink } from "@/config/brand";
-import { makeStars } from "@/lib/stars";
 import MascotFigure from "@/components/mascot/MascotFigure";
-import { CONTAINER, ExternalLink, pillClasses } from "../primitives";
+import { CONTAINER, PillExternal, PillLink } from "../primitives";
+import { useLandingNav } from "../useLandingNav";
 
-const DOTS = [
-  [14, 134],
-  [70, 86],
-  [220, 73],
-  [340, 120],
-  [260, 182],
-];
-
-/** Ajakan penutup di atas latar navy berbintang (footer ada di PublicLayout). */
+/** Ajakan penutup di latar navy dengan garis orbit samar (footer ada di PublicLayout). */
 export default function FinalCtaSection() {
-  const stars = useMemo(() => makeStars(56, 29), []);
+  const { loggedIn, portalTo, subscribeHref } = useLandingNav();
 
   return (
-    <section className="on-dark relative overflow-hidden bg-night-glow py-[72px] lg:py-[110px]">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        {stars.map((s, i) => (
-          <span
-            key={i}
-            className="absolute rounded-full bg-white motion-safe:animate-ob-twinkle"
-            style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.size, height: s.size, opacity: s.opacity, animationDelay: `${s.delay}s` }}
-          />
-        ))}
-      </div>
+    <section className="on-dark relative overflow-hidden bg-gradient-navy py-20 lg:py-32">
+      {/* Garis orbit samar seperti desain */}
+      <svg viewBox="0 0 1728 650" preserveAspectRatio="xMidYMid slice" aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full">
+        <g fill="none" strokeWidth="1.5" className="stroke-night-text [stroke-opacity:0.18]">
+          <ellipse cx="865" cy="330" rx="380" ry="330" />
+          <ellipse cx="1235" cy="290" rx="200" ry="200" />
+          <ellipse cx="490" cy="370" rx="195" ry="195" />
+          <path d="M490 175 L1235 90" />
+          <path d="M490 565 L1235 490" />
+        </g>
+      </svg>
 
-      <div className={`${CONTAINER} relative flex flex-col`}>
-        <div className="flex max-w-[780px] flex-col items-center gap-3.5 self-center text-center lg:gap-[18px]">
-          <svg viewBox="0 0 360 250" aria-hidden="true" className="w-[260px] overflow-visible lg:w-[360px]">
-            <g transform="rotate(-12 180 130)">
-              <ellipse cx="180" cy="130" rx="168" ry="58" fill="none" strokeWidth="1.6" className="stroke-mascot-orbit-soft [stroke-opacity:0.5]" />
-              <ellipse
-                cx="180"
-                cy="130"
-                rx="168"
-                ry="58"
-                fill="none"
-                strokeWidth="2"
-                strokeDasharray="1 23"
-                strokeLinecap="round"
-                className="stroke-white [stroke-opacity:0.55] motion-safe:animate-ob-flow"
-              />
-              {DOTS.map(([cx, cy]) => (
-                <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="6.5" className="fill-sun-1" />
-              ))}
-            </g>
-            <g transform="translate(180 128) scale(0.52) translate(-320 -270)">
-              {/* Seperti desain: maskot menatap ke atas, ke arah judul. */}
-              <MascotFigure ring="solid" lookX={2} lookY={-6} />
-            </g>
-          </svg>
-          <h2 className="text-balance text-[32px] font-bold leading-[1.15] tracking-[-0.6px] text-night-light lg:text-[52px] lg:leading-[1.12] lg:tracking-[-1px]">
-            {FINAL_CTA.title}
-          </h2>
-          <p className="text-[17px] font-medium leading-[1.6] text-night-sub lg:text-xl">{FINAL_CTA.subtitle}</p>
-          <span className="text-sm font-semibold text-sun-2 lg:text-[15px]">{FINAL_CTA.hashtag}</span>
-          <ExternalLink href={whatsappLink("sekolah")} className={pillClasses("sun", "mt-3.5 h-[54px] text-center lg:h-[58px] lg:px-7 lg:text-[17px]")}>
+      <div className={`${CONTAINER} relative flex flex-col items-center gap-4 text-center lg:gap-5`}>
+        <svg viewBox="130 120 380 250" aria-hidden="true" className="h-12 w-[72px] overflow-visible lg:h-14 lg:w-20">
+          <MascotFigure ring="solid" animated={false} />
+        </svg>
+        <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-night-sub lg:text-sm">{FINAL_CTA.kicker}</p>
+        <h2 className="text-balance text-[32px] font-medium leading-[1.15] tracking-[-1px] lg:text-[64px]">
+          <span className="block text-night-light">{FINAL_CTA.titleTop}</span>
+          <span className="block text-sun-2">{FINAL_CTA.titleBottom}</span>
+        </h2>
+        <p className="max-w-[640px] text-base leading-[1.6] text-night-sub lg:text-lg">{FINAL_CTA.subtitle}</p>
+        {loggedIn ? (
+          <PillLink to={portalTo} variant="sun" className="mt-4 h-[54px] lg:px-7">
+            {FINAL_CTA.ctaLoggedIn}
+          </PillLink>
+        ) : (
+          <PillExternal href={subscribeHref} variant="sun" className="mt-4 h-[54px] lg:px-7">
             {FINAL_CTA.cta}
-            <ArrowRight size={20} strokeWidth={2.2} aria-hidden="true" />
-          </ExternalLink>
-        </div>
+          </PillExternal>
+        )}
       </div>
     </section>
   );
