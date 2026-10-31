@@ -4,7 +4,7 @@ import { AuthRequest } from '../middleware/auth';
 
 export const getActionPlans = async (req: AuthRequest, res: Response) => {
   try {
-    if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
+    if (!req.user) return res.status(401).json({ error: 'Unauthorized', code: 'UNAUTHORIZED' });
 
     const profile = await prisma.studentProfile.findUnique({
       where: { userId: req.user.id }
@@ -26,7 +26,7 @@ export const getActionPlans = async (req: AuthRequest, res: Response) => {
 
 export const createActionPlan = async (req: AuthRequest, res: Response) => {
   try {
-    if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
+    if (!req.user) return res.status(401).json({ error: 'Unauthorized', code: 'UNAUTHORIZED' });
 
     const { title, description, category, dueDate, notifyEmail, notifyWa } = req.body;
 
@@ -59,12 +59,22 @@ export const createActionPlan = async (req: AuthRequest, res: Response) => {
   }
 };
 
+// Check Ownership on Toggle Complete (Contract 1.4)
 export const toggleActionPlanComplete = async (req: AuthRequest, res: Response) => {
   try {
-    if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
+    if (!req.user) return res.status(401).json({ error: 'Unauthorized', code: 'UNAUTHORIZED' });
 
     const { id } = req.params;
     const { completed } = req.body;
+
+    const existing = await prisma.actionPlanItem.findUnique({
+      where: { id },
+      include: { profile: true }
+    });
+
+    if (!existing || existing.profile.userId !== req.user.id) {
+      return res.status(404).json({ error: 'Action plan item not found or unauthorized' });
+    }
 
     const updated = await prisma.actionPlanItem.update({
       where: { id },
@@ -78,11 +88,21 @@ export const toggleActionPlanComplete = async (req: AuthRequest, res: Response) 
   }
 };
 
+// Check Ownership on Delete Action Plan (Contract 1.4)
 export const deleteActionPlan = async (req: AuthRequest, res: Response) => {
   try {
-    if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
+    if (!req.user) return res.status(401).json({ error: 'Unauthorized', code: 'UNAUTHORIZED' });
 
     const { id } = req.params;
+
+    const existing = await prisma.actionPlanItem.findUnique({
+      where: { id },
+      include: { profile: true }
+    });
+
+    if (!existing || existing.profile.userId !== req.user.id) {
+      return res.status(404).json({ error: 'Action plan item not found or unauthorized' });
+    }
 
     await prisma.actionPlanItem.delete({
       where: { id }

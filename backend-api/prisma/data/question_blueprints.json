@@ -1,0 +1,1308 @@
+{
+  "skd:TWK": {
+    "category": "skd",
+    "subtest": "TWK",
+    "total_available": 30,
+    "description": "Tes Wawasan Kebangsaan: Mengukur penguasaan materi Pancasila, UUD 1945, NKRI, Bhinneka Tunggal Ika, dan Bela Negara.",
+    "exemplars": [
+      {
+        "question": "Rumusan Pancasila yang sah dan benar disahkan oleh PPKI pada tanggal",
+        "options": [
+          "15 Agustus 1945",
+          "16 Agustus 1945",
+          "18 Agustus 1945",
+          "17 Agustus 1945",
+          "20 Agustus 1945"
+        ],
+        "answerIndex": 2,
+        "explanation": "Rumusan pancasila yang sah dan yang benar disahkan oleh PPKI pada tanggal 18 Agustus 1945. Rumusan Pancasila tersebut terdapat pada pembukaan UUD 1945",
+        "source": "CAT SKD Kedinasan BKN"
+      },
+      {
+        "question": "Nilai-nilai yang terkandung di dalam Pancasila harus mampu mencerminkan kondisi objektif yang sedang berkembang di masyarakat. Pernyataan tersebut merupakan wujud nilai pancasila dari dimensi",
+        "options": [
+          "Kualitas",
+          "Integritas",
+          "Idealitas",
+          "Fleksibilitas",
+          "Realitas"
+        ],
+        "answerIndex": 4,
+        "explanation": "Nilai pancasila harus mampu mencerminkan kondisi objektif yang berkembang di masyarakat sehingga dapat menunjukkan sikap perilaku bangsa Indonesia merupakan wujud nilai pancasila dari dimensi realitas",
+        "source": "CAT SKD Kedinasan BKN"
+      },
+      {
+        "question": "Pengambilan keputusan melalui musyawarah merupakan bentuk pengamalan sila pancasila yang",
+        "options": [
+          "Pertama",
+          "Kedua",
+          "Ketiga",
+          "Keempat",
+          "Kelima"
+        ],
+        "answerIndex": 3,
+        "explanation": "Pengambilan keputusan melalui musyawarah merupakan bentuk pengamalan sila pancasila yang keempat, yaitu sila kerakyatan yang dipimpin oleh hikmat kebijaksanaan dalam permusyawaratan/perwakilan",
+        "source": "CAT SKD Kedinasan BKN"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": false,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "skd:TIU": {
+    "category": "skd",
+    "subtest": "TIU",
+    "total_available": 35,
+    "description": "Tes Intelegensi Umum: Mengukur kemampuan verbal (analogi, silogisme), numerik (berhitung, deret angka, soal cerita), dan figural.",
+    "exemplars": [
+      {
+        "question": "ANGGARAN = …............",
+        "options": [
+          "Keuangan",
+          "Laporan",
+          "Aturan",
+          "Pembelian",
+          "Positif"
+        ],
+        "answerIndex": 2,
+        "explanation": "Anggaran = perkiraan; perhitungan; aturan; taksiran mengenai penerimaan dan pengeluaran kas yang diharapkan untuk periode yang akan datang",
+        "source": "CAT SKD Kedinasan BKN"
+      },
+      {
+        "question": "Nenek : Ibu = ……..... : …….....",
+        "options": [
+          "Paman : kakak",
+          "Ayah : kakek",
+          "Tante : Sepupu",
+          "Bibi : kemenakan",
+          "Ibu : anak"
+        ],
+        "answerIndex": 4,
+        "explanation": "Anak nenek adalah ibu kita, anak ibu adalah anak",
+        "source": "CAT SKD Kedinasan BKN"
+      },
+      {
+        "question": "Air : tempayan = ...… : …….",
+        "options": [
+          "Dagang : deposito",
+          "Padi : sawah",
+          "Bensin : mobil",
+          "Nasi : bakul",
+          "Murid : Sekolah"
+        ],
+        "answerIndex": 3,
+        "explanation": "Tempat menyimpan Air di tempayan, tempat menyimpan nasi di bakul",
+        "source": "CAT SKD Kedinasan BKN"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": false,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "skd:TKP": {
+    "category": "skd",
+    "subtest": "TKP",
+    "total_available": 45,
+    "description": "Tes Karakteristik Pribadi: Mengukur pelayanan publik, jejaring kerja, sosial budaya, TIK, profesionalisme, dan anti-radikalisme.",
+    "exemplars": [
+      {
+        "question": "Anda adalah seorang karyawan apotek. Seorang pembeli ingin membeli obat-obatan tertentu yang harus mengunakan resep dokter karena bisa membahayakan kesehatan. Dia tidak mempunyai resep itu. Namun pembeli tersebut memaksa ingin membelinya dan dia memberikan sejumlah uang kepada anda agar mau memberikan obat tersebut. Sikap Anda adalah",
+        "options": [
+          "Saya memberikan obat tersebut kepadanya, toh tak ada yang tahu",
+          "Saya ragu-ragu keputusan apa yang saya ambil",
+          "Saya berkonsultasi pada rekan sejawat dulu",
+          "Saya menolaknya dengan mantap",
+          "Saya menerima uang tersebut dan memberikan obatnya"
+        ],
+        "answerIndex": 0,
+        "explanation": "Opsi Jawaban Poin A Saya memberikan obat tersebut kepadanya, toh tak ada yang tahu 2 B Saya ragu-ragu keputusan apa yang saya ambil 3 C Saya berkonsultasi pada rekan sejawat dulu 4 D Saya menolaknya dengan mantap 5 E Saya menerima uang tersebut dan memberikan obatnya 1 Soal ini bertujuan untuk mengetahui seberapa besar ketegasan Anda dalam mengikuti prosedur yang berlaku",
+        "source": "CAT SKD Kedinasan BKN"
+      },
+      {
+        "question": "Pesta olahraga antar fakultas tinggal satu minggu lagi. Persiapan Anda agar dapat memenangkan pertandingan adalah",
+        "options": [
+          "Membeli seragam dan perlengkapan baru agar tim tampil lebih percaya diri",
+          "Mengintensifkan latihan bersama pelatih dan tim menggunakan fasilitas yang tersedia saat ini",
+          "Berlatih sendiri tanpa mengikuti jadwal latihan bersama yang sudah disepakati tim",
+          "Menjaga kondisi fisik dengan istirahat cukup dan asupan gizi yang seimbang",
+          "Menyusun strategi bertanding bersama tim berdasarkan hasil evaluasi latihan sebelumnya"
+        ],
+        "answerIndex": 0,
+        "explanation": "Opsi Jawaban Poin A Membeli seragam dan perlengkapan baru agar tim tampil lebih percaya diri 2 B Mengintensifkan latihan bersama pelatih dan tim menggunakan fasilitas yang tersedia saat ini 5 C Berlatih sendiri tanpa mengikuti jadwal latihan bersama yang sudah disepakati tim 1 D Menjaga kondisi fisik dengan istirahat cukup dan asupan gizi yang seimbang 3 E Menyusun strategi bertanding bersama tim berdasarkan hasil evaluasi latihan sebelumnya 4 Waktu persiapan yang tersisa hanya satu minggu sehingga upaya paling realistis adalah mengoptimalkan sumber daya latihan yang sudah tersedia, bukan mengganti unsur pendukung yang justru butuh waktu lebih lama untuk dibangun. Sikap yang fokus pada evaluasi dan penguatan strategi bersama tim mencerminkan profesionalisme dalam mengelola keterbatasan waktu.",
+        "source": "CAT SKD Kedinasan BKN"
+      },
+      {
+        "question": "Ketika Anda melihat mobil menabrak seorang pelajar SD kemudian si pengemudi melarikan diri, sikap Anda adalah",
+        "options": [
+          "Mengambil telepon genggam dan melaporkan SATLANTAS",
+          "Pergi begitu saja sebab akan menghambat pekerjaan dan profesi saya",
+          "Bersedia menjadi saksi, dengan menghafal cirri-ciri kendaraan serta sang pengemudi",
+          "Menyuruh orang yang berada di tempat kejadian agar anak tersebut segera di bawa kerumah sakit",
+          "Mengejar mobil tersebut sampai ketemu"
+        ],
+        "answerIndex": 0,
+        "explanation": "Opsi Jawaban Poin A Mengambil telepon genggam dan melaporkan SATLANTAS 4 B Pergi begitu saja sebab akan menghambat pekerjaan dan profesi saya 1 C Bersedia menjadi saksi, dengan menghafal cirri-ciri kendaraan serta sang pengemudi 5 D Menyuruh orang yang berada di tempat kejadian agar anak tersebut segera di bawa kerumah sakit 3 E Mengejar mobil tersebut sampai ketemu 2 Soal ini bertujuan untuk mengetahui seberapa besar kepedulian Anda terhadap orang lain dan kemauan Anda dalam upaya penegakan hukum",
+        "source": "CAT SKD Kedinasan BKN"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "tka:Ekonomi": {
+    "category": "tka",
+    "subtest": "Ekonomi",
+    "total_available": 49,
+    "description": "Materi evaluasi seleksi untuk subtes Ekonomi tingkat SMA/SMK.",
+    "exemplars": [
+      {
+        "question": "Safia baru saja menyelesaikan pendidikan S1. Setelah lulus kuliah, ia dihadapkan pada tiga pilihan, yaitu bekerja di salah satu perusahaan kolega orang tuanya dengan gaji Rp10.000.000,00 per bulan, menempuh pendidikan S2 di dalam negeri dengan jalur beasiswa dan mendapatkan uang saku sebesar Rp2.000.000,00 setiap bulannya, serta membuka usaha di bidang kuliner yaitu steak tendaan bersama salah satu temannya dengan perkiraan omset sebesar Rp16.000.000,00 per bulan.\nBerapakah jumlah biaya peluang yang dikorbankan oleh Safia apabila ia memilih untuk membuka usaha di bidang kuliner?",
+        "options": [
+          "Rp18.000.000,00.",
+          "Rp16.000.000,00.",
+          "Rp12.000.000,00.",
+          "Rp10.000.000,00.",
+          "Rp2.000.000,00."
+        ],
+        "answerIndex": 3,
+        "explanation": "(D) Rp10.000.000,00.",
+        "source": "TKA Standard (Ekonomi)"
+      },
+      {
+        "question": "Perusahaan minuman sehat “Segar Abadi” mengalami kenaikan harga bahan baku utama seperti jahe, madu, dan lemon akibat gagal panen di daerah penghasil. Jika perusahaan tetap menggunakan bahan yang sama, biaya produksi meningkat dan keuntungan menurun. Namun jika mengganti bahan baku dengan bahan sintetis, harga bisa ditekan, tetapi kualitas produk menurun dan kepercayaan konsumen bisa terganggu.\nBerdasarkan ilustrasi tersebut, manakah tindakan yang paling tepat diambil oleh perusahaan dengan mempertimbangkan prinsip ekonomi?",
+        "options": [
+          "Mencari alternatif bahan baku alami dari daerah lain dengan harga lebih kompetitif.",
+          "Mengganti bahan alami dengan bahan sintetis agar biaya produksi murah dan harga produk tetap.",
+          "Mengurangi produksi agar tidak mengalami kerugian besar sampai harga bahan baku kembali normal.",
+          "Menurunkan kualitas produk untuk menjaga keuntungan dan keberlangsungan perusahaan.",
+          "Menaikkan harga jual dua kali lipat agar perusahaan tetap memperoleh keuntungan dan keberlangsungan usaha tetap terjaga."
+        ],
+        "answerIndex": 0,
+        "explanation": "(A) Mencari alternatif bahan baku alami dari daerah lain dengan harga lebih kompetitif.",
+        "source": "TKA Standard (Ekonomi)"
+      },
+      {
+        "question": "Perusahaan “Adiwastra Jaya” merupakan perusahaan yang memproduksi berbagai macam pakaian jadi dalam jumlah besar sehingga perusahaan tersebut memiliki tenaga kerja yang cukup banyak. Ketika pemerintah menetapkan Kenaikan Upah Minimum Provinsi (UMP) tahun 2025 sebesar 6,5% dari UMP tahun sebelumnya, maka biaya produksi Perusahaan “Adiwastra Jaya” mengalami kenaikan. Kenaikan biaya produksi tersebut akan berdampak pada keseimbangan pasar yaitu ....",
+        "options": [
+          "harga naik dan jumlah barang tetap",
+          "harga naik dan jumlah barang turun",
+          "harga naik dan jumlah barang naik",
+          "harga turun dan jumlah barang naik",
+          "harga turun dan jumlah barang turun"
+        ],
+        "answerIndex": 1,
+        "explanation": "(B) harga naik dan jumlah barang turun",
+        "source": "TKA Standard (Ekonomi)"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "tka:Sejarah": {
+    "category": "tka",
+    "subtest": "Sejarah",
+    "total_available": 39,
+    "description": "Materi evaluasi seleksi untuk subtes Sejarah tingkat SMA/SMK.",
+    "exemplars": [
+      {
+        "question": "Sejarawan R. Moh. Ali mendefinisikan sejarah sebagai ilmu yang menyelidiki perkembangan mengenai peristiwa dan kejadian di masa lampau.\nBerdasarkan pengertian tersebut, apa ciri utama sejarah sebagai ilmu?",
+        "options": [
+          "Disusun berdasarkan kesaksian lisan dari para pelaku",
+          "Mengkaji peristiwa masa lalu secara sistematis dan berdasarkan",
+          "Menyelidiki perubahan dan kesinambungan tradisi dalam",
+          "Mempelajari semua peristiwa yang pernah terjadi di masa lampau.",
+          "Menyusun narasi tentang kejadian di masa lalu berdasarkan imajinasi."
+        ],
+        "answerIndex": 1,
+        "explanation": "(B) Mengkaji peristiwa masa lalu secara sistematis dan berdasarkan",
+        "source": "TKA Standard (Sejarah)"
+      },
+      {
+        "question": "Kerajaan-kerajaan Islam di Indonesia, seperti Demak, Aceh, Mataram Islam, dan Ternate-Tidore, telah memberikan pengaruh besar terhadap perkembangan budaya masyarakat. Pengaruh tersebut tidak hanya tampak dalam sistem pemerintahan dan arsitektur, tetapi juga dalam tradisi, seni pertunjukan, dan upacara keagamaan yang masih dilestarikan hingga kini. Beberapa tradisi dan kesenian yang berkembang pada masa kerajaan Islam tetap hidup sebagai warisan budaya yang terus dipertahankan oleh masyarakat.\nManakah yang merupakan peninggalan budaya dari masa kerajaan Islam yang masih berlanjut di masa kini?\nPilihlah jawaban yang benar! Jawaban benar lebih dari satu.",
+        "options": [
+          "Upacara Kasada",
+          "Tradisi Sekaten",
+          "Tradisi Trabuik",
+          "Wayang Topeng Malangan",
+          "Tari Reog Ponorogo"
+        ],
+        "answerIndex": 1,
+        "explanation": "(B) Tradisi Sekaten | (C )",
+        "source": "TKA Standard (Sejarah)"
+      },
+      {
+        "question": "Sultan Hasanuddin merupakan salah satu penguasa lokal yang tidak mau tunduk pada monopoli dagang VOC sehingga menimbulkan konflik bersenjata selama beberapa tahun. Pada akhirnya VOC berhasil memaksa Sultan Hasanuddin untuk melakukan perundingan di Bongaya pada 18 November 1667. Isi perjanjian tersebut membatasi wilayah kekuasaan Kesultanan Gowa dan memperkuat kedudukan VOC.\nPilihlah Tepat atau Tidak Tepat pada pernyataan berikut yang menggambarkan kondisi konflik GOWA dengan VOC!\n#\nKondisi Konflik Gowa dengan VOC\nTepat\nTidak Tepat",
+        "options": [
+          "",
+          "",
+          ""
+        ],
+        "answerIndex": 0,
+        "explanation": "A (Tepat) | B (Tidak Tepat) | C (Tepat)",
+        "source": "TKA Standard (Sejarah)"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": false,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "tka:PPKN": {
+    "category": "tka",
+    "subtest": "PPKN",
+    "total_available": 49,
+    "description": "Materi evaluasi seleksi untuk subtes PPKN tingkat SMA/SMK.",
+    "exemplars": [
+      {
+        "question": "Sistem pemerintahan Indonesia terbagi antara pemerintah pusat dan pemerintah daerah yang hubungannya diatur sesuai peraturan perundang-undangan. Hubungan ini kerap menimbulkan berbagai tantangan, terutama dalam pelaksanaan otonomi daerah, pembagian anggaran, serta sinkronisasi kebijakan pusat dan daerah.\nBerdasar ilustrasi tersebut, tantangan dari hubungan antara pemerintah pusat dan daerah, yakni….",
+        "options": [
+          "ketidakmampuan pemerintah pusat dalam memenuhi semua kebutuhan anggaran pemerintah daerah",
+          "berbagai kebijakan pemerintah daerah kadangkala tidak sejalan dengan penerapan program nasional",
+          "terbatasnya kewenangan pemerintah pusat dalam mengatur pembagian alokasi anggaran di daerah",
+          "masih belum adanya sinkronisasi ruang lingkup otonomi antara pemerintah pusat dan daerah",
+          "keterbatasan kewenangan dari pemerintah pusat dalam mengawasi pelaksanaan otonomi di daerah"
+        ],
+        "answerIndex": 1,
+        "explanation": "(B) berbagai kebijakan pemerintah daerah kadangkala tidak sejalan dengan penerapan program nasional",
+        "source": "TKA Standard (PPKN)"
+      },
+      {
+        "question": "Sila pertama Pancasila berbunyi “Ketuhanan Yang Maha Esa”. Tentukan Benar (B) atau Salah (S) makna dari sila pertama Pancasila pada pernyataan berikut ini !\n#\nPernyataan\nBenar\nSalah",
+        "options": [
+          "",
+          "",
+          ""
+        ],
+        "answerIndex": 0,
+        "explanation": "A (Salah) | B (Salah) | C (Benar)",
+        "source": "TKA Standard (PPKN)"
+      },
+      {
+        "question": "Masyarakat di seluruh wilayah tanah air Indonesia seharusnya memiliki kesadaran yang sama menjaga keutuhan NKRI, salah satunya dalam bidang pertahanan dan keamanan. Melemahnya peran masyarakat untuk menjaga pertanahan berdampak pada munculnya ancaman yang bisa datang dari dalam maupun luar. Berdasarkan ilustrasi di atas, tentukan alasan pentingnya masyarakat ikut serta dalam menjaga keutuhan NKRI!\nKlik pada setiap pilihan jawaban benar! Jawaban benar lebih dari satu.",
+        "options": [
+          "memperkuat peran masyarakat untuk terlibat dalam mengatur urusan kenegaraan",
+          "membentuk lingkungan yang aman dan tertib untuk menjaga eksistensi NKRI",
+          "menjaga wilayah kedaulatan teritorial NKRI sesuai dengan amanah konstitusi",
+          "meringanan tugas aparat keamanan dalam menjaga ketertiban di wilayahnya",
+          "mengimplementasikan peran masyarakat dalam sistem pertahanan negara"
+        ],
+        "answerIndex": 1,
+        "explanation": "(B) membentuk lingkungan yang aman dan tertib untuk menjaga eksistensi NKRI | (C) menjaga wilayah kedaulatan teritorial NKRI sesuai dengan amanah konstitusi | (E) mengimplementasikan peran masyarakat dalam sistem pertahanan negara",
+        "source": "TKA Standard (PPKN)"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "tka:Sosiologi": {
+    "category": "tka",
+    "subtest": "Sosiologi",
+    "total_available": 50,
+    "description": "Materi evaluasi seleksi untuk subtes Sosiologi tingkat SMA/SMK.",
+    "exemplars": [
+      {
+        "question": "Pandemi COVID-19 yang melanda dunia sejak awal tahun 2020 telah membawa perubahan dalam berbagai aspek kehidupan, termasuk cara kita berinteraksi dan menjaga hubungan sosial. Kebijakan jaga jarak atau physical distancing menjadi norma baru yang wajib dipatuhi, sementara aktivitas tatap muka, termasuk pembelajaran, beralih secara drastis menjadi daring.\nApa yang memungkinkan interaksi sosial tetap terjadi pada masa pandemi meskipun terdapat pembatasan tatap muka secara langsung?",
+        "options": [
+          "Individu memahami teknologi informasi.",
+          "Komunikasi tetap terjalin melalui media daring.",
+          "Semua pihak mengikuti aturan dengan taat.",
+          "Lingkungan sekitar menyediakan jaringan internet.",
+          "Siswa dan guru menggunakan handphone."
+        ],
+        "answerIndex": 1,
+        "explanation": "(B) Komunikasi tetap terjalin melalui media daring.",
+        "source": "TKA Standard (Sosiologi)"
+      },
+      {
+        "question": "Nasionalisme sebagai masyarakat yang lahir di Indonesia muncul pertama kali setelah Indische Partij terbentuk pada 1912. Partai ini melibatkan segala etnis, termasuk Eropa dan peranakan Indo. Kemudian peranakan Indo melebur dengan momentum nasionalisme berikutnya, Sumpah Pemuda 1928. Sumpah Pemuda menjadi ajang persatuan antara peranakan Tionghoa, Arab, dan Indo untuk jati dirinya sebagai orang Indonesia. Peristiwa ini mempertemukan kalangan tersebut untuk mengkampanyekan persatuan. Berangsur-angsur setelah Sumpah Pemuda, berdirilah partai berbasis etnis yang mendukung nasionalisme. Kemudian pergerakan secara etnik perlahan pun melebur dengan kelompok nasionalisme lainnya. Tanpa sekat, dan bermuara pada kemerdekaan Indonesia.\nSumber diadaptasi dari: https://nationalgeographic.grid.id/\nMengapa sumpah pemuda pada kasus tersebut bisa dikategorikan sebagai simbol multikulturalisme?",
+        "options": [
+          "Mencerminkan proses asimilasi nilai dan tujuan budaya-budaya yang berbeda demi menjaga identitas asli setiap etnik.",
+          "Mengakomodasi berbagai etnik dari latar belakang berbeda untuk mendukung penghapusan identitasnya menjadi Indonesia.",
+          "Tedapat dorongan untuk membangun partikularisme melalui partai-partai bernuansa etnik dalam meraih kemerdekaan.",
+          "Bersifat tidak eksklusif untuk satu kelompok etnik melainkan inklusif dan terbuka bagi semua etnik yang hidup di Indonesia.",
+          "Adanya bentuk tuntutan agar etnik yang bergabung turut serta menjadi bagian dari kelompok mayoritas."
+        ],
+        "answerIndex": 3,
+        "explanation": "(D) Bersifat tidak eksklusif untuk satu kelompok etnik melainkan inklusif dan terbuka bagi semua etnik yang hidup di Indonesia.",
+        "source": "TKA Standard (Sosiologi)"
+      },
+      {
+        "question": "Di sebuah desa yang sedang berkembang, hidup dua kelompok masyarakat dengan latar belakang budaya dan kebiasaan yang berbeda, yaitu satu kelompok berasal dari penduduk asli desa dan kelompok lainnya berasal dari warga pendatang. Pada awalnya, hubungan antara kedua kelompok kerap diwarnai kesalahpahaman saat rapat desa, karena perbedaan cara pandang dan nilai-nilai budaya yang dianut. Kondisi ini menimbulkan ketegangan sosial yang menghambat pembangunan desa. Melihat hal ini, tokoh masyarakat menginisiasi kegiatan bersama seperti gotong royong, pelatihan kewirausahaan, dan dialog antarbudaya. Melalui proses ini, kedua kelompok mulai saling memahami, menghargai perbedaan, dan bekerja sama dalam pembangunan desa. Mereka juga sepakat untuk tetap mempertahankan budaya masing-masing, sambil merancang kegiatan budaya bersama yang melibatkan semua warga tanpa membedakan asal-usul.\nBerdasarkan ilustrasi tersebut, bentuk hubungan sosial apakah yang akhirnya terwujud di antara kedua kelompok masyarakat di atas?",
+        "options": [
+          "Asimilasi, karena kedua kelompok membentuk budaya baru dengan menghilangkan perbedaan.",
+          "Kontravensi, karena terjadi perbedaan pandangan meskipun belum sampai pada konflik terbuka.",
+          "Koersi, karena kedua kelompok menyelesaikan konflik dengan dominasi kelompok yang lebih kuat.",
+          "Persaingan, karena masing-masing kelompok tetap mempertahankan identitas budaya secara tertutup.",
+          "Akomodasi, karena terdapat upaya meredakan ketegangan dengan kesepakatan bersama dan saling membantu."
+        ],
+        "answerIndex": 4,
+        "explanation": "(E) Akomodasi, karena terdapat upaya meredakan ketegangan dengan kesepakatan bersama dan saling membantu.",
+        "source": "TKA Standard (Sosiologi)"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "tka:Bahasa Inggris Tingkat Lanjut": {
+    "category": "tka",
+    "subtest": "Bahasa Inggris Tingkat Lanjut",
+    "total_available": 39,
+    "description": "Materi evaluasi seleksi untuk subtes Bahasa Inggris Tingkat Lanjut tingkat SMA/SMK.",
+    "exemplars": [
+      {
+        "question": "AI is increasingly used in various areas of life, including the workplace. While some support this development, others express concern. Below are arguments for and against the use of AI at work.\nSupporters present three main points. First, efficiency and productivity. AI can handle repetitive, monotonous tasks without fatigue, allowing employees to focus on more complex and creative work. This increases output and saves time. Second, better decision- making. AI can analyze vast amounts of data quickly, identifying patterns and trends that help managers make informed, data-driven decisions. This leads to more accurate forecasts, improved employee engagement, and better overall results. Third, learning and development. AI can enhance employee engagement by offering personalized training. AI systems can detect skill gaps and recommend tailored programs, helping employees grow. This benefits both workers—by boosting confidence and capability—and companies—by fostering more skilled, loyal, and satisfied staff.\nCritics, however, raise several concerns. First, job displacement. As AI takes over tasks once handled by humans, there’s growing fear of job loss, causing stress among workers. Second, lack of human touch. Despite its capabilities, AI cannot replicate the empathy, emotional intelligence, and connection offered by human leaders—essential in many roles. Third, ethical and privacy issues. Concerns about data use require clear policies to ensure fairness, transparency, and respect for privacy, maintaining employee trust.\nConclusion: AI should be used in the workplace, but with proper regulations to maximize benefits and minimize risks. A cautious, well- planned approach is essential for the future\nBased on the information given, Which industry sectors are heavily impacted by AI?\nClick the Yes or No option for each statement!\n#\nPernyataan\nYes\nNo",
+        "options": [
+          "",
+          "",
+          ""
+        ],
+        "answerIndex": 0,
+        "explanation": "A (Yes) | B (Yes) | C (No)",
+        "source": "TKA Standard (Bahasa Inggris Tingkat Lanjut)"
+      },
+      {
+        "question": "AI is increasingly used in various areas of life, including the workplace. While some support this development, others express concern. Below are arguments for and against the use of AI at work.\nSupporters present three main points. First, efficiency and productivity. AI can handle repetitive, monotonous tasks without fatigue, allowing employees to focus on more complex and creative work. This increases output and saves time. Second, better decision- making. AI can analyze vast amounts of data quickly, identifying patterns and trends that help managers make informed, data-driven decisions. This leads to more accurate forecasts, improved employee engagement, and better overall results. Third, learning and development. AI can enhance employee engagement by offering personalized training. AI systems can detect skill gaps and recommend tailored programs, helping employees grow. This benefits both workers—by boosting confidence and capability—and companies—by fostering more skilled, loyal, and satisfied staff.\nCritics, however, raise several concerns. First, job displacement. As AI takes over tasks once handled by humans, there’s growing fear of job loss, causing stress among workers. Second, lack of human touch. Despite its capabilities, AI cannot replicate the empathy, emotional intelligence, and connection offered by human leaders—essential in many roles. Third, ethical and privacy issues. Concerns about data use require clear policies to ensure fairness, transparency, and respect for privacy, maintaining employee trust.\nConclusion: AI should be used in the workplace, but with proper regulations to maximize benefits and minimize risks. A cautious, well- planned approach is essential for the future\nParagraph two mainly discussed AI as…",
+        "options": [
+          "a tool to enhance workplace productivity and employee growth.",
+          "the cause of job losses and emotional stress among workers.",
+          "a system that replaces human leaders in decision-making.",
+          "a machine incapable of human empathy and connection.",
+          "the threat to employee’s privacy and data security."
+        ],
+        "answerIndex": 0,
+        "explanation": "(A) a tool to enhance workplace productivity and employee growth.",
+        "source": "TKA Standard (Bahasa Inggris Tingkat Lanjut)"
+      },
+      {
+        "question": "AI is increasingly used in various areas of life, including the workplace. While some support this development, others express concern. Below are arguments for and against the use of AI at work.\nSupporters present three main points. First, efficiency and productivity. AI can handle repetitive, monotonous tasks without fatigue, allowing employees to focus on more complex and creative work. This increases output and saves time. Second, better decision- making. AI can analyze vast amounts of data quickly, identifying patterns and trends that help managers make informed, data-driven decisions. This leads to more accurate forecasts, improved employee engagement, and better overall results. Third, learning and development. AI can enhance employee engagement by offering personalized training. AI systems can detect skill gaps and recommend tailored programs, helping employees grow. This benefits both workers—by boosting confidence and capability—and companies—by fostering more skilled, loyal, and satisfied staff.\nCritics, however, raise several concerns. First, job displacement. As AI takes over tasks once handled by humans, there’s growing fear of job loss, causing stress among workers. Second, lack of human touch. Despite its capabilities, AI cannot replicate the empathy, emotional intelligence, and connection offered by human leaders—essential in many roles. Third, ethical and privacy issues. Concerns about data use require clear policies to ensure fairness, transparency, and respect for privacy, maintaining employee trust.\nConclusion: AI should be used in the workplace, but with proper regulations to maximize benefits and minimize risks. A cautious, well- planned approach is essential for the future\nAccording to the text, as a student who will soon join the workforce, what should you do to compete with AI?\nThere is more than one correct answer. Click on every correct answer!",
+        "options": [
+          "Improve your emotional intelligence",
+          "Avoid industries where AI is widely applied",
+          "Undergo personalized training to close skill gaps",
+          "Switch to jobs with minimal technology involvement",
+          "Focus on tasks that require creativity and complex thinking"
+        ],
+        "answerIndex": 0,
+        "explanation": "(A) Improve your emotional intelligence | (E) Focus on tasks that require creativity and complex thinking",
+        "source": "TKA Standard (Bahasa Inggris Tingkat Lanjut)"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 3,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "tka:Kimia": {
+    "category": "tka",
+    "subtest": "Kimia",
+    "total_available": 44,
+    "description": "Materi evaluasi seleksi untuk subtes Kimia tingkat SMA/SMK.",
+    "exemplars": [
+      {
+        "question": "Seorang siswa melakukan percobaan di laboratorium untuk membuat larutan buffer asam. Ia mencampurkan 20 mL larutan asam asetat 0,1 M dengan 20 mL larutan natrium asetat 0,1 M. Diketahui bahwa tetapan ionisasi asam asetat adalah Ka = 1 × 10⁻⁵.\nBerdasarkan data tersebut, tentukan pH larutan buffer yang terbentuk!",
+        "options": [
+          "5 − log 5",
+          "5",
+          "7",
+          "9",
+          "9 + log 5"
+        ],
+        "answerIndex": 1,
+        "explanation": "(B) 5",
+        "source": "TKA Standard (Kimia)"
+      },
+      {
+        "question": "Salah satu senyawa alkana bercabang digunakan sebagai bahan aditif dalam bahan bakar untuk meningkatkan kualitas pembakaran. Struktur senyawa tersebut ditunjukkan pada gambar berikut.\nBanyaknya atom C primer dan tersier berturut-turut adalah ....",
+        "options": [
+          "5 dan 3",
+          "5 dan 2",
+          "5 dan 1",
+          "4 dan 2",
+          "4 dan1"
+        ],
+        "answerIndex": 2,
+        "explanation": "(C) 5 dan 1",
+        "source": "TKA Standard (Kimia)"
+      },
+      {
+        "question": "Gas nitrogen dioksida yang berwarna merah kecoklatan dapat membentuk reaksi kesetimbangan dengan gas dinitrogen tetraoksida yang tak berwarna dalam suatu wadah tertutup dengan volume tertentu sesuai persamaan termokimia berikut.\n2NO 2( g ) ⇌ N 2O 4( g ) ΔH = –57,20 kJ\n(Merah coklat) (Tak berwarna)\nKetika suhu dinaikkan, warna campuran merah coklat semakin pekat.\nBerdasarkan info dari soal, kelompokkan variabel berikut apakah termasuk ke dalam variabel bebas/terikat/terkontrol!\n#\nVariabel\nVariabel Bebas\nVariabel Terikat\nVariabel Terkontrol",
+        "options": [
+          "",
+          "",
+          ""
+        ],
+        "answerIndex": 0,
+        "explanation": "A (Variabel Terkontrol) | B (Variabel Bebas) | C (Variabel Terikat)",
+        "source": "TKA Standard (Kimia)"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "tka:Matematika": {
+    "category": "tka",
+    "subtest": "Matematika",
+    "total_available": 70,
+    "description": "Materi evaluasi seleksi untuk subtes Matematika tingkat SMA/SMK.",
+    "exemplars": [
+      {
+        "question": "Sebuah hotel memiliki 30 kamar yang tersedia di lantai 5. Manajer operasional mencatat fasilitas kamar tersebut sebagai berikut.\n• 18 kamar memiliki pemandangan ke arah laut.\n• 10 kamar memiliki fasilitas tempat tidur Twin Bed .\n• 6 kamar di antaranya adalah kamar dengan pemandangan laut yang juga memiliki tempat tidur Twin Bed .\n• Sisanya adalah kamar standar yang tidak memiliki pemandangan laut maupun fasilitas Twin Bed .\nJika saat ini semua kamar di lantai tersebut kosong dan resepsionis memilih satu kamar secara acak untuk tamu yang baru datang, berapakah peluang tamu tersebut mendapatkan kamar dengan pemandangan laut atau tempat tidur Twin Bed ?",
+        "options": [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "answerIndex": 2,
+        "explanation": "(C)",
+        "source": "TKA Standard (Matematika)"
+      },
+      {
+        "question": "Dalam sebuah konferensi teknologi, dipaparkan sejumlah data bahwa dalam satu kelompok data yaitu setiap 10 gadget ramah lingkungan yang diproduksi oleh perusahaan X, rata-rata jenisnya adalah sebagai berikut:\n• 4 unit ponsel pintar ( smartphone );\n• 3 unit jam tangan pintar ( smartwatch );\n• 2 unit komputer tablet; dan\n• sisanya adalah unit pelacak lokasi ( smart tag ).\nSeorang petugas quality control memilih 1 unit gadget secara acak dari kelompok data tersebut untuk diuji efisiensi dayanya.\nMana saja pernyataan-pernyataan berikut yang benar terkait nilai peluang terpilihnya jenis gadget tersebut?\nPilihlah semua pernyataan yang benar! Jawaban benar lebih dari satu.",
+        "options": [
+          "Peluang terpilihnya ponsel pintar adalah 40%.",
+          "Peluang terpilihnya gadget bukan komputer tablet adalah 0,2.",
+          "Peluang terpilihnya unit pelacak lokasi adalah",
+          "Peluang terpilihnya gadget bukan jam tangan pintar adalah 70%."
+        ],
+        "answerIndex": 0,
+        "explanation": "(A;D)",
+        "source": "TKA Standard (Matematika)"
+      },
+      {
+        "question": "Harga 3 buah buku dan 2 buah penggaris Rp18.000,00. Jika harga sebuah buku Rp1.000,00 lebih mahal dari sebuah penggaris, harga 2 buah buku dan 5 buah penggaris adalah ....",
+        "options": [
+          "Rp19.000,00",
+          "Rp23.000,00",
+          "Rp25.000,00",
+          "Rp27.000,00",
+          "Rp30.000,00"
+        ],
+        "answerIndex": 1,
+        "explanation": "(B) Rp23.000,00",
+        "source": "TKA Standard (Matematika)"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "tka:Biologi": {
+    "category": "tka",
+    "subtest": "Biologi",
+    "total_available": 48,
+    "description": "Materi evaluasi seleksi untuk subtes Biologi tingkat SMA/SMK.",
+    "exemplars": [
+      {
+        "question": "Paus ( Balaenoptera musculus ) dan ikan hiu ( Carcharodon carcharias ) sama-sama hidup di laut, memiliki sirip dan ekor, serta bentuk tubuh yang lancip di ujung depan dan ujung belakang sehingga efisien untuk berenang. Namun, paus bernapas dengan paru-paru dan menyusui anaknya, sedangkan ikan hiu bernapas dengan insang dan sebagian besar bertelur. Meskipun memiliki bentuk luar yang mirip, dalam sistem klasifikasi keduanya ditempatkan pada kelompok yang berbeda.\nApa prinsip utama yang digunakan dalam pengelompokan tersebut?",
+        "options": [
+          "Kedua makhluk hidup tersebut hidup di ekosistem laut yang berbeda.",
+          "Mereka memiliki peran yang berbeda dalam rantai makanan.",
+          "Pengelompokan didasarkan pada habitat dan perilaku makan.",
+          "Klasifikasi didasarkan pada persamaan dan perbedaan ciri.",
+          "Paus dan ikan hiu memiliki massa tubuh yang berbeda secara alami."
+        ],
+        "answerIndex": 3,
+        "explanation": "(D) Klasifikasi didasarkan pada persamaan dan perbedaan ciri.",
+        "source": "TKA Standard (Biologi)"
+      },
+      {
+        "question": "Seorang wanita datang ke dokter spesialis kandungan berniat memasang IUD ( Intra Uterine Device ). Pemasangan IUD merupakan cara kontrasepsi jangka panjang. IUD berupa alat kecil terdiri dari bahan plastik yang lentur yang dimasukkan ke dalam rongga rahim, yang harus diganti jika sudah digunakan selama periode tertentu.\nTujuan penggunaan IUD ini adalah .... Pilih semua jawaban benar! Jawaban benar lebih dari satu.",
+        "options": [
+          "Mencegah terjadinya fertilisasi dengan mengganggu pergerakan sperma atau mencegah sperma mencapai sel telur.",
+          "Menghentikan kesuburan pada seorang wanita secara permanen sehingga tidak dapat hamil lagi.",
+          "Menghambat proses implantasi hasil pembuahan dengan menciptakan kondisi rahim yang kurang sesuai bagi embrio.",
+          "Menghalangi proses pembuahan dengan mencegah pelepasan sel telur di saluran reproduksi wanita.",
+          "Menurunkan kemampuan sperma dalam membuahi sel telur melalui pengaruh ion tembaga atau hormon pada alat tersebut."
+        ],
+        "answerIndex": 0,
+        "explanation": "(A) Mencegah terjadinya fertilisasi dengan mengganggu pergerakan sperma atau mencegah sperma mencapai sel telur. | (C) Menghambat proses implantasi hasil pembuahan dengan menciptakan kondisi rahim yang kurang sesuai bagi embrio. | (E) Menurunkan kemampuan sperma dalam membuahi sel telur melalui pengaruh ion tembaga atau hormon pada alat tersebut.",
+        "source": "TKA Standard (Biologi)"
+      },
+      {
+        "question": "Masalah gizi di Indonesia saat ini masih sangat kompleks, tidak hanya masalah kekurangan gizi, masalah kelebihan gizi juga menjadi persoalan yang harus ditangani secara serius. Pada anak-anak kondisi stunting (pendek) sering ditemukan disebabkan karena asupan gizi yang tidak sesuai dengan kebutuhan gizinya dalam waktu yang lama. Hal itu terjadi sejak di dalam kandungan dan akan terlihat pada anak berusia 2 tahun, mengakibatkan perkembangan fisik maupun kognitif tidak maksimal, mudah terserang penyakit, serta berdaya saing rendah.\nLangkah pertama untuk memecahkan permasalahan tersebut menggunakan metode ilmiah yang tepat adalah ....",
+        "options": [
+          "mengumpulkan informasi dari berbagai referensi terkait pengaruh faktor gizi terhadap pertumbuhan sebagai dasar untuk mengidentifikasi permasalahan",
+          "merumuskan masalah dengan memperjelas batasan permasalahan yang akan dipecahkan",
+          "melakukan pendataan bagi keluarga yang memiliki anak rendah gizi atau bergizi buruk",
+          "mengadakan sosialisasi program pentingnya makanan bergizi bagi ibu dan anak bagi masyarakat",
+          "pemberian makanan bergizi seimbang bagi seluruh anak balita dan usia anak sekolah dasar"
+        ],
+        "answerIndex": 0,
+        "explanation": "(A) mengumpulkan informasi dari berbagai referensi terkait pengaruh faktor gizi terhadap pertumbuhan sebagai dasar untuk mengidentifikasi permasalahan",
+        "source": "TKA Standard (Biologi)"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "tka:Bahasa Indonesia Tingkat Lanjut": {
+    "category": "tka",
+    "subtest": "Bahasa Indonesia Tingkat Lanjut",
+    "total_available": 39,
+    "description": "Materi evaluasi seleksi untuk subtes Bahasa Indonesia Tingkat Lanjut tingkat SMA/SMK.",
+    "exemplars": [
+      {
+        "question": "PROPOSAL KEGIATAN\nPemanfaatan Teknologi Digital untuk Meningkatkan Daya Saing UKM Pangan Lokal\nDalam beberapa tahun terakhir, perkembangan teknologi digital telah membuka peluang besar bagi pelaku Usaha Kecil dan Menengah (UKM), khususnya di sektor pangan lokal. Namun, banyak UKM yang belum mampu memanfaatkan teknologi secara optimal karena keterbatasan akses informasi, pelatihan, dan pendanaan. Berdasarkan survei yang dilakukan oleh Dinas Koperasi dan UKM Provinsi Jawa Barat pada 2023, hanya 35% UKM pangan yang aktif menggunakan platform digital untuk pemasaran.\nSeiring dengan meningkatnya penggunaan internet dan perangkat digital, konsumen semakin bergeser ke transaksi daring sekitar 60% lebih. Fenomena ini menjadi peluang besar yang belum dimaksimalkan oleh UKM pangan lokal. Misalnya, banyak produk makanan olahan khas daerah memiliki potensi pasar nasional dan bahkan internasional, tetapi belum memiliki strategi pemasaran digital yang memadai. Di sisi lain, persaingan dengan produk pangan dari industri besar dan waralaba semakin ketat, sehingga inovasi digital menjadi kebutuhan mendesak.\nOleh karena itu, kami mengajukan program pelatihan bertema “Digitalisasi UKM Pangan Lokal” yang bertujuan untuk meningkatkan literasi digital, pemahaman e-commerce, serta keterampilan penggunaan dompet digital dan media sosial sebagai sarana promosi. Program ini dirancang untuk menjangkau 50% pelaku UKM di tiga kabupaten, dengan metode blended learning (daring dan luring), serta pendampingan usaha selama 3 bulan.\nProgram ini penting karena teknologi digital tidak hanya memperluas pasar, tetapi juga menekan biaya distribusi, meningkatkan efisiensi, dan mempercepat proses transaksi. Berdasarkan data Bank Indonesia, nilai transaksi e-commerce Indonesia pada 2022 mencapai Rp476 triliun, yang 60% didominasi oleh produk konsumsi rumah tangga, termasuk pangan. Data tersebut menunjukkan adanya kebutuhan akan peningkatan kapasitas pelaku UKM dalam mengakses ekosistem digital.\nDengan adanya pelatihan ini, diharapkan pelaku UKM pangan lokal dapat bersaing secara sehat di pasar digital yang terus berkembang. Usulan program ini akan disampaikan kepada Kementerian Koperasi dan UKM dengan anggaran sebesar Rp450 juta, yang mencakup biaya pelatihan, honor narasumber, pembuatan modul, serta pengembangan platform daring lokal. Program ini juga mendukung Tujuan Pembangunan Berkelanjutan (SDG's), khususnya poin 8 tentang pekerjaan layak dan pertumbuhan ekonomi, serta poin 9 tentang industri, inovasi, dan infrastruktur.\nSumber: www.pusedi.or.id/ecommerce-ukm2022 dengan penyesuaian oleh penulis soal\nDari pernyataan-pernyataan berikut, manakah pernyataan yang mengungkapkan kesesuaian antara usulan program dan data pendukung sesuai teks proposal tersebut?\nTentukan Sesuai atau Tidak Sesuai untuk setiap pernyataan berikut!\n#\nUsulan Program dan Data Pendukung\nSesuai\nTidak Sesuai",
+        "options": [
+          "",
+          "",
+          ""
+        ],
+        "answerIndex": 0,
+        "explanation": "A (Sesuai) | B (Sesuai) | C (Tidak Sesuai)",
+        "source": "TKA Standard (Bahasa Indonesia Tingkat Lanjut)"
+      },
+      {
+        "question": "PROPOSAL KEGIATAN\nPemanfaatan Teknologi Digital untuk Meningkatkan Daya Saing UKM Pangan Lokal\nDalam beberapa tahun terakhir, perkembangan teknologi digital telah membuka peluang besar bagi pelaku Usaha Kecil dan Menengah (UKM), khususnya di sektor pangan lokal. Namun, banyak UKM yang belum mampu memanfaatkan teknologi secara optimal karena keterbatasan akses informasi, pelatihan, dan pendanaan. Berdasarkan survei yang dilakukan oleh Dinas Koperasi dan UKM Provinsi Jawa Barat pada 2023, hanya 35% UKM pangan yang aktif menggunakan platform digital untuk pemasaran.\nSeiring dengan meningkatnya penggunaan internet dan perangkat digital, konsumen semakin bergeser ke transaksi daring sekitar 60% lebih. Fenomena ini menjadi peluang besar yang belum dimaksimalkan oleh UKM pangan lokal. Misalnya, banyak produk makanan olahan khas daerah memiliki potensi pasar nasional dan bahkan internasional, tetapi belum memiliki strategi pemasaran digital yang memadai. Di sisi lain, persaingan dengan produk pangan dari industri besar dan waralaba semakin ketat, sehingga inovasi digital menjadi kebutuhan mendesak.\nOleh karena itu, kami mengajukan program pelatihan bertema “Digitalisasi UKM Pangan Lokal” yang bertujuan untuk meningkatkan literasi digital, pemahaman e-commerce, serta keterampilan penggunaan dompet digital dan media sosial sebagai sarana promosi. Program ini dirancang untuk menjangkau 50% pelaku UKM di tiga kabupaten, dengan metode blended learning (daring dan luring), serta pendampingan usaha selama 3 bulan.\nProgram ini penting karena teknologi digital tidak hanya memperluas pasar, tetapi juga menekan biaya distribusi, meningkatkan efisiensi, dan mempercepat proses transaksi. Berdasarkan data Bank Indonesia, nilai transaksi e-commerce Indonesia pada 2022 mencapai Rp476 triliun, yang 60% didominasi oleh produk konsumsi rumah tangga, termasuk pangan. Data tersebut menunjukkan adanya kebutuhan akan peningkatan kapasitas pelaku UKM dalam mengakses ekosistem digital.\nDengan adanya pelatihan ini, diharapkan pelaku UKM pangan lokal dapat bersaing secara sehat di pasar digital yang terus berkembang. Usulan program ini akan disampaikan kepada Kementerian Koperasi dan UKM dengan anggaran sebesar Rp450 juta, yang mencakup biaya pelatihan, honor narasumber, pembuatan modul, serta pengembangan platform daring lokal. Program ini juga mendukung Tujuan Pembangunan Berkelanjutan (SDG's), khususnya poin 8 tentang pekerjaan layak dan pertumbuhan ekonomi, serta poin 9 tentang industri, inovasi, dan infrastruktur.\nSumber: www.pusedi.or.id/ecommerce-ukm2022 dengan penyesuaian oleh penulis soal\nHubungan koherensi antara paragraf ke-2 dan ke-3 adalah ....",
+        "options": [
+          "alasan pengajuan proposal yang diperinci dengan contoh UKM",
+          "alasan pengajuan program pelatihan yang diperkuat tujuan",
+          "akibat dari maraknya fenomena digitalisasi UKM di daerah",
+          "akibat dari program literasi digital yang disertai tujuan",
+          "alasan pengajuan proposal program dengan persyaratan"
+        ],
+        "answerIndex": 1,
+        "explanation": "(B) alasan pengajuan program pelatihan yang diperkuat tujuan",
+        "source": "TKA Standard (Bahasa Indonesia Tingkat Lanjut)"
+      },
+      {
+        "question": "PROPOSAL KEGIATAN\nPemanfaatan Teknologi Digital untuk Meningkatkan Daya Saing UKM Pangan Lokal\nDalam beberapa tahun terakhir, perkembangan teknologi digital telah membuka peluang besar bagi pelaku Usaha Kecil dan Menengah (UKM), khususnya di sektor pangan lokal. Namun, banyak UKM yang belum mampu memanfaatkan teknologi secara optimal karena keterbatasan akses informasi, pelatihan, dan pendanaan. Berdasarkan survei yang dilakukan oleh Dinas Koperasi dan UKM Provinsi Jawa Barat pada 2023, hanya 35% UKM pangan yang aktif menggunakan platform digital untuk pemasaran.\nSeiring dengan meningkatnya penggunaan internet dan perangkat digital, konsumen semakin bergeser ke transaksi daring sekitar 60% lebih. Fenomena ini menjadi peluang besar yang belum dimaksimalkan oleh UKM pangan lokal. Misalnya, banyak produk makanan olahan khas daerah memiliki potensi pasar nasional dan bahkan internasional, tetapi belum memiliki strategi pemasaran digital yang memadai. Di sisi lain, persaingan dengan produk pangan dari industri besar dan waralaba semakin ketat, sehingga inovasi digital menjadi kebutuhan mendesak.\nOleh karena itu, kami mengajukan program pelatihan bertema “Digitalisasi UKM Pangan Lokal” yang bertujuan untuk meningkatkan literasi digital, pemahaman e-commerce, serta keterampilan penggunaan dompet digital dan media sosial sebagai sarana promosi. Program ini dirancang untuk menjangkau 50% pelaku UKM di tiga kabupaten, dengan metode blended learning (daring dan luring), serta pendampingan usaha selama 3 bulan.\nProgram ini penting karena teknologi digital tidak hanya memperluas pasar, tetapi juga menekan biaya distribusi, meningkatkan efisiensi, dan mempercepat proses transaksi. Berdasarkan data Bank Indonesia, nilai transaksi e-commerce Indonesia pada 2022 mencapai Rp476 triliun, yang 60% didominasi oleh produk konsumsi rumah tangga, termasuk pangan. Data tersebut menunjukkan adanya kebutuhan akan peningkatan kapasitas pelaku UKM dalam mengakses ekosistem digital.\nDengan adanya pelatihan ini, diharapkan pelaku UKM pangan lokal dapat bersaing secara sehat di pasar digital yang terus berkembang. Usulan program ini akan disampaikan kepada Kementerian Koperasi dan UKM dengan anggaran sebesar Rp450 juta, yang mencakup biaya pelatihan, honor narasumber, pembuatan modul, serta pengembangan platform daring lokal. Program ini juga mendukung Tujuan Pembangunan Berkelanjutan (SDG's), khususnya poin 8 tentang pekerjaan layak dan pertumbuhan ekonomi, serta poin 9 tentang industri, inovasi, dan infrastruktur.\nSumber: www.pusedi.or.id/ecommerce-ukm2022 dengan penyesuaian oleh penulis soal\nBerdasarkan teks, manakah argumen yang logis dari pernyataan- pernyataan berikut?\nTentukan Logis atau Tidak Logis untuk setiap argumen berikut!\n#\nArgumen\nLogis\nTidak Logi",
+        "options": [
+          "",
+          "",
+          ""
+        ],
+        "answerIndex": 0,
+        "explanation": "A (Tidak Logi) | B (Logis) | C (Logis)",
+        "source": "TKA Standard (Bahasa Indonesia Tingkat Lanjut)"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 3,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "tka:Fisika": {
+    "category": "tka",
+    "subtest": "Fisika",
+    "total_available": 43,
+    "description": "Materi evaluasi seleksi untuk subtes Fisika tingkat SMA/SMK.",
+    "exemplars": [
+      {
+        "question": "Sebuah kapal bergerak dari pulau A menuju pulau B dengan jarak 10 km. Pulau B berada tepat di sebelah timur pulau A. Diketahui kapal berangkat dari pulau A pada pukul 08.00.\nJika saat itu arus air laut bergerak dari arah barat ke timur dengan kecepatan 2 km.jam -1dan kapal harus sampai tepat pukul 09.00, strategi apa yang harus diterapkan agar kapal datang tepat waktu?",
+        "options": [
+          "Bergerak ke arah timur dengan kecepatan 12 km.jam -1",
+          "Bergerak ke arah tenggara dengan kecepatan 10 km.jam -1.",
+          "Bergerak ke arah barat dengan kecepatan 10 km.jam -1.",
+          "Bergerak ke arah timur laut dengan kecepatan 10 km.jam -1",
+          "Bergerak ke arah timur dengan kecepatan 8 km.jam -1."
+        ],
+        "answerIndex": 4,
+        "explanation": "(E) Bergerak ke arah timur dengan kecepatan 8 km.jam -1 .",
+        "source": "TKA Standard (Fisika)"
+      },
+      {
+        "question": "Uji Coba Mobil\nDi sebuah jalan lurus yang sepi di pinggiran kota, dua sahabat yaitu Rafi dan Dion memutuskan untuk melakukan uji coba mobil mereka. Dua mobil yaitu mobil A dan mobil B berangkat dari titik yang sama secara bersamaan (t = 0) dan ingin mencapai jarak tertentu. Mereka ingin mengetahui mobil mana yang akan sampai tujuan lebih cepat. Kedua mobil tersebut memiliki kombinasi kecepatan awal dan percepatan seperti pada grafik berikut.\nBerdasarkan grafik, kondisi manakah yang menggambarkan gerak dari mobil A dan B?",
+        "options": [
+          "Kecepatan mobil A dan kecepatan mobil B selalu konstan.",
+          "Pada detik ke-5, mobil A dan mobil B berada pada posisi yang sama.",
+          "Mobil A akan menyalip mobil B pada detik ke-5.",
+          "Pada detik ke-5, kecepatan kedua mobil sama.",
+          "Percepatan kedua mobil pada detik ke-5 yaitu 25 m.s -2"
+        ],
+        "answerIndex": 3,
+        "explanation": "(D) Pada detik ke-5, kecepatan kedua mobil sama.",
+        "source": "TKA Standard (Fisika)"
+      },
+      {
+        "question": "Uji Coba Mobil\nDi sebuah jalan lurus yang sepi di pinggiran kota, dua sahabat yaitu Rafi dan Dion memutuskan untuk melakukan uji coba mobil mereka. Dua mobil yaitu mobil A dan mobil B berangkat dari titik yang sama secara bersamaan (t = 0) dan ingin mencapai jarak tertentu. Mereka ingin mengetahui mobil mana yang akan sampai tujuan lebih cepat. Kedua mobil tersebut memiliki kombinasi kecepatan awal dan percepatan seperti pada grafik berikut.\nMobil A akan menyusul mobil B setelah menempuh jarak ....",
+        "options": [
+          "150 m",
+          "200 m",
+          "250 m",
+          "300 m",
+          "400 m"
+        ],
+        "answerIndex": 2,
+        "explanation": "(C) 250 m",
+        "source": "TKA Standard (Fisika)"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "tka:Matematika Tingkat Lanjut": {
+    "category": "tka",
+    "subtest": "Matematika Tingkat Lanjut",
+    "total_available": 36,
+    "description": "Materi evaluasi seleksi untuk subtes Matematika Tingkat Lanjut tingkat SMA/SMK.",
+    "exemplars": [
+      {
+        "question": "Diberikan segitiga pada setengah lingkaran seperti pada gambar berikut.\nKedua sisi segitiga sama dengan jari-jari setengah lingkaran dan titik O merupakan titik pusat lingkaran.\nLuas daerah segitiga dinyatakan dengan dan luas daerah setengah lingkaran dinyatakan dengan dimana nilai .\nSuatu limit fungsi dipetakan sebagai . Bagaimana nilai limit fungsi perbandingan luas tersebut?\nPilihlah semua jawaban benar! Jawaban benar lebih dari satu.",
+        "options": [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "answerIndex": 0,
+        "explanation": "(A) | (C)",
+        "source": "TKA Standard (Matematika Tingkat Lanjut)"
+      },
+      {
+        "question": "Perhatikan matriks berikut!\nInvers dari matrik F adalah ....",
+        "options": [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "answerIndex": 4,
+        "explanation": "(E)",
+        "source": "TKA Standard (Matematika Tingkat Lanjut)"
+      },
+      {
+        "question": "Seorang pemilik Hotel mengelola 3 hotel yang berada pada kota yang berbeda. Hotel tersebut memiliki konsep dan tipe kamar yang sama yaitu Standard Room, Deluxe Room, dan Suite Room, dengan kapasitas dan harga per malam sebagai berikut.\nPemilik hotel akan melakukan perhitungan pendapatan yang diperoleh dari ketiga hotel tersebut. Bagaimana kondisi pendapatan ketiga hotel tersebut dalam 1 hari jika semua tipe kamar terisi penuh? Pilih pada semua jawaban benar! Jawaban benar lebih dari satu.",
+        "options": [
+          "Pendapatan Hotel A dan Hotel C sama besar.",
+          "Pendapatan Hotel B lebih besar daripada Hotel A.",
+          "Pendapatan paling besar diperoleh dari Hotel C.",
+          "Masing-masing hotel memiliki selisih pendapatan yang sama besar.",
+          "Pendapatan yang diperoleh dari ketiga hotel tersebut lebih dari Rp20.000.000."
+        ],
+        "answerIndex": 2,
+        "explanation": "(C) Pendapatan paling besar diperoleh dari Hotel C. | (E) Pendapatan yang diperoleh dari ketiga hotel tersebut lebih dari Rp20.000.000.",
+        "source": "TKA Standard (Matematika Tingkat Lanjut)"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "tka:Bahasa Inggris": {
+    "category": "tka",
+    "subtest": "Bahasa Inggris",
+    "total_available": 45,
+    "description": "Materi evaluasi seleksi untuk subtes Bahasa Inggris tingkat SMA/SMK.",
+    "exemplars": [
+      {
+        "question": "The Lion and the Mouse\nOnce upon a time, in a thick jungle in Africa, there lived a strong and fierce lion. Every afternoon, the lion would rest under the cool shade of a big tree after walking through the forest.One day, while he was sleeping, a playful little mouse passed by. The mouse saw the lion ’s thick mane and was curious. He climbed up and began to jump around on the lion ’s head, playing in his mane.The lion woke up suddenly and was not happy at all. He quickly caught the mouse in his big paw and roared, “Who dares to wake me up?”He was very angry and almost killed the mouse.Scared and shaking, the mouse begged the lion, “Please don ’t kill me! I didn ’t mean to bother you. If you let me go, I promise I ’ll help you one day.”The lion laughed loudly. “You? Help me? That ’s funny.”But the lion was feeling kind, so he let the mouse go free.A few days later, the lion was walking through the jungle again when he fell into a trap. A net set by hunters caught him, and he couldn ’t escape. He tried to bite and tear the ropes, but they were too strong. The lion roared loudly, hoping someone would come.The mouse heard the roar and ran to help. He saw the lion trapped and quickly started to chew the ropes with his sharp teeth. After some time, the net broke, and the lion was free.The lion looked at the mouse with surprise and said, “Thank you! You really saved my life.”The mouse smiled and said, “I told you I would help you one day.”From that moment on, the lion and the mouse became close friends. The lion learned that even small creatures can do great things, and we all need help sometimes.\nSource:https://www.vedantu.com/stories/the-lion-and-the-mouse\nWhich option best summarizes the story?",
+        "options": [
+          "Beginning:A lion was walking through the jungle.Problem:The mouse got lost and couldn't find food.Solution:The lion gave food to the mouse.Lesson:Always be generous to those in need.",
+          "Beginning:A mouse accidentally disturbed a sleeping lion.Problem:The lion was caught in a hunter ’s net.Solution:The mouse chewed through the net and set the lion free.Lesson:Even the smallest creature can be a great help.",
+          "Beginning:The lion and mouse were best friends.Problem:The lion got hurt in a fight.Solution:The mouse helped him find water.Lesson:Friendship is built on adventure.",
+          "Beginning:A mouse was building a home near a tree.Problem:A storm destroyed the tree and trapped the lion.Solution:The mouse called for help from the jungle.Lesson:Teamwork solves big problems.",
+          "Beginning:A lion was hungry and searching for food.Problem:He couldn ’t catch any prey.Solution:The mouse helped him find food.Lesson:Hunger teaches humility."
+        ],
+        "answerIndex": 1,
+        "explanation": "(B) Beginning: A mouse accidentally disturbed a sleeping lion. Problem: The lion was caught in a hunter’s net. Solution: The mouse chewed through the net and set the lion free. Lesson: Even the smallest creature can be a great help.",
+        "source": "TKA Standard (Bahasa Inggris)"
+      },
+      {
+        "question": "The Lion and the Mouse\nOnce upon a time, in a thick jungle in Africa, there lived a strong and fierce lion. Every afternoon, the lion would rest under the cool shade of a big tree after walking through the forest.One day, while he was sleeping, a playful little mouse passed by. The mouse saw the lion ’s thick mane and was curious. He climbed up and began to jump around on the lion ’s head, playing in his mane.The lion woke up suddenly and was not happy at all. He quickly caught the mouse in his big paw and roared, “Who dares to wake me up?”He was very angry and almost killed the mouse.Scared and shaking, the mouse begged the lion, “Please don ’t kill me! I didn ’t mean to bother you. If you let me go, I promise I ’ll help you one day.”The lion laughed loudly. “You? Help me? That ’s funny.”But the lion was feeling kind, so he let the mouse go free.A few days later, the lion was walking through the jungle again when he fell into a trap. A net set by hunters caught him, and he couldn ’t escape. He tried to bite and tear the ropes, but they were too strong. The lion roared loudly, hoping someone would come.The mouse heard the roar and ran to help. He saw the lion trapped and quickly started to chew the ropes with his sharp teeth. After some time, the net broke, and the lion was free.The lion looked at the mouse with surprise and said, “Thank you! You really saved my life.”The mouse smiled and said, “I told you I would help you one day.”From that moment on, the lion and the mouse became close friends. The lion learned that even small creatures can do great things, and we all need help sometimes.\nSource:https://www.vedantu.com/stories/the-lion-and-the-mouse\nWhich of the following statements best conveys the message of the story?There is more than one answer. Click on every correct answer!",
+        "options": [
+          "We should never wake up a sleeping animal",
+          "Even the small and weak can help the strong",
+          "It ’s always good to ask for help when we need it",
+          "Lions are dangerous animals and should be avoided",
+          "Never trust anyone who plays with your hair"
+        ],
+        "answerIndex": 1,
+        "explanation": "(B) Even the small and weak can help the strong | (C) It’s always good to ask for help when we need it",
+        "source": "TKA Standard (Bahasa Inggris)"
+      },
+      {
+        "question": "The Lion and the Mouse\nOnce upon a time, in a thick jungle in Africa, there lived a strong and fierce lion. Every afternoon, the lion would rest under the cool shade of a big tree after walking through the forest.One day, while he was sleeping, a playful little mouse passed by. The mouse saw the lion ’s thick mane and was curious. He climbed up and began to jump around on the lion ’s head, playing in his mane.The lion woke up suddenly and was not happy at all. He quickly caught the mouse in his big paw and roared, “Who dares to wake me up?”He was very angry and almost killed the mouse.Scared and shaking, the mouse begged the lion, “Please don ’t kill me! I didn ’t mean to bother you. If you let me go, I promise I ’ll help you one day.”The lion laughed loudly. “You? Help me? That ’s funny.”But the lion was feeling kind, so he let the mouse go free.A few days later, the lion was walking through the jungle again when he fell into a trap. A net set by hunters caught him, and he couldn ’t escape. He tried to bite and tear the ropes, but they were too strong. The lion roared loudly, hoping someone would come.The mouse heard the roar and ran to help. He saw the lion trapped and quickly started to chew the ropes with his sharp teeth. After some time, the net broke, and the lion was free.The lion looked at the mouse with surprise and said, “Thank you! You really saved my life.”The mouse smiled and said, “I told you I would help you one day.”From that moment on, the lion and the mouse became close friends. The lion learned that even small creatures can do great things, and we all need help sometimes.\nSource:https://www.vedantu.com/stories/the-lion-and-the-mouse\nWhy did the lion trust the mouse and decide to let him go instead of eating him?",
+        "options": [
+          "The lion was too tired to eat the mouse",
+          "The mouse told the lion he might help him one day",
+          "The lion was felling happy to see the mouse",
+          "The lion heard someone coming and got scared",
+          "The mouse promised to bring food for the lion"
+        ],
+        "answerIndex": 1,
+        "explanation": "(B) The mouse told the lion he might help him one day",
+        "source": "TKA Standard (Bahasa Inggris)"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "tka:Antropologi": {
+    "category": "tka",
+    "subtest": "Antropologi",
+    "total_available": 40,
+    "description": "Materi evaluasi seleksi untuk subtes Antropologi tingkat SMA/SMK.",
+    "exemplars": [
+      {
+        "question": "Seorang murid melakukan observasi terhadap komunitas adat yang masih melakukan ritual panen secara turun-temurun. Komunitas tersebut juga menolak teknologi pertanian modern karena dianggap mengganggu keseimbangan alam dan leluhur.\nManakah dari pernyataan berikut yang mencerminkan penerapan prinsip-prinsip dasar Antropologi yang dapat diterapkan oleh murid tersebut?\n#\nPernyataan\nTepat\nTidak Tepat",
+        "options": [
+          "",
+          "",
+          ""
+        ],
+        "answerIndex": 0,
+        "explanation": "A (Tepat) | B (Tidak Tepat) | C (Tepat)",
+        "source": "TKA Standard (Antropologi)"
+      },
+      {
+        "question": "Buku etnografi dengan judul Tempat Terbaik di Dunia mengisahkan kehidupan sehari-hari warga yang tinggal di kolong jembatan Jakarta, sebuah komunitas marginal yang kerap luput dari perhatian publik. Penulis buku tersebut, Roanne van Voorst, seorang antropolog asal Belanda, tinggal bersama komunitas ini selama beberapa waktu sebagai bagian dari penelitian lapangannya.\nMelalui pendekatan partisipatif dan observasi mendalam, Roanne merekam dinamika sosial, cara bertahan hidup, nilai kekeluargaan, solidaritas, serta harapan-harapan yang tumbuh di tengah kemiskinan ekstrem. Meski hidup dalam keterbatasan dan ancaman penggusuran, para penghuni kolong jembatan tidak memandang tempat tinggal mereka sebagai \"neraka\", melainkan sebagai tempat terbaik di dunia , karena di sanalah mereka menemukan komunitas, identitas, dan makna hidup.\n( Sumber: Nurcahyono, Okta Hadi. 2021. Buku murid Antropologi untuk Kelas SMA XI. Jakarta: Pusat Perbukuan Badan Standar, Kurikulum, dan Asesmen Pendidikan Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi)\nPenelitian sebagaimana dijelaskan di atas merupakan jenis penelitian etnografis. Manakah dari pernyataan berikut yang sesuai dengan prinsip-prinsip dasar penelitian tersebut?",
+        "options": [
+          "Membaur dengan masyarakat dan mengikuti kegiatan sehari- hari warga yang tinggal di kolong jembatan Jakarta.",
+          "Menggunakan pendekatan observasi partisipatif untuk memahami praktik budaya secara langsung dari komunitas marjinal di Jakarta tersebut.",
+          "Melakukan wawancara dengan aparat desa saja agar tidak mengganggu praktik sosial warga.",
+          "Mencatat secara rinci dengan observasi mendalam makna simbolik dari praktik dinamika sosial, cara bertahan hidup, dan nilai kekeluargaan.",
+          "Menghindari keterlibatan langsung karena peneliti harus menjaga jarak objektif dengan cara ke perpustakaan."
+        ],
+        "answerIndex": 0,
+        "explanation": "(A) Membaur dengan masyarakat dan mengikuti kegiatan sehari- hari warga yang tinggal di kolong jembatan Jakarta. | (B) Menggunakan pendekatan observasi partisipatif untuk memahami praktik budaya secara langsung dari komunitas marjinal di Jakarta tersebut. | (D) Mencatat secara rinci dengan observasi mendalam makna simbolik dari praktik dinamika sosial, cara bertahan hidup, dan nilai kekeluargaan.",
+        "source": "TKA Standard (Antropologi)"
+      },
+      {
+        "question": "Masyarakat multikultural terdiri atas beragam suku, ras, agama, dan budaya, seperti masyarakat Indonesia yang dikenal kaya akan keberagaman.\nManakah contoh penerapan keberagaman masyarakat multikultural yang tepat dalam kehidupan sehari-hari?",
+        "options": [
+          "Tokoh masyarakat menjalankan tradisi lokal sesuai dengan budaya daerahnya.",
+          "Masyarakat adat mengadakan upacara adat sesuai dengan kebiasaan nenek moyang.",
+          "Masyarakat mengenakan pakaian batik dalam peringatan Hari Batik Nasional.",
+          "Warga melakukan kegiatan jual beli di pasar tradisional setiap hari.",
+          "Umat dari agama lain ikut membantu saat perayaan hari besar keagamaan suatu agama."
+        ],
+        "answerIndex": 4,
+        "explanation": "(E) Umat dari agama lain ikut membantu saat perayaan hari besar keagamaan suatu agama.",
+        "source": "TKA Standard (Antropologi)"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 3,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "tka:Geografi": {
+    "category": "tka",
+    "subtest": "Geografi",
+    "total_available": 39,
+    "description": "Materi evaluasi seleksi untuk subtes Geografi tingkat SMA/SMK.",
+    "exemplars": [
+      {
+        "question": "Perhatikan gambar tangkapan citra satelit berikut!\nberdasarkan tangkapan citra satelit tersebut, seorang kepala daerah mengidentifikasi terdapatnya indikasi banjir pada wilayah yang berbatasan dengan laut.\nBerdasarkan informasi tersebut, seorang peneliti akan menindaklanjuti permasalahan tersebut. Rumusan masalah manakah yang tepat?",
+        "options": [
+          "Bagaimana pengaruh bencana terhadap perekonomian penduduk?",
+          "Apa saja jenis-jenis bencana alam yang berdampak luas terhadap masyarakat?",
+          "Bagaimana hubungan antara pasang air laut dengan topografi wilayah?",
+          "Mengapa siswa perlu mengetahui pentingnya menjaga lingkungan secara berkelanjutan?",
+          "Bagaimana bentuk mitigasi bencana beserta dengan contohnya yang konkret di sekolah?"
+        ],
+        "answerIndex": 0,
+        "explanation": "(A) Bagaimana pengaruh bencana terhadap perekonomian penduduk? | (C) Bagaimana hubungan antara pasang air laut dengan topografi wilayah?",
+        "source": "TKA Standard (Geografi)"
+      },
+      {
+        "question": "Danau Bandung Purba\nDanau Bandung purba terbentuk sekitar 125.000 tahun lalu ketika material erupsi Gunung Sunda membendung aliran Sungai Citarum Purba. Kedalaman rata-rata danau Bandung Purba saat itu sekitar 20-30 meter. Peristiwa gempa bumi dan longsor akibat erosi di antara Curug Cukangrahong dan Curug Halimun sekitar 16.000 tahun lalu berakibat air danau ini mengalir ke utara. Dampaknya adalah air danau mulai terkuras kemudian membuat bentang lahan Cekungan Bandung menjadi rawa dan berangsur-angsur mengering. Danau Bandung Purba juga menjadi wilayah yang dihuni oleh manusia sejak lama dengan ditemukan adanya perkakas obsidian yang tersebar di sekitarnya.\nTentukan apakah pernyataan tentang fenomena Bandung Purba terkait aktivitas manusia berikut Benar atau Salah !\n#\nPernyataan\nBenar\nSalah",
+        "options": [
+          "",
+          "",
+          ""
+        ],
+        "answerIndex": 0,
+        "explanation": "A (Benar) | B (Benar) | C (Salah)",
+        "source": "TKA Standard (Geografi)"
+      },
+      {
+        "question": "Studi Kasus Abrasi Pantai Demak\nSumber: googlemap.com\nKawasan pesisir di Desa Bedono, Kabupaten Demak, Jawa Tengah, mengalami abrasi parah sejak tahun 1990-an akibat kombinasi faktor alami dan aktivitas manusia (lihat gambar). Sekitar 6 km² daratan tenggelam, memaksa ratusan keluarga meninggalkan rumah mereka. Kerusakan ini diperparah oleh konversi hutan mangrove menjadi tambak udang tanpa mempertimbangkan daya dukung lingkungan. Data Dinas Lingkungan Hidup tahun 2022 mencatat bahwa hanya sekitar 20% dari luasan mangrove awal yang masih bertahan, menyebabkan kerusakan ekosistem pesisir dan memperparah risiko bencana.\nSejak 2015, berbagai upaya rehabilitasi dilakukan oleh pemerintah daerah, LSM, dan masyarakat setempat. Program restorasi mangrove ditargetkan menanam kembali 150.000 bibit mangrove hingga tahun 2025. Selain itu, dikembangkan konsep ekowisata berbasis konservasi, di mana masyarakat diberdayakan sebagai pengelola kawasan wisata edukasi mangrove. Hasil awal monitoring tahun 2023 menunjukkan bahwa 65% dari bibit mangrove yang ditanam berhasil tumbuh, mengurangi kecepatan abrasi rata-rata sebesar 10% per tahun di beberapa titik kritis. Program ini juga meningkatkan pendapatan tambahan masyarakat hingga 20% melalui sektor ekowisata.\nTentukan fakta berikut ini Benar atau Salah terkait keberlanjutan pengelolaan SDA berdasarkan prinsip konservasi dan restorasi lingkungan!\n#\nFakta\nBenar\nSalah",
+        "options": [
+          "",
+          "",
+          ""
+        ],
+        "answerIndex": 0,
+        "explanation": "A (Salah) | B (Benar) | C (Benar)",
+        "source": "TKA Standard (Geografi)"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "tka:Bahasa Indonesia": {
+    "category": "tka",
+    "subtest": "Bahasa Indonesia",
+    "total_available": 45,
+    "description": "Materi evaluasi seleksi untuk subtes Bahasa Indonesia tingkat SMA/SMK.",
+    "exemplars": [
+      {
+        "question": "Tradisi Buwuhan: Antara Gotong Royong dan Utang Piutang\nTradisi buwuhan merupakan bagian dari budaya masyarakat Jawa, khususnya di kota-kota besar seperti Surabaya. Tradisi ini dilakukan ketika ada acara penting seperti pernikahan atau khitanan yang diadakan di daerah tersebut. Buwuhan merujuk pada kegiatan memberi bantuan, baik berupa barang, uang, maupun tenaga kepada seseorang yang sedang mengadakan hajatan, atau bisa juga disebut sebagai kegiatan menyumbang. Tradisi ini mencerminkan nilai gotong royong dan solidaritas sosial karena keluarga dan tetangga saling bahu-membahu dalam membantu sesama.Namun, praktik buwuhan tidak lepas dari unsur pertukaran atau dipandang sebagai utang. Masyarakat meyakini bahwa segala bentuk bantuan yang diberikan akan kembali dalam bentuk yang setara ketika si pemberi mengadakan hajatan serupa. Hal ini menyebabkan buwuhan tidak lagi dipandang murni sebagai hibah atau sedekah, tetapi sebagai bentuk \"utang tidak tertulis\" yang menimbulkan kewajiban moral untuk membalas.Dalam praktiknya, buwuhan memang meringankan beban tuan rumah, tetapi dapat menimbulkan tekanan psikologis bagi penerima bantuan. Rasa malu dan kekhawatiran kehilangan harga diri mendorong sebagian orang untuk berutang demi mengembalikan buwuhan. Hal ini menyebabkan terbaginya cara pandang terhadap buwuhan. Ada yang melihatnya sebagai bentuk tolong-menolong, tetapi ada juga yang justru menganggapnya menjadi sistem utang piutang berbasis sosial. Sebagian pihak berpendapat bahwa buwuhan adalah hibah karena tujuannya adalah untuk membantu. Namun, apabila ada keharusan pengembalian, maka secara hukum dan etika, buwuhan telah bergeser dari semangat gotong royong menjadi sebuah kewajiban ekonomi yang membebani. Oleh karena itu, pemahaman masyarakat terhadap tradisi buwuhan perlu diluruskan agar nilai luhur tolong-menolong tetap terjaga tanpa menimbulkan beban yang tidak perlu.\nSumber:Rachmawati, S. A., & Anwar, M. K. (2021). Budaya dan Tradisi Buwuh sebagai Utang Piutang dalam Adat Pernikahan di Kota Surabaya. Jurnal Ekonomika dan Bisnis Islam, 4(3), hl 69 –83.\nApa makna katahajatanpada teks tersebut?",
+        "options": [
+          "Kegiatan kerja bakti membersihkan lingkungan sekitar.",
+          "Pertemuan rutin warga untuk membahas masalah lingkungan.",
+          "Diskusi keluarga besar untuk menentukan pembagian warisan.",
+          "Permohonan bantuan yang dilakukan tuan rumah kepada tetangga.",
+          "Acara atau pesta yang diadakan untuk memperingati hal penting."
+        ],
+        "answerIndex": 4,
+        "explanation": "(E) Acara atau pesta yang diadakan untuk memperingati hal penting.",
+        "source": "TKA Standard (Bahasa Indonesia)"
+      },
+      {
+        "question": "Tradisi Buwuhan: Antara Gotong Royong dan Utang Piutang\nTradisi buwuhan merupakan bagian dari budaya masyarakat Jawa, khususnya di kota-kota besar seperti Surabaya. Tradisi ini dilakukan ketika ada acara penting seperti pernikahan atau khitanan yang diadakan di daerah tersebut. Buwuhan merujuk pada kegiatan memberi bantuan, baik berupa barang, uang, maupun tenaga kepada seseorang yang sedang mengadakan hajatan, atau bisa juga disebut sebagai kegiatan menyumbang. Tradisi ini mencerminkan nilai gotong royong dan solidaritas sosial karena keluarga dan tetangga saling bahu-membahu dalam membantu sesama.Namun, praktik buwuhan tidak lepas dari unsur pertukaran atau dipandang sebagai utang. Masyarakat meyakini bahwa segala bentuk bantuan yang diberikan akan kembali dalam bentuk yang setara ketika si pemberi mengadakan hajatan serupa. Hal ini menyebabkan buwuhan tidak lagi dipandang murni sebagai hibah atau sedekah, tetapi sebagai bentuk \"utang tidak tertulis\" yang menimbulkan kewajiban moral untuk membalas.Dalam praktiknya, buwuhan memang meringankan beban tuan rumah, tetapi dapat menimbulkan tekanan psikologis bagi penerima bantuan. Rasa malu dan kekhawatiran kehilangan harga diri mendorong sebagian orang untuk berutang demi mengembalikan buwuhan. Hal ini menyebabkan terbaginya cara pandang terhadap buwuhan. Ada yang melihatnya sebagai bentuk tolong-menolong, tetapi ada juga yang justru menganggapnya menjadi sistem utang piutang berbasis sosial. Sebagian pihak berpendapat bahwa buwuhan adalah hibah karena tujuannya adalah untuk membantu. Namun, apabila ada keharusan pengembalian, maka secara hukum dan etika, buwuhan telah bergeser dari semangat gotong royong menjadi sebuah kewajiban ekonomi yang membebani. Oleh karena itu, pemahaman masyarakat terhadap tradisi buwuhan perlu diluruskan agar nilai luhur tolong-menolong tetap terjaga tanpa menimbulkan beban yang tidak perlu.\nSumber:Rachmawati, S. A., & Anwar, M. K. (2021). Budaya dan Tradisi Buwuh sebagai Utang Piutang dalam Adat Pernikahan di Kota Surabaya. Jurnal Ekonomika dan Bisnis Islam, 4(3), hl 69 –83.\nManakah gagasan yang mendukung ide pokok bahwa buwuhan adalah bentuk utang?",
+        "options": [
+          "Praktik buwuhan disertai dengan perjanjian utang piutang secara tertulis.",
+          "Buwuhan disertai kesepakatan untuk selalu memberi lebih dari yang diterima.",
+          "Bentuk buwuhan dapat berupa sedekah atau hibah yang harus dibayar kembali.",
+          "Buwuhan dilakukan oleh tetangga dan kerabat sebagai bentuk pertukaran solidaritas.",
+          "Penerima buwuhan merasa harus mengembalikan bantuan yang diterima di kemudian hari."
+        ],
+        "answerIndex": 4,
+        "explanation": "(E) Penerima buwuhan merasa harus mengembalikan bantuan yang diterima di kemudian hari.",
+        "source": "TKA Standard (Bahasa Indonesia)"
+      },
+      {
+        "question": "Tradisi Buwuhan: Antara Gotong Royong dan Utang Piutang\nTradisi buwuhan merupakan bagian dari budaya masyarakat Jawa, khususnya di kota-kota besar seperti Surabaya. Tradisi ini dilakukan ketika ada acara penting seperti pernikahan atau khitanan yang diadakan di daerah tersebut. Buwuhan merujuk pada kegiatan memberi bantuan, baik berupa barang, uang, maupun tenaga kepada seseorang yang sedang mengadakan hajatan, atau bisa juga disebut sebagai kegiatan menyumbang. Tradisi ini mencerminkan nilai gotong royong dan solidaritas sosial karena keluarga dan tetangga saling bahu-membahu dalam membantu sesama.Namun, praktik buwuhan tidak lepas dari unsur pertukaran atau dipandang sebagai utang. Masyarakat meyakini bahwa segala bentuk bantuan yang diberikan akan kembali dalam bentuk yang setara ketika si pemberi mengadakan hajatan serupa. Hal ini menyebabkan buwuhan tidak lagi dipandang murni sebagai hibah atau sedekah, tetapi sebagai bentuk \"utang tidak tertulis\" yang menimbulkan kewajiban moral untuk membalas.Dalam praktiknya, buwuhan memang meringankan beban tuan rumah, tetapi dapat menimbulkan tekanan psikologis bagi penerima bantuan. Rasa malu dan kekhawatiran kehilangan harga diri mendorong sebagian orang untuk berutang demi mengembalikan buwuhan. Hal ini menyebabkan terbaginya cara pandang terhadap buwuhan. Ada yang melihatnya sebagai bentuk tolong-menolong, tetapi ada juga yang justru menganggapnya menjadi sistem utang piutang berbasis sosial. Sebagian pihak berpendapat bahwa buwuhan adalah hibah karena tujuannya adalah untuk membantu. Namun, apabila ada keharusan pengembalian, maka secara hukum dan etika, buwuhan telah bergeser dari semangat gotong royong menjadi sebuah kewajiban ekonomi yang membebani. Oleh karena itu, pemahaman masyarakat terhadap tradisi buwuhan perlu diluruskan agar nilai luhur tolong-menolong tetap terjaga tanpa menimbulkan beban yang tidak perlu.\nSumber:Rachmawati, S. A., & Anwar, M. K. (2021). Budaya dan Tradisi Buwuh sebagai Utang Piutang dalam Adat Pernikahan di Kota Surabaya. Jurnal Ekonomika dan Bisnis Islam, 4(3), hl 69 –83.\nHubungan makna paragraf kedua dan ketiga adalah ….",
+        "options": [
+          "perbedaan jenis buwuhan berdasarkan jenis acara yang dilangsungkan",
+          "penjelasan sebab dan akibat dari perbedaan pandangan mengenai buwuhan",
+          "penjelasan dampak buruk dari adanya pandangan buwuhan sebagai sedekah",
+          "perbedaan tata cara buwuhan pada beberapa kelurahan atau desa di Surabaya",
+          "penjelasan hubungan hukum agama dengan pengertian masyarakat terhadap buwuhan"
+        ],
+        "answerIndex": 1,
+        "explanation": "(B) penjelasan sebab dan akibat dari perbedaan pandangan mengenai buwuhan",
+        "source": "TKA Standard (Bahasa Indonesia)"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "snbt:Literasi Bahasa Indonesia": {
+    "category": "snbt",
+    "subtest": "Literasi Bahasa Indonesia",
+    "total_available": 42,
+    "description": "Menguji kemampuan menganalisis teks kompleks (fiksi & nonfiksi), menyimpulkan tema, tone penulis, dan argumen tersirat.",
+    "exemplars": [
+      {
+        "question": "Gambaran karakter tokoh aku yang sesuai dengan isi bacaan adalah ...",
+        "options": [
+          "mudah membaca keadaan lingkungan dan sifat-sifat orang di sekelilingnya sehingga m tokoh aku\nsangat disegani oleh kawannya",
+          "peduli dengan teman-temanya hingga mengetahui latar belakang, jalan pikiran, bahkan\nkarakteristik mereka secara detail",
+          "berkarisma dan berjiwa besar ketika mengayomi suatu perkumpulan untuk memperjuangkan hakhak masyarakat",
+          "lebih peduli orang lain dan seringkali menjadi penengah jika terjadi suatu permasalahan di lingkup\nterdekatnya",
+          "menyukai hal-hal yang rapi, bersih, tertata, dan penuh makna terutama ketika menikmati karyakarya orang lain"
+        ],
+        "answerIndex": 0,
+        "explanation": "Memahami dan merespons lingkungan dengan cepat.",
+        "source": "UTBK Asli BPPP Kemdikbud 2024"
+      },
+      {
+        "question": "Tindakan tokoh yang menggambarkan ungkapan 'bercita-cita merekam dunia' adalah...",
+        "options": [
+          "melakukan kegiatan pengamatan kondisi sekitar secara diam-diam",
+          "merekam kondisi sekitar yang menghabiskan beberapa rol film",
+          "membayangkan merekam setiap sudut sekitar yang menarik hatinya untuk disimpan",
+          "mendokumentasikan setiap peristiwa yang ada di sekitar secara rutin",
+          "memotret setiap detail kondisi sekitar secara rinci dan berulang untuk mencapai kepuasan diri"
+        ],
+        "answerIndex": 3,
+        "explanation": "Dari pernyataan Alex yang \"selalu berbicara dengan kameranya\" dan \"sekali jadi: hasilnya amat jitu dan tajam\", serta\naktivitasnya yang memotret \"setiap pojok, setiap jengkal lantai\", ini menggambarkan pendekatan yang sistematis dan\nberulang dalam mendokumentasikan setiap peristiwa dan detail di sekitarnya. Ini mencerminkan dedikasi terhadap\nmendokumentasikan atau merekam dunia di sekitarnya secara menyeluruh.\nOleh karena itu, jawaban yang lebih akurat berdasarkan deskripsi tindakan Alex adalah:\n(D) Mendokumentasikan setiap peristiwa yang ada di sekitar secara rutin.",
+        "source": "UTBK Asli BPPP Kemdikbud 2024"
+      },
+      {
+        "question": "Respons tokoh aku terhadap penilaian orang tentang rumah yang akan dijadikan sekretariat organisasi\nadalah:",
+        "options": [
+          "teman-temannya memiliki keahlian dalam mendesain ulang ruangan yang tidak terawat",
+          "tempat tersebut masih sangat layak dijadikan sebagai tempat musyawarah orang banyak",
+          "lokasi rumah yang jauh dari keramaian strategis untuk dijadikan sekretariat organisasi",
+          "hal terpenting dari rumah adalah bisa dijadikan ruang berkumpul dan berdiskusi terkait\npenyusunan strategi",
+          "rumah yang kurang layak itu satu-satunya tempat aman yang mampu mereka sewa dengan harga\nmurah"
+        ],
+        "answerIndex": 3,
+        "explanation": "Dari bacaan yang diberikan sebelumnya, tokoh \"aku\" dan rekan-rekannya melihat potensi ruangan yang besar di\nrumah tersebut untuk kegiatan organisasi mereka. Tokoh \"aku\" secara aktif mengusulkan penggunaan ruangan\ntersebut untuk diskusi dan kegiatan administratif, yang menunjukkan bahwa ia melihat ruangan tersebut sebagai\ntempat yang layak untuk berkumpul dan berdiskusi.\nOleh karena itu, pilihan jawaban yang paling mencerminkan pandangan tokoh \"aku\" berdasarkan deskripsi\nsebelumnya adalah:\n(D) hal terpenting dari rumah adalah bisa dijadikan ruang berkumpul dan berdiskusi terkait penyusunan strategi.\nPilihan ini secara langsung menggambarkan fokus tokoh \"aku\" pada kegunaan praktis rumah sebagai tempat untuk\nkegiatan organisasi dan perencanaan strategis, yang sesuai dengan cara ia menilai potensi ruangan tersebut.",
+        "source": "UTBK Asli BPPP Kemdikbud 2024"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": false,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "snbt:Literasi Bahasa Inggris": {
+    "category": "snbt",
+    "subtest": "Literasi Bahasa Inggris",
+    "total_available": 59,
+    "description": "Menguji pemahaman teks bahasa Inggris akademis, communicative purpose, main idea, specific details, vocabulary in context, and author's attitude.",
+    "exemplars": [
+      {
+        "question": "Which of the following is the issue stated at the beginning of the thread?",
+        "options": [
+          "Getting tickets for K-pop concert",
+          "Selling K-pop concert tickets",
+          "Buying tickets after they are sold out",
+          "Being new to the K-pop industry",
+          "Watching K-pop concerts in Korea"
+        ],
+        "answerIndex": 0,
+        "explanation": "Jawaban yang benar adalah A. Getting tickets for K-pop concert. Mallory bertanya tentang cara membeli tiket konser\nK-pop sebelum mereka habis terjual, yang menunjukkan bahwa masalah utamanya adalah mendapatkan tiket\ntersebut sebelum kehabisan.",
+        "source": "UTBK Asli BPPP Kemdikbud 2024"
+      },
+      {
+        "question": "Brianna responds to Mallory's post in order to...",
+        "options": [
+          "Warn her that she will probably not get tickets",
+          "Explain how to buy tickets directly on the Internet",
+          "Suggest buying tickets using professional services",
+          "Describe the website where she can buy the tickets",
+          "Argue the importance of being able to pay for the tickets"
+        ],
+        "answerIndex": 0,
+        "explanation": "Dalam tanggapan Brianna terhadap pos Mallory, Brianna memberikan instruksi dan saran terperinci tentang\nbagaimana Mallory dapat membeli tiket konser K-pop secara online. Brianna menekankan pentingnya memiliki\ninformasi yang benar tentang tiket, memilih jenis tiket yang diinginkan, dan memastikan telah log in atau membuat\nakun di situs web sebelum melakukan pembelian.\nOleh karena itu, jawaban yang paling sesuai adalah: B. Explain how to buy tickets directly on the Internet.\nJawaban ini cocok karena Brianna secara eksplisit menjelaskan prosedur pembelian tiket secara online, daripada\nhanya menggambarkan situs web, menyarankan layanan profesional, atau membahas pentingnya pembayaran tiket.",
+        "source": "UTBK Asli BPPP Kemdikbud 2024"
+      },
+      {
+        "question": "Who explains the challenge of buying K-pop concert tickets by giving evidence?",
+        "options": [
+          "Brianna",
+          "PhillipG",
+          "Elena",
+          "Ishi",
+          "Jun"
+        ],
+        "answerIndex": 0,
+        "explanation": "Dalam percakapan yang ada, Elena menjelaskan tantangan membeli tiket konser K-pop dengan memberikan bukti\nberdasarkan pengalamannya yang sulit dan frustasi. Dia menggambarkan upayanya dalam membeli tiket sebagai\nsangat menantang karena situs web terus mengalami crash ketika ia mencoba memperbarui halaman untuk membeli\ntiket.\nJadi, jawaban yang benar adalah C. Elena.",
+        "source": "UTBK Asli BPPP Kemdikbud 2024"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": false,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "snbt:Pemahaman Bacaan dan Menulis": {
+    "category": "snbt",
+    "subtest": "Pemahaman Bacaan dan Menulis",
+    "total_available": 30,
+    "description": "Menguji kelogisan susunan wacana, ejaan (PUEBI/EYD V), tanda baca, konjungsi, dan kalimat efektif.",
+    "exemplars": [
+      {
+        "question": "1Pakar media sosial menyebutkan, kita sedang berada di era revolusi keempat. 2[...],\nsecara fundamental banyak hal mengubah cara kita hidup, bekerja, dan berhubungan satu sama\nlain. 3Revolusi yang dibangun di atas revolusi digital yang berinti perangkat keras, perangkat lunak,\nserta jaringan computer semakin mengagumkan dan terintegrasi. 4Hari-hari ini kita berada dalam\nzeitgeist (roh jaman) digital. 5Gawai yang menyandang aplikasi berbasis digital semakin sulit\ndilepaskan dari genggaman kita. 6Alat ini memungkinkan kita untuk senantiasa terhubung dengan\ninternet dan jejaring sosial sehingga mentransformasikan kehidupan. 7Kita semakin akrab dengan\nkreator konten dari berbagai platform. 8Jika pada awalnya kita adalah pengguna, penikmat media\nsosial, seiring potensi melakukan monetisasi untuk menghasilkan uang dari dunia maya, sebagian\nbertransformasi menjadi pembuat konten.\nKalimat yang isinya sama dengan kalimat (8)?",
+        "options": [
+          "Jika pada awalnya kita adalah pengguna atau penikmat media sosial, bersamaan potensi\nmelakukan monetisasi untuk menghasilkan uang, kemudian sebagian bertransformasi\nmenjadi pembuat konten.",
+          "Jika pada awalnya kita adalah pengguna atau penikmat media sosial, seiring potensi\nmelakukan monetisasi untuk menghasilkan uang, karena itu sebagian mengalami\ntransformasi menjadi pembuat konten.",
+          "Jika pada awalnya kita adalah pengguna atau penikmat media sosial, sebagian mengalami\ntransformasi menjadi pembuat konten, seiring potensi melakukan monetisasi untuk\nmenghasilkan uang.",
+          "Pada awalnya kita adalah pengguna atau penikmat media sosial, seiring potensi melakukan\nmonetisasi yang menghasilkan uang, maka sebagian bertransformasi sebagai pembuat\nkonten.",
+          "Pada awalnya kita adalah pengguna atau penikmat media sosial, bersamaan potensi\nmelakukan monetisasi yang menghasilkan uang, maka sebagian bertransformasi sebagai\npembuat konten."
+        ],
+        "answerIndex": 0,
+        "explanation": "Berpengaruh; kejadian - \"Berpengaruh\" cocok untuk menggambarkan pengaruh atau efek mangrove, tapi\n\"kejadian\" tidak tepat menggambarkan ancaman spesifik seperti gelombang atau badai.",
+        "source": "UTBK Asli BPPP Kemdikbud 2024"
+      },
+      {
+        "question": "1Pakar media sosial menyebutkan, kita sedang berada di era revolusi keempat. 2[...],\nsecara fundamental banyak hal mengubah cara kita hidup, bekerja, dan berhubungan satu sama\nlain. 3Revolusi yang dibangun di atas revolusi digital yang berinti perangkat keras, perangkat lunak,\nserta jaringan computer semakin mengagumkan dan terintegrasi. 4Hari-hari ini kita berada dalam\nzeitgeist (roh jaman) digital. 5Gawai yang menyandang aplikasi berbasis digital semakin sulit\ndilepaskan dari genggaman kita. 6Alat ini memungkinkan kita untuk senantiasa terhubung dengan\ninternet dan jejaring sosial sehingga mentransformasikan kehidupan. 7Kita semakin akrab dengan\nkreator konten dari berbagai platform. 8Jika pada awalnya kita adalah pengguna, penikmat media\nsosial, seiring potensi melakukan monetisasi untuk menghasilkan uang dari dunia maya, sebagian\nbertransformasi menjadi pembuat konten.\n\nPenulisan kata bercetak tebal yang salah terdapat pada kalimat nomor…",
+        "options": [
+          "Kalimat (1)",
+          "Kalimat (2)",
+          "Kalimat (3)",
+          "Kalimat (4)",
+          "Kalimat (5)"
+        ],
+        "answerIndex": 0,
+        "explanation": "Berefek; akibat - \"Berefek\" juga menggambarkan pengaruh mangrove, namun \"akibat\" lebih sering digunakan\nuntuk menyebut hasil dari suatu peristiwa, bukan sebagai antisipasi atau perlindungan.",
+        "source": "UTBK Asli BPPP Kemdikbud 2024"
+      },
+      {
+        "question": "1Pakar media sosial menyebutkan, kita sedang berada di era revolusi keempat. 2[...],\nsecara fundamental banyak hal mengubah cara kita hidup, bekerja, dan berhubungan satu sama\nlain. 3Revolusi yang dibangun di atas revolusi digital yang berinti perangkat keras, perangkat lunak,\nserta jaringan computer semakin mengagumkan dan terintegrasi. 4Hari-hari ini kita berada dalam\nzeitgeist (roh jaman) digital. 5Gawai yang menyandang aplikasi berbasis digital semakin sulit\ndilepaskan dari genggaman kita. 6Alat ini memungkinkan kita untuk senantiasa terhubung dengan\ninternet dan jejaring sosial sehingga mentransformasikan kehidupan. 7Kita semakin akrab dengan\nkreator konten dari berbagai platform. 8Jika pada awalnya kita adalah pengguna, penikmat media\nsosial, seiring potensi melakukan monetisasi untuk menghasilkan uang dari dunia maya, sebagian\nbertransformasi menjadi pembuat konten.\nKata hubung yang paling tepat untuk melengkapi kalimat (2) adalah ...",
+        "options": [
+          "padahal",
+          "akan tetapi",
+          "namun",
+          "sebaliknya",
+          "bahkan"
+        ],
+        "answerIndex": 0,
+        "explanation": "Berimbas; bencana - \"Berimbas\" menggambarkan efek langsung, dan \"bencana\" adalah kata yang tepat untuk\nancaman besar, tetapi fokus lebih kepada dampak daripada perlindungan preventif.",
+        "source": "UTBK Asli BPPP Kemdikbud 2024"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "snbt:Penalaran Umum": {
+    "category": "snbt",
+    "subtest": "Penalaran Umum",
+    "total_available": 71,
+    "description": "Menguji kemampuan berpikir induktif, deduktif, dan kuantitatif dalam menganalisis informasi baru secara kritis dan logis.",
+    "exemplars": [
+      {
+        "question": "Semua peternak sapi yang menjadi juara lomba peternakan sehat memiliki pemahaman nutrisi ternak sapi sesuai\njenisnya.\nBeberapa peternak sapi yang memiliki pemahaman nutrisi sesuai jenis sapi mampu mengidentifikasi varietas sapi lebih\nbaik daripada peternak lain.\nBerdasarkan informasi di atas, manakah simpulan berikut yang PALING BENAR?",
+        "options": [
+          "Sebagian peternak sapi perah bukan peternak sapi yang menjadi juara lomba peternak sehat.",
+          "Sebagian peternak sapi yang menjadi juara lomba peternakan sehat memiliki pemahaman nutrisi ternak sapi\nsesuai jenisnya.",
+          "Sebagian peternak sapi yang memiliki pemahaman terhadap nutrisi sapi sesuai jenisnya adalah peternak sapi\nperah.",
+          "Sebagian peternak sapi yang menjadi juara lomba peternakan sehat mampu mengidentifikasi varietas sapi lebih\nbaik daripada peternak lain.",
+          "Sebagian peternak yang memiliki pemahaman terhadap nutrisi sapi sesuai jenisnya tidak mampu\nmengidentifikasi varietas sapi lebih baik daripada peternak lain."
+        ],
+        "answerIndex": 0,
+        "explanation": "2.",
+        "source": "UTBK Asli BPPP Kemdikbud 2024"
+      },
+      {
+        "question": "Semua penari tradisional di pentas seni di Kota X memiliki keterampilan memainkan gamelan.\nBeberapa penari yang terampil memainkan gamelan mampu menyanyikan lagu daerah lebih baik dari penari lain.\nBerdasarkan informasi di atas, manakah simpulan berikut yang PALING BENAR?",
+        "options": [
+          "Sebagian penari tradisional di pentas seni di Kota X mampu menyanyikan lagu daerah lebih baik daripada penari\nlain.",
+          "Sebagian penari yang memiliki keterampilan memainkan gamelan juga menjadi penari latar.",
+          "Sebagian penari tradisional di pentas seni di Kota X memiliki keterampilan memainkan gamelan.",
+          "Sebagian penari yang menjadi penari latar bukan penari tradisional di pentas seni di Kota X.",
+          "Sebagian penari yang memiliki keterampilan memainkan gamelan tidak mampu menyanyikan lagu daerah lebih\nbaik daripada penari lain."
+        ],
+        "answerIndex": 0,
+        "explanation": "Jawaban yang tepat untuk nomor 2 adalah opsi A.",
+        "source": "UTBK Asli BPPP Kemdikbud 2024"
+      },
+      {
+        "question": "Jika hasil karya akan dipajang pada pameran bulan depan, karya tersebut terdiri dari setidaknya lima bahan baku lokal,\npernah diikutkan dalam lomba, dan menjadi ikon di kota asalnya.\nJika sebuah karya mengandung tiga bahan baku lokal, belum pernah diikutkan dalam kompetisi, dan belum dikenal oleh\nmasyarakat setempat, manakah simpulan yang BENAR?",
+        "options": [
+          "Karya tersebut adalah karya yang kreatif.",
+          "Karya tersebut perlu diikutkan dalam lomba.",
+          "Karya tersebut tidak dipajang pada pameran bulan mendatang.",
+          "Karya tersebut hemat bahan baku.",
+          "Karya tersebut perlu disosialisasikan kepada masyarakat."
+        ],
+        "answerIndex": 0,
+        "explanation": "4.",
+        "source": "UTBK Asli BPPP Kemdikbud 2024"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "snbt:Pengetahuan dan Pemahaman Umum": {
+    "category": "snbt",
+    "subtest": "Pengetahuan dan Pemahaman Umum",
+    "total_available": 28,
+    "description": "Menguji kemampuan memahami ide pokok, makna istilah kontekstual, bentuk kata, serta relasi semantik dalam bahasa Indonesia.",
+    "exemplars": [
+      {
+        "question": "1Berdasarkan sejarahnya, nasi goreng bermula dari kebiasaan masyarakat Tionghoa yang tidak\nsuka menyantap makanan dingin. 2Karena tidak boleh membuang sisa makanan, mereka\nmenggoreng nasi yang sudah dingin dengan tambahan bahan dan bumbu sehinga dikenal sebagai\nnasi goreng. 3Nasi goreng lalu tersebar ke wilayah Asia Tenggara karena dibawa oleh perantauperantau Tionghoa yang menetap di sana. 4Mereka kemudian membuat nasi goreng yang khas\ndengan bumbu dan cara menggoreng yang berbeda.\n5\n\nSeiring dengan berjalannya waktu, nasi goreng lebih dikenal sebagai makanan khas\nIndonesia. 6Perbedaan nasi goreng Indonesia dengan nasi goreng di Tiongkok adalah penggunaan\nkecap manis. 7Hal ini membuat [...] nasi goreng Indonesia identik dengan warna coklat yang [...]\nselera. 8Di samping itu, nasi goreng Indonesia juga lebih banyak mengandung rempah dan\nbumbu. 9Penggunaan bawang putih, bawang merah, cabai, bahkan terasi membuat makanan ini\nmemiliki cita rasa Nusantara yang cukup kental.\nKalimat yang mengandung makna lain dari yang tertulis adalah....",
+        "options": [
+          "kalimat 1",
+          "kalimat 2",
+          "kalimat 4",
+          "kalimat 5",
+          "kalimat 6"
+        ],
+        "answerIndex": 0,
+        "explanation": "(1) Pohon kemiri sebagai pohon dengan manfaat berlimpah dan mudah dibudidayakan.",
+        "source": "UTBK Asli BPPP Kemdikbud 2024"
+      },
+      {
+        "question": "1Berdasarkan sejarahnya, nasi goreng bermula dari kebiasaan masyarakat Tionghoa yang tidak\nsuka menyantap makanan dingin. 2Karena tidak boleh membuang sisa makanan, mereka\nmenggoreng nasi yang sudah dingin dengan tambahan bahan dan bumbu sehinga dikenal sebagai\nnasi goreng. 3Nasi goreng lalu tersebar ke wilayah Asia Tenggara karena dibawa oleh perantauperantau Tionghoa yang menetap di sana. 4Mereka kemudian membuat nasi goreng yang khas\ndengan bumbu dan cara menggoreng yang berbeda.\n5\n\nSeiring dengan berjalannya waktu, nasi goreng lebih dikenal sebagai makanan khas\nIndonesia. 6Perbedaan nasi goreng Indonesia dengan nasi goreng di Tiongkok adalah penggunaan\nkecap manis. 7Hal ini membuat [...] nasi goreng Indonesia identik dengan warna coklat yang [...]\nselera. 8Di samping itu, nasi goreng Indonesia juga lebih banyak mengandung rempah dan\nbumbu. 9Penggunaan bawang putih, bawang merah, cabai, bahkan terasi membuat makanan ini\nmemiliki cita rasa Nusantara yang cukup kental.\nKata yang tepat untuk menyimpulkan situasi dalam bacaan tersebut adalah ...",
+        "options": [
+          "optimis",
+          "kreatif",
+          "variatif",
+          "ekspresif",
+          "analogis"
+        ],
+        "answerIndex": 0,
+        "explanation": "(2) Kemudahan pohon kemiri tumbuh di berbagai kondisi tanah.",
+        "source": "UTBK Asli BPPP Kemdikbud 2024"
+      },
+      {
+        "question": "1Berdasarkan sejarahnya, nasi goreng bermula dari kebiasaan masyarakat Tionghoa yang tidak\nsuka menyantap makanan dingin. 2Karena tidak boleh membuang sisa makanan, mereka\nmenggoreng nasi yang sudah dingin dengan tambahan bahan dan bumbu sehinga dikenal sebagai\nnasi goreng. 3Nasi goreng lalu tersebar ke wilayah Asia Tenggara karena dibawa oleh perantau-\n\n\fperantau Tionghoa yang menetap di sana. 4Mereka kemudian membuat nasi goreng yang khas\ndengan bumbu dan cara menggoreng yang berbeda.\n5\n\nSeiring dengan berjalannya waktu, nasi goreng lebih dikenal sebagai makanan khas\nIndonesia. 6Perbedaan nasi goreng Indonesia dengan nasi goreng di Tiongkok adalah penggunaan\nkecap manis. 7Hal ini membuat [...] nasi goreng Indonesia identik dengan warna coklat yang [...]\nselera. 8Di samping itu, nasi goreng Indonesia juga lebih banyak mengandung rempah dan\nbumbu. 9Penggunaan bawang putih, bawang merah, cabai, bahkan terasi membuat makanan ini\nmemiliki cita rasa Nusantara yang cukup kental.\nKalimat (7) dalam bacaan tersebut akan menjadi bermakna bila dilengkapi dengan kata-kata ...",
+        "options": [
+          "sajian; mendorong",
+          "resep; mendekatkan",
+          "menu; menggoda",
+          "hidangan; membuka",
+          "tampilan; menggugah"
+        ],
+        "answerIndex": 0,
+        "explanation": "(3) Ketahanan pohon kemiri terhadap kondisi air yang minim.",
+        "source": "UTBK Asli BPPP Kemdikbud 2024"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "snbt:Pengetahuan Kuantitatif": {
+    "category": "snbt",
+    "subtest": "Pengetahuan Kuantitatif",
+    "total_available": 19,
+    "description": "Menguji konsep matematika dasar (aljabar, geometri, aritmatika, statistika) dengan format perhitungan cepat dan pilihan ganda standar.",
+    "exemplars": [
+      {
+        "question": "Pembahasan Soal\n\nMateri: Operasi Bilangan\nJika diketahui 10 + √49 × 𝑇 ÷ 3 = 15\nmaka nilai 𝑇 adalah….",
+        "options": [
+          "!\"\n#\n!$\n#\n!!\n#\n%\n#\n&\n#\n\nMateri: Bilangan\n'\n\nUrutkan bilangan berikut 0,25; \" ; 15% ; 1\ndari yang terbesar hingga yang terkecil\nadalah….\n'",
+          "15%; 0,25; \" ; 1\n'",
+          "0,25; 1; ; 15%\n'\n\n\"",
+          "1; \" ; 15%; 0,25\n'",
+          "1; 15%; ; 0,25\n'\n\n\""
+        ],
+        "answerIndex": 4,
+        "explanation": "𝟏; 𝟓 ; 𝟎, 𝟐𝟓; 𝟏𝟓%\n\nSoal ini meminta kita untuk mengurutkan\nsusunan bilangan yang terdiri dari 4 jenis\nbilangan. Gampang banget kok gak perlu\nbingung kita cukup harus fokus di mana.\n\n@2025 Alternatifa Project. All rights reserved\n\n\fPembahasan Pengetahuan Kuantitatif\nTryout PK – Bagian 001\nDoc: PK001 – AA Gentha\n\nKonsep soal dan materi:\nUntuk mengurutkan sebuah susunan bilangan\nseperti kasus soal ini. Kita harus tetapkan\nterlebih dahulu mana bentuk bilangan yang\nakan menjadi patokan karena pada soal ini\nterdiri dari banyak bentuk bilangan. Kadi\nkonsep soal dan materinya juga kita perlu\npahami terkait bentuk-bentuk bilangan.\nPenerapan di soal:\nSeperti yang tadi gue kasih tau terkait konsep\ndan materi sebelumnya. Kita bisa terapkan pada\nsoal ini yaitu dengan memilih bentuk bilangan\nyang akan menjadi patokannya terlebih dahulu.\nPada kasus soal ini gue memilih untuk pantokan\nbentuk bilangannya yaitu bilangan desimal. Jadi\nnantinya kita ubah semua bilangan yang ada di\nsusunan menjadi bentuk bilangan desimal\nsemua. Kenapa harus bentuk desimal? Karena\npada soal ada yang berbentuk bilangan pecahan\nsehingga lebih mudah kalau kita ubah ke dalam\nbentuk bilangan desimal.\nLangsung kita gass aja!\nKita punya susunannya yaitu:\n2\n0,25; ; 15%; 1\n5\nDi sini kita bisa pisahkan satu persatu\nbilangannya.\n0,25 → 0,25\n1 → 1,0\n2\n→?\n5\n15% → ?\nNah karena ada 2 bilangan yang belum desimal,\nkita bisa langsung ubah bilangan tersebut ke\nbentuk desimal.\nPertama:\nKita tau bahwa:\n1\n0,1 =\n10\n1\n0,01 =\n100\nJadi bisa kita simpulkan bahwa banyak bilangan\ndibelakang 0, akan mempengaruhi bilangan\ntersebut per sepuluh, per seratus, dan\nseterusnya\nDi soal:\n\n2\n5\n$\nKita bisa ubah & untuk menjadi per sepuluh,\n\nkenapa per sepuluh karena yang terdekat aja ya\ntapi bebas kalau kalian mau per seratus dan\nseterusnya juga bisa tapi di sini kita pilih yang\nnanti gampang dihitungnya.\n$\n\nKita tau bahwa &, penyebutnya 5 untuk bisa jadi\npenyebutnya 10 supaya menjadi per sepuluh\nkita bisa kalikan dengan 2. Kemudian kita harus\ningat juga ketika kita kalikan penyebut dengan\nsesuatu maka pembilang juga ikut kita kalikan\ndengan sesuatu yang sama.\n2\n…\n→\n5 10\n2 2\n4\n× =\n5 2 10\n$\n(\n(\nKarena kita dapat & = %) maka %) bisa kita ubah\nmenjadi\n4\n= 0,4\n10\nNext, kita move ke 15%, kita perlu tau terkait\nbilangan persen yaitu:\n𝑎\n𝑎% =\n100\nSehingga 15% akan menjadi\n15\n15% =\n100\nKarena kita dapat bentuk per seratus. Ingat lagi\nsebelumnya bahwa per seratus itu 2 angka di\nbelakang koma ya.\n1\n= 0,01\n100\nSehingga\n15\n= 0,15\n100\nKita dapat nih semuanya yaitu\n0,25 → 0,25\n1 → 1,0\n2\n→ 0,4\n5\n15% → 0,15\nKarena sudah kita dapat semua nilai kita bisa\nlangsung urutkan. Kita bisa langsung urutkan\ndari yang terbesar hingga yang terkecil sehingga\nmenjadi\n\n@2025 Alternatifa Project. All rights reserved\n\n\fPembahasan Pengetahuan Kuantitatif\nTryout PK – Bagian 001\nDoc: PK001 – AA Gentha\n\n2\n; 0,25; 15%\n5\nSehingga jawabannya yaitu E.\n1; 0,4; 0,25; 0,15 → 1;",
+        "source": "Alternatifa Project UTBK-SNBT"
+      },
+      {
+        "question": "Materi: Persamaan Linear\nTerdapat dua titik yang berbeda anggap\nsaja titik tersebut 𝐴 dan 𝐵. Di mana titik 𝐴\ndi sini berada pada titik origin dan 𝐵(𝑏, 3)\ndan ketika tarik garis antara 𝐴 dan 𝐵\nmemiliki\n\ngradien\n\nsebesar\n\n!\n'\n\n.\n\nQR\nCODE\nPAKET\n\nMaka\n\npersamaan linear yang terbentuk adalah….",
+        "options": [
+          "𝑥 − 2𝑦 = 0",
+          "𝑥 + 2𝑦 = 0",
+          "−2𝑦 − 𝑥 = 0",
+          "2𝑥 − 2𝑦 = 0",
+          "3𝑥 − 4𝑦 = 0\n\n@2025 Alterna-fa Project. All rights reserved\n\n\fPengetahuan Kuantitatif\nTryout PK – Bagian 01\nDoc: PK001 | Lil Gentha"
+        ],
+        "answerIndex": 0,
+        "explanation": "𝒙 − 𝟐𝒚 = 𝟎\nMungkin temen-temen ada yang panik nih\nkarena soal ini penjelasannya lumayan panjang,\ntapi jangan khawatir guys kalian bisa jawab ini\nkalau kalian paham deUinisinya loh.\nKonsep soal dan materi:\nUntuk menjawab soal ini kita harus perhatikan\nbahwa ketika soal menanyakan dua titik dan\nmemiliki gradien (kemiringan) soal ini akan\nmengarah ke sebuah persamaan linear.\nKemudian, kita perlu ingat apa aja sih\nkomponen yang penting pada sebuah\npersamaan linear.\nPokoknya ya sebuah persamaan linear itu kan\nmemiliki bentuk umum:\n𝑦 = 𝑚𝑥 + 𝑐\nDari bentuk persamaan ini bisa kita aplikasi\nlangsung ke soal.\nPenerapan di soal:\nSeperti yang sebelumnya gue kasih tau kita\nperlu kumpulkan komponen penting dari\nsebuah persamaan linear. Komponen tersebut\nyaitu: titik dan gradien(kemiringan).\nPada soal diketahui bahwa titik 𝐴 berada pada\ntitik origin. Nah, sebenarnya pemahaman kita di\nuji di sini. Kita tau bahwa titik origin pada\nsebuah diagram kartesius artinya titik tersebut\nberada pada titik (0,0). Kemudian, titik 𝐵(𝑏, 3)\n%\n\ndan gradien (𝑚) adalah $. Sehingga data yang\ndidapatkan.\n𝐴 → (0,0)\n𝐵 → (𝑏, 3)\n1\n𝑚=\n2\nKarena, sudah didapatkan titik-titiknya. Maka,\nkita bisa langsung subtitusikan nilai titik-titik\npada bentuk umum persamaan linear:\n𝑦 = 𝑚𝑥 + 𝑐\n𝐴(𝑥, 𝑦) → 𝐴(0,0)\n0 = 𝑚(0) + 𝑐\n𝑐=0\n\nSehingga sebuah persamaan linear pada titik\norigin adalah\n𝑦 = 𝑚𝑥 + 𝑐\n1\n𝑐 =0&𝑚 =\n2\n1\n𝑦= 𝑥\n2\nSehingga kita dapat persamaan linearnya\n1\n𝑦= 𝑥\n2\nNamun, pada opsi soal kita diminta bentuk lain\nsehingga pemahaman kita terkait aljabar di\nlatih di sini\n1\n𝑦= 𝑥\n2\nKedua ruas kita (× 2)\n1\n𝑦 ×2= 𝑥 ×2\n2\n2𝑦 = 𝑥\nKedua ruas kita kurang (−2𝑦):\n2𝑦 − 2𝑦 = 𝑥 − 2𝑦\n0 = 𝑥 − 2𝑦\nMaka, persamaan linear yang terbentuk\n𝑥 − 2𝑦 = 0",
+        "source": "Alternatifa Project UTBK-SNBT"
+      },
+      {
+        "question": "Materi: Persamaan Linear\nLima tahun yang lalu, umur ayah adalah 3\nkali umut adik anaknya. Sepuluh tahun dari\nsekarang, umur ayah akan menjadi 2 kali\numur anaknya. Berapakah umur anak\nsekarang adalah….",
+        "options": [
+          "15 Tahun",
+          "30 Tahun",
+          "20 Tahun",
+          "25 Tahun",
+          "35 Tahun"
+        ],
+        "answerIndex": 2,
+        "explanation": "20\nGimana pas liat soal umur kaya gini?, panik gak?\nGue harap gak panik ya, karena soal ini tuh\ngampang banget loh. Meskipun, keliatannya\nribet karena ada “dulu” dan “nanti”, tapi tenang\naja.. asal kita paham konsep selisih umur itu\ntetap, gampang banget kok!.\nKonsep soal dan materi:\nDalam soal perbandingan umur kaya gini, hal\nutama\nyang\nperlu\ndiingat\nadalah:\nSelisih umur antara ayah dan anak itu selalu\ntetap, baik dulu, sekarang, maupun nanti.\nNah, kita bisa permisalan dulu nih biar gak\nribet. Kita bisa misalkan:\nUmur ayah sekarang = 𝐴\nUmur anak sekarang = 𝐵\nMaka:\n5 tahun yang lalu : umur ayah = 𝐴 − 5, umur\nanak = 𝐵 − 5\n10 tahun yang akan datang : umur ayah 𝐴 +\n10, umur anak = 𝐵 + 10.\n\n@2025 Alternatifa Project. All rights reserved\n\n\fPembahasan Pengetahuan Kuantitatif\nTryout PK – Bagian 001\nDoc: PK001 – AA Gentha\n\nSetelah ini kita bisa langsung menuju\npenerapan di soal.\nPenerapan di Soal:\nDari soal kita punya dua kasus:\nKasus 1: Lima tahun yang lalu, umur ayah 3\nkali umur anaknya, sehingga secara\nmatematis kita bisa tuliskan\n𝐴 − 5 = 3(𝐵 − 5)\nKita bisa olah dulu pada kasus satu ini dengan\nmengisolasi nilai 𝐴 pada ruas kiri\n𝐴 − 5 = 3(𝐵 − 5)\n𝐴 − 5 = 3𝐵 − 15\nKemudian, kedua ruas kita +5 menjadi:\n𝐴 − 5 + 5 = 3𝐵 − 15 + 5\n𝐴 = 3𝐵 − 10\nKasus 2: Sepuluh tahun dari sekarang, umur\nayah 2 kali umur anaknya\n𝐴 + 10 = 2(𝐵 + 10)\nKita bisa ulah dulu pada kasus satu ini dengan\nmengisolasi nilai 𝐴 pada ruas kiri\n𝐴 + 10 = 2(𝐵 + 10)\n𝐴 + 10 = 2𝐵 + 20\nKemudian, kedua ruas − 10 menjadi:\n𝐴 + 10 − 10 = 2𝐵 + 20 − 10\n𝐴 = 2𝐵 + 10\nBerdasarkan, kasus 1 dan kasus 2 kita bisa\nlangsung substitusikan kedua nilai 𝐴 menjadi\n𝐴=𝐴\n3𝐵 − 10 = 2𝐵 + 10\nKarena di soal ditanyakan umur anak (B), kita\nbisa isolasikan nilai 𝐵 terletak sendirian baik di\nruas kanan atau ruas kiri.\n3𝐵 − 10 = 2𝐵 + 10\nKurangi 2𝐵 dari kedua sisi:\n3𝐵 − 2𝐵 − 10 = 2𝐵 − 2𝐵 + 10\n𝐵 − 10 = 10\nTambah 10 ke kanan:\n𝐵 − 10 + 10 = 10 + 10\n𝐵 = 20\nKita dapatkan umur anak sekarang adalah 20\ntahun.",
+        "source": "Alternatifa Project UTBK-SNBT"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": false,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  },
+  "snbt:Penalaran Matematika": {
+    "category": "snbt",
+    "subtest": "Penalaran Matematika",
+    "total_available": 17,
+    "description": "Menguji pemecahan masalah kontekstual dunia nyata menggunakan model matematis, rasio, fungsi, dan kalkulasi logis.",
+    "exemplars": [
+      {
+        "question": "2.\n\n(Teks untuk soal nomor 1 sampai 4)\nLomba Pietulasan X17 dihadiri oleh 10\nperempuan dari total 25 peserta. Terdapat\n3 lomba, yaitu balap karung, voli air, dan\nestafet sarung yang akan dilaksanakan\nberurutan.\nLomba\nbalap\nkarung\nmembutuhkan 1 orang perempuan dan 1\norang\nlaki-laki.\nLomba\nvoli\nair\nmembutuhkan 4 orang tanpa ketentuan\nkomposisi gender. Sedangkan pada lomba\nestafet sarung, diperlukan 7 orang dengan\nminimal 2 orang perempuan. Setiap orang\nhanya boleh mengikuti maksimal 1 lomba.\nBerapa banyak cara pembentukan tim\nlomba jika seluruh perempuan wajib\nmenjadi peserta sesuai ketentuan\nkomposisi gender tim?",
+        "options": [
+          "1260",
+          "126",
+          "2460",
+          "246",
+          "1230\nApabila seluruh perempuan wajib menjadi\npeserta lomba, berapa perbandingan\njumlah peserta laki-laki yang ikut lomba\nterhadap laki-laki yang tidak ikut lomba?"
+        ],
+        "answerIndex": 2,
+        "explanation": "2460\nPada soal ini, kita diminta mencari\nberbagai kemungkinan tim yang dapat\ndibentuk sesuai dengan syarat yang\ndiberikan.\nKonsep soal dan materi:\nDalam menentukan sususan dengan\nkaidah pencacahan, terdapat dua konsep\nyang dapat kita gunakan, yaitu\npermutasi dan kombinasi. Pada\npermutasi, kita memperhatikan urutan\ndari susunannya. Sedangkan pada\nkombinasi, kita tidak memperhatikan\nkemungkinan urutannya. Kita dapat\nmenghitung kombinasi dengan\n𝑛!\n𝐶!\" =\n𝑟! (𝑛 − 𝑟)!\nKeterangan:\n𝐶 = Kombinasi\n𝑛 = Jumlah total objek\n𝑟 = Jumlah objek yang dipilih\nPenerapan pada soal:\nPada soal ini kita hanya perlu\nmenentukan\nkemungkian\ncara\npembentukan tim, artinya kita tidak\nterlalu memperhatikan urutan orangorang yang terlibat. Jadi, kita pake\nkonsep kombinasi, ya.\nKita cari dulu yang dibutuhkan berapa.\nBerdasarkan teks, lomba balap karung\nbutuh 1 perempuan, lomba voli air butuh\n4 orang bebas gendernya, lomba estafet\nsarung butuh 7 orang minimal 2\nperempuan. Jadi, totalnya kita butuh 12\norang. Ini melebihi jumlah perempuan\nyang cuma 10 aja. Secara matematis, kita\ntulis begini\n𝑛(𝑘𝑎𝑟𝑢𝑛𝑔) + 𝑛(𝑎𝑖𝑟) + 𝑛(𝑠𝑎𝑟𝑢𝑛𝑔) = 10\n1 + 𝑛(𝑎𝑖𝑟) + 𝑛(𝑠𝑎𝑟𝑢𝑛𝑔) = 10\n𝑛(𝑎𝑖𝑟) + 𝑛(𝑠𝑎𝑟𝑢𝑛𝑔) = 9\nNah, perhatikan, nih, misal 𝑛(𝐴) = 1 dan\n𝑛(𝑠𝑎𝑟𝑢𝑛𝑔) = 7 artinya ada 1 orang\nyang tidak ikut lomba. Ini menyalahi\naturan seluruh perempuan wajib ikut.\nTrus gimana supaya semua perempuan\nikut? Berarti 𝑛(𝑎𝑖𝑟) minimal 2 supaya\n𝑛(𝑠𝑎𝑟𝑢𝑛𝑔) = 7 sehingga totalnya 9\nperempuan. Tapi kan kemungkinannya\nbukan cuma itu aja, bisa juga 𝑛(𝑎𝑖𝑟) = 3\ndan 𝑛(𝑠𝑎𝑟𝑢𝑛𝑔) = 6 totalnya juga 9\n\nperempuan. Nah, makanya sekarang kita\ncari kemungkinan kombinasi dari 𝑛(𝑎𝑖𝑟)\ndan 𝑛(𝑠𝑎𝑟𝑢𝑛𝑔).\n(𝑖)Kemungkinan\n𝑛(𝑠𝑎𝑟𝑢𝑛𝑔) = 5\n\n𝑛(𝑎𝑖𝑟) = 4\n\ndan\n\n𝐶#$ × 𝐶%$&#\nKenapa 9 − 4? Karena lomba dilakukan\nberurutan dari voli air dulu baru estafet\nsarung dan setiap orang hanya boleh ikut\nsatu lomba, artinya setelah voli air\ndilaksanakan, cuma ada 9 − 4 orang\nyang bisa dipilih untuk ikut estafet\nsarung.\n𝐶#$ × 𝐶%%\n9!\n5!\n×\n4! (9 − 4)! 5! (5 − 5)!\n9!\n5!\n×\n4! 5! 5! 0!\n9 × 8 × 7 × 6 × 5! 5!\n×\n4 × 3 × 2 × 1 × 5! 5!\n9×8×7×6\n×1\n4×3×2×1\n9×2×7×1\n126\n(𝑖𝑖) Kemungkinan\n𝑛(𝑠𝑎𝑟𝑢𝑛𝑔) = 6\n\n𝑛(𝑎𝑖𝑟) = 3\n\ndan\n\n𝐶'$ × 𝐶($&'\nKenapa 9 − 3? Alasannya sama kayak\nkemungkinan\nsebelumnya,\nya.\n𝐶'$ × 𝐶((\n9!\n6!\n×\n3! (9 − 3)! 6! (6 − 6)!\n9!\n6!\n×\n3! 6! 6!\n9 × 8 × 7 × 6!\n6!\n×\n3 × 2 × 1 × 6! 6! 0!\n9×8×7\n×1\n3×2×1\n3×4×7×1\n84\n(𝑖𝑖𝑖) Kemungkinan\n𝑛(𝑠𝑎𝑟𝑢𝑛𝑔) = 7\n𝐶)$ × 𝐶*$&)\n𝐶)$ × 𝐶**\n\n@2025 Alterna-fa Project. All rights reserved\n\n𝑛(𝑎𝑖𝑟) = 2\n\ndan\n\n\fPembahasan Penalaran Matematis\nTryout PM – Bagian 001\nDoc: PM001 – Mba Nala\n\n9!\n7!\n×\n2! (9 − 2)! 7! (7 − 7)!\n9!\n7!\n×\n2! 7! 7!\n9 × 8 × 7!\n×1\n2 × 1 × 7!\n9×4×1\n36\nNah, sekarang kita hitung total\nkombinasi tim voli air dan sarung.\n(𝑖) + (𝑖𝑖) + (𝑖𝑖𝑖) = 126 + 84\n+ 36 = 246\nKenapa dijumlah? Karena itu adalah\npilihan skenario yang dapat terjadi\nsecara\nterpisah.\nSekarang kita hitung total cara\npembentukan tim.\nTim karung × tim air dan sarung =\n𝐶++, × 246\n= 10 × 246\n= 2460\nJadi, banyak cara pembentukan tim\nlomba adalah 2460 cara.",
+        "source": "Alternatifa Project UTBK-SNBT"
+      },
+      {
+        "question": "Setelah lomba balap karung dilaksanakan,\npanitia memutuskan untuk langsung\nmelaksanakan lomba estafet sarung.\nBerapa banyak cara pemilihan tim jika\nkomposisi\ngender\npeserta\ntimnya\nmelanggar aturan?",
+        "options": [
+          "30459",
+          "27027",
+          "3432",
+          "30590",
+          "36036"
+        ],
+        "answerIndex": 0,
+        "explanation": "30459\nSoal ini meminta kita untuk\nmenghitung banyak cara pembentukan\ntim misal kita melanggar aturan. Nah,\naturannya kan minimal ada 2\nperempuan. Artinya kalau kita ajukan 0\natau 1 perempuan kalau mau\nmelanggar.\nKonsep soal dan materi:\nDalam menentukan sususan dengan\nkaidah pencacahan, terdapat dua konsep\nyang dapat kita gunakan, yaitu\npermutasi dan kombinasi. Pada\npermutasi, kita memperhatikan urutan\ndari susunannya. Sedangkan pada\nkombinasi, kita tidak memperhatikan\nkemungkinan urutannya. Kita dapat\nmenghitung kombinasi dengan\n𝑛!\n𝐶!\" =\n𝑟! (𝑛 − 𝑟)!\nKeterangan:\n𝐶 = Kombinasi\n𝑛 = Jumlah total objek\n𝑟 = Jumlah objek yang dipilih\nSelain itu, ada aturan “dan” serta aturan\n“atau”. Pada aturan “dan”, kita\nmengalikan hasil seluruh aspek karena\naspek-aspeknya saling berkaitan. Pada\naturan\n“atau”,\nkita\ncukup\nmenjumlahkan hasil seluruh aspek\nkarena aspek-aspeknya tidak saling\nberkaitan\n(seperti\npilihan\nkemungkinan saja).\nPenerapan pada soal:\n\n@2025 Alterna-fa Project. All rights reserved\n\n\fPembahasan Penalaran Matematis\nTryout PM – Bagian 001\nDoc: PM001 – Mba Nala\n\nKita hitung satu per satu tiap\nkemugkinannya.\nKemungkinan tidak ada perempuan.\nArtinya perempuan yang bisa diajukan\nadalah 0 dan laki-laki yang akan dipilih\nadalah 7 (jumlah peserta tim estafet\nsarung) dari jumlah laki-laki yang\ndapat dipilih adalah 15 − 1 = 14 lakilaki. Kenapa dikurang 1? Karena 1\norang sudah diajukan di lomba balap\nkarung dan satu orang hanya dapat ikut\nsatu lomba.\n𝐶,$ × 𝐶*+#\n9!\n14!\n×\n0! (9 − 0)! 7! (14 − 7)!\n3432\nKemungkinan selanjutnya adalah\nketika perempuan yang diajukan hanya\nsatu. Artinya butuh 6 laki-laki dan yang\nbisa dipilih adalah 14 laki-laki.\n𝐶+$ × 𝐶(+#\n9!\n14!\n×\n1! (9 − 1)! 6! (14 − 6)!\n9 × 3003\n27027\nSelanjutnya kita hitung total cara\ndengan menjumlahkan hasil dari kedua\nkemungkinan. Kenapa? Karena kedua\nkemungkinan ini tidak saling berikatan,\nartinya tidak akan terjadi bersamaan.\nTotal cara = 3432 + 27027\n= 30459\nJadi, total cara memilih tim yang\nmelanggar aturan adalah 30459 cara.\n𝟏𝟎𝟓",
+        "source": "Alternatifa Project UTBK-SNBT"
+      },
+      {
+        "question": "Karena tidak ada perempuan yang\nmengikuti lomba estafet sarung, panitia\nmemutuskan untuk menambah jumlah\npeserta tim voli air menjadi 6 orang. Jika\nrasio peserta laki-laki dan perempuan di\ntim voli air adalah 1:1, berapa peluang\npembentukan tim tersebut?\n!\"#",
+        "options": [
+          "$%&",
+          "",
+          "$\"#\n$%&\n'#\n!('\n!\"#",
+          "'%&\n$&\"",
+          "$%&"
+        ],
+        "answerIndex": 0,
+        "explanation": "𝟐𝟖𝟔\n\nPada soal ini, kita diminta untuk\nmencari peluang suatu skenario dari\nseluruh skenario yang mungkin terjadi.\nKonsep soal dan materi:\nDalam menentukan sususan dengan\nkaidah pencacahan, terdapat dua konsep\nyang dapat kita gunakan, yaitu\npermutasi dan kombinasi. Pada\npermutasi, kita memperhatikan urutan\ndari susunannya. Sedangkan pada\nkombinasi, kita tidak memperhatikan\nkemungkinan urutannya. Kita dapat\nmenghitung kombinasi dengan\n\n𝐶!\" =\n\n𝑛!\n𝑟! (𝑛 − 𝑟)!\n\nKeterangan:\n𝐶 = Kombinasi\n𝑛 = Jumlah total objek\n𝑟 = Jumlah objek yang dipilih\nUntuk menghitung peluang, kita\nmembandingkan\nkejadian\nyang\ndiinginkan dengan total kejadian yang\nmungkin\nuntuk\nterjadi.\n𝑛(𝐴)\n𝑃=\n𝑛(𝑆)\nKeterangan:\n𝑃\n= Peluang\n𝑛(𝐴)\n= Kejadian yang dipilih\n𝑛(𝑆)\n= Total seluruh kejadian\nPenerapan pada soal:\nKita hitung dulu orang-orang yang\nmasih bisa kita pilih.\nPerempuan = 10 − 1 − 0 = 9\nKenapa dikurang 1 dan 0? Ingat lagi\nkalau ada 1 perempuan yang sudah ikut\nbalap karung dan dari soal ini\ndinyatakan tidak ada perempuan yang\nikut estafet sarung.\nLaki-laki = 15 − 1 − 7 = 7\nKenapa dikurang 1 dan 7? Alasannya\nsama, 1 orang balap karung dan 7 orang\nestafet sarung.\nSelanjutnya, kita cari total kejadian\nyang akan terjadi, yaitu cara memilih 6\norang dari 16 orang secara random.\nKenapa 6 orang? Tim voli air butuh 6\npeserta. Kenapa 16 orang? Total\nperempuan dan laki-laki yang dapat\ndipilih adalah 9 + 7 = 16 orang.\nKenapa digabung? Karena awalnya voli\nair tidak ada syarat komposisi gender.\n𝐶(+(\n16!\n6! (16 − 6)!\n16!\n6! 10!\n4 × 14 × 13 × 11\nKita tulis seperti itu dulu aja karena\nsaat jadi peluang kan bentuknya\npecahan jadi memudahkan untuk\ndisederhakakan.\nSelanjutnya, kita cari total cara kejadian\nyang diinginkan, yaitu kombinasi 3\norang laki-laki dan 3 orang perempuan.\n\n@2025 Alterna-fa Project. All rights reserved\n\n\fPembahasan Penalaran Matematis\nTryout PM – Bagian 001\nDoc: PM001 – Mba Nala\n\n𝐶'$ × 𝐶'*\n9!\n7!\n×\n3! (9 − 3)! 3! (7 − 3)!\n3×4×7×7×5\nSelanjutnya, kia hitung peluang\n𝑛(𝐴)\n𝑃=\n𝑛(𝑆)\n3×4×7×7×5\n=\n4 × 14 × 13 × 11\n105\n=\n286\nJadi, peluang membentuk tim voli air\nberjumlah 6 orang dengan rasio 1:1\n+,%\nadalah )3(.",
+        "source": "Alternatifa Project UTBK-SNBT"
+      }
+    ],
+    "generation_guidelines": {
+      "tone": "Formal akademis standar seleksi nasional (Kemdikbud BPPP / BKN)",
+      "options_count": 5,
+      "has_passage": true,
+      "difficulty_distribution": "30% Easy, 50% Medium, 20% Hard (HOTS)"
+    }
+  }
+}
