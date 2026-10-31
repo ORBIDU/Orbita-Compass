@@ -59,7 +59,7 @@ export const KENALI = {
   title: "Semuanya dimulai dari mengenal dirimu.",
   body: "Setiap siswa punya minat, kemampuan, pengalaman, dan hal-hal yang membuatnya unik. Gambaran Minat Bakat membantu kamu mengenali potensi dan hal-hal yang paling menonjol dalam dirimu.",
   cta: "Kenali Dirimu",
-  profile: { title: "Profil kamu", subtitle: "Kelas 10 SMA", progressLabel: "Gambaran Minat Bakat", progressValue: "5 dari 7 bagian", progressPct: 71 },
+  profile: { title: "Profil kamu", subtitle: "Kelas X SMA", progressLabel: "Gambaran Minat Bakat", progressValue: "5 dari 7 bagian", progressPct: 71 },
   cards: [
     { key: "minat", title: "Minat", tone: "orange", chips: ["Teknologi", "Desain", "Bisnis"] },
     { key: "potensi", title: "Potensi", tone: "blue", chips: ["Analitis", "Kreatif", "Problem Solving"] },
@@ -135,6 +135,7 @@ export interface FaqGroup {
 }
 
 export const FAQ = {
+  categoriesLabel: "Kategori pertanyaan",
   title: `Punya pertanyaan tentang ${B}?`,
   body: `Pilih kategori pertanyaanmu. Kalau jawabannya belum ada, ngobrol langsung sama tim ${B} lewat WhatsApp.`,
   whatsappCta: "Tanya lewat WhatsApp",
@@ -144,9 +145,9 @@ export const FAQ = {
       items: [
         { q: `Apa itu ${B}?`, a: `${B} adalah platform pendampingan perencanaan pendidikan bagi siswa SMA untuk membantu mengenali potensi, menemukan arah pendidikan, mengeksplorasi pilihan, dan menentukan langkah berikutnya.` },
         { q: `Bagaimana cara mendapatkan akun ${B}?`, a: ACCOUNT_ACCESS.full },
-        { q: `Siapa yang bisa menggunakan ${B}?`, a: `${B} ditujukan untuk siswa SMA kelas 10–12, serta mendukung Guru BK, Wali Kelas, dan sekolah dalam proses pendampingan pendidikan.` },
+        { q: `Siapa yang bisa menggunakan ${B}?`, a: `${B} ditujukan untuk siswa SMA kelas X–XII, serta mendukung Guru BK, Wali Kelas, dan sekolah dalam proses pendampingan pendidikan.` },
         { q: `Bagaimana ${B} memberikan rekomendasi pendidikan?`, a: "Rekomendasi disusun berdasarkan informasi dalam profil siswa, seperti data akademik, prestasi, minat dan bakat, serta refleksi diri. Setiap rekomendasi dilengkapi alasan agar siswa memahami dasar pilihannya." },
-        { q: "Apakah data siswa aman?", a: `Data siswa dikelola dengan akses berbasis peran dan tujuan penggunaan yang jelas. Detail pengumpulan, penggunaan, penyimpanan, dan akses data dijelaskan dalam kebijakan privasi ${B}.` },
+        { q: "Apakah data siswa aman?", a: `Data siswa hanya dipakai untuk fitur ${B}, seperti rekomendasi jurusan dan rencana belajar. Pengamanannya terus disiapkan bersama tim sebelum ${B} dipakai secara luas.` },
       ],
     },
     {
@@ -176,7 +177,7 @@ export const FINAL_CTA = {
 };
 
 export const FOOTER = {
-  description: `${BRAND.tagline}. Pendampingan perencanaan pendidikan untuk siswa SMA kelas 10 sampai 12.`,
+  description: `${BRAND.tagline}. Pendampingan perencanaan pendidikan untuk siswa SMA kelas X sampai XII.`,
   explore: {
     title: "Jelajahi",
     // "Untuk Sekolah" dan "Tentang Kami" disembunyikan sampai halamannya dibuat.

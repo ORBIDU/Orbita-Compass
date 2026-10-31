@@ -10,6 +10,28 @@
 
 Status: 🔴 belum ada · 🟡 ada tetapi perlu diubah · ✅ sudah sesuai
 
+## Ringkasan
+
+Semua kebutuhan di bawah dikerjakan di `backend-api/` (Naufal), kecuali yang
+diberi catatan lain. Detail tiap baris ada di bagian yang disebut.
+
+| Bagian | Isi | Status | Menunggu |
+|---|---|---|---|
+| 1 | Keamanan: `passwordHash` di respons, register terbuka, endpoint admin tanpa cek peran, cek kepemilikan data, kunci jawaban terkirim | 🔴 | Naufal (prioritas tertinggi) |
+| 2 | Auth dan profil: pesan error, nilai bawaan palsu, field profil, dua persetujuan, reset password, token kedaluwarsa 403 | 🔴 🟡 | Naufal |
+| 3 | Status siswa, riwayat tes per kelas, simpan jawaban tes, skor 5 dimensi | 🔴 | Naufal; aturan skor dari Bu Putri |
+| 4 | Ringkasan kebutuhan per fase | — | — |
+| 5 | Catatan bentuk respons: field JSON string, target kampus/prodi tidak cocok di seed | 🟡 | Naufal |
+| 6 | Katalog jurusan per nama, kampus pembuka, label kecocokan | 🔴 🟡 | Naufal + tim data |
+| 7 | Dashboard: rencana hari ini, hasil latihan, timeline seleksi, notifikasi | 🔴 | Naufal |
+| 8 | Analisis Potensi: prestasi lengkap, rapor per semester | 🟡 | Naufal |
+| 9 | ORBIDU Compass: target jurusan, kapan analisis ulang, rekomendasi yang bisa dicocokkan | 🔴 🟡 | Naufal |
+| 10 | Explore Beasiswa: katalog dan beasiswa tersimpan | 🔴 | Naufal + tim data |
+| 11 | Action Plan: pengaturan, latihan harian, hasil per latihan | 🔴 | Naufal |
+| 12 | Persiapan: Siap SNBP, rasionalisasi, riwayat latihan, bank soal, tryout | 🔴 | Naufal + tim data (bank soal); rumus disetujui tim |
+| 13 | Profil: data diri dari sekolah, hak ubah siswa, nama panggilan/foto/password | 🔴 | Naufal + sekolah |
+| 14 | Akun berlangganan: admin membuat akun, wajib ganti password awal | 🔴 | Naufal |
+
 ---
 
 ## 1. Keamanan (prioritas tertinggi)
@@ -193,9 +215,9 @@ GET /assessment/answers → { "answers": { … } | null }        // jawaban tes 
 
 ---
 
-## 4. Kebutuhan lain yang sudah diketahui
+## 4. Kebutuhan per fase
 
-Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
+Daftar kebutuhan menurut fase pengerjaan frontend. Bentuk endpoint lengkapnya ada di bagian yang disebut di tiap baris.
 
 | Kebutuhan | Fase | Status |
 |---|---|---|
@@ -218,20 +240,9 @@ Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
 - Frontend mem-parse-nya di service.
 - Jika backend pindah ke PostgreSQL, sebaiknya dikirim sebagai array/objek asli. Beri tahu tim frontend agar service ikut diubah.
 
-### 5.2 Penilaian tryout
-- `POST /ptn/practice/submit` saat ini menghitung skor dari jumlah soal yang **dijawab**, bukan yang benar.
-- **Dibutuhkan:** backend menilai jawaban dan mengirim hasil per soal:
-
-```jsonc
-{
-  "result": {
-    "totalScore": 612, "maxScore": 1000,
-    "correctCount": 14, "totalQuestions": 20,
-    "perSubtest": [ { "subtest": "PU", "correct": 3, "total": 4 } ],
-    "answers": [ { "questionId": "…", "chosenIndex": 2, "answerIndex": 1, "explanation": "…" } ]
-  }
-}
-```
+### 5.2 Penilaian tryout (lihat 12.6)
+- `POST /ptn/practice/submit` yang ada menghitung skor dari jumlah soal yang **dijawab**, bukan yang benar. Frontend tidak memakainya.
+- Bentuk penilaian yang dibutuhkan (dinilai di server, skor per subtes, kunci dan pembahasan hanya setelah selesai) sudah dirinci di **bagian 12.6**. Bagian ini tidak lagi punya bentuk respons sendiri supaya tidak ada dua versi.
 
 ### 5.3 Target kampus dan prodi tidak saling cocok (data seed)
 - Di seed backend, akun `siswa@orbita.id` punya `targetPtn` Universitas Indonesia, tetapi `targetMajor`-nya milik kampus lain (`targetMajor.universityId` ≠ `targetPtnId`). Penyebabnya, `seed.ts` mencari prodi dengan `findFirst({ name: { contains: "Komputer" } })` tanpa menyaring kampus.
@@ -362,10 +373,10 @@ PATCH /notifications/:id/read → { "message": "…" }
 
 - Sumber: pengingat Action Plan (`notifyEmail`/`notifyWa` sudah ada di `ActionPlanItem`) dan hasil tryout.
 
-### 7.5 Nama panggilan 🔴
-Sapaan Dashboard ("Selamat pagi, Rizki!") memakai `profile.nickname`, yang sudah diusulkan di bagian 2.3 tetapi belum ada di backend.
+### 7.5 Nama panggilan (lihat 13.3) 🔴
+Sapaan Dashboard ("Selamat pagi, Rizki!") memakai `profile.nickname`.
 
-- `GET /auth/me` dan `GET /profile` mengirim `profile.nickname` (string atau `null`); `PUT /profile` menerimanya.
+- Bentuk endpoint mengikuti **bagian 13.3**: siswa mengubahnya lewat `PUT /profile/nickname` (bukan `PUT /profile`), dan `GET /auth/me` serta `GET /profile` mengirim `profile.nickname` (string atau `null`).
 - Selama kosong, frontend memakai kata pertama nama lengkap (dengan backend asli: "Selamat malam, Ahmad!"). Mode dummy sudah mengisi `"Rizki"` dan `"Budi"`.
 
 ---

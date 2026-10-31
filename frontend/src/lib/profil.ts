@@ -4,6 +4,7 @@
 import { LABELS, SECTIONS, VALUES } from "@/content/profil";
 import type { ProfilView } from "@/types/profil";
 import { formatKelas } from "./user";
+import { formatDate } from "@/lib/datetime";
 
 export interface InfoRow {
   label: string;
@@ -21,9 +22,6 @@ export interface InfoSectionData {
   rows: InfoRow[];
 }
 
-/** "2 September 2026" */
-export const formatDate = (iso: string) =>
-  new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "long", year: "numeric" }).format(new Date(iso.length === 10 ? `${iso}T00:00:00` : iso));
 
 const yesNo = (v: boolean | null, types?: string[] | null) =>
   v === null ? null : v ? (types && types.length ? VALUES.yesWith(types.join(", ")) : VALUES.yes) : VALUES.no;

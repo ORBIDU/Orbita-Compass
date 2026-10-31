@@ -2,8 +2,9 @@ import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Check, Info } from "lucide-react";
 import { ROUTES } from "@/config/navigation";
-import { SNBP_ELIGIBLE, SNBP_STEPS } from "@/content/siapSnbp";
+import { SNBP_ELIGIBLE, SNBP_STEPS, SNBP_STEPS_LABEL } from "@/content/siapSnbp";
 import type { EligibleStatus } from "@/types/snbp";
+import { UI } from "@/content/common";
 
 export type SnbpStep = 0 | 1 | 2;
 
@@ -50,7 +51,7 @@ export function EligibleBar({ value, onChange }: { value: EligibleStatus; onChan
 /** Penanda langkah 1-2-3. */
 export function StepIndicator({ step }: { step: SnbpStep }) {
   return (
-    <ol aria-label="Langkah rasionalisasi" className="grid grid-cols-3 gap-2 rounded-card border border-rim-soft bg-white px-3 py-3.5 sm:gap-4 sm:px-6 sm:py-[18px]">
+    <ol aria-label={SNBP_STEPS_LABEL} className="grid grid-cols-3 gap-2 rounded-card border border-rim-soft bg-white px-3 py-3.5 sm:gap-4 sm:px-6 sm:py-[18px]">
       {SNBP_STEPS.map((s, i) => {
         const done = i < step;
         const current = i === step;
@@ -61,7 +62,7 @@ export function StepIndicator({ step }: { step: SnbpStep }) {
                 done ? "border-tint-green-fg bg-tint-green-fg text-white" : current ? "border-orbit-1 bg-orbit-1 text-white" : "border-field-rim bg-white text-prose-dim"
               }`}
             >
-              {done ? <Check size={16} strokeWidth={3} aria-label="Selesai" /> : i + 1}
+              {done ? <Check size={16} strokeWidth={3} aria-label={UI.done} /> : i + 1}
             </span>
             <span className="flex min-w-0 flex-col">
               <span className={`text-[13px] text-space-2 sm:text-[15px] ${current ? "font-bold" : "font-medium"}`}>{s.label}</span>

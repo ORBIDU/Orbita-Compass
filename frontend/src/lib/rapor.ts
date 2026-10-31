@@ -61,3 +61,10 @@ export function averageScore(subjects: { score: number }[]): number | null {
 export function formatScore(value: number): string {
   return value.toLocaleString("id-ID", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 }
+
+/** "semester 1 sampai 4" / "semester 5" */
+export function semesterRange(semesters: number[]): string {
+  if (semesters.length === 0) return "";
+  if (semesters.length === 1) return `semester ${semesters[0]}`;
+  return `semester ${semesters[0]} sampai ${semesters[semesters.length - 1]}`;
+}

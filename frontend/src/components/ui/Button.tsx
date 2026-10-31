@@ -1,14 +1,13 @@
 import type { ButtonHTMLAttributes } from "react";
 import { Link, type LinkProps } from "react-router-dom";
 
-export type ButtonVariant = "primary" | "cta" | "outline" | "ghost";
+export type ButtonVariant = "primary" | "outline" | "ghost";
 export type ButtonSize = "sm" | "md" | "lg";
 
 const VARIANT: Record<ButtonVariant, string> = {
   // Aksi utama: gradient biru
   primary: "bg-gradient-orbit text-white shadow-cta hover:opacity-90",
   // CTA paling penting: gradient oranye (pakai hemat)
-  cta: "bg-gradient-sun text-white hover:opacity-90",
   outline: "border border-orbit-1 text-orbit-1 bg-white hover:bg-cloud",
   ghost: "text-ink-soft hover:bg-page",
 };

@@ -45,3 +45,42 @@ export const PAGE_TITLES = {
   latihan: "Latihan",
 };
 
+/** Label kecil yang dipakai banyak komponen (tombol ikon, area memuat, navigasi). */
+export const UI = {
+  loading: "Memuat",
+  loadingPage: "Memuat...",
+  loadingApp: `Memuat ${BRAND.name}...`,
+  preparingPortal: "Menyiapkan portal...",
+  close: "Tutup",
+  breadcrumb: "Breadcrumb",
+  portalMenu: "Menu portal",
+  done: "Selesai",
+  showPassword: "Tampilkan password",
+  hidePassword: "Sembunyikan password",
+};
+
+/** Halaman tidak ditemukan (404). */
+export const NOT_FOUND = {
+  title: "Halaman tidak ditemukan",
+  body: "Sepertinya kamu keluar dari orbit. Alamat yang dibuka tidak ada atau sudah dipindahkan.",
+  toPortal: "Kembali ke Dashboard",
+  toHome: "Kembali ke beranda",
+};
+
+/** Menu notifikasi dan menu akun di header portal. */
+export const HEADER_MENU = {
+  notifications: "Notifikasi",
+  notificationsEmpty: "Belum ada notifikasi",
+  notificationsEmptyBody: "Pengingat Action Plan dan hasil tryout akan muncul di sini.",
+  account: (name: string) => `Menu akun ${name}`,
+  profile: "Profil",
+  explore: "Explore Jurusan",
+  logout: "Keluar",
+};
+
+/** Label Persiapan yang dipakai dropdown desktop dan bottom sheet HP. */
+export const PERSIAPAN_LABELS = {
+  soon: "Segera hadir",
+  skdMismatch: "Kurang selaras dengan profilmu",
+};
+

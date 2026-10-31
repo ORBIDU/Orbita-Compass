@@ -108,7 +108,7 @@ export const PATHS = {
 
 export const WHY = {
   title: `Kenapa ${BRAND.name} merekomendasikan ini`,
-  tes: { title: "Dari tes minat bakat", link: "Lihat jawaban tes", empty: "Hasil tes belum tersedia." },
+  tes: { title: "Dari Gambaran Minat Bakat", link: "Lihat jawaban tes", empty: "Hasil tes belum tersedia." },
   prestasi: { title: "Dari prestasi", link: "Lihat prestasi", empty: "Belum ada prestasi tercatat. Tambahkan supaya analisis makin lengkap." },
   rapor: { title: "Dari nilai rapor", link: "Lihat nilai rapor", empty: "Nilai rapor belum diinput sekolah." },
   tesTop: (a: string, b: string) => `${a} dan ${b.toLowerCase()} adalah minat paling kuat`,

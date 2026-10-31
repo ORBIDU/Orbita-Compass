@@ -1,10 +1,10 @@
 import { RotateCcw } from "lucide-react";
-import { LOAD_ERROR, RETRY } from "@/content/common";
+import { LOAD_ERROR, RETRY, UI } from "@/content/common";
 
 /** Kerangka saat isi tab sedang dimuat. */
 export function PanelSkeleton() {
   return (
-    <div role="status" aria-label="Memuat" className="flex animate-pulse flex-col gap-4">
+    <div role="status" aria-label={UI.loading} className="flex motion-safe:animate-pulse flex-col gap-4">
       <span className="h-24 rounded-card bg-white" />
       <span className="h-64 rounded-card bg-white" />
     </div>

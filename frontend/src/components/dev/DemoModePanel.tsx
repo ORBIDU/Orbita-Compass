@@ -3,13 +3,8 @@ import { Check, FlaskConical, Loader2, RotateCcw, X } from "lucide-react";
 import { resetMockDb } from "@/mocks/db";
 import { useAuth } from "@/context/AuthContext";
 import { useStudentStatus } from "@/context/StudentStatusContext";
+import { DEMO_PANEL } from "@/content/demo";
 import { STUDENT_STATUSES, STUDENT_STATUS_LABEL, type StudentStatus } from "@/types/student";
-
-const STATUS_HINT: Record<StudentStatus, string> = {
-  baru: "Belum isi tes minat bakat. Kompas, Performa, dan Action Plan terkunci.",
-  sudah_asesmen: "Tes selesai, belum pernah latihan atau tryout.",
-  aktif: "Sudah punya data latihan atau tryout. Semua bagian terisi.",
-};
 
 /**
  * Panel kecil untuk berpindah status siswa dan melihat semua kondisi halaman.
@@ -31,7 +26,7 @@ export default function DemoModePanel() {
     try {
       await setDemoStatus(next);
     } catch {
-      setError("Gagal mengganti status. Coba lagi.");
+      setError(DEMO_PANEL.error);
     } finally {
       setPending(null);
     }
@@ -49,25 +44,25 @@ export default function DemoModePanel() {
       {open && (
         <div
           role="dialog"
-          aria-label="Mode Demo"
+          aria-label={DEMO_PANEL.title}
           className="w-[min(320px,calc(100vw-2rem))] rounded-card bg-white p-4 shadow-card-hover ring-1 ring-line"
         >
           <div className="mb-3 flex items-start justify-between gap-3">
             <div>
-              <p className="text-sm font-bold text-ink">Mode Demo</p>
-              <p className="text-xs text-ink-muted">Data dummy · {user.email}</p>
+              <p className="text-sm font-bold text-ink">{DEMO_PANEL.title}</p>
+              <p className="text-xs text-ink-muted">{DEMO_PANEL.data(user.email)}</p>
             </div>
             <button
               type="button"
               onClick={() => setOpen(false)}
-              aria-label="Tutup panel Mode Demo"
+              aria-label={DEMO_PANEL.close}
               className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-ink-faint hover:bg-page hover:text-ink"
             >
               <X size={16} />
             </button>
           </div>
 
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-ink-faint">Status siswa</p>
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-ink-faint">{DEMO_PANEL.statusTitle}</p>
           <div className="flex flex-col gap-2">
             {STUDENT_STATUSES.map((s) => {
               const active = s === status;
@@ -88,14 +83,14 @@ export default function DemoModePanel() {
                     }`}
                   >
                     {pending === s ? (
-                      <Loader2 size={10} className="animate-spin text-orbit-1" />
+                      <Loader2 size={10} className="motion-safe:animate-spin text-orbit-1" />
                     ) : (
                       active && <Check size={10} strokeWidth={3} />
                     )}
                   </span>
                   <span>
                     <span className="block text-sm font-semibold text-ink">{STUDENT_STATUS_LABEL[s]}</span>
-                    <span className="block text-xs leading-snug text-ink-muted">{STATUS_HINT[s]}</span>
+                    <span className="block text-xs leading-snug text-ink-muted">{DEMO_PANEL.hints[s]}</span>
                   </span>
                 </button>
               );
@@ -109,7 +104,7 @@ export default function DemoModePanel() {
             onClick={reset}
             className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-line py-2 text-xs font-semibold text-ink-soft hover:bg-page"
           >
-            <RotateCcw size={13} /> Kembalikan data dummy ke awal
+            <RotateCcw size={13} aria-hidden="true" /> {DEMO_PANEL.reset}
           </button>
         </div>
       )}
@@ -121,7 +116,7 @@ export default function DemoModePanel() {
         className="flex items-center gap-2 rounded-full bg-gradient-navy px-4 py-2 text-xs font-semibold text-white shadow-card-hover"
       >
         <FlaskConical size={14} />
-        Mode Demo · {STUDENT_STATUS_LABEL[status]}
+        {DEMO_PANEL.title} · {STUDENT_STATUS_LABEL[status]}
       </button>
     </div>
   );

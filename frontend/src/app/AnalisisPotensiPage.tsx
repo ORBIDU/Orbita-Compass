@@ -19,6 +19,7 @@ import TestPanel from "@/components/analisis/test/TestPanel";
 import PrestasiPanel from "@/components/analisis/prestasi/PrestasiPanel";
 import RaporPanel from "@/components/analisis/rapor/RaporPanel";
 import { usePageTitle } from "@/lib/usePageTitle";
+import { UI } from "@/content/common";
 
 const isTab = (v: string | null): v is AnalisisTab => ANALISIS_TABS.includes(v as AnalisisTab);
 
@@ -53,7 +54,7 @@ export default function AnalisisPotensiPage() {
 
   const total = ASESMEN.sections.length;
   const sectionsDone = tested ? total : (liveDone ?? doneSectionCount(ASESMEN, draft.data?.answers ?? {}));
-  const list = achievements.data ?? [];
+  const list = useMemo(() => achievements.data ?? [], [achievements.data]);
   const raporSemesters = (rapor.data?.semesters ?? []).filter((s) => s.subjects.length > 0);
 
   const completeness = useMemo(
@@ -88,7 +89,7 @@ export default function AnalisisPotensiPage() {
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-4 px-4 pb-8 pt-4 sm:px-6 lg:gap-6 lg:px-10 lg:pb-12 lg:pt-7">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
           <div className="flex max-w-[640px] flex-col gap-1.5 lg:gap-2">
-            <nav aria-label="Breadcrumb" className="hidden items-center gap-2 text-[13px] text-prose-dim lg:flex">
+            <nav aria-label={UI.breadcrumb} className="hidden items-center gap-2 text-[13px] text-prose-dim lg:flex">
               <Link to={ROUTES.portal} className="rounded hover:text-space-2 hover:underline">
                 {ANALISIS_HEADER.breadcrumbHome}
               </Link>

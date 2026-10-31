@@ -22,7 +22,7 @@ export interface ExamCopy {
   /** Format tryout; `minutes` dihitung dari jumlah soal dan detik per soal (config/practice.ts). */
   tryoutFormat: (minutes: number) => string;
   scaleNote: string;
-  /** Satuan skor di kartu Performance. */
+  /** Satuan skor di kartu Performa. */
   scoreUnit: string;
 }
 
@@ -90,7 +90,7 @@ export const SUBJECT_DESC_FALLBACK = "Mapel pilihan TKA-mu.";
 export const UJIAN_TABS = [
   { id: "latihan", label: "Latihan Soal" },
   { id: "tryout", label: "Tryout" },
-  { id: "performance", label: "Performance" },
+  { id: "performance", label: "Performa" },
 ] as const;
 export type UjianTab = (typeof UJIAN_TABS)[number]["id"];
 

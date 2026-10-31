@@ -2,6 +2,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { PORTAL_NAV_AFTER, PORTAL_NAV_BEFORE, type NavItem } from "@/config/navigation";
 import PersiapanMenu from "./PersiapanMenu";
 import { NAV_ICON_CLASS, navItemClasses } from "./navStyles";
+import { UI } from "@/content/common";
 
 function Item({ item }: { item: NavItem }) {
   const Icon = item.icon;
@@ -18,7 +19,7 @@ function Item({ item }: { item: NavItem }) {
 /** Menu portal di dalam header desktop (≥1024px). Di HP diganti BottomNav. */
 export default function PortalNav() {
   return (
-    <nav aria-label="Menu portal" className="hidden h-full items-stretch gap-0.5 lg:flex">
+    <nav aria-label={UI.portalMenu} className="hidden h-full items-stretch gap-0.5 lg:flex">
       {PORTAL_NAV_BEFORE.map((item) => (
         <Item key={item.to} item={item} />
       ))}

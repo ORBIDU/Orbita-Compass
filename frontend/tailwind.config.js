@@ -21,6 +21,7 @@ const brand = {
 
 // Warna ilustrasi maskot dan planet (dipakai SVG lewat kelas fill-/stroke-/stop-).
 const mascot = {
+  // light/dark/glow dipakai lewat theme() di gradien SVG (MascotFigure, HeroVisual, AuthVideoSlot).
   light: "#8CC8FF",
   mid: "#1F7BFF",
   dark: "#0445B8",
@@ -30,8 +31,6 @@ const mascot = {
   cheek: "#FF8FB1",
   orbit: "#6E9BEA",
   "orbit-soft": "#8FB8FF",
-  "planet-1": "#22397A",
-  "planet-3": "#0C1530",
 };
 
 const gradient = (from, to) => `linear-gradient(135deg, ${from} 0%, ${to} 100%)`;
@@ -57,14 +56,12 @@ export default {
           muted: "#6B7280",
           faint: "#9CA3AF",
         },
-        // Garis pembatas: DEFAULT untuk border kartu/input, soft untuk pemisah tipis
+        // Garis pembatas: DEFAULT untuk border kartu/input, soft untuk border bawaan semua elemen (styles/theme.css)
         line: {
           DEFAULT: "#E5E7EB",
           soft: "rgba(0, 0, 0, 0.08)",
         },
-        // Warna status (kalender, badge, validasi)
-        success: "#22C55E",
-        warning: "#F1AD00",
+        // Warna status (validasi)
         danger: "#EF4444",
 
         // ── Landing & halaman publik (desain docs/design/landing) ──
@@ -93,7 +90,7 @@ export default {
           "orange-rim": "#FFB066", "orange-ink": "#7A3300", "orange-line": "#FFD2AD",
           "green-bg": "#E3F5EC", "green-fg": "#0A7A45",
           "navy-bg": "#E9ECF4", "navy-fg": "#15234D",
-          "amber-bg": "#FFF1CC", "amber-fg": "#8A5A00",
+          "amber-fg": "#8A5A00",
           // Action Plan: kategori Kedinasan, tanggal terjadwal, dan tanggal hari ini yang dipilih
           "purple-bg": "#EFEBFB", "purple-fg": "#5B3FC4", "purple-dot": "#6B4FD1",
           "amber-soft": "#FFF4D6",

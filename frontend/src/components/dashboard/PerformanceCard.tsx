@@ -121,7 +121,10 @@ function PerformanceBody({ summary, showSkd }: { summary: PracticeSummary; showS
 export default function PerformanceCard({ locked, state, showSkd }: { locked: boolean; state: AsyncState<PracticeSummary>; showSkd: boolean }) {
   const aside = (
     <CardLink to={PERFORMA_URL}>
-      <span className="lg:hidden">{PERFORMA.linkShort}</span>
+      <span className="lg:hidden">
+        {PERFORMA.linkShort}
+        <span className="sr-only"> {PERFORMA.linkShortSr}</span>
+      </span>
       <span className="hidden lg:inline">{PERFORMA.link}</span>
     </CardLink>
   );

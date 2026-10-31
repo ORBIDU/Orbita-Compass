@@ -25,7 +25,7 @@ export const HERO = {
 };
 
 export const LOCKED = {
-  title: "Terbuka setelah tes minat bakat",
+  title: "Terbuka setelah mengisi Gambaran Minat Bakat",
   plan: "Rencana belajar disusun dari hasil tes dan fokus yang kamu pilih.",
   performa: "Setelah itu kamu bisa mulai latihan, dan performamu akan tampil di sini.",
   compass: `${BRAND.compassName} membaca hasil tesmu, prestasi, dan nilai rapor untuk menunjukkan arah yang paling selaras.`,
@@ -35,6 +35,8 @@ export const PLAN = {
   title: "Rencana hari ini",
   link: "Buka Action Plan",
   linkShort: "Lihat semua",
+  /** Lanjutan tersembunyi untuk pembaca layar: "Lihat semua rencana belajar". */
+  linkShortSr: "rencana belajar",
   summary: (done: number, total: number) => `${done} dari ${total} latihan selesai`,
   remaining: (minutes: number) => `Sekitar ${minutes} menit lagi untuk hari ini`,
   allDone: "Semua latihan hari ini selesai",
@@ -65,6 +67,8 @@ export const PERFORMA = {
   title: "Performa latihan",
   link: "Lihat performa",
   linkShort: "Detail",
+  /** Lanjutan tersembunyi untuk pembaca layar: "Detail performa". */
+  linkShortSr: "performa",
   radarLabel: "Radar skor 7 subtes SNBT dari tryout terakhir",
   lastScore: "Skor tryout SNBT terakhir",
   delta: (diff: number, short: boolean) => {

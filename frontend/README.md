@@ -58,9 +58,9 @@ src/
 │                        (katalog jurusan, beasiswa, timeline, bank soal, paket tryout, penyusun
 │                        Action Plan, rasionalisasi SNBP, profil kosong) + asesmen.json
 ├── layouts/            ← kerangka halaman (portal, publik, auth)
-├── routes/             ← penjaga halaman (wajib login, gembok status) + pembungkus halaman lama
+├── routes/             ← penjaga halaman (wajib login, aktivasi akun, tamu saja)
 ├── components/
-│   ├── ui/             ← komponen dasar: Button, Card, EmptyState, LockedOverlay, FormField, Logo, Dialog, BottomSheet, RadarChart, PanelState
+│   ├── ui/             ← komponen dasar: Button, EmptyState, FormField, Logo, Avatar, Dialog, BottomSheet, RadarChart, PanelState, PageLoader
 │   ├── landing/        ← header, section beranda, carousel, footer, tombol konsultasi
 │   ├── mascot/         ← MascotFigure (SVG) dan MascotSlot (maskot hero interaktif)
 │   ├── jurusan/        ← kartu dan sampul jurusan
@@ -78,8 +78,8 @@ src/
 ├── types/              ← tipe data backend dan status siswa
 ├── lib/                ← fungsi bantu kecil
 ├── styles/             ← CSS dasar dan @font-face
-├── assets/fonts/       ← tempat file font Pecita
-└── app/                ← halaman-halaman (sebagian masih versi lama, dirombak per fase)
+├── assets/fonts/       ← tempat file font Pecita (sementara dimatikan, lihat styles/fonts.css)
+└── app/                ← halaman-halaman (satu file per route) + ErrorPage
 ```
 
 ## Aturan singkat
