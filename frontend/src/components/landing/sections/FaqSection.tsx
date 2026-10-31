@@ -33,7 +33,7 @@ export default function FaqSection() {
         </div>
 
         <div className="flex flex-col gap-6">
-          <div role="group" aria-label="Kategori pertanyaan" className="flex flex-wrap gap-2">
+          <div role="group" aria-label={FAQ.categoriesLabel} className="flex flex-wrap gap-2">
             {FAQ.groups.map((g, i) => {
               const active = i === category;
               return (

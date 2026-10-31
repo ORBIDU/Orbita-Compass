@@ -15,6 +15,7 @@ import TryoutTab from "@/components/ujian/TryoutTab";
 import PerformanceTab from "@/components/ujian/PerformanceTab";
 import NotFoundPage from "./NotFoundPage";
 import { usePageTitle } from "@/lib/usePageTitle";
+import { UI } from "@/content/common";
 
 const TAB_ICON: Record<UjianTab, typeof BookOpen> = { latihan: BookOpen, tryout: Clock, performance: BarChart3 };
 const isTab = (v: string | null): v is UjianTab => UJIAN_TABS.some((t) => t.id === v);
@@ -40,7 +41,7 @@ function SiapUjian({ exam }: { exam: ExamId }) {
 
   const overview = useAsync(() => getExamOverview(user?.id ?? "", user?.profile?.grade ?? 12, exam, now), [user?.id, status, exam]);
   const copy = EXAM_COPY[exam];
-  usePageTitle(copy.title);
+  usePageTitle(`${UJIAN_TABS.find((t) => t.id === tab)?.label} · ${copy.title}`);
 
   if (!user) return <PageLoader />;
 
@@ -75,7 +76,7 @@ function SiapUjian({ exam }: { exam: ExamId }) {
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-4 px-4 pb-8 pt-4 sm:px-6 lg:gap-5 lg:px-10 lg:pb-12 lg:pt-7">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between lg:gap-8">
           <div className="flex max-w-[760px] flex-col gap-1.5 lg:gap-2">
-            <nav aria-label="Breadcrumb" className="hidden items-center gap-2 text-[13px] text-prose-dim lg:flex">
+            <nav aria-label={UI.breadcrumb} className="hidden items-center gap-2 text-[13px] text-prose-dim lg:flex">
               <Link to={ROUTES.portal} className="rounded hover:text-space-2 hover:underline">
                 {UJIAN_HEADER.breadcrumbHome}
               </Link>

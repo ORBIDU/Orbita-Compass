@@ -3,8 +3,8 @@ import { useAuth } from "@/context/AuthContext";
 import { useStudentStatus } from "@/context/StudentStatusContext";
 import { ROUTES } from "@/config/navigation";
 import PageLoader from "@/components/ui/PageLoader";
-import { BRAND } from "@/config/brand";
 import { activationStep, fromState, portalTarget } from "@/lib/activation";
+import { UI } from "@/content/common";
 
 /**
  * Halaman yang wajib login. Belum login → ke /masuk, lalu kembali ke halaman
@@ -14,7 +14,7 @@ import { activationStep, fromState, portalTarget } from "@/lib/activation";
 export function RequireAuth() {
   const { status, user } = useAuth();
   const location = useLocation();
-  if (status === "loading") return <PageLoader fullscreen label={`Memuat ${BRAND.name}...`} />;
+  if (status === "loading") return <PageLoader fullscreen label={UI.loadingApp} />;
   // Halaman asal ikut ?query (mis. ?tab=performance), supaya kembali ke tempat yang sama.
   const from = location.pathname + location.search;
   if (status === "guest") return <Navigate to={ROUTES.masuk} replace state={{ from }} />;
@@ -37,7 +37,7 @@ export function GuestOnly() {
   const { status: studentStatus, ready } = useStudentStatus();
   const location = useLocation();
 
-  if (status === "loading") return <PageLoader fullscreen label={`Memuat ${BRAND.name}...`} />;
+  if (status === "loading") return <PageLoader fullscreen label={UI.loadingApp} />;
   if (status === "authenticated") {
     const from = fromState(location.state);
     if (activationStep(user)) return <Navigate to={ROUTES.aktivasi} replace state={{ from }} />;
@@ -46,7 +46,7 @@ export function GuestOnly() {
       const target = from && !from.startsWith("/portal") ? from : ROUTES.walikelas;
       return <Navigate to={target} replace />;
     }
-    if (user?.role === "STUDENT" && !ready) return <PageLoader fullscreen label="Menyiapkan portal..." />;
+    if (user?.role === "STUDENT" && !ready) return <PageLoader fullscreen label={UI.preparingPortal} />;
     return <Navigate to={portalTarget(studentStatus, from)} replace />;
   }
   return <Outlet />;
@@ -55,22 +55,24 @@ export function GuestOnly() {
 /**
  * Guard khusus portal Wali Kelas (/walikelas/*).
  * - Belum login -> diarahkan ke /masuk (membawa state.from).
- * - Login sebagai siswa -> ditolak dan diarahkan ke /portal.
+ * - Belum aktivasi -> ke /aktivasi dulu.
+ * - Login dengan peran selain Wali Kelas -> ditolak dan diarahkan ke /portal.
  * - Login sebagai Wali Kelas -> diizinkan masuk.
  */
 export function RequireWali() {
   const { status, user } = useAuth();
   const location = useLocation();
 
-  if (status === "loading") return <PageLoader fullscreen label={`Memuat ${BRAND.name}...`} />;
+  if (status === "loading") return <PageLoader fullscreen label={UI.loadingApp} />;
   const from = location.pathname + location.search;
 
   if (status === "guest") {
     return <Navigate to={ROUTES.masuk} replace state={{ from }} />;
   }
+  if (activationStep(user)) return <Navigate to={ROUTES.aktivasi} replace state={{ from }} />;
 
-  // Jika akun siswa mencoba mengakses area wali kelas, kembalikan ke portal siswa
-  if (user?.role === "STUDENT") {
+  // Area ini khusus Wali Kelas; peran lain kembali ke portal
+  if (user?.role !== "WALI_KELAS") {
     return <Navigate to={ROUTES.portal} replace />;
   }
 

@@ -60,8 +60,16 @@ function subjectStats(exam: ExamId, settings: PlanSettings | null, days: Record<
   return examSubjects(exam, settings).map(({ subject, name }) => {
     let answered = 0;
     let correct = 0;
-    for (const p of plan) if (p.subject === subject) (answered += p.questions), (correct += p.correct ?? 0);
-    for (const f of free) if (f.subject === subject) (answered += f.questions), (correct += f.correct);
+    for (const p of plan) {
+      if (p.subject !== subject) continue;
+      answered += p.questions;
+      correct += p.correct ?? 0;
+    }
+    for (const f of free) {
+      if (f.subject !== subject) continue;
+      answered += f.questions;
+      correct += f.correct;
+    }
     return { subject, name, answered, correct, accuracy: answered ? Math.round((correct / answered) * 100) : null };
   });
 }

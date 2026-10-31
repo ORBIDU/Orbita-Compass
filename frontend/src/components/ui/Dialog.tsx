@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
+import { UI } from "@/content/common";
 
 interface DialogProps {
   title: string;
@@ -33,7 +34,7 @@ export default function Dialog({
   widthClass = "max-w-[560px]",
   icon,
   showClose = true,
-  closeLabel = "Tutup",
+  closeLabel = UI.close,
   busy = false,
 }: DialogProps) {
   const titleId = useId();

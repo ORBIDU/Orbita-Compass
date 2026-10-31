@@ -244,6 +244,12 @@ export async function startPractice(
   if (bank.length === 0) throw new ApiError(404, PRACTICE_SERVER_MSG.noBank);
   const now = store.now();
   const sessions = await store.loadSessions();
+  // Sesi latihan bebas subtes yang sama yang belum selesai dilanjutkan, supaya
+  // membuka link latihan berkali-kali tidak menumpuk sesi kosong.
+  const unfinished = Object.values(sessions)
+    .filter((s) => !s.planPracticeId && !s.finishedAt && s.exam === req.exam && s.subject === req.subject)
+    .sort((x, y) => y.startedAt.localeCompare(x.startedAt))[0];
+  if (unfinished) return sessionView(unfinished, practiceTitle(req.exam, req.subject));
   const session: PracticeSession = {
     id: `bebas-${req.exam}-${now.getTime().toString(36)}`,
     exam: req.exam,

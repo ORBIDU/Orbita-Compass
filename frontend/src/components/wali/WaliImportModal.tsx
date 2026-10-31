@@ -6,9 +6,11 @@ interface WaliImportModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess?: () => void;
+  /** Nama kelas dari profil wali, mis. "XI IPA 2". */
+  kelas?: string;
 }
 
-export default function WaliImportModal({ isOpen, onClose, onSuccess }: WaliImportModalProps) {
+export default function WaliImportModal({ isOpen, onClose, onSuccess, kelas }: WaliImportModalProps) {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [semester, setSemester] = useState("Semester 5 (Ganjil)");
   const [tahunAjaran, setTahunAjaran] = useState("2026 / 2027");
@@ -61,7 +63,7 @@ export default function WaliImportModal({ isOpen, onClose, onSuccess }: WaliImpo
               Impor Rekap Nilai Rapor
             </h3>
             <p className="text-xs text-prose-dim">
-              Unggah format template Excel e-Rapor kelas XI IPA 2
+              Unggah format template Excel e-Rapor{kelas ? ` kelas ${kelas}` : ""}
             </p>
           </div>
           <button

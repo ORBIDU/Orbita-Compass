@@ -49,12 +49,12 @@ export default function WaliHeader({ wali, onLogout }: WaliHeaderProps) {
           <Link to={ROUTES.walikelas} className="flex items-center gap-2">
             <Logo />
           </Link>
-          <div className="h-5 w-px bg-rim-soft" aria-hidden="true" />
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-space-2 sm:text-sm">
+          <div className="hidden h-5 w-px bg-rim-soft sm:block" aria-hidden="true" />
+          <div className="hidden items-center gap-2 sm:flex">
+            <span className="whitespace-nowrap text-xs font-bold text-space-2 sm:text-sm">
               Wali Kelas
             </span>
-            <span className="rounded-full bg-tint-blue-bg px-2.5 py-0.5 text-[11px] font-semibold text-tint-blue-fg">
+            <span className="whitespace-nowrap rounded-full bg-tint-blue-bg px-2.5 py-0.5 text-[11px] font-semibold text-tint-blue-fg">
               {wali.kelas}
             </span>
           </div>
@@ -67,7 +67,7 @@ export default function WaliHeader({ wali, onLogout }: WaliHeaderProps) {
             end
             className={({ isActive }) =>
               [
-                "flex h-full items-center gap-2 border-b-2 px-3 text-sm transition-colors",
+                "flex h-full items-center gap-2 border-b-2 px-2.5 text-sm transition-colors sm:px-3",
                 isActive
                   ? "border-orbit-1 font-semibold text-orbit-1"
                   : "border-transparent font-medium text-prose hover:text-space-2",
@@ -75,13 +75,13 @@ export default function WaliHeader({ wali, onLogout }: WaliHeaderProps) {
             }
           >
             <LayoutDashboard size={18} aria-hidden="true" />
-            <span>Beranda</span>
+            <span className="sr-only lg:not-sr-only">Beranda</span>
           </NavLink>
           <NavLink
             to={ROUTES.walikelasSiswa}
             className={({ isActive }) =>
               [
-                "flex h-full items-center gap-2 border-b-2 px-3 text-sm transition-colors",
+                "flex h-full items-center gap-2 border-b-2 px-2.5 text-sm transition-colors sm:px-3",
                 isActive
                   ? "border-orbit-1 font-semibold text-orbit-1"
                   : "border-transparent font-medium text-prose hover:text-space-2",
@@ -89,7 +89,7 @@ export default function WaliHeader({ wali, onLogout }: WaliHeaderProps) {
             }
           >
             <Users size={18} aria-hidden="true" />
-            <span>Data Siswa</span>
+            <span className="sr-only lg:not-sr-only">Data Siswa</span>
           </NavLink>
         </nav>
 
@@ -147,6 +147,7 @@ export default function WaliHeader({ wali, onLogout }: WaliHeaderProps) {
               className="flex items-center gap-2.5 rounded-full transition-colors hover:bg-surface-soft sm:h-11 sm:rounded-[14px] sm:border sm:border-rim-soft sm:bg-white sm:pl-1.5 sm:pr-2.5"
             >
               <Avatar
+                src={wali.avatarUrl ?? null}
                 initials={wali.initials}
                 className="h-10 w-10 text-[13px] sm:h-8 sm:w-8 bg-gradient-sun text-white font-bold"
               />

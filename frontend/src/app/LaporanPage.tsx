@@ -13,6 +13,7 @@ import PageLoader from "@/components/ui/PageLoader";
 import { PanelError } from "@/components/ui/PanelState";
 import ReviewList from "@/components/pengerjaan/ReviewList";
 import { usePageTitle } from "@/lib/usePageTitle";
+import { UI } from "@/content/common";
 
 /**
  * Subtes terendah dan terkuat (relatif terhadap skor maksimum), dihitung dari
@@ -58,7 +59,7 @@ export default function LaporanPage() {
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-4 px-4 pb-8 pt-4 sm:px-6 lg:gap-[22px] lg:px-10 lg:pb-12 lg:pt-7">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between lg:gap-8">
           <div className="flex flex-col gap-1.5 lg:gap-2">
-            <nav aria-label="Breadcrumb" className="hidden items-center gap-2 text-[13px] text-prose-dim lg:flex">
+            <nav aria-label={UI.breadcrumb} className="hidden items-center gap-2 text-[13px] text-prose-dim lg:flex">
               <span>{HASIL.breadcrumbSection}</span>
               <ChevronRight size={12} strokeWidth={2.4} aria-hidden="true" className="text-prose-faint" />
               <Link to={backTo} className="rounded hover:text-space-2 hover:underline">

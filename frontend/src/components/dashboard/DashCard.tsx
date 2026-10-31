@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Lock, RotateCcw, type LucideIcon } from "lucide-react";
 import { LOCKED } from "@/content/dashboard";
-import { LOAD_ERROR, RETRY } from "@/content/common";
+import { LOAD_ERROR, RETRY, UI } from "@/content/common";
 
 interface DashCardProps {
   id: string;
@@ -112,7 +112,7 @@ export function LockedPanel({ description, lines = 4 }: { description: string; l
 /** Kerangka saat data kartu sedang dimuat. */
 export function CardSkeleton({ lines = 3 }: { lines?: number }) {
   return (
-    <div role="status" aria-label="Memuat" className="flex flex-1 animate-pulse flex-col gap-3">
+    <div role="status" aria-label={UI.loading} className="flex flex-1 motion-safe:animate-pulse flex-col gap-3">
       <span className="h-20 rounded-2xl bg-surface-soft" />
       {Array.from({ length: lines }, (_, i) => (
         <span key={i} className="h-12 rounded-[14px] bg-surface-soft" />

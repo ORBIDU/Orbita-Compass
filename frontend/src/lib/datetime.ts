@@ -17,9 +17,13 @@ export function formatLongDate(date: Date): string {
   return new Intl.DateTimeFormat("id-ID", { weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(date);
 }
 
-/** "12 Sep 2026" */
-export function formatShortDate(iso: string): string {
-  return new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date(iso));
+/**
+ * "2 September 2026": satu format untuk semua tanggal "Diperbarui …",
+ * "Dianalisis …", dan tanggal lahir. Tanggal tanpa jam ("2009-05-15") dibaca
+ * sebagai tanggal lokal, bukan UTC.
+ */
+export function formatDate(iso: string): string {
+  return new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "long", year: "numeric" }).format(new Date(iso.length === 10 ? `${iso}T00:00:00` : iso));
 }
 
 /** "26 Sep" (tanpa tahun) */

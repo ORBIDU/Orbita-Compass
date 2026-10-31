@@ -1,4 +1,5 @@
 import type { UjianKey } from "./navigation";
+import type { PlanMinutes, PlanSettingsInput } from "@/types/actionPlan";
 
 // Pengaturan ukuran latihan dan waktu tryout, di satu tempat.
 
@@ -20,3 +21,11 @@ export const sessionMinutes = (exam: UjianKey) => Math.ceil((SESSION_SIZE * SECO
  * layar. Batas yang lebih panjang dari durasi subtes dilewati.
  */
 export const TIME_WARNING_SECONDS = [300, 60];
+
+/** Jumlah latihan Action Plan per hari belajar, menurut waktu belajar (menit). */
+export const PRACTICES_PER_DAY: Record<PlanMinutes, number> = { 30: 2, 60: 3, 90: 4 };
+
+/** Perkiraan jumlah latihan per minggu (ditampilkan di jendela Atur rencana). */
+export function practicesPerWeek(input: Pick<PlanSettingsInput, "studyDays" | "minutesPerDay">): number {
+  return input.studyDays.length * PRACTICES_PER_DAY[input.minutesPerDay];
+}

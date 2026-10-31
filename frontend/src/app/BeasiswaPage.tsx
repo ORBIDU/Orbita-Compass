@@ -18,6 +18,7 @@ import ScholarshipCard from "@/components/beasiswa/ScholarshipCard";
 import ScholarshipDialog from "@/components/beasiswa/ScholarshipDialog";
 import { useSavedScholarships } from "@/components/beasiswa/useSavedScholarships";
 import { usePageTitle } from "@/lib/usePageTitle";
+import { UI } from "@/content/common";
 
 /**
  * Explore Beasiswa (/portal/beasiswa), sesuai docs/design/portal/Portal-Beasiswa.dc.html
@@ -41,7 +42,7 @@ export default function BeasiswaPage() {
   const studentPaths = tested ? (paths.data ?? null) : null;
   const matchUnavailable = !tested ? FILTERS.matchUnavailable.baru : !paths.loading && !paths.data ? FILTERS.matchUnavailable.noCompass : null;
   // Selama "Cocok dengan jalurku" belum bisa dipakai, filternya diabaikan.
-  const effective: ScholarshipFilters = matchUnavailable ? { ...filters, matchOnly: false } : filters;
+  const effective: ScholarshipFilters = useMemo(() => (matchUnavailable ? { ...filters, matchOnly: false } : filters), [matchUnavailable, filters]);
 
   const all = useMemo(() => scholarships.data ?? [], [scholarships.data]);
   const results = useMemo(() => applyFilters(all, effective, studentPaths, saved.ids), [all, effective, studentPaths, saved.ids]);
@@ -64,7 +65,7 @@ export default function BeasiswaPage() {
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-4 px-4 pb-8 pt-4 sm:px-6 lg:gap-6 lg:px-10 lg:pb-12 lg:pt-7">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between lg:gap-8">
           <div className="flex max-w-[720px] flex-col gap-1.5 lg:gap-2">
-            <nav aria-label="Breadcrumb" className="hidden items-center gap-2 text-[13px] text-prose-dim lg:flex">
+            <nav aria-label={UI.breadcrumb} className="hidden items-center gap-2 text-[13px] text-prose-dim lg:flex">
               <Link to={ROUTES.portal} className="rounded hover:text-space-2 hover:underline">
                 {BEASISWA_HEADER.breadcrumbHome}
               </Link>

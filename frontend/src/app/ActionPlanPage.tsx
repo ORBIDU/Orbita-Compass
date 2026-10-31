@@ -18,6 +18,7 @@ import PlanCalendar from "@/components/actionPlan/PlanCalendar";
 import DayPanel from "@/components/actionPlan/DayPanel";
 import PlanDialog from "@/components/actionPlan/PlanDialog";
 import { usePageTitle } from "@/lib/usePageTitle";
+import { UI } from "@/content/common";
 
 /**
  * Action Plan (/portal/action-plan), sesuai docs/design/portal/Portal-ActionPlan.dc.html
@@ -127,7 +128,7 @@ export default function ActionPlanPage() {
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-4 px-4 pb-8 pt-4 sm:px-6 lg:gap-6 lg:px-10 lg:pb-12 lg:pt-7">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between lg:gap-8">
           <div className="flex max-w-[700px] flex-col gap-1.5 lg:gap-2">
-            <nav aria-label="Breadcrumb" className="hidden items-center gap-2 text-[13px] text-prose-dim lg:flex">
+            <nav aria-label={UI.breadcrumb} className="hidden items-center gap-2 text-[13px] text-prose-dim lg:flex">
               <Link to={ROUTES.portal} className="rounded hover:text-space-2 hover:underline">
                 {AP_HEADER.breadcrumbHome}
               </Link>

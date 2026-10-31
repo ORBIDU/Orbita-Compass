@@ -2,7 +2,7 @@ import { useAuth } from "@/context/AuthContext";
 import PageLoader from "@/components/ui/PageLoader";
 import PortalLayout from "./PortalLayout";
 import PublicLayout from "./PublicLayout";
-import { BRAND } from "@/config/brand";
+import { UI } from "@/content/common";
 
 /**
  * Layout yang mengikuti status login: belum login → layout publik,
@@ -11,6 +11,6 @@ import { BRAND } from "@/config/brand";
  */
 export default function AdaptiveLayout() {
   const { status } = useAuth();
-  if (status === "loading") return <PageLoader fullscreen label={`Memuat ${BRAND.name}...`} />;
+  if (status === "loading") return <PageLoader fullscreen label={UI.loadingApp} />;
   return status === "authenticated" ? <PortalLayout /> : <PublicLayout />;
 }

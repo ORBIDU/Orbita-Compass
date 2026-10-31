@@ -1,10 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { PERSIAPAN_ITEMS, ROUTES } from "@/config/navigation";
 import { useSkdRelevance } from "@/lib/useSkdRelevant";
-
-export const SKD_MISMATCH = "Kurang selaras dengan profilmu";
-
-export const SOON_LABEL = "Segera hadir";
+import { PERSIAPAN_LABELS } from "@/content/common";
 
 /**
  * Daftar pilihan Persiapan (Siap SNBP s.d. Siap Mandiri). Dipakai dropdown
@@ -28,12 +25,12 @@ export default function PersiapanList() {
               <span className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm font-semibold text-space-2">
                 {item.label}
                 {!item.to && (
-                  <span className="rounded-full bg-surface-track px-2 py-0.5 text-[10px] font-semibold text-prose">{SOON_LABEL}</span>
+                  <span className="rounded-full bg-surface-track px-2 py-0.5 text-[10px] font-semibold text-prose">{PERSIAPAN_LABELS.soon}</span>
                 )}
               </span>
               <span className="block text-xs text-prose-dim">{item.description}</span>
               {mismatch && item.to === ROUTES.persiapanUjian("skd") && (
-                <span className="block text-xs font-semibold text-tint-orange-fg">{SKD_MISMATCH}</span>
+                <span className="block text-xs font-semibold text-tint-orange-fg">{PERSIAPAN_LABELS.skdMismatch}</span>
               )}
             </span>
           </>

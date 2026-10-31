@@ -16,7 +16,7 @@ function EmptyNote({ title, body, action, onAction }: { title: string; body: str
   );
 }
 
-/** Tab Performance: skor terakhir, akurasi, subtes terlemah, tren tryout, skor per subtes. */
+/** Tab Performa: skor terakhir, akurasi, subtes terlemah, tren tryout, skor per subtes. */
 export default function PerformanceTab({ overview, onTab }: { overview: ExamOverview; onTab: (tab: "latihan" | "tryout") => void }) {
   const copy = EXAM_COPY[overview.exam];
   const done = overview.tryouts.filter((t) => t.result);

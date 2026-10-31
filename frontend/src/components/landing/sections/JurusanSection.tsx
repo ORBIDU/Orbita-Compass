@@ -48,7 +48,7 @@ export default function JurusanSection() {
             <p className="py-10 text-center text-sm text-prose">{JURUSAN_SECTION.empty}</p>
           ) : (
             // Kerangka sementara selama data dimuat (tinggi sama dengan kartu).
-            <div aria-hidden="true" className="h-[330px] animate-pulse rounded-[18px] bg-white/60 lg:h-[340px]" />
+            <div aria-hidden="true" className="h-[330px] motion-safe:animate-pulse rounded-[18px] bg-white/60 lg:h-[340px]" />
           )}
         </div>
 

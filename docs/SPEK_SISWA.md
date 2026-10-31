@@ -257,7 +257,7 @@ Acuan desain: `docs/design/portal/Portal-Profil.dc.html`. Teks di `frontend/src/
 - [x] Fase 6 — Action Plan
 - [x] Fase 7 — Persiapan
 - [x] Fase 8 — Profil
-- [ ] Fase 9 — Finishing: cek tampilan HP, empty state, konsistensi angka antarhalaman, rapikan API_CONTRACT.md
+- [x] Fase 9 — Finishing: cek tampilan HP, empty state, konsistensi angka antarhalaman, rapikan API_CONTRACT.md (Tahap 9A: build backend bersih, halaman error, sesi berakhir, kontras, judul tab; Tahap 9B: konsistensi teks, aset, bersih-bersih kode)
 
 ## Sebelum rilis
 Hal yang sengaja ditunda dan wajib dibereskan sebelum ORBIDU dipakai siswa:
@@ -274,3 +274,6 @@ Hal yang sengaja ditunda dan wajib dibereskan sebelum ORBIDU dipakai siswa:
 - Rumus rasionalisasi SNBP dan skor tryout (sekarang perkiraan sementara) disetujui tim, dan latihan/tryout memakai endpoint backend (API_CONTRACT 12.5–12.6) supaya kunci jawaban tidak pernah ada di browser.
 - Data kondisi keluarga dan kondisi khusus di Profil baru boleh diisi data asli siswa setelah celah keamanan di `BACKEND_MAP.md` bagian 6 ditutup (endpoint admin terbuka tanpa cek peran, `passwordHash` terkirim di respons). Lihat `docs/API_CONTRACT.md` bagian 13.4.
 - Profil memakai endpoint backend untuk nama panggilan, foto, dan ganti password (`docs/API_CONTRACT.md` bagian 13.3), bukan penyimpanan browser.
+- `og:url` di `frontend/index.html` diisi setelah subdomain demo tersambung. `og:image` menunggu gambar 1200×630 dari Riza.
+- Bank soal contoh beserta kunci jawabannya masih ikut di build mode backend (`frontend/src/data/practiceServer.ts` dan `frontend/src/data/soal/`). Hilang setelah latihan dan tryout memakai endpoint backend (`docs/API_CONTRACT.md` 12.5–12.6).
+- Font aksen Pecita sementara dimatikan (memakai Caveat). Nyalakan lagi setelah file dan lisensinya ada; caranya di komentar `frontend/src/styles/fonts.css`.

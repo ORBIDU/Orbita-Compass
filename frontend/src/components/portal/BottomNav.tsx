@@ -3,6 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { MOBILE_NAV, PERSIAPAN_ICON, PERSIAPAN_LABEL, ROUTES } from "@/config/navigation";
 import BottomSheet from "@/components/ui/BottomSheet";
 import PersiapanList from "./PersiapanList";
+import { UI } from "@/content/common";
 
 const itemClass = (active: boolean) =>
   `flex min-w-0 flex-col items-center justify-center gap-1 text-[11px] ${
@@ -32,7 +33,7 @@ export default function BottomNav() {
   return (
     <>
       <nav
-        aria-label="Menu portal"
+        aria-label={UI.portalMenu}
         data-bottom-nav
         className="fixed inset-x-0 bottom-0 z-40 border-t border-rim-soft bg-white pb-[env(safe-area-inset-bottom)] shadow-nav-up lg:hidden"
       >

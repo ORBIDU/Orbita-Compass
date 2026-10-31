@@ -21,6 +21,7 @@ const brand = {
 
 // Warna ilustrasi maskot dan planet (dipakai SVG lewat kelas fill-/stroke-/stop-).
 const mascot = {
+  // light/dark/glow dipakai lewat theme() di gradien SVG (MascotFigure, HeroVisual, AuthVideoSlot).
   light: "#8CC8FF",
   mid: "#1F7BFF",
   dark: "#0445B8",
@@ -30,8 +31,6 @@ const mascot = {
   cheek: "#FF8FB1",
   orbit: "#6E9BEA",
   "orbit-soft": "#8FB8FF",
-  "planet-1": "#22397A",
-  "planet-3": "#0C1530",
 };
 
 const gradient = (from, to) => `linear-gradient(135deg, ${from} 0%, ${to} 100%)`;
@@ -57,12 +56,12 @@ export default {
           muted: "#6B7280",
           faint: "#9CA3AF",
         },
-        // Garis pembatas: DEFAULT untuk border kartu/input, soft untuk pemisah tipis
+        // Garis pembatas: DEFAULT untuk border kartu/input, soft untuk border bawaan semua elemen (styles/theme.css)
         line: {
           DEFAULT: "#E5E7EB",
           soft: "rgba(0, 0, 0, 0.08)",
         },
-        // Warna status (kalender, badge, validasi)
+        // Warna status (validasi, KPI dan status impor portal Wali Kelas)
         success: "#22C55E",
         warning: "#F1AD00",
         danger: "#EF4444",

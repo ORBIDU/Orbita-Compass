@@ -20,6 +20,7 @@ import {
 import { useAsync } from "@/lib/useAsync";
 import { getWaliStudentDetail } from "@/services/waliService";
 import PageLoader from "@/components/ui/PageLoader";
+import { PanelError } from "@/components/ui/PanelState";
 import Avatar from "@/components/ui/Avatar";
 import EmptyState from "@/components/ui/EmptyState";
 import { ROUTES } from "@/config/navigation";
@@ -29,11 +30,18 @@ type TabKey = "profil" | "akademik" | "prestasi" | "bk";
 export default function WaliStudentDetailPage() {
   const { id } = useParams<{ id: string }>();
   const studentId = Number(id) || 1;
-  const { data: student, loading } = useAsync(() => getWaliStudentDetail(studentId), [studentId]);
+  const { data: student, loading, error, reload } = useAsync(() => getWaliStudentDetail(studentId), [studentId]);
 
   const [activeTab, setActiveTab] = useState<TabKey>("profil");
   const [selectedSemester, setSelectedSemester] = useState<number>(5);
 
+  if (error) {
+    return (
+      <div className="mx-auto w-full max-w-[1240px] px-4 pt-6 sm:px-6 lg:px-8">
+        <PanelError onRetry={reload} />
+      </div>
+    );
+  }
   if (loading || !student) return <PageLoader fullscreen />;
 
   // Kalkulasi rata-rata semester terpilih
@@ -82,6 +90,7 @@ export default function WaliStudentDetailPage() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
               <Avatar
+                src={null}
                 initials={student.nama.slice(0, 2).toUpperCase()}
                 className={`h-16 w-16 text-lg font-bold text-white shadow-card ${
                   student.jk === "L" ? "bg-orbit-1" : "bg-sun-1"

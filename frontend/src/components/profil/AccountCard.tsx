@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle2, Info, Trophy } from "lucide-react";
 import { ROUTES } from "@/config/navigation";
 import { AKUN } from "@/content/profil";
-import { formatDate } from "@/lib/profil";
+import { formatDate } from "@/lib/datetime";
 
 interface AccountCardProps {
   email: string;

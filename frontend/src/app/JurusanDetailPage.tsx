@@ -32,6 +32,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import EmptyState from "@/components/ui/EmptyState";
 import PageLoader from "@/components/ui/PageLoader";
 import { usePageTitle } from "@/lib/usePageTitle";
+import { UI } from "@/content/common";
 
 // Ikon dan warna kotak ikon prospek karier (warna berputar seperti desain).
 const CAREER_ICON: Record<CareerIcon, LucideIcon> = {
@@ -180,7 +181,7 @@ export default function JurusanDetailPage() {
     <div ref={scrollRef} className="flex-1 overflow-y-auto bg-white">
       <div className={`${CONTAINER} flex flex-col gap-6 pb-16 pt-6 lg:gap-8 lg:pb-24 lg:pt-8`}>
         {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="flex min-w-0 items-center gap-2.5 text-sm text-prose-dim">
+        <nav aria-label={UI.breadcrumb} className="flex min-w-0 items-center gap-2.5 text-sm text-prose-dim">
           <Link to={homeTo} aria-label={T.breadcrumbHome} className="flex shrink-0 items-center hover:text-space-2">
             <House size={18} strokeWidth={2} />
           </Link>

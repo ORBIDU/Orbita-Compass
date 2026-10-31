@@ -9,6 +9,7 @@ import { BRAND } from "@/config/brand";
 import Logo from "@/components/ui/Logo";
 import EmptyState from "@/components/ui/EmptyState";
 import PortalNav from "./PortalNav";
+import { HEADER_MENU } from "@/content/common";
 
 interface PortalHeaderProps {
   user: DisplayUser;
@@ -46,15 +47,15 @@ function NotificationMenu() {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-controls={panelId}
-        aria-label="Notifikasi"
+        aria-label={HEADER_MENU.notifications}
         className={iconButton}
       >
         <Bell size={20} aria-hidden="true" />
       </button>
       {open && (
         <div id={panelId} className="absolute right-0 top-full z-50 mt-2 w-[min(320px,calc(100vw-2rem))] rounded-2xl bg-white shadow-card-hover ring-1 ring-rim-soft">
-          <p className="border-b border-rim-soft px-4 py-3 text-sm font-semibold text-space-2">Notifikasi</p>
-          <EmptyState icon={Bell} title="Belum ada notifikasi" description="Pengingat Action Plan dan hasil tryout akan muncul di sini." className="py-8" />
+          <p className="border-b border-rim-soft px-4 py-3 text-sm font-semibold text-space-2">{HEADER_MENU.notifications}</p>
+          <EmptyState icon={Bell} title={HEADER_MENU.notificationsEmpty} description={HEADER_MENU.notificationsEmptyBody} className="py-8" />
         </div>
       )}
     </div>
@@ -73,7 +74,7 @@ function AccountMenu({ user, onLogout }: PortalHeaderProps) {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-controls={panelId}
-        aria-label={`Menu akun ${user.name}`}
+        aria-label={HEADER_MENU.account(user.name)}
         className="flex items-center gap-2.5 rounded-full transition-colors hover:bg-surface-soft nav:h-12 nav:rounded-[14px] nav:border nav:border-rim-soft nav:bg-white nav:pl-1.5 nav:pr-2.5"
       >
         <Avatar src={user.avatarUrl} initials={user.initials} className="h-11 w-11 text-[13px] nav:h-9 nav:w-9" />
@@ -92,13 +93,13 @@ function AccountMenu({ user, onLogout }: PortalHeaderProps) {
           </div>
           <div className="mt-1 flex flex-col">
             <Link to={ROUTES.profil} className={`${menuItem} text-space-1`}>
-              <UserRound size={18} aria-hidden="true" /> Profil
+              <UserRound size={18} aria-hidden="true" /> {HEADER_MENU.profile}
             </Link>
             <Link to={ROUTES.jurusan} className={`${menuItem} text-space-1`}>
-              <Search size={18} aria-hidden="true" /> Explore Jurusan
+              <Search size={18} aria-hidden="true" /> {HEADER_MENU.explore}
             </Link>
             <button type="button" onClick={onLogout} className={`${menuItem} text-alert-fg`}>
-              <LogOut size={18} aria-hidden="true" /> Keluar
+              <LogOut size={18} aria-hidden="true" /> {HEADER_MENU.logout}
             </button>
           </div>
         </div>

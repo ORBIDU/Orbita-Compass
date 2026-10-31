@@ -3,7 +3,7 @@ import { ArrowRight, ChevronRight, Compass } from "lucide-react";
 import { ROUTES } from "@/config/navigation";
 import { BIDANG, COVER_CLASSES } from "@/config/bidang";
 import { COMPASS, LOCKED } from "@/content/dashboard";
-import { formatShortDate } from "@/lib/datetime";
+import { formatDate } from "@/lib/datetime";
 import type { AsyncState } from "@/lib/useAsync";
 import type { CompassHighlights } from "@/types/dashboard";
 import FitBadge from "@/components/jurusan/FitBadge";
@@ -88,8 +88,8 @@ export default function CompassCard({ locked, state }: { locked: boolean; state:
   const aside =
     !locked && state.data ? (
       <span className="shrink-0 text-xs text-prose-dim lg:text-[13px]">
-        <span className="lg:hidden">{formatShortDate(state.data.analyzedAt)}</span>
-        <span className="hidden lg:inline">{COMPASS.updated(formatShortDate(state.data.analyzedAt))}</span>
+        <span className="lg:hidden">{formatDate(state.data.analyzedAt)}</span>
+        <span className="hidden lg:inline">{COMPASS.updated(formatDate(state.data.analyzedAt))}</span>
       </span>
     ) : undefined;
 

@@ -2,6 +2,7 @@ import { useAsync } from "@/lib/useAsync";
 import { useAuth } from "@/context/AuthContext";
 import { getWaliDashboard } from "@/services/waliService";
 import PageLoader from "@/components/ui/PageLoader";
+import { PanelError } from "@/components/ui/PanelState";
 import WaliHero from "@/components/wali/WaliHero";
 import WaliKpiCards from "@/components/wali/WaliKpiCards";
 import WaliDistribusiChart from "@/components/wali/WaliDistribusiChart";
@@ -12,16 +13,16 @@ import WaliBkNotificationCard from "@/components/wali/WaliBkNotificationCard";
 
 export default function WaliDashboardPage() {
   const { user } = useAuth();
-  const { data, loading, error } = useAsync(() => getWaliDashboard(), []);
+  const { data, loading, error, reload } = useAsync(() => getWaliDashboard(), []);
 
-  if (loading || !data) return <PageLoader fullscreen />;
   if (error) {
     return (
-      <div className="flex h-full items-center justify-center p-6 text-center">
-        <p className="text-danger font-medium">Gagal memuat data dashboard wali kelas.</p>
+      <div className="mx-auto w-full max-w-[1240px] px-4 pt-6 sm:px-6 lg:px-8">
+        <PanelError onRetry={reload} />
       </div>
     );
   }
+  if (loading || !data) return <PageLoader fullscreen />;
 
   const wali = user ? { ...data.wali, name: user.name } : data.wali;
 

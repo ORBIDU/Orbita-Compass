@@ -1,10 +1,17 @@
 /*
  * Poppins (font utama) dan Caveat dimuat dari Google Fonts di index.html.
  *
- * Pecita (font aksen) di-host sendiri. Taruh file-nya di src/assets/fonts/
- * dengan nama Pecita.woff2 dan/atau Pecita.otf. Selama file belum ada,
- * kelas `font-accent` otomatis memakai Caveat (Google Fonts) sebagai cadangan.
+ * Pecita (font aksen) SEMENTARA DIMATIKAN sampai file dan lisensinya ada.
+ * Selama dimatikan, kelas `font-accent` memakai Caveat (tailwind.config.js),
+ * dan build tidak lagi memberi peringatan file Pecita yang tidak ditemukan.
+ *
+ * Cara menyalakan lagi:
+ * 1. Taruh file di src/assets/fonts/ dengan nama Pecita.woff2 (dan/atau
+ *    Pecita.otf; hapus baris format yang filenya tidak ada).
+ * 2. Hapus tanda komentar pada blok @font-face di bawah.
+ * 3. Jalankan `npm run build` dan pastikan tidak ada peringatan Pecita.
  */
+/*
 @font-face {
   font-family: "Pecita";
   src:
@@ -14,3 +21,4 @@
   font-style: normal;
   font-display: swap;
 }
+*/

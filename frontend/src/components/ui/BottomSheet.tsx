@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
+import { UI } from "@/content/common";
 
 interface BottomSheetProps {
   title: string;
@@ -17,7 +18,7 @@ const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), selec
  * Lembar dari bawah layar untuk HP/tablet (<1024px). Tutup lewat tombol X,
  * klik latar, atau Escape; fokus tetap di dalam lalu kembali ke pembuka.
  */
-export default function BottomSheet({ title, onClose, children, footer, closeLabel = "Tutup" }: BottomSheetProps) {
+export default function BottomSheet({ title, onClose, children, footer, closeLabel = UI.close }: BottomSheetProps) {
   const titleId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
   const onCloseRef = useRef(onClose);
