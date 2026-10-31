@@ -10,7 +10,7 @@ export const getUniversities = async (req: Request, res: Response) => {
     const skip = (pageNum - 1) * limitNum;
 
     const where: any = {};
-    if (city) where.city = { contains: String(city) };
+    if (city) where.city = { contains: String(city), mode: 'insensitive' };
     if (type) where.type = String(type);
 
     const [universities, totalCount] = await Promise.all([
@@ -51,7 +51,7 @@ export const getMajors = async (req: Request, res: Response) => {
 
     const where: any = {};
     if (category) where.category = String(category);
-    if (search) where.name = { contains: String(search) };
+    if (search) where.name = { contains: String(search), mode: 'insensitive' };
 
     const [majors, totalCount] = await Promise.all([
       prisma.major.findMany({
@@ -126,7 +126,7 @@ export const getPracticeQuestions = async (req: Request, res: Response) => {
 
     const whereCondition: any = { category: catLower };
     if (catLower === 'mandiri' && campusStr) {
-      whereCondition.subtest = { contains: campusStr };
+      whereCondition.subtest = { contains: campusStr, mode: 'insensitive' };
     }
 
     let dbQuestions = await prisma.questionBank.findMany({
