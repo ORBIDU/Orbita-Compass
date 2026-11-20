@@ -18,6 +18,8 @@ import { BRAND } from "@/config/brand";
 export const ROUTES = {
   landing: "/",
   jurusan: "/jurusan",
+  untukSekolah: "/untuk-sekolah",
+  tentangKami: "/tentang-kami",
   jurusanDetail: (id: string) => `/jurusan/${id}`,
   masuk: "/masuk",
   /** Login pertama: ganti password awal + persetujuan (SPEK bagian 3). */

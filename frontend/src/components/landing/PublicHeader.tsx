@@ -8,7 +8,8 @@ import { useDismiss } from "@/lib/useDismiss";
 import { CONTAINER, pillClasses } from "./primitives";
 import { useLandingNav } from "./useLandingNav";
 
-const ITEM = "flex items-center rounded-full px-4 py-2 text-[15px] transition-colors xl:px-5";
+// Di 1024–1279px menu dipadatkan supaya lima item tetap satu baris.
+const ITEM = "flex items-center whitespace-nowrap rounded-full px-3 py-2 text-sm transition-colors xl:px-5 xl:text-[15px]";
 const ITEM_ACTIVE = "bg-white font-semibold text-orbit-1 shadow-card ring-1 ring-rim-soft";
 const ITEM_IDLE = "font-medium text-prose hover:text-space-2";
 

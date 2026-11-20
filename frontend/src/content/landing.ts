@@ -18,9 +18,8 @@ export const HEADER = {
 
 /**
  * Menu navbar halaman publik (desain docs/design/publik).
- * Untuk Sekolah dan Latihan Soal ditambahkan saat halamannya dibuat (Tahap 10D),
- * halaman FAQ di Tahap 10E (sementara menuju section FAQ di beranda).
- * Tentang Kami menunggu desain.
+ * Latihan Soal ditambahkan saat halamannya dibuat (Tahap 10D), halaman FAQ di
+ * Tahap 10E (sementara menuju section FAQ di beranda).
  */
 export const NAV = {
   label: "Menu utama",
@@ -28,7 +27,9 @@ export const NAV = {
   close: "Tutup menu",
   items: [
     { label: "Beranda", to: ROUTES.landing },
+    { label: "Untuk Sekolah", to: ROUTES.untukSekolah },
     { label: "Eksplor Jurusan", to: ROUTES.jurusan },
+    { label: "Tentang Kami", to: ROUTES.tentangKami },
     { label: "FAQ", to: `${ROUTES.landing}#faq` },
   ],
 };
@@ -155,7 +156,7 @@ export type FooterLink = { label: string; to: string } | { label: string; whatsa
 
 export const FOOTER = {
   description: "Smart companion untuk membantu siswa memahami diri, menemukan arah, dan mengambil langkah menuju masa depan.",
-  // "Untuk Sekolah" ditambahkan di Tahap 10D, "Hubungi Kami" pindah ke /faq di Tahap 10E.
+  // "Hubungi Kami" pindah ke /faq di Tahap 10E.
   columns: [
     {
       title: "Perjalanan",
@@ -168,6 +169,8 @@ export const FOOTER = {
     {
       title: "Kolaborasi",
       links: [
+        { label: "Untuk Sekolah", to: ROUTES.untukSekolah },
+        { label: "Tentang Kami", to: ROUTES.tentangKami },
         { label: "FAQ", to: `${ROUTES.landing}#faq` },
         { label: "Hubungi Kami", whatsapp: "faq" },
       ],

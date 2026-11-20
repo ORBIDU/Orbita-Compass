@@ -32,7 +32,7 @@ Acuan desain: `docs/design/publik/` (Beranda, Untuk Sekolah, Eksplor Jurusan, La
 
 ### Keputusan Fase 10
 - **Navbar** di semua halaman publik (`PublicHeader`): logo, menu di tengah (Beranda, Untuk Sekolah, Eksplor Jurusan, Latihan Soal, FAQ), **Masuk** + **Berlangganan** di kanan. Kalau sudah login, keduanya diganti "Buka Portal" (wali kelas ke `/walikelas`). Di bawah lebar `lg` menu pindah ke panel hamburger.
-  - Menu hanya tampil kalau halamannya sudah ada. **Tentang Kami** disembunyikan sampai desainnya ada.
+  - Menu hanya tampil kalau halamannya sudah ada (Beranda, Untuk Sekolah, Eksplor Jurusan, Tentang Kami, FAQ). Latihan Soal menyusul di 10D.
 - Tombol **"Daftar"** di desain diganti **"Berlangganan"** (WhatsApp). Tidak ada pendaftaran mandiri.
 - Semua teks memakai **Poppins** (desain memakai Plus Jakarta Sans dan Inter di beberapa bagian).
 - Desain HP belum ada; tampilan HP disusun dari desain desktop. Tetap dicek di 360px, 768px, 1440px tanpa scroll horizontal.
@@ -41,7 +41,7 @@ Acuan desain: `docs/design/publik/` (Beranda, Untuk Sekolah, Eksplor Jurusan, La
 - Teks yang tidak sesuai kondisi produk diganti: klaim "Sumber Terpercaya & Teruji" selama bank soal masih contoh, nama lama "ORBITA", "Latihan Soal Mandiri" diberi label "Segera hadir".
 - Form "Kirim Pesan" di FAQ dikirim lewat WhatsApp (pesan terisi otomatis) sampai backend punya endpoint pesan (catat di `docs/API_CONTRACT.md`).
 - Tombol **"Ayo konsultasi!"** tetap menempel di pojok kanan bawah semua halaman publik (tidak ada di desain), tidak tampil di Masuk/Aktivasi dan portal.
-- Hero Beranda: dua meteor jatuh diagonal berulang (keluar dari hero lalu muncul lagi dari atas), jeda dan kecepatan berbeda. Semua animasi mati jika `prefers-reduced-motion`.
+- **Hero bergerak** di Beranda, Untuk Sekolah, dan Tentang Kami (meteor, orbit dan planet, bintang, awan, roket, matahari/bulan, gunung). Maskot dan siswa tidak diubah gambarnya. Semua animasi mati jika `prefers-reduced-motion` dan berhenti saat tidak terlihat di layar. Rinciannya di `docs/design/publik/README.md` bagian Interaksi.
 - Ilustrasi beranda diambil dari SVG desain ke `frontend/src/assets/publik/` (panel angkasa + meteor sebagai SVG, gedung sekolah + logo kampus sebagai WebP, siswa bingung sebagai SVG). Teks tetap HTML. Gelembung pertanyaan di HP disusun dalam grid di atas ilustrasi.
 - Lebar isi halaman publik mengikuti desain: margin tepi ±3,7% (maks. 64px), lebar isi maks. 1600px (`CONTAINER` di `components/landing/primitives.tsx`).
 
@@ -50,6 +50,9 @@ Acuan desain: `docs/design/publik/` (Beranda, Untuk Sekolah, Eksplor Jurusan, La
 - [x] 10B — Beranda sesuai desain baru (hero terang + meteor, Masalah, "Tenang Bifriends, ada ORBIDU", 3 kartu Perjalanan, CTA penutup). Section FAQ lama tetap di beranda sampai `/faq` jadi (10E). Carousel jurusan dan section Kenali/Compass/Action Plan lama dihapus.
 - [ ] 10C — Eksplor Jurusan (`/jurusan`) sesuai desain.
 - [ ] 10D — Untuk Sekolah (`/untuk-sekolah`) dan Latihan Soal (`/latihan-soal`).
+  - [x] Untuk Sekolah: hero bergerak (siswa di roket), kartu peran Siswa/Guru BK/Wali Kelas, "Apa yang Didapat Sekolah?", linimasa lima langkah dengan lanskap sekolah, CTA ke WhatsApp. Teks di `frontend/src/content/untukSekolah.ts`.
+  - [ ] Latihan Soal.
+- [x] Tentang Kami (`/tentang-kami`, belum ada desain; disusun dengan gaya yang sama): hero fajar bergerak, kenapa ORBIDU ada, empat prinsip, perjalanan lima langkah, CTA. Teks di `frontend/src/content/tentangKami.ts`, hanya berisi hal yang benar-benar ada di produk. Perlu ditinjau tim UI/UX dan diganti teks resmi kalau sudah ada.
 - [ ] 10E — FAQ (`/faq`) dan Hubungi Kami.
 
 ### Aturan lama yang tetap berlaku

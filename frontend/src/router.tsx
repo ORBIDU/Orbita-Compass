@@ -10,6 +10,8 @@ import ErrorPage from "@/app/ErrorPage";
 import { DaftarRedirect, GuestOnly, RequireAuth, RequireWali } from "@/routes/guards";
 
 const LandingPage = lazy(() => import("@/app/LandingPage"));
+const UntukSekolahPage = lazy(() => import("@/app/UntukSekolahPage"));
+const TentangKamiPage = lazy(() => import("@/app/TentangKamiPage"));
 const ProfilPage = lazy(() => import("@/app/ProfilPage"));
 
 const AuthPage = lazy(() => import("@/app/AuthPage"));
@@ -48,7 +50,19 @@ export const router = createBrowserRouter([
     children: [
       // ── Publik ──────────────────────────────────────────────────────────────
       // Beranda selalu memakai layout publik, juga untuk siswa yang sudah masuk.
-      { element: <PublicLayout />, children: [{ path: "/", element: <LandingPage />, errorElement: <ErrorPage inLayout /> }] },
+      {
+        element: <PublicLayout />,
+        children: [
+          {
+            errorElement: <ErrorPage inLayout />,
+            children: [
+              { path: "/", element: <LandingPage /> },
+              { path: "/untuk-sekolah", element: <UntukSekolahPage /> },
+              { path: "/tentang-kami", element: <TentangKamiPage /> },
+            ],
+          },
+        ],
+      },
       {
         // Satu halaman untuk tamu dan siswa: layout mengikuti status login.
         path: "/jurusan",

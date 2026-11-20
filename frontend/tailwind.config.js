@@ -106,6 +106,10 @@ export default {
           "navy-bg": "#DDE3F2", "navy-ink": "#15234D",
           "amber-bg": "#FFF1CC", "amber-ink": "#8A5A00",
         },
+        // Halaman Untuk Sekolah (docs/design/publik/UntukSekolah-Desktop.jpg)
+        sekolah: { navy: "#121F41", judul: "#1E3A6E", bintang: "#8B7A45", garis: "#FBBF24" },
+        // Gunung di hero Tentang Kami: makin dekat makin gelap
+        gunung: { jauh: "#7A86C2", tengah: "#3F4E8C", dekat: "#1F2B57" },
         // Teks di latar navy (Final CTA dan footer)
         night: { light: "#F4F7FF", sub: "#C8D4EE", text: "#A9B8D9", dim: "#8394BC", chip: "#DCE6FF", line: "rgba(169, 184, 217, 0.18)", positive: "#7BE3A6", "positive-bg": "rgba(46, 204, 113, 0.18)" },
         // Hijau WhatsApp yang cukup gelap untuk teks putih (5,4:1).
@@ -141,6 +145,18 @@ export default {
           "radial-gradient(520px 260px at 82% 50%, rgba(9,101,250,0.38), rgba(9,101,250,0) 70%), linear-gradient(120deg, #15234D 0%, #101A33 100%)",
         "portal-hero-sm":
           "radial-gradient(260px 200px at 90% 20%, rgba(9,101,250,0.4), rgba(9,101,250,0) 70%), linear-gradient(140deg, #15234D 0%, #101A33 100%)",
+        // Hero Untuk Sekolah (docs/design/publik/UntukSekolah-Desktop.jpg)
+        "sekolah-hero": "linear-gradient(90deg, #121C37 31.6%, #33509D 100%)",
+        // Hero Tentang Kami: langit fajar (hangat hanya di bawah supaya teks putih tetap terbaca) dan matahari
+        fajar: "linear-gradient(180deg, #15234D 0%, #233A78 45%, #3D5193 62%, #B97E9C 78%, #FFB98A 90%, #FFE0B2 100%)",
+        matahari: "radial-gradient(circle at 40% 35%, #FFF3C4 0%, #FFD36E 40%, #FF9A3C 100%)",
+        // Garis putus-putus biru (Tentang Kami: perjalanan)
+        "garis-x": "repeating-linear-gradient(90deg, #00B2DD 0 6px, transparent 6px 14px)",
+        "garis-y": "repeating-linear-gradient(180deg, #00B2DD 0 6px, transparent 6px 14px)",
+        // Kartu kaca di section "Apa yang Didapat Sekolah?"
+        "kaca-navy": "linear-gradient(150deg, rgba(137,149,182,0.28), rgba(24,46,106,0.15) 40%, rgba(18,31,65,0.3))",
+        // Garis linimasa "Cara kerjanya": kuning ke biru
+        "linimasa": "linear-gradient(180deg, #FBBF24 0%, #F59E0B 45%, #01B2DD 75%, #0965FA 100%)",
         // Sorotan bidang di kartu ORBIDU Compass
         "compass-soft": "linear-gradient(120deg, #EEF4FF, #E4F6FB)",
       },
@@ -195,6 +211,25 @@ export default {
           "30%": { transform: "translateY(0)" },
           "40%": { transform: "translateY(-7px)" },
         },
+        // Ilustrasi hero halaman publik (Beranda, Untuk Sekolah, Tentang Kami).
+        "ob-kelip": { "0%, 100%": { opacity: "0.2" }, "50%": { opacity: "1" } },
+        "ob-meteor": {
+          "0%": { transform: "translateX(0)", opacity: "0" },
+          "6%": { opacity: "1" },
+          "55%": { opacity: "1" },
+          "70%, 100%": { transform: "translateX(-120vw)", opacity: "0" },
+        },
+        "ob-awan": { from: { transform: "translateX(-24px)" }, to: { transform: "translateX(24px)" } },
+        "ob-goyang": { from: { transform: "rotate(-1.6deg)" }, to: { transform: "rotate(1.6deg)" } },
+        "ob-melayang": { from: { transform: "translateY(6px) rotate(-1deg)" }, to: { transform: "translateY(-12px) rotate(1.5deg)" } },
+        "ob-api": { from: { transform: "scaleX(0.82)", opacity: "0.85" }, to: { transform: "scaleX(1.12)", opacity: "1" } },
+        "ob-kilau": { from: { opacity: "0.65" }, to: { opacity: "1" } },
+        "ob-terbit": { from: { transform: "translateY(18%)" }, to: { transform: "translateY(0)" } },
+        "ob-denyut": { from: { transform: "scale(0.94)", opacity: "0.75" }, to: { transform: "scale(1.06)", opacity: "1" } },
+        "ob-muncul": { from: { transform: "translateY(24px)", opacity: "0" }, to: { transform: "translateY(0)", opacity: "1" } },
+        // Garis putus-putus yang "mengalir" (bg-garis-x / bg-garis-y, satu pola = 14px)
+        "ob-garis-x": { to: { backgroundPosition: "28px 0" } },
+        "ob-garis-y": { to: { backgroundPosition: "0 28px" } },
       },
       animation: {
         "ob-float": "ob-float 6s ease-in-out infinite",
@@ -202,6 +237,18 @@ export default {
         "ob-flow": "ob-flow 18s linear infinite",
         "ob-twinkle": "ob-twinkle 4.2s ease-in-out infinite",
         "ob-hop": "ob-hop 2.6s ease-in-out infinite",
+        "ob-kelip": "ob-kelip 3.2s ease-in-out infinite",
+        "ob-meteor": "ob-meteor 9s linear infinite",
+        "ob-awan": "ob-awan 14s ease-in-out infinite alternate",
+        "ob-goyang": "ob-goyang 5s ease-in-out infinite alternate",
+        "ob-melayang": "ob-melayang 4.5s ease-in-out infinite alternate",
+        "ob-api": "ob-api 0.16s ease-in-out infinite alternate",
+        "ob-kilau": "ob-kilau 5s ease-in-out infinite alternate",
+        "ob-terbit": "ob-terbit 3.5s cubic-bezier(.22,.8,.3,1) both",
+        "ob-denyut": "ob-denyut 4s ease-in-out infinite alternate",
+        "ob-muncul": "ob-muncul 0.7s cubic-bezier(.22,.8,.3,1) both",
+        "ob-garis-x": "ob-garis-x 1.6s linear infinite",
+        "ob-garis-y": "ob-garis-y 1.6s linear infinite",
       },
     },
   },
