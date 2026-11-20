@@ -43,6 +43,10 @@ export const ROUTES = {
   walikelas: "/walikelas",
   walikelasSiswa: "/walikelas/siswa",
   walikelasDetailSiswa: (id: number | string) => `/walikelas/siswa/${id}`,
+  // ── Portal Guru BK ─────────────────────────────────────────────────────────
+  bk: "/bk",
+  bkSiswa: "/bk/siswa",
+  bkDetailSiswa: (id: number | string) => `/bk/siswa/${id}`,
 } as const;
 
 export type UjianKey = "tka" | "snbt" | "skd";
