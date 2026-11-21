@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react";
 import { AtSign, Mail, MapPin, MessageCircle, type LucideIcon } from "lucide-react";
 import { FAQ_KONTAK, faqWhatsappMessage, type KontakIcon } from "@/content/faq";
 import { whatsappTextLink } from "@/config/brand";
-import { pillClasses } from "@/components/landing/primitives";
+import { Badge, pillClasses } from "@/components/landing/primitives";
 
 const ICONS: Record<KontakIcon, { Icon: LucideIcon; tone: string }> = {
   mail: { Icon: Mail, tone: "bg-surface-blue text-orbit-1" },
@@ -36,7 +36,7 @@ export default function FaqKontak() {
   return (
     <section id="kontak" className="scroll-mt-20 bg-masalah-glow">
       <div className="mx-auto w-full max-w-[1200px] px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
-        <span className="inline-block rounded-full bg-sun-2/20 px-3.5 py-1 text-xs font-bold uppercase tracking-[0.12em] text-sun-1">{K.badge}</span>
+        <Badge>{K.badge}</Badge>
         <h2 className="mt-3 max-w-[640px] text-balance text-[28px] font-bold leading-[1.2] tracking-[-0.5px] text-space-2 lg:text-[40px]">{K.title}</h2>
         <p className="mt-3 max-w-[640px] text-base leading-[1.65] text-prose">{K.body}</p>
 

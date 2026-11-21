@@ -96,3 +96,10 @@ export function ExternalLink({ children, ...props }: AnchorHTMLAttributes<HTMLAn
     </a>
   );
 }
+
+/** Label kecil di atas judul section (mis. "Our Story", "Hubungi Kami"). */
+export function Badge({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return (
+    <span className={`inline-block rounded-full bg-sun-2/20 px-3.5 py-1 text-xs font-bold uppercase tracking-[0.12em] text-sun-1 ${className}`}>{children}</span>
+  );
+}

@@ -1,64 +1,115 @@
-import { Link } from "react-router-dom";
+import type { CSSProperties } from "react";
+import { Compass, Footprints, Sparkles, type LucideIcon } from "lucide-react";
 import { TENTANG_HERO } from "@/content/tentangKami";
-import { ROUTES } from "@/config/navigation";
-import { whatsappLink } from "@/config/brand";
 import { usePauseOffscreen } from "@/lib/usePauseOffscreen";
-import { Meteors, Starfield } from "@/components/landing/motion/Sky";
-import Hills from "@/components/landing/motion/Hills";
+import { Meteors, Starfield, type MeteorSpec } from "@/components/landing/motion/Sky";
 import Cloud from "@/components/landing/motion/Cloud";
-import { PillExternal, pillClasses } from "@/components/landing/primitives";
+import MascotFigure from "@/components/mascot/MascotFigure";
+import { PillButton } from "@/components/landing/primitives";
+import pohonKanan from "@/assets/publik/sekolah/sekolah-pohon-kanan.svg";
+import pohonKecil from "@/assets/publik/sekolah/sekolah-pohon-kecil.svg";
+import pohonKiri from "@/assets/publik/sekolah/sekolah-pohon-kiri.svg";
+import roket from "@/assets/publik/sekolah/sekolah-roket.svg";
+import api from "@/assets/publik/sekolah/sekolah-roket-api.svg";
 import tanah from "@/assets/publik/sekolah/sekolah-tanah.svg";
 
-/**
- * Hero Tentang Kami (belum ada desain, disusun dengan gaya situs publik):
- * langit fajar, matahari terbit yang naik pelan, tiga lapis gunung, awan, meteor.
- */
+/** Posisi dalam persen panggung 1730 × 836 (sama dengan hero Untuk Sekolah). */
+const at = (x: number, y: number, w: number): CSSProperties => ({
+  left: `${(x / 1730) * 100}%`,
+  top: `${((y - 96) / 836) * 100}%`,
+  width: `${(w / 1730) * 100}%`,
+});
+
+const METEORS: MeteorSpec[] = [
+  { left: 35, top: 4, duration: 8, delay: -1, length: 200 },
+  { left: 68, top: 0, duration: 10, delay: -6, length: 240 },
+  { left: 92, top: 16, duration: 12, delay: -3.5, length: 180 },
+];
+
+const IMG = "pointer-events-none absolute h-auto max-w-none select-none";
+
+/** Label perjalanan di sekitar maskot: posisi (persen kotak roket) dan ikon. */
+const STEP_STYLE: { pos: string; Icon: LucideIcon; tone: string; delay: string }[] = [
+  { pos: "left-[-6%] top-[2%]", Icon: Sparkles, tone: "bg-sun-1/20 text-sun-2", delay: "[animation-delay:-0.5s]" },
+  { pos: "right-[-4%] top-[44%]", Icon: Compass, tone: "bg-orbit-1/25 text-orbit-2", delay: "[animation-delay:-2s]" },
+  { pos: "left-[2%] top-[66%]", Icon: Footprints, tone: "bg-tint-green-bg/20 text-night-positive", delay: "[animation-delay:-3.5s]" },
+];
+
+/** Ilustrasi: pohon, awan, tanah, dan maskot di atas roket dengan tiga label perjalanan. */
+function HeroArt({ className }: { className: string }) {
+  return (
+    <div aria-hidden="true" className={`pointer-events-none absolute aspect-[1730/836] ${className}`}>
+      <Cloud className="opacity-80" style={at(1560, 150, 420)} />
+      <Cloud className="opacity-70 [animation-direction:alternate-reverse] [animation-duration:16s]" style={at(1180, 760, 420)} />
+      <Cloud className="opacity-70 [animation-duration:20s]" style={at(160, 760, 380)} />
+      <img src={pohonKanan} alt="" className={`${IMG} origin-bottom motion-safe:animate-ob-goyang`} style={at(1568, 278, 224)} />
+
+      {/* Maskot dan roket bergerak bersama; api roket berkedip. Roket dan api berbagi viewBox yang sama. */}
+      <div className="absolute aspect-[545/535] motion-safe:animate-ob-melayang" style={at(1105, 300, 545)}>
+        <img src={api} alt="" className="absolute inset-0 h-full w-full origin-[76%_76%] motion-safe:animate-ob-api" />
+        <img src={roket} alt="" className="absolute inset-0 h-full w-full" />
+        <svg viewBox="148 138 344 248" className="absolute left-[22%] top-[2%] w-[60%] overflow-visible">
+          <MascotFigure tilt={-12} lookX={4} lookY={-2} animated={false} ring="gradient" />
+        </svg>
+        {TENTANG_HERO.steps.map((label, i) => {
+          const s = STEP_STYLE[i];
+          return (
+            <span
+              key={label}
+              className={`absolute flex items-center gap-2 whitespace-nowrap rounded-xl border border-white/15 bg-space-1/85 px-2.5 py-1.5 text-[clamp(10px,0.85vw,14px)] font-semibold text-white shadow-card backdrop-blur-sm motion-safe:animate-ob-melayang ${s.pos} ${s.delay}`}
+            >
+              <span className={`flex h-[1.9em] w-[1.9em] items-center justify-center rounded-lg ${s.tone}`}>
+                <s.Icon className="h-[1.1em] w-[1.1em]" strokeWidth={2.2} />
+              </span>
+              {label}
+            </span>
+          );
+        })}
+      </div>
+
+      <img src={pohonKecil} alt="" className={`${IMG} origin-bottom motion-safe:animate-ob-goyang [animation-delay:-2s]`} style={at(482, 678, 275)} />
+      <img src={pohonKiri} alt="" className={`${IMG} origin-bottom motion-safe:animate-ob-goyang [animation-delay:-3.5s] [animation-duration:6s]`} style={at(28, 409, 433)} />
+      <img src={tanah} alt="" className={IMG} style={at(0, 804, 1730)} />
+    </div>
+  );
+}
+
+/** Hero Tentang Kami (docs/design/publik/TentangKami-Desktop.webp). */
 export default function TentangHero() {
   const ref = usePauseOffscreen<HTMLElement>();
   const H = TENTANG_HERO;
+  const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 
   return (
-    <section ref={ref} className="on-dark relative overflow-hidden bg-fajar">
-      <Starfield count={50} seed={23} maxTop={40} />
-      <Meteors
-        meteors={[
-          { left: 70, top: 2, duration: 9, delay: -1, length: 200 },
-          { left: 95, top: 12, duration: 12, delay: -6, length: 170 },
-          { left: 45, top: -4, duration: 15, delay: -11, length: 150 },
-        ]}
-      />
+    <section ref={ref} className="on-dark relative overflow-hidden bg-sekolah-hero lg:aspect-[1730/836] lg:max-h-[880px] lg:min-h-[520px]">
+      <Starfield count={70} seed={23} maxTop={80} />
+      <Meteors meteors={METEORS} />
 
-      {/* Matahari terbit di belakang gunung. */}
-      <div aria-hidden="true" className="pointer-events-none absolute bottom-[90px] left-[52%] w-[clamp(150px,18vw,270px)] sm:bottom-[110px] lg:bottom-[150px] lg:left-[58%]">
-        <div className="motion-safe:animate-ob-terbit">
-          <span className="absolute inset-[-45%] rounded-full bg-[radial-gradient(circle,rgba(255,200,110,0.55),transparent_65%)] motion-safe:animate-ob-denyut" />
-          <span className="relative block aspect-square rounded-full bg-matahari shadow-[0_0_80px_20px_rgba(255,170,80,0.45)]" />
+      <HeroArt className="hidden lg:block lg:bottom-0 lg:right-0 lg:h-full" />
+
+      <div className="relative px-5 pb-6 pt-12 sm:px-8 sm:pt-16 lg:absolute lg:inset-y-0 lg:left-0 lg:flex lg:w-[56%] lg:flex-col lg:justify-center lg:px-0 lg:pb-[8%] lg:pl-[10%] lg:pt-0">
+        <h1 className="text-[34px] font-bold leading-[1.2] tracking-[-0.6px] sm:text-[46px] lg:text-[clamp(38px,3.9vw,68px)]">
+          <span className="block text-white">{H.titleTop}</span>
+          <span className="block text-sun-1">{H.titleAccent}</span>
+        </h1>
+        <p className="mt-4 max-w-[620px] text-base leading-[1.65] text-night-sub lg:mt-5 lg:max-w-[min(40vw,640px)] lg:text-[clamp(15px,1.15vw,19px)]">
+          {H.body.before}
+          <strong className="font-bold text-white">{H.body.brand}</strong>
+          {H.body.after}
+        </p>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center lg:mt-8">
+          <PillButton variant="sun" icon="none" onClick={() => scrollTo("cerita")} className="h-12 px-7 lg:h-[52px]">
+            {H.primary}
+          </PillButton>
+          <PillButton variant="outline" icon="none" onClick={() => scrollTo("misi")} className="h-12 border-white/30 bg-white/10 px-7 text-white hover:bg-white/20 lg:h-[52px]">
+            {H.secondary}
+          </PillButton>
         </div>
       </div>
 
-      <Cloud className="bottom-[120px] left-[8%] w-[clamp(120px,14vw,220px)] opacity-80 sm:bottom-[160px] lg:bottom-auto lg:left-[56%] lg:top-[44%] [animation-duration:16s]" />
-      <Cloud className="bottom-[170px] left-[70%] w-[clamp(90px,10vw,170px)] opacity-60 sm:bottom-[220px] lg:bottom-auto lg:left-[78%] lg:top-[30%] [animation-direction:alternate-reverse]" />
-      <Cloud className="-left-[2%] top-[62%] hidden w-[clamp(110px,12vw,200px)] opacity-50 sm:block [animation-duration:20s]" />
-
-      {/* Tiga lapis gunung, makin dekat makin gelap. */}
-      <Hills className="h-[170px] sm:h-[220px] lg:h-[300px]" />
-      <img src={tanah} alt="" aria-hidden="true" className="pointer-events-none absolute bottom-[-2px] left-0 h-auto w-full" />
-
-      <div className="relative mx-auto flex min-h-[640px] w-full max-w-[1600px] flex-col px-5 pb-[230px] pt-14 sm:px-8 sm:pb-[300px] sm:pt-20 lg:min-h-[min(48vw,760px)] lg:px-[min(7vw,120px)] lg:pb-[320px] lg:pt-24">
-        <p className="text-sm font-semibold uppercase tracking-[0.14em] text-sun-2">{H.kicker}</p>
-        <h1 className="mt-4 max-w-[760px] text-balance text-[32px] font-bold leading-[1.18] tracking-[-0.6px] text-white sm:text-[44px] lg:text-[clamp(40px,3.9vw,64px)]">
-          {H.titleLead}
-          <span className="text-sun-2">{H.titleAccent}</span>
-        </h1>
-        <p className="mt-5 max-w-[620px] text-base leading-[1.65] text-night-sub lg:text-lg">{H.body}</p>
-        <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <PillExternal href={whatsappLink("faq")} variant="sun" icon="none" className="h-12 px-7 lg:h-[54px]">
-            {H.primary}
-          </PillExternal>
-          <Link to={ROUTES.untukSekolah} className={pillClasses("outline", "h-12 border-white/40 bg-white/10 px-7 text-white hover:bg-white/20 lg:h-[54px]")}>
-            {H.secondary}
-          </Link>
-        </div>
+      {/* HP dan tablet: potongan kanan ilustrasi (maskot di roket) di bawah teks. */}
+      <div className="relative aspect-[10/9] w-full overflow-hidden sm:aspect-[16/10] lg:hidden">
+        <HeroArt className="bottom-0 right-[-6%] w-[210%] sm:right-[-4%] sm:w-[150%]" />
       </div>
     </section>
   );

@@ -55,7 +55,9 @@ Acuan desain: `docs/design/publik/` (Beranda, Untuk Sekolah, Eksplor Jurusan, La
 - [ ] 10D — Untuk Sekolah (`/untuk-sekolah`) dan Latihan Soal (`/latihan-soal`).
   - [x] Untuk Sekolah: hero bergerak (siswa di roket), kartu peran Siswa/Guru BK/Wali Kelas, "Apa yang Didapat Sekolah?", linimasa lima langkah dengan lanskap sekolah, CTA ke WhatsApp. Teks di `frontend/src/content/untukSekolah.ts`.
   - [ ] Latihan Soal.
-- [x] Tentang Kami (`/tentang-kami`, belum ada desain; disusun dengan gaya yang sama): hero fajar bergerak, kenapa ORBIDU ada, empat prinsip, perjalanan lima langkah, CTA. Teks di `frontend/src/content/tentangKami.ts`, hanya berisi hal yang benar-benar ada di produk. Perlu ditinjau tim UI/UX dan diganti teks resmi kalau sudah ada.
+- [x] Tentang Kami (`/tentang-kami`, desain dari tim: `docs/design/publik/TentangKami-Desktop.webp`, tanpa bagian "Hubungi Kami" karena sudah ada di `/faq`): hero navy dengan maskot di roket dan label Potensi/Arah/Langkah, Our Story, "Your journey, Your orbit" dengan diagram cabang pilihan, enam pilar misi, carousel Meet the Team (3 kartu, geser kiri/kanan, HP 1 kartu), ekosistem kolaborasi, CTA "Ready to find your orbit". Teks di `frontend/src/content/tentangKami.ts`.
+  - [ ] Data tim (BELUM DIPASTIKAN): baru 3 dari 11 nama yang diketahui, semua foto belum ada (memakai avatar bawaan).
+  - [ ] Ganti teks yang tidak terbaca di pratinjau desain dengan teks resmi, dan ilustrasi "Kebingungan Setelah SMA?" (sementara memakai siswa bingung dari beranda).
 - [x] 10E — FAQ (`/faq`) dan Hubungi Kami: hero malam dengan ilustrasi desain dan bola tanda tanya, kategori di kiri (HP: tombol geser) dengan pertanyaan accordion per kategori, kartu Kontak Resmi, form "Kirim Pesan Langsung" yang membuka WhatsApp dengan pesan terisi. Teks di `frontend/src/content/faq.ts`. Menu FAQ dan link footer "Hubungi Kami" (`/faq#kontak`) mengarah ke sini.
 
 ### Aturan lama yang tetap berlaku

@@ -12,8 +12,9 @@ kalau butuh ukuran atau aset pasti.
 | `EksplorJurusan-Desktop.jpg` | Eksplor Jurusan | `/jurusan` |
 | `LatihanSoal-Desktop.jpg` | Latihan Soal | `/latihan-soal` |
 | `FAQ-Desktop.jpg` | FAQ + Hubungi Kami | `/faq` |
+| `TentangKami-Desktop.webp` | Tentang Kami (pratinjau kecil, 428px) | `/tentang-kami` |
 
-Belum ada: desain HP dan desain halaman **Tentang Kami**. Tentang Kami (`/tentang-kami`) disusun sendiri dengan gaya yang sama; minta tim UI/UX meninjaunya.
+Belum ada: desain HP. Desain Tentang Kami hanya pratinjau kecil, jadi teks yang tidak terbaca ditulis ulang sesuai produk; minta file aslinya ke tim.
 
 ## Yang sengaja berbeda dari desain
 Keputusan Fase 10 (lihat `docs/SPEK_SISWA.md` bagian 1):
@@ -43,5 +44,6 @@ Semua gerakan memakai CSS (geser, putar, transparansi), mati kalau `prefers-redu
 - **Hero Untuk Sekolah**: meteor, bintang berkelip, bimasakti berkilau, awan bergeser, pohon bergoyang, siswa dan roket melayang bersama dengan api berkedip, bulan bercahaya. Lapisan diambil dari SVG desain ke `src/assets/publik/sekolah/`.
 - **Hero FAQ** (lapisan dari SVG desain ke `src/assets/publik/faq/`): bulan bercahaya, awan bergeser, pohon bergoyang, bintang berkelip, meteor, bola tanda tanya melayang.
 - **Hero Eksplor Jurusan** (lapisan dari SVG desain ke `src/assets/publik/jurusan/`): matahari bercahaya, awan bergeser, pohon bergoyang, bintang berkelip, dua meteor tipis. Tombol "Coba Orbita Compass" di desain ditulis dengan nama baru "Coba ORBIDU Compass".
-- **Hero Tentang Kami**: langit fajar, matahari terbit perlahan lalu bercahaya, tiga lapis gunung, awan bergeser, meteor dan bintang di langit atas.
+- **Hero Tentang Kami**: meteor, bintang berkelip, awan bergeser, pohon bergoyang, maskot di atas roket melayang dengan api berkedip, tiga label perjalanan melayang.
+- **Tentang Kami:** bagian "Hubungi Kami" tidak dipakai (sudah ada di `/faq`); cabang diagram memakai PTN, PTS, Kedinasan, PTLN; mitra ekosistem: Sekolah, Guru BK & Wali Kelas, Orang Tua, Mitra Pendidikan; carousel tim berputar dan bisa digeser di HP.
 - Kartu dan langkah di halaman publik muncul halus saat pertama kali terlihat (`components/landing/motion/Reveal.tsx`).

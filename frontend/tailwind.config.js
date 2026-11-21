@@ -108,8 +108,8 @@ export default {
         },
         // Halaman Untuk Sekolah (docs/design/publik/UntukSekolah-Desktop.jpg)
         sekolah: { navy: "#121F41", judul: "#1E3A6E", bintang: "#8B7A45", garis: "#FBBF24" },
-        // Gunung di hero Tentang Kami: makin dekat makin gelap
-        gunung: { jauh: "#7A86C2", tengah: "#3F4E8C", dekat: "#1F2B57" },
+        // Dua lapis gunung di hero Untuk Sekolah: makin dekat makin gelap
+        gunung: { tengah: "#3F4E8C", dekat: "#1F2B57" },
         // Teks di latar navy (Final CTA dan footer)
         night: { light: "#F4F7FF", sub: "#C8D4EE", text: "#A9B8D9", dim: "#8394BC", chip: "#DCE6FF", line: "rgba(169, 184, 217, 0.18)", positive: "#7BE3A6", "positive-bg": "rgba(46, 204, 113, 0.18)" },
         // Hijau WhatsApp yang cukup gelap untuk teks putih (5,4:1).
@@ -151,12 +151,6 @@ export default {
         bulan: "radial-gradient(circle at 35% 35%, #FFF7D6 0%, #FFE7A3 45%, #F1C76B 100%)",
         // Hero Untuk Sekolah (docs/design/publik/UntukSekolah-Desktop.jpg)
         "sekolah-hero": "linear-gradient(90deg, #121C37 31.6%, #33509D 100%)",
-        // Hero Tentang Kami: langit fajar (hangat hanya di bawah supaya teks putih tetap terbaca) dan matahari
-        fajar: "linear-gradient(180deg, #15234D 0%, #233A78 45%, #3D5193 62%, #B97E9C 78%, #FFB98A 90%, #FFE0B2 100%)",
-        matahari: "radial-gradient(circle at 40% 35%, #FFF3C4 0%, #FFD36E 40%, #FF9A3C 100%)",
-        // Garis putus-putus biru (Tentang Kami: perjalanan)
-        "garis-x": "repeating-linear-gradient(90deg, #00B2DD 0 6px, transparent 6px 14px)",
-        "garis-y": "repeating-linear-gradient(180deg, #00B2DD 0 6px, transparent 6px 14px)",
         // Hero Eksplor Jurusan: langit pagi (docs/design/publik/EksplorJurusan-Desktop.jpg)
         "jurusan-langit": "linear-gradient(180deg, #6DCAFF 0%, #FFFFFF 60.6%, #FFEEC3 100%)",
         // Kartu kaca di section "Apa yang Didapat Sekolah?"
@@ -230,12 +224,8 @@ export default {
         "ob-melayang": { from: { transform: "translateY(6px) rotate(-1deg)" }, to: { transform: "translateY(-12px) rotate(1.5deg)" } },
         "ob-api": { from: { transform: "scaleX(0.82)", opacity: "0.85" }, to: { transform: "scaleX(1.12)", opacity: "1" } },
         "ob-kilau": { from: { opacity: "0.65" }, to: { opacity: "1" } },
-        "ob-terbit": { from: { transform: "translateY(18%)" }, to: { transform: "translateY(0)" } },
         "ob-denyut": { from: { transform: "scale(0.94)", opacity: "0.75" }, to: { transform: "scale(1.06)", opacity: "1" } },
         "ob-muncul": { from: { transform: "translateY(24px)", opacity: "0" }, to: { transform: "translateY(0)", opacity: "1" } },
-        // Garis putus-putus yang "mengalir" (bg-garis-x / bg-garis-y, satu pola = 14px)
-        "ob-garis-x": { to: { backgroundPosition: "28px 0" } },
-        "ob-garis-y": { to: { backgroundPosition: "0 28px" } },
       },
       animation: {
         "ob-float": "ob-float 6s ease-in-out infinite",
@@ -250,11 +240,8 @@ export default {
         "ob-melayang": "ob-melayang 4.5s ease-in-out infinite alternate",
         "ob-api": "ob-api 0.16s ease-in-out infinite alternate",
         "ob-kilau": "ob-kilau 5s ease-in-out infinite alternate",
-        "ob-terbit": "ob-terbit 3.5s cubic-bezier(.22,.8,.3,1) both",
         "ob-denyut": "ob-denyut 4s ease-in-out infinite alternate",
         "ob-muncul": "ob-muncul 0.7s cubic-bezier(.22,.8,.3,1) both",
-        "ob-garis-x": "ob-garis-x 1.6s linear infinite",
-        "ob-garis-y": "ob-garis-y 1.6s linear infinite",
       },
     },
   },
