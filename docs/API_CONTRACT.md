@@ -33,6 +33,7 @@ diberi catatan lain. Detail tiap baris ada di bagian yang disebut.
 | 14 | Akun berlangganan: admin membuat akun, wajib ganti password awal | 🔴 | Naufal |
 | 15 | Portal Wali Kelas: peran `WALI_KELAS`, profil wali, dashboard kelas, daftar dan detail siswa, impor rapor | 🔴 | Naufal |
 | 16 | Portal Guru BK: profil konselor, dashboard sekolah, daftar & detail siswa lintas kelas, catatan konseling | 🔴 | Naufal |
+| 17 | Pesan "Hubungi Kami" dari halaman FAQ (publik) | 🔴 | Naufal |
 
 ---
 
@@ -870,3 +871,19 @@ POST /bk/students/:id/notes      ← CreateBkNoteInput  { tanggal, konselor, top
 ```
 - `GET /bk/students` dan `GET /bk/students/:id` dibatasi ke siswa pada sekolah konselor yang login.
 - Catatan konseling baru (`POST /bk/students/:id/notes`) juga dapat diteruskan sebagai notifikasi ke Wali Kelas siswa terkait (bagian 15).
+
+## 17. Pesan "Hubungi Kami" (`/faq`, Fase 10)
+
+Sementara form "Kirim Pesan Langsung" di `/faq` (`frontend/src/components/faq/FaqKontak.tsx`) membuka WhatsApp dengan pesan yang sudah terisi (`whatsappTextLink` di `frontend/src/config/brand.ts`). Tidak ada data yang dikirim ke backend.
+
+### 17.1 Endpoint yang dibutuhkan 🔴
+```
+POST /contact-messages           (publik, tanpa login)
+  ← { nama: string, email?: string, peran: "Sekolah" | "Guru BK" | "Wali Kelas" | "Partner" | "Siswa" | "Lainnya", pesan: string }
+  → 201 { id: string, createdAt: string }
+  → 400 { error: string, code: "INVALID_INPUT" }   (nama/pesan kosong, email tidak valid, pesan terlalu panjang)
+  → 429 { error: string, code: "RATE_LIMITED" }
+```
+- **Alasan:** pesan sekolah dan calon partner bisa dicatat dan ditindaklanjuti tim, tidak hanya bergantung pada WhatsApp.
+- Karena publik, perlu batas jumlah kiriman per IP dan batas panjang pesan (mis. 2.000 karakter) di backend.
+- Saat endpoint siap, form tetap menampilkan tautan WhatsApp sebagai alternatif.

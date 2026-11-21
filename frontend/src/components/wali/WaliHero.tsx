@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { Users } from "lucide-react";
 import { makeStars } from "@/lib/stars";
 import { greetingFor } from "@/lib/datetime";
 import type { WaliTeacherProfile } from "@/types/wali";
@@ -51,8 +52,9 @@ export default function WaliHero({ wali, totalStudents = 36 }: WaliHeroProps) {
           <span className="flex h-7 items-center rounded-full border border-white/20 bg-white/10 px-3 text-xs font-medium text-white backdrop-blur-sm">
             Tahun Ajaran {wali.tahunAjaran}
           </span>
-          <span className="flex h-7 items-center rounded-full border border-tint-blue-fg/30 bg-orbit-1/30 px-3 text-xs font-semibold text-white backdrop-blur-sm">
-            👥 {totalStudents} Siswa
+          <span className="flex h-7 items-center gap-1.5 rounded-full border border-tint-blue-fg/30 bg-orbit-1/30 px-3 text-xs font-semibold text-white backdrop-blur-sm">
+            <Users size={14} aria-hidden="true" />
+            {totalStudents} Siswa
           </span>
         </div>
       </div>

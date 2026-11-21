@@ -14,7 +14,7 @@ export default function PublicLayout() {
   const { pathname, hash } = useLocation();
 
   // Pindah halaman → mulai dari atas lagi. Alamat dengan #section di-scroll
-  // oleh halamannya sendiri (mis. /#faq di LandingPage).
+  // oleh halamannya sendiri (lib/useHashScroll.ts).
   useEffect(() => {
     if (!hash) window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps -- hanya saat halaman berganti

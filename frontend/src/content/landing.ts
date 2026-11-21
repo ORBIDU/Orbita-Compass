@@ -18,8 +18,7 @@ export const HEADER = {
 
 /**
  * Menu navbar halaman publik (desain docs/design/publik).
- * Latihan Soal ditambahkan saat halamannya dibuat (Tahap 10D), halaman FAQ di
- * Tahap 10E (sementara menuju section FAQ di beranda).
+ * Latihan Soal ditambahkan saat halamannya dibuat (Tahap 10D).
  */
 export const NAV = {
   label: "Menu utama",
@@ -30,7 +29,7 @@ export const NAV = {
     { label: "Untuk Sekolah", to: ROUTES.untukSekolah },
     { label: "Eksplor Jurusan", to: ROUTES.jurusan },
     { label: "Tentang Kami", to: ROUTES.tentangKami },
-    { label: "FAQ", to: `${ROUTES.landing}#faq` },
+    { label: "FAQ", to: ROUTES.faq },
   ],
 };
 
@@ -48,12 +47,12 @@ export const HERO = {
 
 export const PROBLEM = {
   title: "Masih bingung harus mulai dari mana?",
-  /** Urutan dan bentuk gelembung sama dengan desain. */
+  /** Urutan dan bentuk gelembung sama dengan desain (gambar gelembung di assets/publik/masalah). */
   bubbles: [
-    { text: "PTN, PTS, Kedinasan, atau PTLN, ya? Kok pilihannya banyak banget...", shape: "box", tail: "right" },
-    { text: "Masih bingung harus mulai dari mana :(", shape: "oval", tail: "right" },
-    { text: "Aku gatau potensi-ku di bidang apa...", shape: "oval", tail: "left" },
-    { text: "Kalau aku suka ini, berarti jurusannya apa yaa?", shape: "box", tail: "left" },
+    { text: "PTN, PTS, Kedinasan, atau PTLN, ya? Kok pilihannya banyak banget...", shape: "kotakKanan" },
+    { text: "Masih bingung harus mulai dari mana :(", shape: "oval" },
+    { text: "Aku gatau potensi-ku di bidang apa...", shape: "bebas" },
+    { text: "Kalau aku suka ini, berarti jurusannya apa yaa?", shape: "kotakKiri" },
   ] as const,
 };
 
@@ -102,46 +101,6 @@ export const JURUSAN_SECTION = {
   photoPlaceholder: "Foto jurusan",
 };
 
-export interface FaqGroup {
-  category: string;
-  items: { q: string; a: string }[];
-}
-
-export const FAQ = {
-  categoriesLabel: "Kategori pertanyaan",
-  title: `Punya pertanyaan tentang ${B}?`,
-  body: `Pilih kategori pertanyaanmu. Kalau jawabannya belum ada, ngobrol langsung sama tim ${B} lewat WhatsApp.`,
-  whatsappCta: "Tanya lewat WhatsApp",
-  groups: [
-    {
-      category: `Tentang ${B}`,
-      items: [
-        { q: `Apa itu ${B}?`, a: `${B} adalah platform pendampingan perencanaan pendidikan bagi siswa SMA untuk membantu mengenali potensi, menemukan arah pendidikan, mengeksplorasi pilihan, dan menentukan langkah berikutnya.` },
-        { q: `Bagaimana cara mendapatkan akun ${B}?`, a: ACCOUNT_ACCESS.full },
-        { q: `Siapa yang bisa menggunakan ${B}?`, a: `${B} ditujukan untuk siswa SMA kelas X–XII, serta mendukung Guru BK, Wali Kelas, dan sekolah dalam proses pendampingan pendidikan.` },
-        { q: `Bagaimana ${B} memberikan rekomendasi pendidikan?`, a: "Rekomendasi disusun berdasarkan informasi dalam profil siswa, seperti data akademik, prestasi, minat dan bakat, serta refleksi diri. Setiap rekomendasi dilengkapi alasan agar siswa memahami dasar pilihannya." },
-        { q: "Apakah data siswa aman?", a: `Data siswa hanya dipakai untuk fitur ${B}, seperti rekomendasi jurusan dan rencana belajar. Pengamanannya terus disiapkan bersama tim sebelum ${B} dipakai secara luas.` },
-      ],
-    },
-    {
-      category: `Untuk ${HI}`,
-      items: [
-        { q: `Apakah ${B} menentukan satu jurusan terbaik untuk saya?`, a: `Tidak. ${B} membantu menemukan beberapa pilihan yang sesuai dengan profilmu untuk kemudian kamu eksplorasi dan pertimbangkan.` },
-        { q: "Pilihan pendidikan apa saja yang bisa dieksplorasi?", a: "Berbagai program studi dan jalur pendidikan, seperti PTN, PTS, Kedinasan, dan PTLN, sesuai dengan pilihan dan kebutuhanmu." },
-        { q: `Apakah ${B} juga membantu persiapan seleksi?`, a: `Ya. ${B} membantumu memahami apa yang perlu disiapkan untuk jalur seleksi yang relevan, seperti SNBP, SNBT, TKA, SKD, dan jalur lainnya sesuai ketentuan yang berlaku.` },
-        { q: "Apa itu Action Plan?", a: "Action Plan membantu mengubah tujuan pendidikanmu menjadi langkah yang lebih konkret, mulai dari menentukan prioritas, membuat tugas, hingga memantau progres." },
-      ],
-    },
-    {
-      category: "Untuk Sekolah",
-      items: [
-        { q: `Bagaimana sekolah bisa menggunakan ${B}?`, a: `Sekolah dapat menggunakan ${B} sebagai bagian dari pendampingan pendidikan siswa. Guru BK dan Wali Kelas memperoleh informasi yang lebih terarah untuk memahami dan mendampingi perjalanan siswa.` },
-        { q: `Bagaimana cara sekolah bergabung dengan ${B}?`, a: `Sekolah dapat menghubungi tim ${B} untuk mendapatkan informasi mengenai proses kerja sama, implementasi, dan penggunaan platform di sekolah.` },
-      ],
-    },
-  ] satisfies FaqGroup[],
-};
-
 export const FINAL_CTA = {
   kicker: BRAND.tagline,
   titleTop: "Setiap mimpi punya jalurnya.",
@@ -156,7 +115,6 @@ export type FooterLink = { label: string; to: string } | { label: string; whatsa
 
 export const FOOTER = {
   description: "Smart companion untuk membantu siswa memahami diri, menemukan arah, dan mengambil langkah menuju masa depan.",
-  // "Hubungi Kami" pindah ke /faq di Tahap 10E.
   columns: [
     {
       title: "Perjalanan",
@@ -171,8 +129,8 @@ export const FOOTER = {
       links: [
         { label: "Untuk Sekolah", to: ROUTES.untukSekolah },
         { label: "Tentang Kami", to: ROUTES.tentangKami },
-        { label: "FAQ", to: `${ROUTES.landing}#faq` },
-        { label: "Hubungi Kami", whatsapp: "faq" },
+        { label: "FAQ", to: ROUTES.faq },
+        { label: "Hubungi Kami", to: `${ROUTES.faq}#kontak` },
       ],
     },
   ] satisfies { title: string; links: FooterLink[] }[],

@@ -12,6 +12,7 @@ import { DaftarRedirect, GuestOnly, RequireAuth, RequireBk, RequireWali } from "
 const LandingPage = lazy(() => import("@/app/LandingPage"));
 const UntukSekolahPage = lazy(() => import("@/app/UntukSekolahPage"));
 const TentangKamiPage = lazy(() => import("@/app/TentangKamiPage"));
+const FaqPage = lazy(() => import("@/app/FaqPage"));
 const ProfilPage = lazy(() => import("@/app/ProfilPage"));
 
 const AuthPage = lazy(() => import("@/app/AuthPage"));
@@ -65,6 +66,7 @@ export const router = createBrowserRouter([
               { path: "/", element: <LandingPage /> },
               { path: "/untuk-sekolah", element: <UntukSekolahPage /> },
               { path: "/tentang-kami", element: <TentangKamiPage /> },
+              { path: "/faq", element: <FaqPage /> },
             ],
           },
         ],

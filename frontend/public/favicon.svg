@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34">
-  <!-- Logo ORBIDU (planet biru + cincin oranye), sama dengan components/ui/Logo.tsx. -->
-  <circle cx="17" cy="17" r="9.5" fill="#0965FA"/>
-  <ellipse cx="17" cy="18" rx="15" ry="5" fill="none" stroke="#FF7000" stroke-width="2.6" transform="rotate(-18 17 18)"/>
-</svg>

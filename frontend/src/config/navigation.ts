@@ -20,6 +20,7 @@ export const ROUTES = {
   jurusan: "/jurusan",
   untukSekolah: "/untuk-sekolah",
   tentangKami: "/tentang-kami",
+  faq: "/faq",
   jurusanDetail: (id: string) => `/jurusan/${id}`,
   masuk: "/masuk",
   /** Login pertama: ganti password awal + persetujuan (SPEK bagian 3). */

@@ -28,7 +28,7 @@ const mascot = {
   glow: "#3D8BFF",
   highlight: "#B5DCFF",
   cap: "#1E2F62",
-  cheek: "#FF8FB1",
+  cheek: "#C9E4FF",
   orbit: "#6E9BEA",
   "orbit-soft": "#8FB8FF",
 };
@@ -110,6 +110,8 @@ export default {
         sekolah: { navy: "#121F41", judul: "#1E3A6E", bintang: "#8B7A45", garis: "#FBBF24" },
         // Gunung di hero Tentang Kami: makin dekat makin gelap
         gunung: { jauh: "#7A86C2", tengah: "#3F4E8C", dekat: "#1F2B57" },
+        // Bukit pagi di hero Eksplor Jurusan: biru muda yang makin dekat makin pekat
+        bukit: { jauh: "#BFE6FB", tengah: "#8DCDF2", dekat: "#5AAFE3" },
         // Teks di latar navy (Final CTA dan footer)
         night: { light: "#F4F7FF", sub: "#C8D4EE", text: "#A9B8D9", dim: "#8394BC", chip: "#DCE6FF", line: "rgba(169, 184, 217, 0.18)", positive: "#7BE3A6", "positive-bg": "rgba(46, 204, 113, 0.18)" },
         // Hijau WhatsApp yang cukup gelap untuk teks putih (5,4:1).
@@ -145,6 +147,25 @@ export default {
           "radial-gradient(520px 260px at 82% 50%, rgba(9,101,250,0.38), rgba(9,101,250,0) 70%), linear-gradient(120deg, #15234D 0%, #101A33 100%)",
         "portal-hero-sm":
           "radial-gradient(260px 200px at 90% 20%, rgba(9,101,250,0.4), rgba(9,101,250,0) 70%), linear-gradient(140deg, #15234D 0%, #101A33 100%)",
+        // Hero Beranda: langit malam penuh (warna sama dengan panel angkasa desain), cakrawala planet, judul biru terang
+        "angkasa-hero": "linear-gradient(160deg, #121C37 8%, #1A2850 45%, #2E4891 100%)",
+        "angkasa-tanah": "linear-gradient(180deg, #3A57A8 0%, #22377A 30%, #17254F 70%)",
+        "gradient-orbit-terang": "linear-gradient(90deg, #5AAEFF, #3FDDFF)",
+        // Hero FAQ: langit malam biru (docs/design/publik/FAQ-Desktop.jpg)
+        "faq-hero": "linear-gradient(160deg, #15234D 0%, #1C3A9E 55%, #2F6BE0 100%)",
+        // Siluet pohon, awan, dan bukit dari desain (components/landing/motion/Siluet.tsx)
+        "pohon-malam": "linear-gradient(180deg, #4A66BE 0%, #26357A 60%, #1B2656 100%)",
+        "awan-malam": "linear-gradient(180deg, rgba(220,230,255,0.5) 0%, rgba(160,180,230,0.18) 100%)",
+        "pohon-pagi": "linear-gradient(180deg, #5DB4E6 0%, #2F78BE 100%)",
+        "pohon-pagi-gelap": "linear-gradient(180deg, #3566B0 0%, #1E3F7E 100%)",
+        "bukit-pagi": "linear-gradient(180deg, #B4E2F9 0%, #7CC3EC 100%)",
+        "bukit-pagi-dekat": "linear-gradient(180deg, #86CBF0 0%, #4F9FD8 100%)",
+        "awan-pagi": "linear-gradient(180deg, #FFFFFF 45%, rgba(255,255,255,0.7) 100%)",
+        "pohon-malam-gelap": "linear-gradient(180deg, #1F2C7A 0%, #0E1650 100%)",
+        "bukit-malam": "linear-gradient(180deg, #3A63D8 0%, #2441A8 100%)",
+        "bukit-malam-dekat": "linear-gradient(180deg, #2C4FC0 0%, #1B3389 100%)",
+        // Bulan (hero Untuk Sekolah dan FAQ)
+        bulan: "radial-gradient(circle at 35% 35%, #FFF7D6 0%, #FFE7A3 45%, #F1C76B 100%)",
         // Hero Untuk Sekolah (docs/design/publik/UntukSekolah-Desktop.jpg)
         "sekolah-hero": "linear-gradient(90deg, #121C37 31.6%, #33509D 100%)",
         // Hero Tentang Kami: langit fajar (hangat hanya di bawah supaya teks putih tetap terbaca) dan matahari

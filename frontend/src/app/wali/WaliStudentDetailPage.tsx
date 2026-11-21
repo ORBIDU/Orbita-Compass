@@ -424,7 +424,7 @@ export default function WaliStudentDetailPage() {
                     className="flex items-start gap-3.5 rounded-xl border border-rim-soft bg-surface-soft p-4"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-tint-amber-bg text-sun-1 font-bold">
-                      🏆
+                      <Trophy size={18} aria-hidden="true" />
                     </div>
                     <div>
                       <h4 className="text-sm font-bold text-space-2 leading-snug">

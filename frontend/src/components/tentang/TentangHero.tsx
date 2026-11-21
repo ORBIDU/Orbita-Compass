@@ -4,6 +4,7 @@ import { ROUTES } from "@/config/navigation";
 import { whatsappLink } from "@/config/brand";
 import { usePauseOffscreen } from "@/lib/usePauseOffscreen";
 import { Meteors, Starfield } from "@/components/landing/motion/Sky";
+import Hills from "@/components/landing/motion/Hills";
 import { PillExternal, pillClasses } from "@/components/landing/primitives";
 import tanah from "@/assets/publik/sekolah/sekolah-tanah.svg";
 
@@ -53,11 +54,7 @@ export default function TentangHero() {
       <Cloud className="-left-[2%] top-[62%] hidden w-[clamp(110px,12vw,200px)] opacity-50 sm:block [animation-duration:20s]" />
 
       {/* Tiga lapis gunung, makin dekat makin gelap. */}
-      <svg viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true" className="pointer-events-none absolute bottom-0 left-0 h-[170px] w-full sm:h-[220px] lg:h-[300px]">
-        <path d="M0 150 C120 120 180 60 260 70 C340 80 380 150 470 140 C560 130 620 40 720 50 C820 60 860 140 960 130 C1060 120 1110 60 1200 70 C1290 80 1360 130 1440 120 V320 H0Z" className="fill-gunung-jauh" />
-        <path d="M0 210 C90 180 150 120 240 130 C330 140 400 210 500 200 C600 190 650 120 760 125 C870 130 920 205 1030 200 C1140 195 1200 140 1300 150 C1370 157 1410 180 1440 185 V320 H0Z" className="fill-gunung-tengah" />
-        <path d="M0 260 C120 240 200 200 320 215 C440 230 520 270 650 262 C780 254 860 222 990 232 C1120 242 1200 275 1320 266 C1380 262 1420 255 1440 252 V320 H0Z" className="fill-gunung-dekat" />
-      </svg>
+      <Hills className="h-[170px] sm:h-[220px] lg:h-[300px]" />
       <img src={tanah} alt="" aria-hidden="true" className="pointer-events-none absolute bottom-[-2px] left-0 h-auto w-full" />
 
       <div className="relative mx-auto flex min-h-[640px] w-full max-w-[1600px] flex-col px-5 pb-[230px] pt-14 sm:px-8 sm:pb-[300px] sm:pt-20 lg:min-h-[min(48vw,760px)] lg:px-[min(7vw,120px)] lg:pb-[320px] lg:pt-24">

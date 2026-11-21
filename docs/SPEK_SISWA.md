@@ -41,21 +41,23 @@ Acuan desain: `docs/design/publik/` (Beranda, Untuk Sekolah, Eksplor Jurusan, La
 - Teks yang tidak sesuai kondisi produk diganti: klaim "Sumber Terpercaya & Teruji" selama bank soal masih contoh, nama lama "ORBITA", "Latihan Soal Mandiri" diberi label "Segera hadir".
 - Form "Kirim Pesan" di FAQ dikirim lewat WhatsApp (pesan terisi otomatis) sampai backend punya endpoint pesan (catat di `docs/API_CONTRACT.md`).
 - Tombol **"Ayo konsultasi!"** tetap menempel di pojok kanan bawah semua halaman publik (tidak ada di desain), tidak tampil di Masuk/Aktivasi dan portal.
-- **Hero bergerak** di Beranda, Untuk Sekolah, dan Tentang Kami (meteor, orbit dan planet, bintang, awan, roket, matahari/bulan, gunung). Maskot dan siswa tidak diubah gambarnya. Semua animasi mati jika `prefers-reduced-motion` dan berhenti saat tidak terlihat di layar. Rinciannya di `docs/design/publik/README.md` bagian Interaksi.
-- Ilustrasi beranda diambil dari SVG desain ke `frontend/src/assets/publik/` (panel angkasa + meteor sebagai SVG, gedung sekolah + logo kampus sebagai WebP, siswa bingung sebagai SVG). Teks tetap HTML. Gelembung pertanyaan di HP disusun dalam grid di atas ilustrasi.
+- **Hero bergerak** di semua halaman publik (meteor, orbit dan planet, bintang, awan, roket, matahari/bulan, bukit, pohon). Maskot dan siswa tidak diubah gambarnya. Semua animasi mati jika `prefers-reduced-motion` dan berhenti saat tidak terlihat di layar. Rinciannya di `docs/design/publik/README.md` bagian Interaksi.
+- **Gaya hero mulus:** gambar dari desain (pohon, awan, bukit) tetap dipakai dengan bentuk dan posisi yang sama, tapi digambar sebagai siluet rata bergradasi halus (`components/landing/motion/Siluet.tsx`, warna dari token Tailwind). Hero Beranda tidak lagi memakai panel bertepi awan: seluruh hero berlatar langit malam, gedung sekolah berdiri di cakrawala planet.
+- Tidak memakai emoji/stiker sebagai ikon; pakai ikon garis lucide.
+- Ilustrasi beranda diambil dari SVG desain ke `frontend/src/assets/publik/` (panel angkasa + meteor sebagai SVG, gedung sekolah + logo kampus sebagai WebP, siswa bingung sebagai SVG). Section "Masih bingung harus mulai darimana?" memakai gambar judul dan empat gambar gelembung dari tim UI/UX (`assets/publik/masalah/`); teks gelembung tetap HTML dari `content/landing.ts`. Di HP gelembung disusun zig-zag di atas ilustrasi.
 - Lebar isi halaman publik mengikuti desain: margin tepi ±3,7% (maks. 64px), lebar isi maks. 1600px (`CONTAINER` di `components/landing/primitives.tsx`).
 
 ### Tahapan
 - [x] 10A — Fondasi: desain disimpan, navbar + menu HP, footer baru, beranda masuk `PublicLayout`.
-- [x] 10B — Beranda sesuai desain baru (hero terang + meteor, Masalah, "Tenang Bifriends, ada ORBIDU", 3 kartu Perjalanan, CTA penutup). Section FAQ lama tetap di beranda sampai `/faq` jadi (10E). Carousel jurusan dan section Kenali/Compass/Action Plan lama dihapus.
+- [x] 10B — Beranda sesuai desain baru (hero angkasa + meteor, Masalah, "Tenang Bifriends, ada ORBIDU", 3 kartu Perjalanan, CTA penutup). Section FAQ di beranda dihapus setelah `/faq` jadi. Carousel jurusan dan section Kenali/Compass/Action Plan lama dihapus.
 - [ ] 10C — Eksplor Jurusan (`/jurusan`) sesuai desain.
-  - [x] Hero bergerak, tab PTN & PTS / Kedinasan, pencarian, ajakan Compass; `/jurusan` selalu memakai layout publik.
+  - [x] Hero bergerak (dibuat ringkas, ±50% tinggi desain), tab PTN & PTS / Kedinasan, pencarian, ajakan Compass; `/jurusan` selalu memakai layout publik.
   - [ ] Kartu jurusan dan pengelompokan per bidang sesuai desain (sementara memakai kartu versi sekarang).
 - [ ] 10D — Untuk Sekolah (`/untuk-sekolah`) dan Latihan Soal (`/latihan-soal`).
   - [x] Untuk Sekolah: hero bergerak (siswa di roket), kartu peran Siswa/Guru BK/Wali Kelas, "Apa yang Didapat Sekolah?", linimasa lima langkah dengan lanskap sekolah, CTA ke WhatsApp. Teks di `frontend/src/content/untukSekolah.ts`.
   - [ ] Latihan Soal.
 - [x] Tentang Kami (`/tentang-kami`, belum ada desain; disusun dengan gaya yang sama): hero fajar bergerak, kenapa ORBIDU ada, empat prinsip, perjalanan lima langkah, CTA. Teks di `frontend/src/content/tentangKami.ts`, hanya berisi hal yang benar-benar ada di produk. Perlu ditinjau tim UI/UX dan diganti teks resmi kalau sudah ada.
-- [ ] 10E — FAQ (`/faq`) dan Hubungi Kami.
+- [x] 10E — FAQ (`/faq`) dan Hubungi Kami: hero malam dengan ilustrasi desain dan bola tanda tanya, kategori di kiri (HP: tombol geser) dengan pertanyaan accordion per kategori, kartu Kontak Resmi, form "Kirim Pesan Langsung" yang membuka WhatsApp dengan pesan terisi. Teks di `frontend/src/content/faq.ts`. Menu FAQ dan link footer "Hubungi Kami" (`/faq#kontak`) mengarah ke sini.
 
 ### Aturan lama yang tetap berlaku
 - **MascotSlot** (hero beranda): maskot versi SVG. Desktop: mata mengikuti kursor. HP: menoleh ke titik sentuhan. Nanti diganti model 3D tanpa mengubah halaman.
@@ -65,7 +67,7 @@ Acuan desain: `docs/design/publik/` (Beranda, Untuk Sekolah, Eksplor Jurusan, La
 ## 2. Explore Jurusan (`/jurusan`, publik) dan Detail Jurusan (`/jurusan/:slug`)
 Acuan desain detail: `docs/design/landing/Jurusan-Detail.dc.html` (desktop).
 - Katalog jurusan dikelompokkan **per nama jurusan** (bukan per kampus), masing-masing punya `slug`. Konten dari `JurusanPage` lama dipindah ke `frontend/src/mocks/` (tanpa persentase "match", perkiraan gaji, dan daftar alumni karena tidak bisa dipertanggungjawabkan).
-- `/jurusan`: **hero sesuai desain** `docs/design/publik/EksplorJurusan-Desktop.jpg` (langit pagi, matahari, bukit, pohon, awan, bintang; bergerak pelan), judul "Eksplor Jurusan", tab **PTN & PTS / Kedinasan** (`?jenis=kedinasan`), kotak **pencarian**, dan ajakan "Coba ORBIDU Compass" (tamu → Masuk lalu ke Compass; siswa → Compass). Di bawahnya "Semua Jurusan": **filter bidang** (hanya untuk PTN & PTS) dan grid kartu jurusan versi sekarang (kartu sesuai desain menyusul). Chip filter turun ke baris baru kalau tidak muat. Jenis, kata kunci, dan bidang disimpan di URL. Tanpa scroll horizontal.
+- `/jurusan`: **hero sesuai desain** `docs/design/publik/EksplorJurusan-Desktop.jpg` (langit pagi, matahari, bukit, pohon, awan, bintang sebagai siluet halus; bergerak pelan; tinggi ringkas), judul "Eksplor Jurusan", tab **PTN & PTS / Kedinasan** (`?jenis=kedinasan`), kotak **pencarian**, dan ajakan "Coba ORBIDU Compass" (tamu → Masuk lalu ke Compass; siswa → Compass). Di bawahnya "Semua Jurusan": **filter bidang** (hanya untuk PTN & PTS) dan grid kartu jurusan versi sekarang (kartu sesuai desain menyusul). Chip filter turun ke baris baru kalau tidak muat. Jenis, kata kunci, dan bidang disimpan di URL. Tanpa scroll horizontal.
 - `/jurusan/:slug`: sesuai desain detail (tentang jurusan, apa yang dipelajari, prospek karier, kampus yang membuka, mapel pendukung, jalur masuk, ajakan "Cocok nggak sih buatku?" (tamu: tombol "Berlangganan" ke WhatsApp + link "Sudah punya akun? Masuk"), jurusan lain yang mirip). Harus responsif walaupun desain HP-nya belum ada.
 - Daftar **"Kampus yang membuka jurusan ini"** diambil dari `ptnService`, dengan **filter jenis kampus** (PTN, PTS, Kedinasan, PTLN) dan **filter kota**.
 - Kalau siswa sudah login dan sudah asesmen, kartu jurusan menampilkan **label kecocokan dari Compass** ("Sangat sesuai" atau "Sesuai"), bukan persentase.

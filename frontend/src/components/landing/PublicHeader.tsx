@@ -13,7 +13,7 @@ const ITEM = "flex items-center whitespace-nowrap rounded-full px-3 py-2 text-sm
 const ITEM_ACTIVE = "bg-white font-semibold text-orbit-1 shadow-card ring-1 ring-rim-soft";
 const ITEM_IDLE = "font-medium text-prose hover:text-space-2";
 
-/** Link ke section beranda (`/#faq`) tidak pernah ditandai aktif. */
+/** Link ke section halaman (mis. `/#perjalanan`) tidak pernah ditandai aktif. */
 const isSectionLink = (to: string) => to.includes("#");
 
 /**
