@@ -32,6 +32,7 @@ diberi catatan lain. Detail tiap baris ada di bagian yang disebut.
 | 13 | Profil: data diri dari sekolah, hak ubah siswa, nama panggilan/foto/password | 🔴 | Naufal + sekolah |
 | 14 | Akun berlangganan: admin membuat akun, wajib ganti password awal | 🔴 | Naufal |
 | 15 | Portal Wali Kelas: peran `WALI_KELAS`, profil wali, dashboard kelas, daftar dan detail siswa, impor rapor | 🔴 | Naufal |
+| 16 | Portal Guru BK: profil konselor, dashboard sekolah, daftar & detail siswa lintas kelas, catatan konseling | 🔴 | Naufal |
 
 ---
 
@@ -846,3 +847,26 @@ POST /profile/rapor/import-excel  (multipart: file, semester, tahunAjaran) → {
 ```
 - `import-excel` sudah ada, tetapi sejak PR #6 hanya untuk `ADMIN` dan `BK_TEACHER`. Kalau wali kelas yang mengimpor rapor, `WALI_KELAS` perlu ditambahkan dan dibatasi ke siswa di kelasnya.
 - `initials` boleh dihitung di frontend dari `name`; kirim `null` untuk kolom yang belum ada, jangan nilai contoh.
+
+---
+
+## 16. Portal Guru BK (`/bk`)
+
+Sementara berjalan di mode dummy: `frontend/src/services/bkService.ts` memakai `frontend/src/mocks/bkMock.ts`, dan di mode backend setiap fungsi melempar error `"Endpoint backend … belum tersedia"` hingga endpoint siap. Bentuk data mengikuti `frontend/src/types/bk.ts`.
+
+### 16.1 Kondisi backend saat ini 🟡
+- Peran `BK_TEACHER` sudah ada di `schema.prisma` dan akun seed `gurubk@orbita.id` sudah tersedia (`password123`).
+- Endpoint `/bk/teachers` dan `/bk/bookings` (jadwal konseling) sudah ada, namun belum ada endpoint agregasi dashboard sekolah, pemantauan siswa lintas kelas, tryout summary, maupun catatan konseling terstruktur untuk Portal Guru BK.
+
+### 16.2 Endpoint yang dibutuhkan 🔴
+Semua endpoint di bawah wajib `authenticateToken` + `requireRole("BK_TEACHER")`:
+```
+GET  /bk/profile                 → BkTeacherProfile   { id, name, nip, jabatan, sekolah, semester, tahunAjaran, avatarUrl?, initials }
+GET  /bk/dashboard               → BkDashboardData    (KPI sekolah, AI monitoring mingguan, peta potensi X/XI/XII, aktivitas terkini)
+GET  /bk/students                → BkStudentSummary[] (daftar siswa lintas kelas beserta status tes minat & prioritas pendampingan)
+GET  /bk/students/:id            → BkStudentDetail    (profil, absensi, rapor semester 1–6, tryout SNBT/TKA/SKD, minat & rekomendasi, prestasi, catatan BK)
+POST /bk/students/:id/notes      ← CreateBkNoteInput  { tanggal, konselor, topik, catatan, rekomendasi, tindakLanjut, prioritas }
+                                 → 201 BkNoteItem
+```
+- `GET /bk/students` dan `GET /bk/students/:id` dibatasi ke siswa pada sekolah konselor yang login.
+- Catatan konseling baru (`POST /bk/students/:id/notes`) juga dapat diteruskan sebagai notifikasi ke Wali Kelas siswa terkait (bagian 15).

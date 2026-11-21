@@ -6,7 +6,7 @@ import AdaptiveLayout from "@/layouts/AdaptiveLayout";
 import PageLoader from "@/components/ui/PageLoader";
 // Tidak lazy: halaman error harus tetap bisa tampil walau file halaman lain gagal dimuat.
 import ErrorPage from "@/app/ErrorPage";
-import { DaftarRedirect, GuestOnly, RequireAuth, RequireWali } from "@/routes/guards";
+import { DaftarRedirect, GuestOnly, RequireAuth, RequireBk, RequireWali } from "@/routes/guards";
 
 const LandingPage = lazy(() => import("@/app/LandingPage"));
 const ProfilPage = lazy(() => import("@/app/ProfilPage"));
@@ -33,6 +33,12 @@ const WaliLayout = lazy(() => import("@/layouts/WaliLayout"));
 const WaliDashboardPage = lazy(() => import("@/app/wali/WaliDashboardPage"));
 const WaliStudentListPage = lazy(() => import("@/app/wali/WaliStudentListPage"));
 const WaliStudentDetailPage = lazy(() => import("@/app/wali/WaliStudentDetailPage"));
+
+// Portal Guru BK
+const BkLayout = lazy(() => import("@/layouts/BkLayout"));
+const BkDashboardPage = lazy(() => import("@/app/bk/BkDashboardPage"));
+const BkStudentListPage = lazy(() => import("@/app/bk/BkStudentListPage"));
+const BkStudentDetailPage = lazy(() => import("@/app/bk/BkStudentDetailPage"));
 
 /** Landing tidak memakai layout, jadi butuh Suspense sendiri. */
 const withSuspense = (node: ReactNode) => <Suspense fallback={<PageLoader fullscreen />}>{node}</Suspense>;
@@ -123,6 +129,27 @@ export const router = createBrowserRouter([
                   { index: true, element: <WaliDashboardPage /> },
                   { path: "siswa", element: <WaliStudentListPage /> },
                   { path: "siswa/:id", element: <WaliStudentDetailPage /> },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+
+      // ── Portal Guru BK (wajib login) ────────────────────────────────────────
+      {
+        element: <RequireBk />,
+        children: [
+          {
+            path: "/bk",
+            element: <BkLayout />,
+            children: [
+              {
+                errorElement: <ErrorPage inLayout />,
+                children: [
+                  { index: true, element: <BkDashboardPage /> },
+                  { path: "siswa", element: <BkStudentListPage /> },
+                  { path: "siswa/:id", element: <BkStudentDetailPage /> },
                 ],
               },
             ],

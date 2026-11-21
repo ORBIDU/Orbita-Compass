@@ -39,6 +39,7 @@ export default function AktivasiPage() {
 
   if (!step) {
     if (user?.role === "WALI_KELAS") return <Navigate to={ROUTES.walikelas} replace />;
+    if (user?.role === "BK_TEACHER") return <Navigate to={ROUTES.bk} replace />;
     if (user?.role === "STUDENT" && !ready) return <PageLoader label={UI.preparingPortal} />;
     return <Navigate to={portalTarget(studentStatus, from)} replace />;
   }

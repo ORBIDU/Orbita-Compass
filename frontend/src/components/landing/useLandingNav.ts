@@ -16,7 +16,12 @@ export type LandingSection = "masalah" | "kenali" | "compass" | "jurusan" | "act
 export function useLandingNav() {
   const { status, user } = useAuth();
   const loggedIn = status === "authenticated";
-  const portalTo = user?.role === "WALI_KELAS" ? ROUTES.walikelas : ROUTES.portal;
+  const portalTo =
+    user?.role === "WALI_KELAS"
+      ? ROUTES.walikelas
+      : user?.role === "BK_TEACHER"
+      ? ROUTES.bk
+      : ROUTES.portal;
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const reduced = useReducedMotion();
