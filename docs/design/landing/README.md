@@ -1,5 +1,8 @@
 # Referensi desain landing page ORBIDU
 
+> **Fase 10:** tampilan beranda dan halaman publik lain kini mengikuti `docs/design/publik/`.
+> `Jurusan-Detail.dc.html` tetap acuan halaman detail jurusan; dua file Home disimpan sebagai riwayat.
+
 File di folder ini adalah desain dari canvas (format .dc.html), bukan kode untuk dipakai langsung.
 Bangun ulang di React + Tailwind dengan mengikuti isi teks, warna, ukuran huruf, jarak, dan radius yang tertulis di sini.
 

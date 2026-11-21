@@ -536,15 +536,3 @@ export const JURUSAN_CATALOG: JurusanDetail[] = [
     similar: ["komputasi-statistik"],
   }),
 ];
-
-/** Urutan jurusan unggulan di carousel beranda (sesuai desain). */
-export const FEATURED_SLUGS = [
-  "informatika",
-  "kedokteran",
-  "psikologi",
-  "ilmu-hukum",
-  "manajemen",
-  "teknik-sipil",
-  "desain-komunikasi-visual",
-  "akuntansi-sektor-publik",
-];

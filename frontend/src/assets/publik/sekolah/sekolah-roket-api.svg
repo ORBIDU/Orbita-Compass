@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="1135 345 545 535" fill="none"><defs><filter id="filter7_f_725_1203" x="1563.89" y="691.61" width="135.81" height="135.81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix" />
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+<feGaussianBlur stdDeviation="19.40" result="effect1_foregroundBlur_725_1203" />
+</filter>
+<linearGradient id="paint13_linear_725_1203" x1="1567.1" y1="760.53" x2="1667.87" y2="782.14" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFF3A4" />
+<stop offset="0.5" stop-color="#FF9F1C" />
+<stop offset="1" stop-color="#FF5B23" />
+</linearGradient>
+</defs><g opacity="0.24" filter="url(#filter7_f_725_1203)">
+<path d="M1660.25 765.62C1663.62 749.91 1653.62 734.44 1637.9 731.07C1622.19 727.70 1606.72 737.70 1603.34 753.42C1599.97 769.13 1609.98 784.60 1625.7 787.98C1641.41 791.35 1656.88 781.34 1660.25 765.62Z" fill="#FF5B36" />
+</g>
+<path d="M1567.1 760.53L1573.2 732.07L1658.56 750.38C1679.11 754.79 1673.01 783.24 1652.46 778.83L1567.1 760.53Z" fill="url(#paint13_linear_725_1203)" />
+<path d="M1550.7 789.17L1555.45 767.04L1623.42 781.61C1640.81 785.34 1636.06 807.47 1618.67 803.74L1550.7 789.17Z" fill="#FF9C16" />
+<path d="M1564.96 722.68L1569.71 700.55L1637.68 715.13C1655.07 718.85 1650.32 740.99 1632.93 737.26L1564.96 722.68Z" fill="#FF9C16" />
+</svg>

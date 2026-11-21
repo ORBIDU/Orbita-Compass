@@ -3,12 +3,15 @@ import { createBrowserRouter } from "react-router-dom";
 import PortalLayout from "@/layouts/PortalLayout";
 import AuthLayout from "@/layouts/AuthLayout";
 import AdaptiveLayout from "@/layouts/AdaptiveLayout";
+import PublicLayout from "@/layouts/PublicLayout";
 import PageLoader from "@/components/ui/PageLoader";
 // Tidak lazy: halaman error harus tetap bisa tampil walau file halaman lain gagal dimuat.
 import ErrorPage from "@/app/ErrorPage";
 import { DaftarRedirect, GuestOnly, RequireAuth, RequireBk, RequireWali } from "@/routes/guards";
 
 const LandingPage = lazy(() => import("@/app/LandingPage"));
+const UntukSekolahPage = lazy(() => import("@/app/UntukSekolahPage"));
+const TentangKamiPage = lazy(() => import("@/app/TentangKamiPage"));
 const ProfilPage = lazy(() => import("@/app/ProfilPage"));
 
 const AuthPage = lazy(() => import("@/app/AuthPage"));
@@ -40,7 +43,7 @@ const BkDashboardPage = lazy(() => import("@/app/bk/BkDashboardPage"));
 const BkStudentListPage = lazy(() => import("@/app/bk/BkStudentListPage"));
 const BkStudentDetailPage = lazy(() => import("@/app/bk/BkStudentDetailPage"));
 
-/** Landing tidak memakai layout, jadi butuh Suspense sendiri. */
+/** Halaman tanpa layout (pengerjaan soal) butuh Suspense sendiri. */
 const withSuspense = (node: ReactNode) => <Suspense fallback={<PageLoader fullscreen />}>{node}</Suspense>;
 
 // Peta halaman sesuai docs/SPEK_SISWA.md.
@@ -52,7 +55,20 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       // ── Publik ──────────────────────────────────────────────────────────────
-      { path: "/", element: withSuspense(<LandingPage />) },
+      // Beranda selalu memakai layout publik, juga untuk siswa yang sudah masuk.
+      {
+        element: <PublicLayout />,
+        children: [
+          {
+            errorElement: <ErrorPage inLayout />,
+            children: [
+              { path: "/", element: <LandingPage /> },
+              { path: "/untuk-sekolah", element: <UntukSekolahPage /> },
+              { path: "/tentang-kami", element: <TentangKamiPage /> },
+            ],
+          },
+        ],
+      },
       {
         // Satu halaman untuk tamu dan siswa: layout mengikuti status login.
         path: "/jurusan",

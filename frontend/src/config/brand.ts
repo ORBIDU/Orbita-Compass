@@ -11,7 +11,8 @@ export const BRAND = {
   audience: "Bifriends",
   /** Nama fitur rekomendasi (dulu "Orbita Compass"). */
   compassName: "ORBIDU Compass",
-  location: "Indonesia",
+  // BELUM DIPASTIKAN: lokasi dari desain footer Fase 10.
+  location: "Palembang, Indonesia",
 } as const;
 
 // BELUM DIPASTIKAN: nomor WhatsApp resmi belum ada. Ganti placeholder ini

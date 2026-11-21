@@ -2,7 +2,7 @@ import type { BidangKey, CampusGroup, CampusOffering, FitLabel, JurusanDetail, J
 import type { CompassAnalysis, MajorWithUniversity } from "@/types/backend";
 import type { CompassHighlights } from "@/types/dashboard";
 import type { CompassRecommendation, CompassResult, HiddenPath, PathGroup, PathKey } from "@/types/compass";
-import { FEATURED_SLUGS, JURUSAN_CATALOG } from "@/data/jurusan";
+import { JURUSAN_CATALOG } from "@/data/jurusan";
 import { delay } from "@/lib/delay";
 import { BIDANG } from "@/config/bidang";
 import { getMajors } from "./ptnService";
@@ -43,14 +43,6 @@ export function countByBidang(): Record<BidangKey, number> {
   const counts = {} as Record<BidangKey, number>;
   for (const j of JURUSAN_CATALOG) counts[j.bidang] = (counts[j.bidang] ?? 0) + 1;
   return counts;
-}
-
-/** Jurusan unggulan untuk carousel beranda. */
-export async function getFeaturedJurusan(): Promise<JurusanSummary[]> {
-  await delay(150);
-  return FEATURED_SLUGS.map((slug) => JURUSAN_CATALOG.find((j) => j.slug === slug))
-    .filter((j): j is JurusanDetail => Boolean(j))
-    .map(toSummary);
 }
 
 /** Detail jurusan, atau null jika slug tidak dikenal. */

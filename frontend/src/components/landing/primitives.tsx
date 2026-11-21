@@ -4,30 +4,14 @@ import { ArrowDown, ArrowRight } from "lucide-react";
 
 // Potongan kecil yang dipakai berulang di beranda dan halaman publik.
 
-/** Lebar isi halaman publik: 1200px di desktop, dengan jarak tepi di HP. */
-export const CONTAINER = "mx-auto w-full max-w-[1200px] px-5 sm:px-8 xl:px-0";
+/**
+ * Lebar isi halaman publik. Desain docs/design/publik memakai hampir seluruh
+ * lebar layar dengan margin tepi ±3,7% (64px di 1728px), maksimal 1600px.
+ */
+export const CONTAINER = "mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-[min(3.7vw,64px)]";
 
 /** Jarak atas-bawah section beranda. */
 export const SECTION_Y = "py-[72px] lg:py-[120px]";
-
-/** Chip bernomor oranye (1 Potensi, 2 Arah, dan seterusnya). */
-export function StepChip({ no, label, size = "md", className = "" }: { no: number; label: string; size?: "sm" | "md"; className?: string }) {
-  const small = size === "sm";
-  return (
-    <span
-      className={`inline-flex items-center gap-2 rounded-full border border-rim bg-white font-semibold text-space-1 ${
-        small ? "h-7 gap-1.5 pl-1 pr-2.5 text-xs" : "h-8 pl-[5px] pr-3.5 text-[13px]"
-      } ${className}`}
-    >
-      <span
-        className={`flex items-center justify-center rounded-full bg-sun-1 text-space-2 ${small ? "h-5 w-5 text-[11px]" : "h-[22px] w-[22px] text-xs"}`}
-      >
-        {no}
-      </span>
-      {label}
-    </span>
-  );
-}
 
 export function H2({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
@@ -35,15 +19,6 @@ export function H2({ children, className = "" }: { children: ReactNode; classNam
       {children}
     </h2>
   );
-}
-
-export function Lead({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <p className={`text-base leading-[1.65] text-prose lg:text-lg lg:leading-[1.7] ${className}`}>{children}</p>;
-}
-
-/** Teks aksen tulisan tangan (Pecita, cadangan Caveat). */
-export function Accent({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <p className={`font-accent text-[30px] font-bold leading-[1.1] lg:text-4xl ${className}`}>{children}</p>;
 }
 
 // ─── Tombol berbentuk pil ─────────────────────────────────────────────────────

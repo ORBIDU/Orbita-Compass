@@ -1,101 +1,75 @@
-import { ArrowDown } from "lucide-react";
+import type { CSSProperties } from "react";
 import { PROBLEM } from "@/content/landing";
-import { Accent, CONTAINER, H2, SECTION_Y } from "../primitives";
-import { useLandingNav } from "../useLandingNav";
+import siswa from "@/assets/publik/masalah-siswa.svg";
+import { CONTAINER } from "../primitives";
 
-type Tone = (typeof PROBLEM.bubbles)[number]["tone"];
+type Bubble = (typeof PROBLEM.bubbles)[number];
 
-const TONE: Record<Tone, string> = {
-  blue: "bg-surface-bubble text-space-1",
-  peach: "bg-surface-peach text-space-1",
-  outline: "border-[1.5px] border-rim bg-white text-prose",
-};
-
-// Posisi gelembung di layar lebar (≥1280px), persis seperti desain 1200×470.
-const DESKTOP_LAYOUT = [
-  { left: 20, top: 20, maxW: 420, rotate: -1.5, corner: "rounded-[24px_24px_24px_8px]" },
-  { left: 740, top: 0, maxW: 420, rotate: 1.5, corner: "rounded-[24px_24px_8px_24px]" },
-  { left: 390, top: 150, maxW: 420, rotate: 0, corner: "rounded-[24px]" },
-  { left: 0, top: 270, maxW: 470, rotate: 1, corner: "rounded-[24px_24px_24px_8px]" },
-  { left: 790, top: 250, maxW: 400, rotate: -1, corner: "rounded-[24px_24px_8px_24px]" },
-  { left: 700, top: 370, maxW: undefined, rotate: 2, corner: "rounded-[22px]" },
+// Posisi gelembung di desktop: persen dari panggung (lebar 1728, tinggi 894 dari desain).
+const DESKTOP_POS: CSSProperties[] = [
+  { left: "5%", top: "20.4%", width: "19.7%" },
+  { left: "27%", top: "3.7%", width: "15.4%" },
+  { left: "62.7%", top: "15.4%", width: "19.7%" },
+  { left: "78.5%", top: "44.6%", width: "19%" },
 ];
 
-// Garis putus-putus yang menghubungkan pertanyaan ke titik orbit di bawah.
-const LINES = [
-  "M220 70 Q400 300 600 440",
-  "M930 50 Q800 300 600 440",
-  "M600 200 Q600 330 600 440",
-  "M230 330 Q420 420 600 440",
-  "M960 300 Q780 420 600 440",
-];
-
-export default function ProblemSection() {
-  const { scrollTo } = useLandingNav();
-
+/** Gelembung pikiran dengan ekor di kiri/kanan bawah. */
+function SpeechBubble({ bubble, className = "", style }: { bubble: Bubble; className?: string; style?: CSSProperties }) {
+  const oval = bubble.shape === "oval";
   return (
-    <section id="masalah" className={`scroll-mt-4 bg-white ${SECTION_Y}`}>
-      <div className={`${CONTAINER} flex flex-col items-center gap-7 lg:gap-14`}>
-        <H2 className="text-center">{PROBLEM.title}</H2>
+    <div className={`relative ${className}`} style={style}>
+      <div
+        className={`flex items-center justify-center border-2 border-space-2 bg-white text-center shadow-chip ${
+          oval ? "min-h-[8.5em] rounded-[50%] px-[1.6em] py-[1.4em]" : "rounded-[1.4em] px-[1.1em] py-[1em]"
+        }`}
+      >
+        <p className="leading-[1.6] text-space-2">{bubble.text}</p>
+      </div>
+      {/* Garis ekor tidak ditutup, jadi bagian atasnya menutupi border gelembung tanpa garis. */}
+      <svg
+        viewBox="0 0 32 26"
+        aria-hidden="true"
+        className={`absolute top-[calc(100%-4px)] h-[1.6em] w-[2em] ${bubble.tail === "right" ? "right-[18%]" : "left-[18%] -scale-x-100"}`}
+      >
+        <path d="M1 0 C 2 12, 14 22, 30 24 C 18 16, 15 8, 15 0" className="fill-white stroke-space-2" strokeWidth="2" />
+      </svg>
+    </div>
+  );
+}
 
-        {/* HP & tablet: gelembung bergantian kiri-kanan */}
-        <div className="flex w-full max-w-[560px] flex-col gap-3 xl:hidden">
-          {PROBLEM.bubbles.map((b, i) => (
-            <p
-              key={i}
-              className={`max-w-[300px] px-[18px] py-3 text-[15px] font-medium leading-normal sm:max-w-[360px] ${TONE[b.tone]} ${
-                i % 2 === 0 ? "self-start" : "self-end"
-              } ${
-                b.tone === "outline"
-                  ? "rounded-[20px]"
-                  : i % 2 === 0
-                    ? "rounded-[20px_20px_20px_6px]"
-                    : "rounded-[20px_20px_6px_20px]"
-              }`}
-            >
-              {b.text}
-            </p>
+/** "Masih bingung harus mulai dari mana?" dengan siswa yang bingung dan empat gelembung pertanyaan. */
+export default function ProblemSection() {
+  return (
+    <section id="masalah" className="scroll-mt-16 overflow-hidden bg-masalah-glow pt-16 lg:scroll-mt-20 lg:pt-20">
+      <div className={CONTAINER}>
+        <h2 className="mx-auto max-w-[760px] text-balance text-center text-[32px] font-bold leading-[1.25] tracking-[-0.5px] text-orbit-1 lg:text-[52px]">
+          {PROBLEM.title}
+        </h2>
+
+        {/* HP & tablet: gelembung dalam grid, lalu ilustrasi */}
+        <ul className="mt-10 grid grid-cols-1 gap-x-5 gap-y-10 text-[15px] sm:grid-cols-2 lg:hidden">
+          {PROBLEM.bubbles.map((b) => (
+            <li key={b.text}>
+              <SpeechBubble bubble={b} className="mx-auto max-w-[300px]" />
+            </li>
           ))}
-        </div>
+        </ul>
+      </div>
 
-        {/* Desktop lebar: kolase seperti desain */}
-        <div className="relative hidden h-[470px] w-[1200px] xl:block">
-          <svg viewBox="0 0 1200 470" aria-hidden="true" className="absolute inset-0 h-full w-full">
-            {LINES.map((d) => (
-              <path key={d} d={d} fill="none" strokeWidth="1.5" strokeDasharray="4 8" className="stroke-rim-dash" />
-            ))}
-            <circle cx="600" cy="440" r="24" strokeWidth="1.5" className="fill-white stroke-rim" />
-            <circle cx="600" cy="440" r="8" className="fill-orbit-1" />
-            <ellipse cx="600" cy="441" rx="17" ry="6" fill="none" strokeWidth="2.2" transform="rotate(-18 600 441)" className="stroke-sun-1" />
-          </svg>
-          {PROBLEM.bubbles.map((b, i) => {
-            const pos = DESKTOP_LAYOUT[i];
-            const isOutline = b.tone === "outline";
-            return (
-              <p
-                key={i}
-                className={`absolute m-0 font-medium leading-normal ${isOutline ? "px-[22px] py-3.5 text-[17px]" : "px-6 py-[18px] text-[19px]"} ${TONE[b.tone]} ${pos.corner}`}
-                style={{ left: pos.left, top: pos.top, maxWidth: pos.maxW, transform: pos.rotate ? `rotate(${pos.rotate}deg)` : undefined }}
-              >
-                {b.text}
-              </p>
-            );
-          })}
-        </div>
-
-        <div className="flex max-w-[760px] flex-col items-center gap-3 text-center">
-          <Accent className="mt-1.5 text-orbit-1">{PROBLEM.reassurance}</Accent>
-          <h3 className="text-balance text-[22px] font-bold leading-[1.3] text-space-2 lg:text-[30px] lg:leading-[1.25]">{PROBLEM.heading}</h3>
-          <p className="text-base leading-[1.65] text-prose lg:text-lg">{PROBLEM.body}</p>
-          <button
-            type="button"
-            onClick={() => scrollTo("kenali")}
-            aria-label={PROBLEM.nextLabel}
-            className="mt-3 flex h-12 w-12 items-center justify-center rounded-full border-[1.5px] border-rim-strong text-space-1 transition hover:bg-surface-soft"
-          >
-            <ArrowDown size={20} strokeWidth={2.2} />
-          </button>
-        </div>
+      {/* Desktop: panggung berasio desain, gelembung di sekeliling siswa */}
+      <div className="relative mx-auto mt-10 w-full max-w-[1728px] lg:mt-0 lg:aspect-[1728/894]">
+        <img
+          src={siswa}
+          alt=""
+          className="mx-auto block w-[110%] max-w-none -translate-x-[5%] sm:w-full sm:translate-x-0 lg:absolute lg:bottom-0 lg:left-[16.2%] lg:w-[64.8%]"
+        />
+        <ul className="hidden text-[clamp(13px,1.25vw,22px)] lg:block">
+          {PROBLEM.bubbles.map((b, i) => (
+            <li key={b.text}>
+              <SpeechBubble bubble={b} className="absolute" style={DESKTOP_POS[i]} />
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
