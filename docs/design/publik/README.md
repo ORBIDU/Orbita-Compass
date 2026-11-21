@@ -25,9 +25,8 @@ Keputusan Fase 10 (lihat `docs/SPEK_SISWA.md` bagian 1):
 - Form "Kirim Pesan" dikirim lewat WhatsApp sampai backend punya endpoint pesan.
 - Tahun di footer otomatis (desain: © 2025).
 - **Untuk Sekolah:** judul kartu Wali Kelas di desain sama dengan kartu Siswa, jadi diganti "Ikuti perkembangan siswa di kelasmu."; poin Guru BK yang muncul dua kali ("Memberikan catatan atau arahan") diganti; "umpan balik yang konstruktif secara real-time" menjadi "umpan balik yang membangun" (belum ada fitur real-time); salah ketik ("ekplorais", "leih", "unutk") diperbaiki; "HOW IT WORKS" menjadi "Cara kerjanya"; link "Pelajari tahap ini" di kartu peran menjadi "Tanya tim kami" (WhatsApp sekolah) karena belum ada halaman rinciannya.
-- Di hero Untuk Sekolah ditambah bulan dan dua lapis bukit halus di belakang pohon kiri.
-- **Gaya hero:** pohon, awan, dan bukit dari desain tetap dipakai (bentuk dan posisi sama), tapi digambar sebagai siluet rata bergradasi halus supaya hero terlihat lebih bersih (`components/landing/motion/Siluet.tsx`).
-- **Hero Beranda:** panel angkasa bertepi awan diganti latar langit malam penuh; panel memudar ke latar, gedung sekolah berdiri di cakrawala planet. Judul "Temukan potensi diri" memakai biru yang lebih terang supaya terbaca di latar gelap.
+- Di hero Untuk Sekolah ditambah bulan dan dua lapis gunung di belakang pohon kiri.
+- **Beranda, section Masalah:** gelembung di desktop disusun dua baris ("Masih bingung" sejajar "Kalau aku suka", "PTN, PTS" sejajar "Aku gatau") atas permintaan pemilik produk.
 - **Hero Eksplor Jurusan** dibuat ringkas (±50% tinggi desain) supaya daftar jurusan cepat terlihat; emoji topi wisuda diganti ikon garis.
 - **FAQ:** judul "Temukan Jawabanmu Disini" menjadi "di Sini"; kategori disesuaikan dengan fitur yang ada (Tentang ORBIDU, Cara Menggunakan, Jurusan & Kampus, Action Plan, Untuk Sekolah); "CONTACT US" menjadi "Hubungi Kami"; janji "merespons dalam 1×24 jam kerja" tidak dipakai karena belum pasti; "Base Radar" ditulis "Lokasi" dari `brand.ts`.
 
@@ -38,7 +37,7 @@ Semua gerakan memakai CSS (geser, putar, transparansi), mati kalau `prefers-redu
   - tiga meteor jatuh diagonal berulang (satu lebih kecil dan samar);
   - dua orbit putus-putus "mengalir" berlawanan arah; planet putih berjalan di orbit dalam dan planet biru kecil di orbit luar (membesar saat di depan, mengecil saat di belakang maskot);
   - planet oranye mengambang dengan kilau berdenyut, permukaan planet biru besar bergeser pelan seperti berputar, cahaya biru berdenyut;
-  - bintang berkelip, roket kecil sesekali melintas;
+  - bintang berkelip, roket kecil sesekali melintas, awan di tepi kiri panel bergeser pelan;
   - kalau animasi dikurangi, planet kembali ke posisi desain asli.
 - **Hero Untuk Sekolah**: meteor, bintang berkelip, bimasakti berkilau, awan bergeser, pohon bergoyang, siswa dan roket melayang bersama dengan api berkedip, bulan bercahaya. Lapisan diambil dari SVG desain ke `src/assets/publik/sekolah/`.
 - **Hero FAQ** (lapisan dari SVG desain ke `src/assets/publik/faq/`): bulan bercahaya, awan bergeser, pohon bergoyang, bintang berkelip, meteor, bola tanda tanya melayang.

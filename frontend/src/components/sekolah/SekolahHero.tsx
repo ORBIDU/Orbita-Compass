@@ -4,7 +4,6 @@ import { whatsappLink } from "@/config/brand";
 import { usePauseOffscreen } from "@/lib/usePauseOffscreen";
 import { Meteors, Starfield, type MeteorSpec } from "@/components/landing/motion/Sky";
 import { PillExternal } from "@/components/landing/primitives";
-import Siluet from "@/components/landing/motion/Siluet";
 import bimasakti from "@/assets/publik/sekolah/sekolah-bimasakti.svg";
 import awan from "@/assets/publik/sekolah/awan-abu.svg";
 import pohonKanan from "@/assets/publik/sekolah/sekolah-pohon-kanan.svg";
@@ -36,27 +35,27 @@ const METEORS: MeteorSpec[] = [
 
 const IMG = "pointer-events-none absolute h-auto max-w-none select-none";
 
-/** Ilustrasi hero: langit, bimasakti, bulan, bukit, awan, pohon (siluet halus), dan siswa di atas roket. */
+/** Ilustrasi hero: langit, bimasakti, gunung, awan, pohon, dan siswa di atas roket. */
 function HeroArt({ className }: { className: string }) {
   return (
     <div aria-hidden="true" className={`pointer-events-none absolute aspect-[1730/836] ${className}`}>
       <img src={bimasakti} alt="" className={`${IMG} motion-safe:animate-ob-kilau`} style={at(603, 180, 1127)} />
 
-      {/* Bulan dan dua lapis bukit halus. */}
+      {/* Tambahan: bulan dan dua lapis gunung di kiri, di belakang pohon (bimasakti tetap di kanan). */}
       <span
         className="absolute aspect-square rounded-full bg-bulan shadow-[0_0_40px_14px_rgba(255,231,163,0.35)] motion-safe:animate-ob-denyut"
         style={{ ...at(1205, 128, 62) }}
       />
       <svg viewBox="0 0 1730 300" preserveAspectRatio="none" className="absolute w-full" style={{ left: 0, top: `${((600 - 96) / 836) * 100}%`, height: "38%" }}>
-        <path d="M0 140 C180 90 300 60 460 80 C640 102 720 170 900 160 C1080 150 1180 90 1360 100 C1520 108 1640 150 1730 160 V300 H0Z" className="fill-gunung-tengah" opacity="0.5" />
-        <path d="M0 210 C200 170 360 150 540 175 C720 200 820 235 1000 225 C1180 215 1300 185 1480 195 C1600 202 1680 215 1730 220 V300 H0Z" className="fill-gunung-dekat" opacity="0.85" />
+        <path d="M0 150 L150 70 L280 125 L420 35 L560 115 L690 75 L830 160 L960 300 L0 300Z" className="fill-gunung-tengah" opacity="0.55" />
+        <path d="M0 200 L110 140 L250 185 L370 115 L510 180 L630 150 L760 230 L860 300 L0 300Z" className="fill-gunung-dekat" opacity="0.8" />
       </svg>
 
-      {/* Awan dan pohon dari desain: bentuk dan posisi sama, digambar sebagai siluet bergradasi. */}
-      <Siluet src={awan} fill="bg-awan-malam" className="motion-safe:animate-ob-awan" style={at(45, 693, 719)} />
-      <Siluet src={awan} fill="bg-awan-malam" className="motion-safe:animate-ob-awan [animation-direction:alternate-reverse] [animation-duration:18s]" style={at(1398, 157, 719)} />
-      <Siluet src={awan} fill="bg-awan-malam" className="motion-safe:animate-ob-awan [animation-duration:20s]" style={at(982, 775, 719)} />
-      <Siluet src={pohonKanan} fill="bg-pohon-malam" className="origin-bottom motion-safe:animate-ob-goyang" style={at(1568, 278, 224)} />
+      <img src={awan} alt="" className={`${IMG} opacity-90 motion-safe:animate-ob-awan`} style={at(45, 693, 719)} />
+      <img src={awan} alt="" className={`${IMG} motion-safe:animate-ob-awan [animation-direction:alternate-reverse] [animation-duration:18s]`} style={at(1398, 157, 719)} />
+      <img src={awan} alt="" className={`${IMG} motion-safe:animate-ob-awan [animation-duration:20s]`} style={at(982, 775, 719)} />
+
+      <img src={pohonKanan} alt="" className={`${IMG} origin-bottom motion-safe:animate-ob-goyang`} style={at(1568, 278, 224)} />
 
       {/* Siswa dan roket bergerak bersama; api roket berkedip. Ketiganya berbagi viewBox yang sama. */}
       <div className="absolute aspect-[545/535] motion-safe:animate-ob-melayang" style={at(1135, 345, 545)}>
@@ -66,8 +65,8 @@ function HeroArt({ className }: { className: string }) {
       </div>
       <img src={maskotMini} alt="" className={IMG} style={at(1570, 411, 90)} />
 
-      <Siluet src={pohonKecil} fill="bg-pohon-malam" className="origin-bottom motion-safe:animate-ob-goyang [animation-delay:-2s]" style={at(482, 678, 275)} />
-      <Siluet src={pohonKiri} fill="bg-pohon-malam" className="origin-bottom motion-safe:animate-ob-goyang [animation-delay:-3.5s] [animation-duration:6s]" style={at(28, 409, 433)} />
+      <img src={pohonKecil} alt="" className={`${IMG} origin-bottom motion-safe:animate-ob-goyang [animation-delay:-2s]`} style={at(482, 678, 275)} />
+      <img src={pohonKiri} alt="" className={`${IMG} origin-bottom motion-safe:animate-ob-goyang [animation-delay:-3.5s] [animation-duration:6s]`} style={at(28, 409, 433)} />
       <img src={tanah} alt="" className={IMG} style={at(0, 804, 1730)} />
     </div>
   );

@@ -7,7 +7,6 @@ import { useAuth } from "@/context/AuthContext";
 import type { JenisLembaga } from "@/services/jurusanService";
 import { usePauseOffscreen } from "@/lib/usePauseOffscreen";
 import { Meteors, StarShape } from "@/components/landing/motion/Sky";
-import Siluet from "@/components/landing/motion/Siluet";
 import { pillClasses } from "@/components/landing/primitives";
 import matahari from "@/assets/publik/jurusan/jurusan-matahari.svg";
 import awanKanan from "@/assets/publik/jurusan/jurusan-awan-kanan.svg";
@@ -37,25 +36,26 @@ const STARS: [number, number, number, string][] = [
   [1096, 420, 21, "-2.9s"],
 ];
 
+const IMG = "pointer-events-none absolute h-auto max-w-none select-none";
 const SWAY = "origin-bottom motion-safe:animate-ob-goyang";
 
 /**
  * Ilustrasi pagi dari desain: matahari, awan, bukit, dan pohon. Bentuk dan posisi
- * sama dengan desain; awan, bukit, dan pohon digambar sebagai siluet bergradasi halus.
+ * sama dengan desain; lapisannya diambil dari SVG desain apa adanya.
  */
 function HeroArt({ className }: { className: string }) {
   return (
     <div aria-hidden="true" className={`pointer-events-none absolute aspect-[1730/700] ${className}`}>
       <img src={matahari} alt="" className="absolute h-auto max-w-none select-none motion-safe:animate-ob-denyut" style={at(778, 280, 541)} />
-      <Siluet src={awanKanan} fill="bg-awan-pagi" className="motion-safe:animate-ob-awan [animation-duration:18s]" style={at(1064, 269, 719)} />
-      <Siluet src={awanKiri} fill="bg-awan-pagi" className="motion-safe:animate-ob-awan [animation-direction:alternate-reverse]" style={at(52, 347, 719)} />
-      <Siluet src={bukitKiri} fill="bg-bukit-pagi" style={at(0, 213, 905)} />
-      <Siluet src={pohonGelapKanan} fill="bg-pohon-pagi-gelap" className={`${SWAY} [animation-duration:7s]`} style={at(1285, 163, 312)} />
-      <Siluet src={pohonGelapTengah} fill="bg-pohon-pagi-gelap" className={`${SWAY} [animation-delay:-2.5s]`} style={at(784, 330, 174)} />
-      <Siluet src={bukitBiru} fill="bg-bukit-pagi-dekat" style={at(506, 481, 1225)} />
-      <Siluet src={pohonKanan} fill="bg-pohon-pagi" className={`${SWAY} [animation-delay:-1s]`} style={at(1575, 330, 128)} />
-      <Siluet src={pohonKiri} fill="bg-pohon-pagi" className={`${SWAY} [animation-delay:-3.2s]`} style={at(546, 450, 128)} />
-      <Siluet src={pohonKecil} fill="bg-pohon-pagi" className={`${SWAY} [animation-delay:-1.7s] [animation-duration:6s]`} style={at(723, 344, 105)} />
+      <img src={awanKanan} alt="" className={`${IMG} motion-safe:animate-ob-awan [animation-duration:18s]`} style={at(1064, 269, 719)} />
+      <img src={awanKiri} alt="" className={`${IMG} motion-safe:animate-ob-awan [animation-direction:alternate-reverse]`} style={at(52, 347, 719)} />
+      <img src={bukitKiri} alt="" className={IMG} style={at(0, 213, 905)} />
+      <img src={pohonGelapKanan} alt="" className={`${IMG} ${SWAY} [animation-duration:7s]`} style={at(1285, 163, 312)} />
+      <img src={pohonGelapTengah} alt="" className={`${IMG} ${SWAY} [animation-delay:-2.5s]`} style={at(784, 330, 174)} />
+      <img src={bukitBiru} alt="" className={IMG} style={at(506, 481, 1225)} />
+      <img src={pohonKanan} alt="" className={`${IMG} ${SWAY} [animation-delay:-1s]`} style={at(1575, 330, 128)} />
+      <img src={pohonKiri} alt="" className={`${IMG} ${SWAY} [animation-delay:-3.2s]`} style={at(546, 450, 128)} />
+      <img src={pohonKecil} alt="" className={`${IMG} ${SWAY} [animation-delay:-1.7s] [animation-duration:6s]`} style={at(723, 344, 105)} />
       {STARS.map(([x, y, w, delay]) => (
         <StarShape key={`${x}-${y}`} className="absolute text-sun-2/50 motion-safe:animate-ob-kelip" style={{ ...at(x, y, w), animationDelay: delay }} />
       ))}

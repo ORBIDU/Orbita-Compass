@@ -1,9 +1,7 @@
 /** Warna tiap lapis bukit (jauh → dekat), dari token Tailwind. */
 const TONES = {
-  /** Malam/fajar: Tentang Kami, FAQ. */
+  /** Malam/fajar: Tentang Kami. */
   malam: ["fill-gunung-jauh", "fill-gunung-tengah", "fill-gunung-dekat"],
-  /** Pagi: Eksplor Jurusan. */
-  pagi: ["fill-bukit-jauh", "fill-bukit-tengah", "fill-bukit-dekat"],
 } as const;
 
 const PATHS = [

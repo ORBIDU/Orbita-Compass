@@ -22,18 +22,22 @@ const BUBBLE: Record<Shape, { src: string; aspect: string; text: CSSProperties }
 };
 
 // Posisi gelembung di desktop: persen dari panggung (lebar 1728, tinggi 894 dari desain).
+// Dua baris: "Masih bingung" sejajar "Kalau aku suka", "PTN, PTS" sejajar "Aku gatau".
+const ROW_ATAS = "3.7%";
+const ROW_BAWAH = "17%";
 const DESKTOP_POS: CSSProperties[] = [
-  { left: "5%", top: "20.4%", width: "19.7%" },
-  { left: "27%", top: "3.7%", width: "15.4%" },
-  { left: "62.7%", top: "15.4%", width: "19.7%" },
-  { left: "78.5%", top: "44.6%", width: "19%" },
+  { left: "5%", top: ROW_BAWAH, width: "19.7%" },
+  { left: "27%", top: ROW_ATAS, width: "15.4%" },
+  { left: "62.7%", top: ROW_BAWAH, width: "19.7%" },
+  { left: "78.5%", top: ROW_ATAS, width: "19%" },
 ];
 
 /** Gelembung ucapan memakai gambar dari desain, teksnya ditaruh di atas gambar. */
 function SpeechBubble({ text, shape, className = "", style }: { text: string; shape: Shape; className?: string; style?: CSSProperties }) {
   const b = BUBBLE[shape];
   return (
-    <div className={`relative ${className}`} style={{ aspectRatio: b.aspect, ...style }}>
+    // className wajib berisi "relative" atau "absolute" (posisi diatur pemanggil).
+    <div className={className} style={{ aspectRatio: b.aspect, ...style }}>
       <img src={b.src} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full select-none" />
       <p className="absolute flex items-center justify-center text-center leading-[1.55] text-black" style={b.text}>
         {text}
@@ -57,7 +61,7 @@ export default function ProblemSection() {
         <ul className="mx-auto mt-8 flex max-w-[440px] flex-col text-[13.5px] min-[400px]:text-[14.5px] sm:grid sm:max-w-none sm:grid-cols-2 sm:gap-x-6 sm:gap-y-6 sm:text-[15px] lg:hidden">
           {PROBLEM.bubbles.map((b, i) => (
             <li key={b.text} className={`${i % 2 ? "self-end" : "self-start"} ${i ? "-mt-5 sm:mt-0" : ""} w-[74%] sm:w-auto`}>
-              <SpeechBubble text={b.text} shape={b.shape} className={`mx-auto ${b.shape === "oval" ? "w-[82%] sm:w-[230px]" : "sm:w-[290px]"} max-w-full`} />
+              <SpeechBubble text={b.text} shape={b.shape} className={`relative mx-auto ${b.shape === "oval" ? "w-[82%] sm:w-[230px]" : "sm:w-[290px]"} max-w-full`} />
             </li>
           ))}
         </ul>
