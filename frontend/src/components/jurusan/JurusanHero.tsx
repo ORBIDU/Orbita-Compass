@@ -7,10 +7,9 @@ import { useAuth } from "@/context/AuthContext";
 import type { JenisLembaga } from "@/services/jurusanService";
 import { usePauseOffscreen } from "@/lib/usePauseOffscreen";
 import { Meteors, StarShape } from "@/components/landing/motion/Sky";
+import Cloud from "@/components/landing/motion/Cloud";
 import { pillClasses } from "@/components/landing/primitives";
 import matahari from "@/assets/publik/jurusan/jurusan-matahari.svg";
-import awanKanan from "@/assets/publik/jurusan/jurusan-awan-kanan.svg";
-import awanKiri from "@/assets/publik/jurusan/jurusan-awan-kiri.svg";
 import bukitKiri from "@/assets/publik/jurusan/jurusan-bukit-kiri.svg";
 import pohonGelapKanan from "@/assets/publik/jurusan/jurusan-pohon-gelap-kanan.svg";
 import pohonGelapTengah from "@/assets/publik/jurusan/jurusan-pohon-gelap-tengah.svg";
@@ -47,12 +46,13 @@ function HeroArt({ className }: { className: string }) {
   return (
     <div aria-hidden="true" className={`pointer-events-none absolute aspect-[1730/700] ${className}`}>
       <img src={matahari} alt="" className="absolute h-auto max-w-none select-none motion-safe:animate-ob-denyut" style={at(778, 280, 541)} />
-      <img src={awanKanan} alt="" className={`${IMG} motion-safe:animate-ob-awan [animation-duration:18s]`} style={at(1064, 269, 719)} />
-      <img src={awanKiri} alt="" className={`${IMG} motion-safe:animate-ob-awan [animation-direction:alternate-reverse]`} style={at(52, 347, 719)} />
       <img src={bukitKiri} alt="" className={IMG} style={at(0, 213, 905)} />
       <img src={pohonGelapKanan} alt="" className={`${IMG} ${SWAY} [animation-duration:7s]`} style={at(1285, 163, 312)} />
       <img src={pohonGelapTengah} alt="" className={`${IMG} ${SWAY} [animation-delay:-2.5s]`} style={at(784, 330, 174)} />
       <img src={bukitBiru} alt="" className={IMG} style={at(506, 481, 1225)} />
+      {/* Hero ringkas memotong langit atas, jadi awan diletakkan di depan matahari dan bukit supaya tetap terlihat. */}
+      <Cloud className="opacity-95 [animation-duration:18s]" style={at(940, 430, 400)} />
+      <Cloud className="opacity-90 [animation-direction:alternate-reverse]" style={at(1290, 520, 340)} />
       <img src={pohonKanan} alt="" className={`${IMG} ${SWAY} [animation-delay:-1s]`} style={at(1575, 330, 128)} />
       <img src={pohonKiri} alt="" className={`${IMG} ${SWAY} [animation-delay:-3.2s]`} style={at(546, 450, 128)} />
       <img src={pohonKecil} alt="" className={`${IMG} ${SWAY} [animation-delay:-1.7s] [animation-duration:6s]`} style={at(723, 344, 105)} />

@@ -5,22 +5,9 @@ import { whatsappLink } from "@/config/brand";
 import { usePauseOffscreen } from "@/lib/usePauseOffscreen";
 import { Meteors, Starfield } from "@/components/landing/motion/Sky";
 import Hills from "@/components/landing/motion/Hills";
+import Cloud from "@/components/landing/motion/Cloud";
 import { PillExternal, pillClasses } from "@/components/landing/primitives";
 import tanah from "@/assets/publik/sekolah/sekolah-tanah.svg";
-
-/** Awan putih lembut (bentuk sederhana), bergeser pelan. */
-function Cloud({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 220 80" aria-hidden="true" className={`pointer-events-none absolute h-auto motion-safe:animate-ob-awan ${className}`}>
-      <g className="fill-white">
-        <ellipse cx="70" cy="52" rx="58" ry="26" />
-        <ellipse cx="118" cy="38" rx="46" ry="34" />
-        <ellipse cx="160" cy="54" rx="48" ry="24" />
-        <rect x="20" y="52" width="190" height="26" rx="13" />
-      </g>
-    </svg>
-  );
-}
 
 /**
  * Hero Tentang Kami (belum ada desain, disusun dengan gaya situs publik):

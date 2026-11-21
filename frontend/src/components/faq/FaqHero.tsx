@@ -2,15 +2,11 @@ import type { CSSProperties } from "react";
 import { FAQ_HERO } from "@/content/faq";
 import { usePauseOffscreen } from "@/lib/usePauseOffscreen";
 import { Meteors, StarShape } from "@/components/landing/motion/Sky";
+import Cloud from "@/components/landing/motion/Cloud";
 import bukitKiri from "@/assets/publik/faq/faq-bukit-kiri.svg";
 import bukitKanan from "@/assets/publik/faq/faq-bukit-kanan.svg";
 import bukitBawah from "@/assets/publik/faq/faq-bukit-bawah.svg";
 import bulan from "@/assets/publik/faq/faq-bulan.svg";
-import awan1 from "@/assets/publik/faq/faq-awan-1.svg";
-import awan2 from "@/assets/publik/faq/faq-awan-2.svg";
-import awan3 from "@/assets/publik/faq/faq-awan-3.svg";
-import awan4 from "@/assets/publik/faq/faq-awan-4.svg";
-import awan5 from "@/assets/publik/faq/faq-awan-5.svg";
 import pohonGelap from "@/assets/publik/faq/faq-pohon-gelap.svg";
 import pohonA from "@/assets/publik/faq/faq-pohon-a.svg";
 import pohonB from "@/assets/publik/faq/faq-pohon-b.svg";
@@ -47,16 +43,16 @@ function HeroArt({ className }: { className: string }) {
       <img src={bukitKiri} alt="" className={IMG} style={at(0, 197, 440)} />
       <img src={bukitKanan} alt="" className={IMG} style={at(519, 118, 1212)} />
       <img src={bulan} alt="" className="absolute h-auto max-w-none select-none motion-safe:animate-ob-denyut" style={at(579.5, 75.4, 267.5)} />
-      <img src={awan1} alt="" className={`${IMG} motion-safe:animate-ob-awan`} style={at(94, 237, 715)} />
-      <img src={awan2} alt="" className={`${IMG} motion-safe:animate-ob-awan [animation-direction:alternate-reverse] [animation-duration:16s]`} style={at(-29, 301, 715)} />
-      <img src={awan3} alt="" className={`${IMG} motion-safe:animate-ob-awan [animation-duration:18s]`} style={at(171, 498, 715)} />
+      <Cloud className="opacity-80" style={at(231.5, 237, 440)} />
+      <Cloud className="opacity-80 [animation-direction:alternate-reverse] [animation-duration:16s]" style={at(108.5, 301, 440)} />
+      <Cloud className="opacity-80 [animation-duration:18s]" style={at(308.5, 498, 440)} />
       <img src={pohonGelap} alt="" className={`${IMG} ${SWAY} [animation-duration:7s]`} style={at(278, 407, 410)} />
       <img src={bukitBawah} alt="" className={IMG} style={at(0, 600, 1731)} />
       <img src={pohonA} alt="" className={`${IMG} ${SWAY} [animation-delay:-1.2s]`} style={at(639, 372, 163)} />
       <img src={pohonB} alt="" className={`${IMG} ${SWAY} [animation-delay:-2.6s] [animation-duration:6s]`} style={at(122, 422, 98)} />
       <img src={pohonC} alt="" className={`${IMG} ${SWAY} [animation-delay:-3.4s]`} style={at(-15, 459, 127)} />
-      <img src={awan4} alt="" className={`${IMG} motion-safe:animate-ob-awan [animation-duration:20s]`} style={at(1059, 684, 715)} />
-      <img src={awan5} alt="" className={`${IMG} motion-safe:animate-ob-awan [animation-direction:alternate-reverse]`} style={at(-215, 633, 715)} />
+      <Cloud className="opacity-80 [animation-duration:20s]" style={at(1196.5, 684, 440)} />
+      <Cloud className="opacity-80 [animation-direction:alternate-reverse]" style={at(-77.5, 633, 440)} />
       {STARS.map(([x, y, w, delay]) => (
         <StarShape key={`${x}-${y}`} className="absolute text-white/60 motion-safe:animate-ob-kelip" style={{ ...at(x, y, w), animationDelay: delay }} />
       ))}

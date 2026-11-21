@@ -3,9 +3,9 @@ import { SEKOLAH_HERO } from "@/content/untukSekolah";
 import { whatsappLink } from "@/config/brand";
 import { usePauseOffscreen } from "@/lib/usePauseOffscreen";
 import { Meteors, Starfield, type MeteorSpec } from "@/components/landing/motion/Sky";
+import Cloud from "@/components/landing/motion/Cloud";
 import { PillExternal } from "@/components/landing/primitives";
 import bimasakti from "@/assets/publik/sekolah/sekolah-bimasakti.svg";
-import awan from "@/assets/publik/sekolah/awan-abu.svg";
 import pohonKanan from "@/assets/publik/sekolah/sekolah-pohon-kanan.svg";
 import pohonKecil from "@/assets/publik/sekolah/sekolah-pohon-kecil.svg";
 import pohonKiri from "@/assets/publik/sekolah/sekolah-pohon-kiri.svg";
@@ -51,9 +51,9 @@ function HeroArt({ className }: { className: string }) {
         <path d="M0 200 L110 140 L250 185 L370 115 L510 180 L630 150 L760 230 L860 300 L0 300Z" className="fill-gunung-dekat" opacity="0.8" />
       </svg>
 
-      <img src={awan} alt="" className={`${IMG} opacity-90 motion-safe:animate-ob-awan`} style={at(45, 693, 719)} />
-      <img src={awan} alt="" className={`${IMG} motion-safe:animate-ob-awan [animation-direction:alternate-reverse] [animation-duration:18s]`} style={at(1398, 157, 719)} />
-      <img src={awan} alt="" className={`${IMG} motion-safe:animate-ob-awan [animation-duration:20s]`} style={at(982, 775, 719)} />
+      <Cloud className="opacity-80" style={at(184.5, 693, 440)} />
+      <Cloud className="opacity-80 [animation-direction:alternate-reverse] [animation-duration:18s]" style={at(1537.5, 157, 440)} />
+      <Cloud className="opacity-80 [animation-duration:20s]" style={at(1121.5, 775, 440)} />
 
       <img src={pohonKanan} alt="" className={`${IMG} origin-bottom motion-safe:animate-ob-goyang`} style={at(1568, 278, 224)} />
 
