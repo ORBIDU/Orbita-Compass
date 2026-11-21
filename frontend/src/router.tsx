@@ -70,9 +70,10 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        // Satu halaman untuk tamu dan siswa: layout mengikuti status login.
+        // Selalu tampil sebagai situs publik (juga untuk siswa yang sudah masuk),
+        // sama seperti beranda; siswa kembali ke portal lewat "Buka Portal" di navbar.
         path: "/jurusan",
-        element: <AdaptiveLayout />,
+        element: <PublicLayout />,
         children: [
           {
             errorElement: <ErrorPage inLayout />,

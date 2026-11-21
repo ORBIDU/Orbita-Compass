@@ -11,7 +11,7 @@ Di luar cakupan tahap ini: Konsultasi Guru BK, feedback, portal guru BK, wali ke
 - Nilai TKA memakai skala 0–100 (perlu dicek ulang ke aturan resmi).
 - Rapor memakai format Kurikulum Merdeka: satu nilai akhir per mapel, semester 1–5.
 - Profil: golongan darah dihapus, riwayat penyakit diganti "buta warna" (opsional), kondisi sosial ekonomi opsional dengan penjelasan tujuan.
-- `/jurusan` memakai satu komponen halaman untuk semua pengunjung. Belum login → dibungkus layout publik; sudah login → dibungkus layout portal. URL tetap `/jurusan` (tidak ada `/portal/jurusan`). Menu portal "Explore Jurusan" mengarah ke `/jurusan`.
+- `/jurusan` dan `/jurusan/:slug` selalu tampil sebagai **situs publik** (layout publik), juga untuk siswa yang sudah masuk, sama seperti beranda. Siswa kembali ke portal lewat "Buka Portal" di navbar. URL tetap `/jurusan` (tidak ada `/portal/jurusan`). Menu portal "Explore Jurusan" mengarah ke `/jurusan`.
 
 ## Status siswa
 Status menentukan bagian yang terkunci:
@@ -49,6 +49,8 @@ Acuan desain: `docs/design/publik/` (Beranda, Untuk Sekolah, Eksplor Jurusan, La
 - [x] 10A — Fondasi: desain disimpan, navbar + menu HP, footer baru, beranda masuk `PublicLayout`.
 - [x] 10B — Beranda sesuai desain baru (hero terang + meteor, Masalah, "Tenang Bifriends, ada ORBIDU", 3 kartu Perjalanan, CTA penutup). Section FAQ lama tetap di beranda sampai `/faq` jadi (10E). Carousel jurusan dan section Kenali/Compass/Action Plan lama dihapus.
 - [ ] 10C — Eksplor Jurusan (`/jurusan`) sesuai desain.
+  - [x] Hero bergerak, tab PTN & PTS / Kedinasan, pencarian, ajakan Compass; `/jurusan` selalu memakai layout publik.
+  - [ ] Kartu jurusan dan pengelompokan per bidang sesuai desain (sementara memakai kartu versi sekarang).
 - [ ] 10D — Untuk Sekolah (`/untuk-sekolah`) dan Latihan Soal (`/latihan-soal`).
   - [x] Untuk Sekolah: hero bergerak (siswa di roket), kartu peran Siswa/Guru BK/Wali Kelas, "Apa yang Didapat Sekolah?", linimasa lima langkah dengan lanskap sekolah, CTA ke WhatsApp. Teks di `frontend/src/content/untukSekolah.ts`.
   - [ ] Latihan Soal.
@@ -63,7 +65,7 @@ Acuan desain: `docs/design/publik/` (Beranda, Untuk Sekolah, Eksplor Jurusan, La
 ## 2. Explore Jurusan (`/jurusan`, publik) dan Detail Jurusan (`/jurusan/:slug`)
 Acuan desain detail: `docs/design/landing/Jurusan-Detail.dc.html` (desktop).
 - Katalog jurusan dikelompokkan **per nama jurusan** (bukan per kampus), masing-masing punya `slug`. Konten dari `JurusanPage` lama dipindah ke `frontend/src/mocks/` (tanpa persentase "match", perkiraan gaji, dan daftar alumni karena tidak bisa dipertanggungjawabkan).
-- `/jurusan`: grid kartu jurusan yang sama dengan carousel beranda, dengan **pencarian** dan **filter bidang**. Chip filter turun ke baris baru kalau tidak muat (tidak digeser). Tanpa filter kota atau jenis kampus. Tanpa scroll horizontal.
+- `/jurusan`: **hero sesuai desain** `docs/design/publik/EksplorJurusan-Desktop.jpg` (langit pagi, matahari, bukit, pohon, awan, bintang; bergerak pelan), judul "Eksplor Jurusan", tab **PTN & PTS / Kedinasan** (`?jenis=kedinasan`), kotak **pencarian**, dan ajakan "Coba ORBIDU Compass" (tamu → Masuk lalu ke Compass; siswa → Compass). Di bawahnya "Semua Jurusan": **filter bidang** (hanya untuk PTN & PTS) dan grid kartu jurusan versi sekarang (kartu sesuai desain menyusul). Chip filter turun ke baris baru kalau tidak muat. Jenis, kata kunci, dan bidang disimpan di URL. Tanpa scroll horizontal.
 - `/jurusan/:slug`: sesuai desain detail (tentang jurusan, apa yang dipelajari, prospek karier, kampus yang membuka, mapel pendukung, jalur masuk, ajakan "Cocok nggak sih buatku?" (tamu: tombol "Berlangganan" ke WhatsApp + link "Sudah punya akun? Masuk"), jurusan lain yang mirip). Harus responsif walaupun desain HP-nya belum ada.
 - Daftar **"Kampus yang membuka jurusan ini"** diambil dari `ptnService`, dengan **filter jenis kampus** (PTN, PTS, Kedinasan, PTLN) dan **filter kota**.
 - Kalau siswa sudah login dan sudah asesmen, kartu jurusan menampilkan **label kecocokan dari Compass** ("Sangat sesuai" atau "Sesuai"), bukan persentase.

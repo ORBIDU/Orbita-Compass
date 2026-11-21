@@ -5,10 +5,17 @@ import type { CampusGroup, FitLabel, JalurKey } from "@/types/jurusan";
 // Teks halaman /jurusan dan /jurusan/:slug. Komponen hanya menampilkan isi file ini.
 
 export const JURUSAN_LIST = {
-  title: "Explore Jurusan",
-  subtitle: "Kenali apa yang dipelajari di setiap program studi sebelum kamu memutuskan.",
+  // Hero mengikuti docs/design/publik/EksplorJurusan-Desktop.jpg.
+  title: "Eksplor Jurusan",
+  subtitle: "Temukan jurusan yang sesuai dengan minat, potensi, dan tujuan kariermu.",
+  jenisLabel: "Jenis kampus",
+  jenis: { umum: "PTN & PTS", kedinasan: "Kedinasan" },
+  compassText: "Cari tahu jurusan yang cocok berdasarkan profil diri saya",
+  compassCta: `Coba ${BRAND.compassName}`,
+  listTitle: "Semua Jurusan",
+  listBody: "Jelajahi berbagai jurusan berdasarkan bidang ilmu untuk menemukan jurusan yang paling menarik bagimu.",
   searchLabel: "Cari jurusan",
-  searchPlaceholder: "Cari jurusan, mis. Psikologi",
+  searchPlaceholder: "Cari jurusan...",
   clearSearch: "Hapus pencarian",
   filterLabel: "Filter bidang",
   allBidang: "Semua",

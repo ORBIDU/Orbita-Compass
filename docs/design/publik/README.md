@@ -37,5 +37,6 @@ Semua gerakan memakai CSS (geser, putar, transparansi), mati kalau `prefers-redu
   - bintang berkelip, roket kecil sesekali melintas, awan di tepi kiri panel bergeser pelan;
   - kalau animasi dikurangi, planet kembali ke posisi desain asli.
 - **Hero Untuk Sekolah**: meteor, bintang berkelip, bimasakti berkilau, awan bergeser, pohon bergoyang, siswa dan roket melayang bersama dengan api berkedip, bulan bercahaya. Lapisan diambil dari SVG desain ke `src/assets/publik/sekolah/`.
+- **Hero Eksplor Jurusan** (lapisan dari SVG desain ke `src/assets/publik/jurusan/`): matahari bercahaya, awan bergeser, pohon bergoyang, bintang berkelip, dua meteor tipis. Tombol "Coba Orbita Compass" di desain ditulis dengan nama baru "Coba ORBIDU Compass".
 - **Hero Tentang Kami**: langit fajar, matahari terbit perlahan lalu bercahaya, tiga lapis gunung, awan bergeser, meteor dan bintang di langit atas.
 - Kartu dan langkah di halaman publik muncul halus saat pertama kali terlihat (`components/landing/motion/Reveal.tsx`).

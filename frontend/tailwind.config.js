@@ -153,6 +153,8 @@ export default {
         // Garis putus-putus biru (Tentang Kami: perjalanan)
         "garis-x": "repeating-linear-gradient(90deg, #00B2DD 0 6px, transparent 6px 14px)",
         "garis-y": "repeating-linear-gradient(180deg, #00B2DD 0 6px, transparent 6px 14px)",
+        // Hero Eksplor Jurusan: langit pagi (docs/design/publik/EksplorJurusan-Desktop.jpg)
+        "jurusan-langit": "linear-gradient(180deg, #6DCAFF 0%, #FFFFFF 60.6%, #FFEEC3 100%)",
         // Kartu kaca di section "Apa yang Didapat Sekolah?"
         "kaca-navy": "linear-gradient(150deg, rgba(137,149,182,0.28), rgba(24,46,106,0.15) 40%, rgba(18,31,65,0.3))",
         // Garis linimasa "Cara kerjanya": kuning ke biru
