@@ -10,7 +10,8 @@
  */
 
 export const API_BASE_URL: string =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api/v1";
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.DEV ? "http://localhost:5000/api/v1" : "/api/v1");
 
 /** Kunci localStorage untuk token login (sama di mode dummy dan backend). */
 export const TOKEN_KEY = "orbita_token";
