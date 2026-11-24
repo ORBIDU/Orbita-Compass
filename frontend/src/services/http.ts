@@ -61,7 +61,7 @@ export class ApiError extends Error {
  * SESSION_EXPIRED_MESSAGE di halaman Masuk, dan RequireAuth membawa siswa ke
  * /masuk lalu kembali ke halaman tadi setelah masuk lagi.
  */
-export const SESSION_EXPIRED_EVENT = "orbita:session-expired";
+export const SESSION_EXPIRED_EVENT = "orbidu:session-expired";
 export const SESSION_EXPIRED_MESSAGE = "Sesimu sudah berakhir. Silakan masuk lagi.";
 
 // Backend mengirim 403 (bukan 401) untuk token kedaluwarsa (API_CONTRACT 2.6).

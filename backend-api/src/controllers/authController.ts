@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { prisma } from '../config/prisma';
 import { AuthRequest } from '../middleware/auth';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'orbita_compass_super_secret_jwt_key_2026';
+const JWT_SECRET = process.env.JWT_SECRET || 'orbidu_compass_super_secret_jwt_key_2026';
 
 // 1. Admin-Only Registration (Contract 1.2 & 14)
 export const register = async (req: AuthRequest, res: Response) => {

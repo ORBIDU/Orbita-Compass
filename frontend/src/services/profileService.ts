@@ -18,7 +18,7 @@ interface LocalProfil {
   nickname: string | null;
   avatarUrl: string | null;
 }
-const localKey = (userId: string) => `orbita_profil_${userId}`;
+const localKey = (userId: string) => `orbidu_profil_${userId}`;
 const readLocalProfil = (userId: string): LocalProfil => readLocal<LocalProfil>(localKey(userId)) ?? { nickname: null, avatarUrl: null };
 
 export async function getProfil(user: MeUser): Promise<ProfilView> {

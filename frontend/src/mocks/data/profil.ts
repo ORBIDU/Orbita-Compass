@@ -3,7 +3,7 @@ import type { SchoolProfile } from "@/types/profil";
 // Data diri contoh dari "pihak kurikulum sekolah" (mode dummy), mengikuti
 // docs/design/portal/Portal-Profil.dc.html. Bukan data asli siswa.
 
-/** Akun siswa@orbita.id: data lengkap. */
+/** Akun siswa@orbidu.id: data lengkap. */
 export const SISWA_SCHOOL_PROFILE: SchoolProfile = {
   identity: { gender: "L", birthPlace: "Palembang", birthDate: "2009-05-15", nis: "2425001234", nisn: "0098765432", religion: "Islam" },
   address: {
@@ -39,7 +39,7 @@ export const SISWA_SCHOOL_PROFILE: SchoolProfile = {
   updatedAt: "2026-09-02T08:00:00.000Z",
 };
 
-/** Akun budi@orbita.id: sebagian belum diisi sekolah (untuk menguji tampilan kosong). */
+/** Akun budi@orbidu.id: sebagian belum diisi sekolah (untuk menguji tampilan kosong). */
 export const BUDI_SCHOOL_PROFILE: SchoolProfile = {
   identity: { gender: "L", birthPlace: "Bandung", birthDate: "2009-02-03", nis: null, nisn: "0091234567", religion: null },
   address: { street: "Jl. Dago No. 45", rt: null, rw: null, village: "Lebakgede", district: "Coblong", city: "Bandung", province: "Jawa Barat", postalCode: null },

@@ -582,8 +582,8 @@ const SEEDED_NOTES: Record<number, BkNoteItem[]> = {
   ],
 };
 
-const BK_NOTES_STORAGE_KEY = "orbita_mock_bk_notes_v1";
-const BK_ACTIVITIES_STORAGE_KEY = "orbita_mock_bk_activities_v1";
+const BK_NOTES_STORAGE_KEY = "orbidu_mock_bk_notes_v1";
+const BK_ACTIVITIES_STORAGE_KEY = "orbidu_mock_bk_activities_v1";
 
 function loadSavedNotes(): Record<number, BkNoteItem[]> {
   try {

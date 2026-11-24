@@ -106,7 +106,7 @@ interface MockDb {
   accounts: MockAccount[];
 }
 
-const STORAGE_KEY = "orbita_mock_db";
+const STORAGE_KEY = "orbidu_mock_db";
 // Naikkan angka ini jika bentuk data dummy berubah, supaya data lama diganti.
 // v2 (Tahap 2B): akun demo langsung punya hasil Compass + kampus PTS contoh.
 // v3 (Tahap 4A): nama panggilan, rencana belajar, dan riwayat latihan.
@@ -120,8 +120,8 @@ const STORAGE_KEY = "orbita_mock_db";
 // v11: riwayat tryout contoh dengan kenaikan yang wajar.
 // v12 (Fase 8): data diri dari sekolah, sekolah demo di Palembang.
 // v13: akun dibuat admin (tanpa daftar mandiri), akun demo login pertama, dua persetujuan.
-// v14: tambah akun wali kelas walkel@orbita.id (role WALI_KELAS).
-// v15: tambah akun guru BK gurubk@orbita.id (role BK_TEACHER).
+// v14: tambah akun wali kelas walkel@orbidu.id (role WALI_KELAS).
+// v15: tambah akun guru BK gurubk@orbidu.id (role BK_TEACHER).
 const DB_VERSION = 15;
 
 const SEED_DATE = "2026-07-01T08:00:00.000Z";
@@ -204,7 +204,7 @@ function seed(): MockDb {
   const demoTryout = demoTryoutData();
   const siswa: MockAccount = {
     id: "user-siswa",
-    email: "siswa@orbita.id",
+    email: "siswa@orbidu.id",
     password: "password123",
     name: "Ahmad Rizki",
     role: "STUDENT",
@@ -265,7 +265,7 @@ function seed(): MockDb {
 
   const budi: MockAccount = {
     id: "user-budi",
-    email: "budi@orbita.id",
+    email: "budi@orbidu.id",
     password: "password123",
     name: "Budi Pratama",
     role: "STUDENT",
@@ -321,7 +321,7 @@ function seed(): MockDb {
   });
   const dimas: MockAccount = {
     id: "user-dimas",
-    email: "dimas@orbita.id",
+    email: "dimas@orbidu.id",
     password: "password123",
     name: "Dimas Saputra",
     role: "STUDENT",
@@ -357,7 +357,7 @@ function seed(): MockDb {
 
   const walkel: MockAccount = {
     id: "user-walkel",
-    email: "walkel@orbita.id",
+    email: "walkel@orbidu.id",
     password: "password123",
     name: "Dewi Sartika, S.Pd.",
     role: "WALI_KELAS",
@@ -393,7 +393,7 @@ function seed(): MockDb {
 
   const gurubk: MockAccount = {
     id: "user-gurubk",
-    email: "gurubk@orbita.id",
+    email: "gurubk@orbidu.id",
     password: "password123",
     name: "Hendra Raharjo, S.Psi.",
     role: "BK_TEACHER",

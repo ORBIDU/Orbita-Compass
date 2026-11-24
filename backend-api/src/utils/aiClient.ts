@@ -105,7 +105,7 @@ export async function generateGeminiInsights(
 
   if (apiKey && apiKey !== 'your_gemini_api_key_here') {
     try {
-      const prompt = `Anda adalah Guru BK & Mentor Akademik AI untuk platform Orbita Compass.
+      const prompt = `Anda adalah Guru BK & Mentor Akademik AI untuk platform ORBIDU Compass.
 Analisis profil siswa berikut:
 - Jurusan Target: ${targetMajor} di ${targetPtn}
 - Rumpun: ${majorTrack}

@@ -4,12 +4,12 @@ const options: swaggerJSDoc.Options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Orbita Compass Backend API Documentation',
+      title: 'ORBIDU Compass Backend API Documentation',
       version: '1.0.0',
-      description: 'API Server untuk Platform Analitik & Mentor Akademik AI Siswa SMA/SMK/MA Indonesia (Orbita Compass)',
+      description: 'API Server untuk Platform Analitik & Mentor Akademik AI Siswa SMA/SMK/MA Indonesia (ORBIDU Compass)',
       contact: {
-        name: 'Orbita Compass Engineering Team',
-        url: 'https://github.com/mauinGit/Orbita-Compass'
+        name: 'ORBIDU Engineering Team',
+        url: 'https://github.com/ORBIDU/Orbita-Compass'
       }
     },
     servers: [
@@ -39,7 +39,7 @@ const options: swaggerJSDoc.Options = {
           type: 'object',
           properties: {
             id: { type: 'string', example: 'c123456789' },
-            email: { type: 'string', example: 'siswa@orbita.id' },
+            email: { type: 'string', example: 'siswa@orbidu.id' },
             name: { type: 'string', example: 'Siswa Demo' },
             role: { type: 'string', example: 'STUDENT' },
             school: { type: 'string', example: 'SMA Negeri 1 Jakarta' },
@@ -104,7 +104,7 @@ const options: swaggerJSDoc.Options = {
                   type: 'object',
                   required: ['email', 'password', 'name'],
                   properties: {
-                    email: { type: 'string', example: 'siswa.baru@orbita.id' },
+                    email: { type: 'string', example: 'siswa.baru@orbidu.id' },
                     password: { type: 'string', example: 'password123' },
                     name: { type: 'string', example: 'Siswa Baru' },
                     school: { type: 'string', example: 'SMA N 1 Jakarta' },
@@ -133,7 +133,7 @@ const options: swaggerJSDoc.Options = {
                   type: 'object',
                   required: ['email', 'password'],
                   properties: {
-                    email: { type: 'string', example: 'siswa@orbita.id' },
+                    email: { type: 'string', example: 'siswa@orbidu.id' },
                     password: { type: 'string', example: 'password123' }
                   }
                 }
@@ -191,7 +191,7 @@ const options: swaggerJSDoc.Options = {
       },
       '/compass/analyze': {
         post: {
-          tags: ['Orbita Compass AI'],
+          tags: ['ORBIDU Compass AI'],
           summary: 'Jalankan analisis AI keselarasan minat x bakat x rapor',
           security: [{ bearerAuth: [] }],
           responses: {
@@ -201,7 +201,7 @@ const options: swaggerJSDoc.Options = {
       },
       '/compass/result': {
         get: {
-          tags: ['Orbita Compass AI'],
+          tags: ['ORBIDU Compass AI'],
           summary: 'Ambil hasil analisis AI terakhir',
           security: [{ bearerAuth: [] }],
           responses: { 200: { description: 'Hasil analisis AI' } }

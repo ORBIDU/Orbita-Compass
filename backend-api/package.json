@@ -1,7 +1,7 @@
 {
-  "name": "orbita-compass-backend",
+  "name": "orbidu-compass-backend",
   "version": "1.0.0",
-  "description": "Backend API Server for Orbita Compass",
+  "description": "Backend API Server for ORBIDU Compass",
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",

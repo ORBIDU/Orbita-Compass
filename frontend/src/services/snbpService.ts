@@ -16,7 +16,7 @@ const mock = () => import("@/mocks/snbpMock");
 // - rasionalisasi: simulasi (mocks/snbpEngine.ts) di kedua mode;
 // - target prodi: PUT /profile (sudah ada) di mode backend.
 
-const draftKey = (userId: string) => `orbita_snbp_${userId}`;
+const draftKey = (userId: string) => `orbidu_snbp_${userId}`;
 
 export async function getSnbpDraft(userId: string): Promise<SnbpDraft | null> {
   if (USE_MOCK) return (await mock()).mockGetSnbpDraft(getToken());

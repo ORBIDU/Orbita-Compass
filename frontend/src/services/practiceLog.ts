@@ -11,7 +11,7 @@ const mock = () => import("@/mocks/practiceMock");
 // (BACKEND_MAP poin 4) dan riwayatnya belum bisa dibaca. Sementara:
 // mode dummy di data dummy, mode backend di browser per akun.
 
-export const logKey = (userId: string) => `orbita_practice_${userId}`;
+export const logKey = (userId: string) => `orbidu_practice_${userId}`;
 
 export async function getPracticeLog(userId: string): Promise<PracticeLog> {
   if (USE_MOCK) return (await mock()).mockGetPracticeLog(getToken());

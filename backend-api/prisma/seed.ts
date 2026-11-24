@@ -20,10 +20,10 @@ async function main() {
 
   // 2. Seed Demo Accounts
   const student = await prisma.user.upsert({
-    where: { email: 'siswa@orbita.id' },
+    where: { email: 'siswa@orbidu.id' },
     update: {},
     create: {
-      email: 'siswa@orbita.id',
+      email: 'siswa@orbidu.id',
       passwordHash,
       name: 'Ahmad Rizki',
       role: 'STUDENT',
@@ -73,10 +73,10 @@ async function main() {
   });
 
   const bkTeacher = await prisma.user.upsert({
-    where: { email: 'gurubk@orbita.id' },
+    where: { email: 'gurubk@orbidu.id' },
     update: {},
     create: {
-      email: 'gurubk@orbita.id',
+      email: 'gurubk@orbidu.id',
       passwordHash,
       name: 'Bapak Ahmad, S.Pd.',
       role: 'BK_TEACHER',
@@ -85,22 +85,22 @@ async function main() {
   });
 
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@orbita.id' },
+    where: { email: 'admin@orbidu.id' },
     update: {},
     create: {
-      email: 'admin@orbita.id',
+      email: 'admin@orbidu.id',
       passwordHash,
-      name: 'Administrator Orbita',
+      name: 'Administrator ORBIDU',
       role: 'ADMIN',
       avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150'
     }
   });
 
   const studentSoshum = await prisma.user.upsert({
-    where: { email: 'budi@orbita.id' },
+    where: { email: 'budi@orbidu.id' },
     update: {},
     create: {
-      email: 'budi@orbita.id',
+      email: 'budi@orbidu.id',
       passwordHash,
       name: 'Budi Pratama',
       role: 'STUDENT',

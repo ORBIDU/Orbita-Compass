@@ -26,7 +26,7 @@ tags_metadata = [
 ]
 
 app = FastAPI(
-    title="Orbita Compass AI Engine API",
+    title="ORBIDU Compass AI Engine API",
     description="Microservice AI & Scoring Engine berbasis Python FastAPI + NumPy + Gemini 2.0 Flash untuk Analisis Keselarasan Minat, Bakat, dan Rapor Siswa SMA/SMK/MA Indonesia.",
     version="1.0.0",
     openapi_tags=tags_metadata,
@@ -93,7 +93,7 @@ def health_check():
     """
     return {
         "status": "ok",
-        "service": "Orbita Compass AI Engine",
+        "service": "ORBIDU Compass AI Engine",
         "gemini_api_configured": bool(os.getenv("GEMINI_API_KEY")),
         "swagger_docs": "/docs",
         "redoc_docs": "/redoc"
@@ -102,7 +102,7 @@ def health_check():
 @app.post("/analyze-compass", tags=["Compass AI Analytics"])
 def analyze_compass(payload: StudentPayload):
     """
-    Menjalankan pipeline analisis Orbita Compass AI:
+    Menjalankan pipeline analisis ORBIDU Compass AI:
     1. Perhitungan matematis NumPy (Confidence Score, Konsistensi Rapor, Alignment %).
     2. Prompting Gemini 2.0 Flash LLM untuk ringkasan naratif, rekomendasi jurusan, PTN, dan jalur karir.
     """

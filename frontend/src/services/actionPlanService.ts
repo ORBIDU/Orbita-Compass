@@ -38,7 +38,7 @@ const mock = () => import("@/mocks/actionPlanMock");
 // Penyusun latihannya simulasi (mocks/actionPlanEngine.ts) di kedua mode.
 
 /** Kunci browser untuk mode backend (dipakai juga soalService). */
-export const planKey = (userId: string) => `orbita_action_plan_${userId}`;
+export const planKey = (userId: string) => `orbidu_action_plan_${userId}`;
 
 async function loadState(userId: string): Promise<PlanState | null> {
   if (USE_MOCK) return (await mock()).mockGetPlanState(getToken());

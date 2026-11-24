@@ -17,7 +17,7 @@ export const authenticateToken = (req: AuthRequest, res: Response, next: NextFun
     return res.status(401).json({ error: 'Access token required', code: 'TOKEN_REQUIRED' });
   }
 
-  const jwtSecret = process.env.JWT_SECRET || 'orbita_compass_super_secret_jwt_key_2026';
+  const jwtSecret = process.env.JWT_SECRET || 'orbidu_compass_super_secret_jwt_key_2026';
 
   jwt.verify(token, jwtSecret, (err, decoded) => {
     if (err) {

@@ -41,8 +41,8 @@ Isi yang penting:
 
 Akun demo (sama di mode dummy dan di seed backend), password `password123`:
 
-- `siswa@orbita.id` (status "aktif" di mode dummy)
-- `budi@orbita.id` (status "sudah asesmen" di mode dummy)
+- `siswa@orbidu.id` (status "aktif" di mode dummy)
+- `budi@orbidu.id` (status "sudah asesmen" di mode dummy)
 
 > ⚠️ **Setiap kali `.env` diubah, server harus dinyalakan ulang.** Hentikan `npm run dev` (Ctrl+C) lalu jalankan lagi. Vite hanya membaca `.env` saat server mulai; refresh browser saja tidak cukup.
 

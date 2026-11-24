@@ -39,7 +39,7 @@ ENV HOME=/home/user \
     PORT=7860 \
     DATABASE_URL="file:/home/user/app/backend-api/dev.db" \
     AI_ENGINE_URL="http://127.0.0.1:8000" \
-    JWT_SECRET="orbita_compass_super_secret_jwt_key_2026"
+    JWT_SECRET="orbidu_compass_super_secret_jwt_key_2026"
 
 WORKDIR $HOME/app
 

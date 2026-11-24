@@ -3,7 +3,7 @@
 // Solusinya muat ulang halaman, tapi hanya SEKALI supaya tidak berulang terus
 // kalau masalahnya lain (mis. internet putus).
 
-const KEY = "orbita_reload_at";
+const KEY = "orbidu_reload_at";
 /** Muat ulang otomatis berikutnya baru boleh setelah jeda ini. */
 const WINDOW_MS = 10_000;
 

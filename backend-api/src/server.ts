@@ -28,7 +28,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Health check endpoint
 app.get('/health', (req: Request, res: Response) => {
-  res.json({ status: 'ok', service: 'Orbita Compass Backend API', docs: 'http://localhost:5000/api-docs', timestamp: new Date().toISOString() });
+  res.json({ status: 'ok', service: 'ORBIDU Compass Backend API', docs: 'http://localhost:5000/api-docs', timestamp: new Date().toISOString() });
 });
 
 // API Routes (v1)
@@ -70,7 +70,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
 if (!process.env.VERCEL) {
   app.listen(PORT, () => {
-    console.log(`🚀 Orbita Compass Backend API running on http://localhost:${PORT}`);
+    console.log(`🚀 ORBIDU Compass Backend API running on http://localhost:${PORT}`);
   });
 }
 

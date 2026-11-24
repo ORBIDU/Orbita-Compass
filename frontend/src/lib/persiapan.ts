@@ -10,4 +10,4 @@ export function isSkdRelevant(recommendations: { bidang: BidangKey | null }[], p
 }
 
 /** Nama event yang dikirim saat rencana Action Plan berubah (relevansi SKD perlu dihitung ulang). */
-export const PLAN_CHANGED_EVENT = "orbita:plan-changed";
+export const PLAN_CHANGED_EVENT = "orbidu:plan-changed";

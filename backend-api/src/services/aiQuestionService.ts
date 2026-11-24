@@ -281,7 +281,7 @@ INSTRUKSI PENTING:
     answerIndex: typeof q.answerIndex === 'number' ? q.answerIndex : 0,
     explanation: q.explanation || 'Pembahasan soal.',
     difficultyWeight: q.difficultyWeight || (difficulty === 'hard' ? 1.3 : difficulty === 'easy' ? 0.9 : 1.0),
-    source: `Orbita AI (${subtest})`
+    source: `ORBIDU AI (${subtest})`
   }));
 }
 
@@ -313,7 +313,7 @@ function synthesizeFromArchive(
     answerIndex: q.answerIndex,
     explanation: q.explanation,
     difficultyWeight: q.difficultyWeight || (difficulty === 'hard' ? 1.25 : 1.0),
-    source: q.source || 'Arsip Soal Orbita Standar Nasional'
+    source: q.source || 'Arsip Soal ORBIDU Standar Nasional'
   }));
 }
 

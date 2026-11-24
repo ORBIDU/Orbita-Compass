@@ -14,8 +14,8 @@ export const ASESMEN = asesmenJson as AsesmenDoc;
 // Backend belum menyimpan draft jawaban dan jawaban lengkap (API_CONTRACT 3.3),
 // jadi di mode backend keduanya disimpan di browser per akun.
 
-const draftKey = (userId: string) => `orbita_asesmen_draft_${userId}`;
-const answersKey = (userId: string) => `orbita_asesmen_answers_${userId}`;
+const draftKey = (userId: string) => `orbidu_asesmen_draft_${userId}`;
+const answersKey = (userId: string) => `orbidu_asesmen_answers_${userId}`;
 
 /** Jawaban yang belum dikirim. null = belum pernah mengisi. */
 export async function getDraft(userId: string): Promise<AsesmenDraft | null> {

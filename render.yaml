@@ -1,7 +1,7 @@
 services:
   # 1. AI Engine Microservice (FastAPI + Gemini)
   - type: web
-    name: orbita-ai-engine
+    name: orbidu-ai-engine
     runtime: python
     rootDir: ai-engine
     plan: free
@@ -13,7 +13,7 @@ services:
 
   # 2. Backend REST API (Node.js + Express + Prisma)
   - type: web
-    name: orbita-backend-api
+    name: orbidu-backend-api
     runtime: node
     rootDir: backend-api
     plan: free
@@ -27,5 +27,5 @@ services:
       - key: AI_ENGINE_URL
         fromService:
           type: web
-          name: orbita-ai-engine
+          name: orbidu-ai-engine
           property: host

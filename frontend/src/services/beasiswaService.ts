@@ -21,7 +21,7 @@ export async function listScholarships(): Promise<Scholarship[]> {
   return structuredClone(SCHOLARSHIP_SAMPLES);
 }
 
-const savedKey = (userId: string) => `orbita_beasiswa_saved_${userId}`;
+const savedKey = (userId: string) => `orbidu_beasiswa_saved_${userId}`;
 
 export async function getSavedScholarships(userId: string): Promise<string[]> {
   if (USE_MOCK) return (await (await mock()).mockGetSaved(getToken())).ids;

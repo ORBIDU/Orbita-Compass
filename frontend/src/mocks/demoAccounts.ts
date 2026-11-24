@@ -7,9 +7,9 @@ export const AUTH_DEMO_HINT = {
   label: "Mode dummy · akun demo",
   password: "password123",
   accounts: [
-    { email: "siswa@orbita.id", note: "siswa aktif" },
-    { email: "dimas@orbita.id", note: "login pertama" },
-    { email: "walkel@orbita.id", note: "wali kelas" },
-    { email: "gurubk@orbita.id", note: "guru BK" },
+    { email: "siswa@orbidu.id", note: "siswa aktif" },
+    { email: "dimas@orbidu.id", note: "login pertama" },
+    { email: "walkel@orbidu.id", note: "wali kelas" },
+    { email: "gurubk@orbidu.id", note: "guru BK" },
   ],
 };

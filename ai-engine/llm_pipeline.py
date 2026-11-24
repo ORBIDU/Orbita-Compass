@@ -24,7 +24,7 @@ def generate_llm_insights(
             from google import genai
             client = genai.Client(api_key=api_key)
             prompt = f"""
-            Anda adalah Guru BK & Mentor Akademik AI untuk platform Orbita Compass.
+            Anda adalah Guru BK & Mentor Akademik AI untuk platform ORBIDU Compass.
             Analisis profil siswa berikut:
             - Jurusan Target: {target_major} di {target_ptn}
             - Rumpun: {major_track}

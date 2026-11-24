@@ -15,8 +15,8 @@ import { getToken } from "./http";
 // Halaman hanya menerima soal tanpa kunci (PublicQuestion).
 
 function localStore(userId: string): PracticeStore {
-  const sessionsKey = `orbita_sessions_${userId}`;
-  const attemptsKey = `orbita_attempts_${userId}`;
+  const sessionsKey = `orbidu_sessions_${userId}`;
+  const attemptsKey = `orbidu_attempts_${userId}`;
   return {
     now: () => new Date(),
     loadPlan: async () => readLocal<PlanState>(planKey(userId)),

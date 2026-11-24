@@ -13,7 +13,7 @@ export interface NotificationPayload {
 
 export const sendWaNotification = async (payload: NotificationPayload) => {
   try {
-    const message = `🔔 *Pengingat Action Plan — Orbita Compass*\n\nHalo ${payload.studentName}!\nJangan lupa agenda berikut:\n📌 *${payload.taskTitle}*\n📅 Tenggat: ${payload.dueDate}\n\nTetap semangat meraih PTN impianmu! 🚀`;
+    const message = `🔔 *Pengingat Action Plan — ORBIDU Compass*\n\nHalo ${payload.studentName}!\nJangan lupa agenda berikut:\n📌 *${payload.taskTitle}*\n📅 Tenggat: ${payload.dueDate}\n\nTetap semangat meraih PTN impianmu! 🚀`;
 
     // Attempting sending via Open-WA HTTP endpoint
     const response = await axios.post(`${OPENWA_API_URL}/send-message`, {

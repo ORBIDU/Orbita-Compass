@@ -29,7 +29,7 @@ export async function analyzeCompass(): Promise<CompassAnalysis> {
 // backend). Backend belum punya tempat untuk target jurusan (API_CONTRACT
 // 9.1), jadi di mode backend disimpan di browser per akun.
 
-const targetKey = (userId: string) => `orbita_compass_target_${userId}`;
+const targetKey = (userId: string) => `orbidu_compass_target_${userId}`;
 
 export async function getTarget(userId: string): Promise<CompassTarget | null> {
   if (USE_MOCK) return (await (await mock()).mockGetTarget(getToken())).target;
