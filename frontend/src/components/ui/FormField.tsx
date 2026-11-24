@@ -1,5 +1,6 @@
 import { forwardRef, useId, useState, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { UI } from "@/content/common";
 
 // Gaya input mengikuti desain halaman Masuk (docs/design/auth). Ukuran huruf
 // 16px di HP supaya iOS tidak memperbesar layar saat input disentuh.
@@ -79,7 +80,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
           <button
             type="button"
             onClick={() => setShowPassword((v) => !v)}
-            aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}
+            aria-label={showPassword ? UI.hidePassword : UI.showPassword}
             className="absolute right-1 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-lg text-prose hover:text-space-2"
           >
             {showPassword ? <EyeOff size={20} aria-hidden="true" /> : <Eye size={20} aria-hidden="true" />}

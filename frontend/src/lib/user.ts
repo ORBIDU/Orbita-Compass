@@ -9,7 +9,12 @@ const GRADE_ROMAN: Record<number, string> = { 10: "X", 11: "XI", 12: "XII" };
  */
 export function formatKelas(grade: number | null | undefined): string {
   if (!grade) return "";
-  return `Kelas ${GRADE_ROMAN[grade] ?? grade}`;
+  return `Kelas ${gradeRoman(grade)}`;
+}
+
+/** Angka romawi kelas saja ("XII"), untuk kolom tabel berjudul "Kelas". */
+export function gradeRoman(grade: number): string {
+  return GRADE_ROMAN[grade] ?? String(grade);
 }
 
 /** Data user yang siap ditampilkan (header, menu akun, sapaan). */
@@ -38,7 +43,14 @@ export function toDisplayUser(user: MeUser): DisplayUser {
   if (user.profile) {
     kelas = formatKelas(user.profile.grade);
   } else {
-    kelas = user.role === "BK_TEACHER" ? "Guru BK" : user.role === "ADMIN" ? "Administrator" : "";
+    kelas =
+      user.role === "BK_TEACHER"
+        ? "Guru BK"
+        : user.role === "ADMIN"
+        ? "Administrator"
+        : user.role === "WALI_KELAS"
+        ? "Wali Kelas"
+        : "";
   }
 
   return {

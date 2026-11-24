@@ -123,7 +123,10 @@ function PlanBody({ plan }: { plan: TodayPlan }) {
 export default function TodayPlanCard({ locked, state }: { locked: boolean; state: AsyncState<TodayPlan> }) {
   const aside = (
     <CardLink to={ROUTES.actionPlan}>
-      <span className="lg:hidden">{PLAN.linkShort}</span>
+      <span className="lg:hidden">
+        {PLAN.linkShort}
+        <span className="sr-only"> {PLAN.linkShortSr}</span>
+      </span>
       <span className="hidden lg:inline">{PLAN.link}</span>
     </CardLink>
   );

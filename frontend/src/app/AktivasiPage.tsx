@@ -8,7 +8,8 @@ import { saveConsents, setFirstPassword } from "@/services/authService";
 import PageLoader from "@/components/ui/PageLoader";
 import { ConsentForm, FirstPasswordForm } from "@/components/auth/ActivationForms";
 import { usePageTitle } from "@/lib/usePageTitle";
-import { PAGE_TITLES } from "@/content/common";
+import { PAGE_TITLES, UI } from "@/content/common";
+import { ROUTES } from "@/config/navigation";
 
 /**
  * Aktivasi akun saat pertama masuk (/aktivasi, SPEK bagian 3): akun dibuat
@@ -37,7 +38,9 @@ export default function AktivasiPage() {
   }, [step]);
 
   if (!step) {
-    if (user?.role === "STUDENT" && !ready) return <PageLoader label="Menyiapkan portal..." />;
+    if (user?.role === "WALI_KELAS") return <Navigate to={ROUTES.walikelas} replace />;
+    if (user?.role === "BK_TEACHER") return <Navigate to={ROUTES.bk} replace />;
+    if (user?.role === "STUDENT" && !ready) return <PageLoader label={UI.preparingPortal} />;
     return <Navigate to={portalTarget(studentStatus, from)} replace />;
   }
 

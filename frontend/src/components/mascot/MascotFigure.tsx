@@ -56,21 +56,20 @@ export default function MascotFigure({ lookX = 0, lookY = 0, tilt = 0, animated 
           <circle cx="320" cy="172" r="5" className="fill-sun-1" />
           <path d="M320 172 Q370 178 386 192 L388 226" fill="none" strokeWidth="4" strokeLinecap="round" className="stroke-sun-1" />
           <rect x="382" y="222" width="12" height="18" rx="4" className="fill-sun-2" />
-          {/* Mata */}
+          {/* Wajah dari desain maskot terbaru: mata hitam berkilau, pipi biru muda, senyum kecil. */}
           <g className={animated ? "origin-center [transform-box:fill-box] motion-safe:animate-ob-blink" : undefined}>
-            <ellipse cx="286" cy="250" rx="22" ry="25" className="fill-white" />
-            <ellipse cx="354" cy="250" rx="22" ry="25" className="fill-white" />
-            <g transform={`translate(${lookX} ${lookY})`}>
-              <circle cx="286" cy="252" r="13" className="fill-space-2" />
-              <circle cx="354" cy="252" r="13" className="fill-space-2" />
-              <circle cx="281" cy="246" r="4.5" className="fill-white" />
-              <circle cx="349" cy="246" r="4.5" className="fill-white" />
+            <g transform={`translate(${lookX * 0.6} ${lookY * 0.6})`}>
+              <circle cx="277" cy="258" r="17" className="fill-black" />
+              <circle cx="363" cy="258" r="17" className="fill-black" />
+              <circle cx="282" cy="251.5" r="6" className="fill-white" />
+              <circle cx="368" cy="251.5" r="6" className="fill-white" />
+              <circle cx="273" cy="263" r="2.8" className="fill-white" />
+              <circle cx="359" cy="263" r="2.8" className="fill-white" />
             </g>
           </g>
-          {/* Pipi dan senyum */}
-          <ellipse cx="262" cy="284" rx="14" ry="8" className="fill-mascot-cheek [fill-opacity:0.6]" />
-          <ellipse cx="378" cy="284" rx="14" ry="8" className="fill-mascot-cheek [fill-opacity:0.6]" />
-          <path d="M304 286 Q320 300 336 286" fill="none" strokeWidth="5" strokeLinecap="round" className="stroke-space-2" />
+          <ellipse cx="247" cy="277" rx="13" ry="6.5" className="fill-mascot-cheek [fill-opacity:0.55]" />
+          <ellipse cx="393" cy="277" rx="13" ry="6.5" className="fill-mascot-cheek [fill-opacity:0.55]" />
+          <path d="M307 276 Q320 289 333 276" fill="none" strokeWidth="4.5" strokeLinecap="round" className="stroke-space-2" />
           {/* Cincin bagian depan (menutupi bawah badan) */}
           <g transform="rotate(-16 320 285)">
             <ellipse cx="320" cy="285" rx="172" ry="40" fill="none" strokeWidth="16" clipPath={`url(#${frontId})`} {...ringFront} />

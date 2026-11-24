@@ -16,3 +16,9 @@
     bottom: calc(76px + env(safe-area-inset-bottom));
   }
 }
+
+/* Ilustrasi bergerak berhenti saat bagiannya tidak terlihat di layar (lib/usePauseOffscreen.ts). */
+[data-paused] *,
+[data-paused] {
+  animation-play-state: paused !important;
+}

@@ -120,7 +120,9 @@ const STORAGE_KEY = "orbita_mock_db";
 // v11: riwayat tryout contoh dengan kenaikan yang wajar.
 // v12 (Fase 8): data diri dari sekolah, sekolah demo di Palembang.
 // v13: akun dibuat admin (tanpa daftar mandiri), akun demo login pertama, dua persetujuan.
-const DB_VERSION = 13;
+// v14: tambah akun wali kelas walkel@orbita.id (role WALI_KELAS).
+// v15: tambah akun guru BK gurubk@orbita.id (role BK_TEACHER).
+const DB_VERSION = 15;
 
 const SEED_DATE = "2026-07-01T08:00:00.000Z";
 
@@ -353,6 +355,78 @@ function seed(): MockDb {
     termsAcceptedAt: null,
   };
 
+  const walkel: MockAccount = {
+    id: "user-walkel",
+    email: "walkel@orbita.id",
+    password: "password123",
+    name: "Dewi Sartika, S.Pd.",
+    role: "WALI_KELAS",
+    avatarUrl: null,
+    createdAt: SEED_DATE,
+    updatedAt: SEED_DATE,
+    profile: null,
+    status: "aktif",
+    academicRecords: [],
+    achievements: [],
+    reflection: null,
+    assessment: null,
+    compassAnalysis: null,
+    actionPlan: null,
+    actionPlanStash: null,
+    practiceLog: structuredClone(EMPTY_PRACTICE_LOG),
+    practiceSessions: {},
+    tryoutAttempts: {},
+    practiceStash: null,
+    assessmentDraft: null,
+    assessmentAnswers: null,
+    assessmentGrade: null,
+    assessmentHistory: [],
+    compassTarget: null,
+    inputsUpdatedAt: null,
+    savedScholarships: [],
+    snbp: null,
+    schoolProfile: structuredClone(EMPTY_SCHOOL_PROFILE),
+    mustChangePassword: false,
+    parentConsentAt: "2026-07-20T08:00:00.000Z",
+    termsAcceptedAt: "2026-07-20T08:00:00.000Z",
+  };
+
+  const gurubk: MockAccount = {
+    id: "user-gurubk",
+    email: "gurubk@orbita.id",
+    password: "password123",
+    name: "Hendra Raharjo, S.Psi.",
+    role: "BK_TEACHER",
+    avatarUrl: null,
+    createdAt: SEED_DATE,
+    updatedAt: SEED_DATE,
+    profile: null,
+    status: "aktif",
+    academicRecords: [],
+    achievements: [],
+    reflection: null,
+    assessment: null,
+    compassAnalysis: null,
+    actionPlan: null,
+    actionPlanStash: null,
+    practiceLog: structuredClone(EMPTY_PRACTICE_LOG),
+    practiceSessions: {},
+    tryoutAttempts: {},
+    practiceStash: null,
+    assessmentDraft: null,
+    assessmentAnswers: null,
+    assessmentGrade: null,
+    assessmentHistory: [],
+    compassTarget: null,
+    inputsUpdatedAt: null,
+    savedScholarships: [],
+    snbp: null,
+    schoolProfile: structuredClone(EMPTY_SCHOOL_PROFILE),
+    mustChangePassword: false,
+    parentConsentAt: "2026-07-20T08:00:00.000Z",
+    termsAcceptedAt: "2026-07-20T08:00:00.000Z",
+  };
+
   // Akun demo yang sudah asesmen dianggap sudah pernah membuka Compass,
   // supaya label kecocokan di kartu jurusan bisa langsung dicoba.
   for (const account of [siswa, budi]) {
@@ -366,7 +440,7 @@ function seed(): MockDb {
     }
   }
 
-  return { version: DB_VERSION, accounts: [siswa, budi, dimas] };
+  return { version: DB_VERSION, accounts: [siswa, budi, dimas, walkel, gurubk] };
 }
 
 let cache: MockDb | null = null;

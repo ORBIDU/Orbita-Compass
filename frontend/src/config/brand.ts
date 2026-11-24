@@ -5,13 +5,16 @@
 
 export const BRAND = {
   name: "ORBIDU",
+  /** Tulisan di logo: huruf "O" diganti maskot, lalu "RB" biru dan "IDU" oranye. */
+  logoText: { lead: "RB", accent: "IDU" },
   tagline: "The Smart Way to Shape Your Future",
   hashtag: "#TheSmartWaytoShapeYourFuture",
   /** Sapaan untuk pengguna (dipakai di hero, dll.). */
   audience: "Bifriends",
   /** Nama fitur rekomendasi (dulu "Orbita Compass"). */
   compassName: "ORBIDU Compass",
-  location: "Indonesia",
+  // BELUM DIPASTIKAN: lokasi dari desain footer Fase 10.
+  location: "Palembang, Indonesia",
 } as const;
 
 // BELUM DIPASTIKAN: nomor WhatsApp resmi belum ada. Ganti placeholder ini
@@ -52,5 +55,10 @@ export type WhatsAppTopic = keyof typeof WHATSAPP_MESSAGES;
 
 /** Link WhatsApp (wa.me) dengan pesan pembuka sesuai topik. */
 export function whatsappLink(topic: WhatsAppTopic): string {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGES[topic])}`;
+  return whatsappTextLink(WHATSAPP_MESSAGES[topic]);
+}
+
+/** Link WhatsApp (wa.me) dengan pesan bebas, mis. hasil form "Kirim Pesan" di halaman FAQ. */
+export function whatsappTextLink(text: string): string {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 }

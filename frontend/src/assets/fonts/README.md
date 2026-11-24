@@ -1,5 +1,7 @@
 # Font aksen Pecita
 
+> **Sementara dimatikan.** `@font-face` Pecita di `src/styles/fonts.css` dijadikan komentar sampai file dan lisensinya ada. Selama itu `font-accent` memakai Caveat. Cara menyalakannya lagi ada di komentar `fonts.css`.
+
 Taruh file font Pecita di folder ini dengan nama:
 
 - `Pecita.woff2` (disarankan, ukurannya paling kecil), dan/atau

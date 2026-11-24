@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Search, SearchX, X } from "lucide-react";
+import { SearchX } from "lucide-react";
 import type { BidangKey, JurusanSummary } from "@/types/jurusan";
 import { BIDANG, BIDANG_KEYS } from "@/config/bidang";
 import { JURUSAN_LIST } from "@/content/jurusan";
 import { JURUSAN_SECTION } from "@/content/landing";
-import { countByBidang, getJurusanList } from "@/services/jurusanService";
+import { countByBidang, getJurusanList, type JenisLembaga } from "@/services/jurusanService";
+import JurusanHero from "@/components/jurusan/JurusanHero";
 import JurusanCard from "@/components/jurusan/JurusanCard";
 import { useJurusanFit } from "@/components/jurusan/useJurusanFit";
 import { CONTAINER } from "@/components/landing/primitives";
@@ -18,16 +19,18 @@ const SEARCH_DEBOUNCE_MS = 200;
 const isBidang = (value: string | null): value is BidangKey => value !== null && value in BIDANG;
 
 /**
- * /jurusan: katalog jurusan dengan pencarian dan filter bidang.
- * Kata kunci dan bidang disimpan di URL (?q=&bidang=) supaya bisa dibagikan.
+ * /jurusan: hero (docs/design/publik/EksplorJurusan-Desktop.jpg) dengan tab jenis
+ * kampus dan pencarian, lalu katalog jurusan dengan filter bidang. Jenis, kata
+ * kunci, dan bidang disimpan di URL (?jenis=&q=&bidang=) supaya bisa dibagikan.
  */
 export default function JurusanListPage() {
   usePageTitle(JURUSAN_LIST.title);
   const [params, setParams] = useSearchParams();
+  const jenis: JenisLembaga = params.get("jenis") === "kedinasan" ? "kedinasan" : "umum";
   const bidang = isBidang(params.get("bidang")) ? (params.get("bidang") as BidangKey) : null;
   const [search, setSearch] = useState(params.get("q") ?? "");
   const [items, setItems] = useState<JurusanSummary[] | null>(null);
-  const counts = useMemo(() => countByBidang(), []);
+  const counts = useMemo(() => countByBidang(jenis), [jenis]);
   const total = useMemo(() => Object.values(counts).reduce((a, b) => a + b, 0), [counts]);
   const fit = useJurusanFit();
 
@@ -50,11 +53,25 @@ export default function JurusanListPage() {
   const query = params.get("q") ?? "";
   useEffect(() => {
     let active = true;
-    getJurusanList({ search: query, bidang }).then((data) => active && setItems(data));
+    getJurusanList({ search: query, bidang, jenis }).then((data) => active && setItems(data));
     return () => {
       active = false;
     };
-  }, [query, bidang]);
+  }, [query, bidang, jenis]);
+
+  /** Ganti tab jenis kampus; filter bidang dilepas karena daftar bidangnya berbeda. */
+  function pickJenis(value: JenisLembaga) {
+    setParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        if (value === "kedinasan") next.set("jenis", value);
+        else next.delete("jenis");
+        next.delete("bidang");
+        return next;
+      },
+      { replace: true },
+    );
+  }
 
   function pickBidang(key: BidangKey | null) {
     setParams(
@@ -79,40 +96,20 @@ export default function JurusanListPage() {
     }`;
   const count = (active: boolean) => `text-xs font-medium ${active ? "text-white/80" : "text-prose-dim"}`;
 
+  // Kedinasan hanya satu bidang, jadi chip bidang hanya tampil untuk PTN & PTS.
+  const showChips = jenis === "umum";
+
   return (
-    <div className="flex-1 overflow-y-auto bg-surface-soft">
-      <div className={`${CONTAINER} flex flex-col gap-6 py-8 lg:gap-8 lg:py-12`}>
+    <div className="bg-surface-soft">
+      <JurusanHero search={search} onSearch={setSearch} jenis={jenis} onJenis={pickJenis} />
+      <div className={`${CONTAINER} flex flex-col gap-6 py-10 lg:gap-8 lg:py-14`}>
         <header className="flex flex-col gap-2">
-          <h1 className="text-[28px] font-bold leading-tight tracking-[-0.5px] text-space-2 lg:text-[44px] lg:tracking-[-0.8px]">
-            {JURUSAN_LIST.title}
-          </h1>
-          <p className="max-w-[640px] text-base leading-[1.65] text-prose lg:text-lg">{JURUSAN_LIST.subtitle}</p>
+          <h2 className="text-[26px] font-bold leading-tight tracking-[-0.4px] text-space-2 lg:text-[36px]">{JURUSAN_LIST.listTitle}</h2>
+          <p className="max-w-[760px] text-base leading-[1.65] text-prose lg:text-lg">{JURUSAN_LIST.listBody}</p>
         </header>
 
-        <div className="flex flex-col gap-4">
-          <label className="relative block">
-            <span className="sr-only">{JURUSAN_LIST.searchLabel}</span>
-            <Search size={20} aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-prose-dim" />
-            <input
-              type="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder={JURUSAN_LIST.searchPlaceholder}
-              className="h-[52px] w-full rounded-2xl border-[1.5px] border-rim bg-white pl-12 pr-12 text-[15px] text-space-2 placeholder:text-prose-dim focus:border-orbit-1 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
-            />
-            {search && (
-              <button
-                type="button"
-                onClick={() => setSearch("")}
-                aria-label={JURUSAN_LIST.clearSearch}
-                className="absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-prose-dim hover:bg-surface-soft hover:text-space-2"
-              >
-                <X size={18} />
-              </button>
-            )}
-          </label>
-
-          {/* Chip bidang turun ke baris baru kalau tidak muat (tidak digeser). */}
+        {showChips && (
+          /* Chip bidang turun ke baris baru kalau tidak muat (tidak digeser). */
           <div role="group" aria-label={JURUSAN_LIST.filterLabel} className="flex flex-wrap gap-2">
             <button type="button" aria-pressed={bidang === null} onClick={() => pickBidang(null)} className={chip(bidang === null)}>
               {JURUSAN_LIST.allBidang}
@@ -128,7 +125,7 @@ export default function JurusanListPage() {
               );
             })}
           </div>
-        </div>
+        )}
 
         {items === null ? (
           <PageLoader label={JURUSAN_LIST.loading} />

@@ -4,11 +4,10 @@ import { ChevronRight } from "lucide-react";
 import { ROUTES } from "@/config/navigation";
 import { SNBP_CHECK, SNBP_CHOICES, SNBP_HEADER, SNBP_RESULT, SNBP_REVIEW } from "@/content/siapSnbp";
 import { useAuth } from "@/context/AuthContext";
-import { formatShortDate } from "@/lib/datetime";
-import { formatScore } from "@/lib/rapor";
+import { formatDate } from "@/lib/datetime";
+import { formatScore, semesterRange } from "@/lib/rapor";
 import { defaultFirstChoice, summarizeRapor } from "@/lib/snbp";
 import { useAsync } from "@/lib/useAsync";
-import { semesterRange } from "@/data/snbpEngine";
 import { listAchievements } from "@/services/achievementService";
 import { getPlanSettings } from "@/services/actionPlanService";
 import { getTarget } from "@/services/compassService";
@@ -23,6 +22,7 @@ import { EligibleBar, StepIndicator, type SnbpStep } from "@/components/snbp/Snb
 import { AchievementSection, ChoiceSection, RaporSection, TkaSection, parseTka } from "@/components/snbp/SnbpInputSections";
 import { CompletenessCard, ResultStep, ReviewStep, type CheckRow } from "@/components/snbp/SnbpSteps";
 import { usePageTitle } from "@/lib/usePageTitle";
+import { UI } from "@/content/common";
 
 const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 
@@ -268,7 +268,7 @@ export default function SiapSnbpPage() {
           targetError={targetError}
           onSetTarget={makeTarget}
           onRecalc={() => goTo(0)}
-          computedAt={formatShortDate(draft.result.computedAt)}
+          computedAt={formatDate(draft.result.computedAt)}
         />
       );
     }
@@ -278,7 +278,7 @@ export default function SiapSnbpPage() {
     <div className="flex-1 overflow-y-auto bg-surface-soft">
       <div ref={topRef} className="mx-auto flex w-full max-w-[1200px] scroll-mt-4 flex-col gap-4 px-4 pb-8 pt-4 sm:px-6 lg:gap-[22px] lg:px-10 lg:pb-12 lg:pt-7">
         <div className="flex max-w-[760px] flex-col gap-1.5 lg:gap-2">
-          <nav aria-label="Breadcrumb" className="hidden items-center gap-2 text-[13px] text-prose-dim lg:flex">
+          <nav aria-label={UI.breadcrumb} className="hidden items-center gap-2 text-[13px] text-prose-dim lg:flex">
             <Link to={ROUTES.portal} className="rounded hover:text-space-2 hover:underline">
               {SNBP_HEADER.breadcrumbHome}
             </Link>

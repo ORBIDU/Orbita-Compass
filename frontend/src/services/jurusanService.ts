@@ -2,7 +2,7 @@ import type { BidangKey, CampusGroup, CampusOffering, FitLabel, JurusanDetail, J
 import type { CompassAnalysis, MajorWithUniversity } from "@/types/backend";
 import type { CompassHighlights } from "@/types/dashboard";
 import type { CompassRecommendation, CompassResult, HiddenPath, PathGroup, PathKey } from "@/types/compass";
-import { FEATURED_SLUGS, JURUSAN_CATALOG } from "@/data/jurusan";
+import { JURUSAN_CATALOG } from "@/data/jurusan";
 import { delay } from "@/lib/delay";
 import { BIDANG } from "@/config/bidang";
 import { getMajors } from "./ptnService";
@@ -20,16 +20,26 @@ function toSummary({ slug, name, bidang, description, imageUrl }: JurusanDetail)
 
 const normalize = (text: string) => text.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").trim();
 
+/**
+ * Jenis lembaga di tab hero /jurusan: "umum" = PTN & PTS (semua bidang selain
+ * Kedinasan), "kedinasan" = sekolah kedinasan saja.
+ */
+export type JenisLembaga = "umum" | "kedinasan";
+
+const cocokJenis = (bidang: BidangKey, jenis: JenisLembaga) => (jenis === "kedinasan" ? bidang === "kedinasan" : bidang !== "kedinasan");
+
 export interface JurusanQuery {
   search?: string;
   bidang?: BidangKey | null;
+  jenis?: JenisLembaga;
 }
 
 /** Katalog jurusan untuk /jurusan, sudah difilter pencarian dan bidang. */
-export async function getJurusanList({ search = "", bidang = null }: JurusanQuery = {}): Promise<JurusanSummary[]> {
+export async function getJurusanList({ search = "", bidang = null, jenis = "umum" }: JurusanQuery = {}): Promise<JurusanSummary[]> {
   await delay(150);
   const q = normalize(search);
   return JURUSAN_CATALOG.filter((j) => {
+    if (!cocokJenis(j.bidang, jenis)) return false;
     if (bidang && j.bidang !== bidang) return false;
     if (!q) return true;
     return [j.name, j.description, BIDANG[j.bidang].label].some((t) => normalize(t).includes(q));
@@ -38,19 +48,11 @@ export async function getJurusanList({ search = "", bidang = null }: JurusanQuer
     .sort((a, b) => a.name.localeCompare(b.name, "id"));
 }
 
-/** Jumlah jurusan per bidang (untuk angka di chip filter). */
-export function countByBidang(): Record<BidangKey, number> {
+/** Jumlah jurusan per bidang untuk satu jenis lembaga (angka di chip filter). */
+export function countByBidang(jenis: JenisLembaga = "umum"): Record<BidangKey, number> {
   const counts = {} as Record<BidangKey, number>;
-  for (const j of JURUSAN_CATALOG) counts[j.bidang] = (counts[j.bidang] ?? 0) + 1;
+  for (const j of JURUSAN_CATALOG) if (cocokJenis(j.bidang, jenis)) counts[j.bidang] = (counts[j.bidang] ?? 0) + 1;
   return counts;
-}
-
-/** Jurusan unggulan untuk carousel beranda. */
-export async function getFeaturedJurusan(): Promise<JurusanSummary[]> {
-  await delay(150);
-  return FEATURED_SLUGS.map((slug) => JURUSAN_CATALOG.find((j) => j.slug === slug))
-    .filter((j): j is JurusanDetail => Boolean(j))
-    .map(toSummary);
 }
 
 /** Detail jurusan, atau null jika slug tidak dikenal. */

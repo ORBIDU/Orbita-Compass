@@ -6,7 +6,7 @@ import { whatsappLink } from "@/config/brand";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 
 /** Id section beranda yang bisa dituju lewat tombol atau /#id. */
-export type LandingSection = "masalah" | "kenali" | "compass" | "jurusan" | "action-plan" | "faq";
+export type LandingSection = "masalah" | "tenang" | "perjalanan" | "faq";
 
 /**
  * Tujuan tombol-tombol beranda. Tidak ada pendaftaran mandiri: tamu diajak
@@ -14,8 +14,14 @@ export type LandingSection = "masalah" | "kenali" | "compass" | "jurusan" | "act
  * halaman portal terkait.
  */
 export function useLandingNav() {
-  const { status } = useAuth();
+  const { status, user } = useAuth();
   const loggedIn = status === "authenticated";
+  const portalTo =
+    user?.role === "WALI_KELAS"
+      ? ROUTES.walikelas
+      : user?.role === "BK_TEACHER"
+      ? ROUTES.bk
+      : ROUTES.portal;
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const reduced = useReducedMotion();
@@ -39,12 +45,13 @@ export function useLandingNav() {
 
   return {
     loggedIn,
+    portalTo,
     scrollTo,
     /** "Berlangganan": WhatsApp dengan pesan template (brand.ts). */
     subscribeHref: whatsappLink("berlangganan"),
-    /** "Kenali Dirimu" */
+    /** Kartu "Kenali Diri" */
     kenaliTo: loggedIn ? ROUTES.analisisPotensi : ROUTES.masuk,
-    /** "Mulai Action Plan" */
+    /** Kartu "Susun Langkah" */
     actionPlanTo: loggedIn ? ROUTES.actionPlan : ROUTES.masuk,
   };
 }

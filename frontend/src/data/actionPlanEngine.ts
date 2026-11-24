@@ -2,7 +2,6 @@ import type {
   DurationOption,
   PlanCategory,
   PlanDuration,
-  PlanMinutes,
   PlanPractice,
   PlanSettings,
   PlanSettingsInput,
@@ -12,7 +11,7 @@ import { KEDINASAN_TESTS, TKA_REQUIRED } from "@/types/actionPlan";
 import { SNBT_SUBTESTS } from "@/types/dashboard";
 import { addDays, formatMonthYear, lastDayOfMonth, weekdayOf } from "@/lib/datetime";
 import { SELECTION_TIMELINE } from "./timeline";
-import { SESSION_SIZE, sessionMinutes } from "@/config/practice";
+import { PRACTICES_PER_DAY, SESSION_SIZE, sessionMinutes } from "@/config/practice";
 
 // Sementara, dipakai juga di mode backend sampai endpoint Action Plan (/study-plan dan latihan harian, API_CONTRACT 11.1–11.2) ada.
 //
@@ -38,8 +37,6 @@ export interface PlanState {
 /** Skor 0–1 per `${kategori}:${subtes}`. Makin rendah, makin perlu dilatih. */
 export type Weakness = Record<string, number>;
 
-export const PRACTICES_PER_DAY: Record<PlanMinutes, number> = { 30: 2, 60: 3, 90: 4 };
-
 /** Ukuran satu latihan per kategori (config/practice.ts: SESSION_SIZE dan detik per soal). */
 export const PRACTICE_SIZE: Record<PlanCategory, { questions: number; minutes: number }> = {
   SNBT: { questions: SESSION_SIZE, minutes: sessionMinutes("snbt") },
@@ -51,10 +48,6 @@ export const PRACTICE_SIZE: Record<PlanCategory, { questions: number; minutes: n
 const DEFAULT_SCORE = 0.6;
 
 export const weaknessKey = (category: PlanCategory, subject: string) => `${category}:${subject}`;
-
-export function practicesPerWeek(input: Pick<PlanSettingsInput, "studyDays" | "minutesPerDay">): number {
-  return input.studyDays.length * PRACTICES_PER_DAY[input.minutesPerDay];
-}
 
 export function practiceTitle(category: PlanCategory, subject: string): string {
   if (category === "SNBT") return `Latihan ${SNBT_SUBTESTS.find((s) => s.key === subject)?.name ?? subject}`;

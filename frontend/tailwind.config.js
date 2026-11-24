@@ -21,17 +21,16 @@ const brand = {
 
 // Warna ilustrasi maskot dan planet (dipakai SVG lewat kelas fill-/stroke-/stop-).
 const mascot = {
+  // light/dark/glow dipakai lewat theme() di gradien SVG (MascotFigure, AuthVideoSlot).
   light: "#8CC8FF",
   mid: "#1F7BFF",
   dark: "#0445B8",
   glow: "#3D8BFF",
   highlight: "#B5DCFF",
   cap: "#1E2F62",
-  cheek: "#FF8FB1",
+  cheek: "#C9E4FF",
   orbit: "#6E9BEA",
   "orbit-soft": "#8FB8FF",
-  "planet-1": "#22397A",
-  "planet-3": "#0C1530",
 };
 
 const gradient = (from, to) => `linear-gradient(135deg, ${from} 0%, ${to} 100%)`;
@@ -57,12 +56,12 @@ export default {
           muted: "#6B7280",
           faint: "#9CA3AF",
         },
-        // Garis pembatas: DEFAULT untuk border kartu/input, soft untuk pemisah tipis
+        // Garis pembatas: DEFAULT untuk border kartu/input, soft untuk border bawaan semua elemen (styles/theme.css)
         line: {
           DEFAULT: "#E5E7EB",
           soft: "rgba(0, 0, 0, 0.08)",
         },
-        // Warna status (kalender, badge, validasi)
+        // Warna status (validasi, KPI dan status impor portal Wali Kelas)
         success: "#22C55E",
         warning: "#F1AD00",
         danger: "#EF4444",
@@ -107,6 +106,10 @@ export default {
           "navy-bg": "#DDE3F2", "navy-ink": "#15234D",
           "amber-bg": "#FFF1CC", "amber-ink": "#8A5A00",
         },
+        // Halaman Untuk Sekolah (docs/design/publik/UntukSekolah-Desktop.jpg)
+        sekolah: { navy: "#121F41", judul: "#1E3A6E", bintang: "#8B7A45", garis: "#FBBF24" },
+        // Dua lapis gunung di hero Untuk Sekolah: makin dekat makin gelap
+        gunung: { tengah: "#3F4E8C", dekat: "#1F2B57" },
         // Teks di latar navy (Final CTA dan footer)
         night: { light: "#F4F7FF", sub: "#C8D4EE", text: "#A9B8D9", dim: "#8394BC", chip: "#DCE6FF", line: "rgba(169, 184, 217, 0.18)", positive: "#7BE3A6", "positive-bg": "rgba(46, 204, 113, 0.18)" },
         // Hijau WhatsApp yang cukup gelap untuk teks putih (5,4:1).
@@ -129,12 +132,9 @@ export default {
         // Versi horizontal untuk tombol CTA dan progress bar
         "gradient-sun-x": gradientX(brand["sun-1"], brand["sun-2"]),
         "gradient-orbit-x": gradientX(brand["orbit-1"], brand["orbit-2"]),
-        // Latar hero beranda
-        "hero-glow":
-          "radial-gradient(760px 600px at 74% 40%, rgba(9,101,250,0.11), rgba(9,101,250,0) 70%), radial-gradient(420px 320px at 94% 84%, rgba(255,112,0,0.10), rgba(255,112,0,0) 70%), linear-gradient(180deg, #F2F6FF 0%, #FFFFFF 100%)",
-        // Latar Final CTA + footer
-        "night-glow":
-          "radial-gradient(760px 460px at 50% 12%, rgba(9,101,250,0.30), rgba(9,101,250,0) 70%), linear-gradient(180deg, #15234D 0%, #101A33 100%)",
+        // Beranda Fase 10 (docs/design/publik): section Masalah dan garis buku tulis di "Tenang"
+        "masalah-glow": "linear-gradient(180deg, #FFFFFF 0%, #E3EEFB 100%)",
+        "buku-garis": "repeating-linear-gradient(180deg, transparent 0 36px, #DCEBFA 36px 38px)",
         // Panel video auth: desktop (kiri 65%) dan banner HP
         "auth-glow":
           "radial-gradient(620px 520px at 50% 46%, rgba(9,101,250,0.34), rgba(9,101,250,0) 70%), radial-gradient(360px 300px at 82% 82%, rgba(255,112,0,0.12), rgba(255,112,0,0) 70%), linear-gradient(180deg, #15234D 0%, #101A33 100%)",
@@ -145,10 +145,20 @@ export default {
           "radial-gradient(520px 260px at 82% 50%, rgba(9,101,250,0.38), rgba(9,101,250,0) 70%), linear-gradient(120deg, #15234D 0%, #101A33 100%)",
         "portal-hero-sm":
           "radial-gradient(260px 200px at 90% 20%, rgba(9,101,250,0.4), rgba(9,101,250,0) 70%), linear-gradient(140deg, #15234D 0%, #101A33 100%)",
+        // Hero FAQ: langit malam biru (docs/design/publik/FAQ-Desktop.jpg)
+        "faq-hero": "linear-gradient(160deg, #15234D 0%, #1C3A9E 55%, #2F6BE0 100%)",
+        // Bulan (hero Untuk Sekolah dan FAQ)
+        bulan: "radial-gradient(circle at 35% 35%, #FFF7D6 0%, #FFE7A3 45%, #F1C76B 100%)",
+        // Hero Untuk Sekolah (docs/design/publik/UntukSekolah-Desktop.jpg)
+        "sekolah-hero": "linear-gradient(90deg, #121C37 31.6%, #33509D 100%)",
+        // Hero Eksplor Jurusan: langit pagi (docs/design/publik/EksplorJurusan-Desktop.jpg)
+        "jurusan-langit": "linear-gradient(180deg, #6DCAFF 0%, #FFFFFF 60.6%, #FFEEC3 100%)",
+        // Kartu kaca di section "Apa yang Didapat Sekolah?"
+        "kaca-navy": "linear-gradient(150deg, rgba(137,149,182,0.28), rgba(24,46,106,0.15) 40%, rgba(18,31,65,0.3))",
+        // Garis linimasa "Cara kerjanya": kuning ke biru
+        "linimasa": "linear-gradient(180deg, #FBBF24 0%, #F59E0B 45%, #01B2DD 75%, #0965FA 100%)",
         // Sorotan bidang di kartu ORBIDU Compass
         "compass-soft": "linear-gradient(120deg, #EEF4FF, #E4F6FB)",
-        // Piringan planet di belakang maskot
-        planet: "radial-gradient(circle at 45% 40%, #22397A 0%, #15234D 55%, #0C1530 100%)",
       },
       fontFamily: {
         // Font utama untuk semua teks
@@ -174,10 +184,8 @@ export default {
         soft: "0 16px 36px rgba(16, 26, 51, 0.08)",
         lift: "0 24px 50px rgba(16, 26, 51, 0.12)",
         chip: "0 8px 20px rgba(16, 26, 51, 0.08)",
-        float: "0 8px 22px rgba(16, 26, 51, 0.18)",
         bubble: "0 12px 30px rgba(16, 26, 51, 0.16)",
         sun: "0 14px 30px rgba(255, 112, 0, 0.25)",
-        planet: "0 40px 90px rgba(21, 35, 77, 0.30)",
         // Tombol mode aktif (Masuk/Daftar)
         tab: "0 4px 12px rgba(16, 26, 51, 0.10)",
         // Menu bawah portal di HP
@@ -197,21 +205,43 @@ export default {
         "ob-blink": { "0%, 92%, 100%": { transform: "scaleY(1)" }, "94%": { transform: "scaleY(0.08)" }, "96%": { transform: "scaleY(1)" } },
         "ob-flow": { to: { strokeDashoffset: "-480" } },
         "ob-twinkle": { "0%, 100%": { opacity: "0.3", transform: "scale(0.7)" }, "50%": { opacity: "1", transform: "scale(1.15)" } },
-        "ob-bob": { "0%, 100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-6px)" } },
         "ob-hop": {
           "0%, 55%, 100%": { transform: "translateY(0)" },
           "15%": { transform: "translateY(-18px)" },
           "30%": { transform: "translateY(0)" },
           "40%": { transform: "translateY(-7px)" },
         },
+        // Ilustrasi hero halaman publik (Beranda, Untuk Sekolah, Tentang Kami).
+        "ob-kelip": { "0%, 100%": { opacity: "0.2" }, "50%": { opacity: "1" } },
+        "ob-meteor": {
+          "0%": { transform: "translateX(0)", opacity: "0" },
+          "6%": { opacity: "1" },
+          "55%": { opacity: "1" },
+          "70%, 100%": { transform: "translateX(-120vw)", opacity: "0" },
+        },
+        "ob-awan": { from: { transform: "translateX(-24px)" }, to: { transform: "translateX(24px)" } },
+        "ob-goyang": { from: { transform: "rotate(-1.6deg)" }, to: { transform: "rotate(1.6deg)" } },
+        "ob-melayang": { from: { transform: "translateY(6px) rotate(-1deg)" }, to: { transform: "translateY(-12px) rotate(1.5deg)" } },
+        "ob-api": { from: { transform: "scaleX(0.82)", opacity: "0.85" }, to: { transform: "scaleX(1.12)", opacity: "1" } },
+        "ob-kilau": { from: { opacity: "0.65" }, to: { opacity: "1" } },
+        "ob-denyut": { from: { transform: "scale(0.94)", opacity: "0.75" }, to: { transform: "scale(1.06)", opacity: "1" } },
+        "ob-muncul": { from: { transform: "translateY(24px)", opacity: "0" }, to: { transform: "translateY(0)", opacity: "1" } },
       },
       animation: {
         "ob-float": "ob-float 6s ease-in-out infinite",
         "ob-blink": "ob-blink 5.5s infinite",
         "ob-flow": "ob-flow 18s linear infinite",
         "ob-twinkle": "ob-twinkle 4.2s ease-in-out infinite",
-        "ob-bob": "ob-bob 7s ease-in-out infinite",
         "ob-hop": "ob-hop 2.6s ease-in-out infinite",
+        "ob-kelip": "ob-kelip 3.2s ease-in-out infinite",
+        "ob-meteor": "ob-meteor 9s linear infinite",
+        "ob-awan": "ob-awan 14s ease-in-out infinite alternate",
+        "ob-goyang": "ob-goyang 5s ease-in-out infinite alternate",
+        "ob-melayang": "ob-melayang 4.5s ease-in-out infinite alternate",
+        "ob-api": "ob-api 0.16s ease-in-out infinite alternate",
+        "ob-kilau": "ob-kilau 5s ease-in-out infinite alternate",
+        "ob-denyut": "ob-denyut 4s ease-in-out infinite alternate",
+        "ob-muncul": "ob-muncul 0.7s cubic-bezier(.22,.8,.3,1) both",
       },
     },
   },

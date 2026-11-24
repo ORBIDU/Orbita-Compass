@@ -26,9 +26,10 @@ import WhySection from "@/components/compass/WhySection";
 import ScholarshipSection from "@/components/compass/ScholarshipSection";
 import { EmptyCompass, LockedCompass } from "@/components/compass/CompassStates";
 import { usePageTitle } from "@/lib/usePageTitle";
+import { UI } from "@/content/common";
+import { formatDate } from "@/lib/datetime";
 
 const MAX_RECOMMENDATIONS = 5;
-const longDate = (iso: string) => new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "long", year: "numeric" }).format(new Date(iso));
 
 /**
  * ORBIDU Compass (/portal/compass), sesuai docs/design/portal/Portal-Compass.dc.html
@@ -157,7 +158,7 @@ export default function CompassPage() {
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-4 px-4 pb-8 pt-4 sm:px-6 lg:gap-6 lg:px-10 lg:pb-12 lg:pt-7">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between lg:gap-8">
           <div className="flex max-w-[680px] flex-col gap-1.5 lg:gap-2">
-            <nav aria-label="Breadcrumb" className="hidden items-center gap-2 text-[13px] text-prose-dim lg:flex">
+            <nav aria-label={UI.breadcrumb} className="hidden items-center gap-2 text-[13px] text-prose-dim lg:flex">
               <Link to={ROUTES.portal} className="rounded hover:text-space-2 hover:underline">
                 {COMPASS_HEADER.breadcrumbHome}
               </Link>
@@ -174,7 +175,7 @@ export default function CompassPage() {
             <div className="flex flex-col gap-2 rounded-2xl border border-rim-soft bg-white p-3.5 lg:min-w-[300px] lg:px-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-[13px] text-prose">{COMPASS_HEADER.analyzedAt(longDate(analysis.analyzedAt))}</span>
+                  <span className="text-[13px] text-prose">{COMPASS_HEADER.analyzedAt(formatDate(analysis.analyzedAt))}</span>
                   {placeholderQuestions && (
                     <span title={COMPASS_HEADER.trialQuestionsHint} className="self-start rounded-full bg-tint-orange-bg px-2 py-0.5 text-[11px] font-semibold text-tint-orange-fg">
                       {COMPASS_HEADER.trialQuestions}

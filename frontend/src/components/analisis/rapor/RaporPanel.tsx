@@ -7,9 +7,9 @@ import { DESKTOP_QUERY, useMediaQuery } from "@/lib/useMediaQuery";
 import type { RaporData, RaporSemester } from "@/types/analisis";
 import { PanelError, PanelSkeleton } from "@/components/ui/PanelState";
 import RaporTrendChart from "./RaporTrendChart";
+import { formatKelas, gradeRoman } from "@/lib/user";
+import { formatDate } from "@/lib/datetime";
 
-const ROMAN: Record<number, string> = { 10: "X", 11: "XI", 12: "XII" };
-const longDate = (iso: string) => new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "long", year: "numeric" }).format(new Date(iso));
 
 /** Mapel yang dipilih pertama kali: Matematika jika ada. */
 function defaultSubject(subjects: string[]): string {
@@ -80,9 +80,9 @@ export default function RaporPanel({ state }: { state: AsyncState<RaporData> }) 
       <div className="flex gap-2.5 rounded-[14px] bg-surface-blue px-3.5 py-3 text-[13px] leading-normal text-space-1 lg:items-center lg:px-4 lg:text-sm">
         <Info size={18} aria-hidden="true" className="mt-px shrink-0 text-orbit-1 lg:mt-0" />
         <span className="flex-1">{RAPOR.info}</span>
-        {data.updatedAt && <span className="hidden shrink-0 text-xs text-prose lg:inline">{RAPOR.source(longDate(data.updatedAt))}</span>}
+        {data.updatedAt && <span className="hidden shrink-0 text-xs text-prose lg:inline">{RAPOR.source(formatDate(data.updatedAt))}</span>}
       </div>
-      {data.updatedAt && <span className="-mt-2 text-xs text-prose lg:hidden">{RAPOR.source(longDate(data.updatedAt))}</span>}
+      {data.updatedAt && <span className="-mt-2 text-xs text-prose lg:hidden">{RAPOR.source(formatDate(data.updatedAt))}</span>}
 
       {withScores.length === 0 ? (
         <section className="flex flex-col items-center gap-3 rounded-card border border-rim-soft bg-white px-5 py-12 text-center lg:px-12 lg:py-14">
@@ -156,7 +156,7 @@ export default function RaporPanel({ state }: { state: AsyncState<RaporData> }) 
                 const has = s.subjects.length > 0;
                 const isOpen = has && openSemester === s.semester;
                 const detailId = `rapor-sem-${s.semester}`;
-                const kelas = ROMAN[s.grade] ?? String(s.grade);
+                const kelas = gradeRoman(s.grade);
                 return (
                   <li key={s.semester} className="flex flex-col gap-2.5 rounded-[18px] border border-rim-soft bg-white p-4 lg:gap-0 lg:rounded-none lg:border-0 lg:border-b lg:border-rim-faint lg:p-0">
                     {/* HP: kartu */}
@@ -165,7 +165,7 @@ export default function RaporPanel({ state }: { state: AsyncState<RaporData> }) 
                         <span className="text-[15px] font-bold text-space-2">
                           {RAPOR.semester(s.semester)}, {s.term}
                         </span>
-                        <span className="text-xs text-prose-dim">{RAPOR.kelasYear(`Kelas ${kelas}`, s.schoolYear)}</span>
+                        <span className="text-xs text-prose-dim">{RAPOR.kelasYear(formatKelas(s.grade), s.schoolYear)}</span>
                       </div>
                       <span className={`shrink-0 text-right font-bold tabular-nums ${has ? "text-xl text-space-2" : "text-sm text-prose-dim"}`}>{avgText(s)}</span>
                     </div>

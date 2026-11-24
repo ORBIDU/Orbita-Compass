@@ -1,5 +1,5 @@
 import { SNBP_FACTORS, SNBP_RESULT, SNBP_STRATEGY } from "@/content/siapSnbp";
-import { formatScore } from "@/lib/rapor";
+import { formatScore, semesterRange } from "@/lib/rapor";
 import type { SnbpCategory, SnbpChoiceResult, SnbpFactor, SnbpInput, SnbpResult } from "@/types/snbp";
 
 // Sementara, dipakai juga di mode backend sampai endpoint POST /snbp/rationalization (API_CONTRACT 12.2) ada.
@@ -24,13 +24,6 @@ const SAFE_MIN = 88;
 const WATCH_MIN = 84;
 
 const mean = (values: number[]) => values.reduce((a, b) => a + b, 0) / values.length;
-
-/** "semester 1 sampai 4" / "semester 5" */
-export function semesterRange(semesters: number[]): string {
-  if (semesters.length === 0) return "";
-  if (semesters.length === 1) return `semester ${semesters[0]}`;
-  return `semester ${semesters[0]} sampai ${semesters[semesters.length - 1]}`;
-}
 
 const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 

@@ -9,8 +9,8 @@ import { formatKelas } from "@/lib/user";
 import type { AsesmenDoc, AssessmentSummary } from "@/types/analisis";
 import type { BidangKey } from "@/types/jurusan";
 import Dialog from "@/components/ui/Dialog";
+import { formatDate } from "@/lib/datetime";
 
-const longDate = (iso: string) => new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "long", year: "numeric" }).format(new Date(iso));
 
 interface TestDoneProps {
   doc: AsesmenDoc;
@@ -24,7 +24,7 @@ function HistoryRow({ kelas, date, bidang, latest }: { kelas: string; date: stri
     <li className="flex items-start justify-between gap-3 border-b border-rim-faint py-3.5 last:border-b-0">
       <span className="flex flex-col gap-0.5">
         <span className="text-sm font-semibold text-space-2">{kelas}</span>
-        <span className="text-xs text-prose-dim">{longDate(date)}</span>
+        <span className="text-xs text-prose-dim">{formatDate(date)}</span>
         {bidang && <span className="text-[13px] text-space-1">{TEST_DONE.topField(BIDANG[bidang].label)}</span>}
       </span>
       {latest && <span className="shrink-0 rounded-full bg-tint-blue-bg px-2.5 py-[3px] text-xs font-semibold text-tint-blue-fg">{TEST_DONE.latest}</span>}
@@ -45,7 +45,7 @@ export default function TestDone({ doc, summary, latestBidang }: TestDoneProps) 
           <CircleCheck size={28} aria-hidden="true" />
         </span>
         <h2 className="text-xl font-bold text-space-2 lg:text-2xl">{TEST_DONE.title}</h2>
-        <p className="text-sm leading-relaxed text-prose lg:text-[15px]">{TEST_DONE.body(longDate(summary.completedAt), kelas)}</p>
+        <p className="text-sm leading-relaxed text-prose lg:text-[15px]">{TEST_DONE.body(formatDate(summary.completedAt), kelas)}</p>
         <div className="mt-1 flex flex-col gap-2.5 sm:flex-row">
           <Link
             to={ROUTES.compass}

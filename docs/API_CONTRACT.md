@@ -10,6 +10,31 @@
 
 Status: 🔴 belum ada · 🟡 ada tetapi perlu diubah · ✅ sudah sesuai
 
+## Ringkasan
+
+Semua kebutuhan di bawah dikerjakan di `backend-api/` (Naufal), kecuali yang
+diberi catatan lain. Detail tiap baris ada di bagian yang disebut.
+
+| Bagian | Isi | Status | Menunggu |
+|---|---|---|---|
+| 1 | Keamanan: `passwordHash` di respons, register terbuka, endpoint admin tanpa cek peran, cek kepemilikan data, kunci jawaban terkirim | 🔴 | Naufal (prioritas tertinggi) |
+| 2 | Auth dan profil: pesan error, nilai bawaan palsu, field profil, dua persetujuan, reset password, token kedaluwarsa 403 | 🔴 🟡 | Naufal |
+| 3 | Status siswa, riwayat tes per kelas, simpan jawaban tes, skor 5 dimensi | 🔴 | Naufal; aturan skor dari Bu Putri |
+| 4 | Ringkasan kebutuhan per fase | — | — |
+| 5 | Catatan bentuk respons: field JSON string, target kampus/prodi tidak cocok di seed | 🟡 | Naufal |
+| 6 | Katalog jurusan per nama, kampus pembuka, label kecocokan | 🔴 🟡 | Naufal + tim data |
+| 7 | Dashboard: rencana hari ini, hasil latihan, timeline seleksi, notifikasi | 🔴 | Naufal |
+| 8 | Analisis Potensi: prestasi lengkap, rapor per semester | 🟡 | Naufal |
+| 9 | ORBIDU Compass: target jurusan, kapan analisis ulang, rekomendasi yang bisa dicocokkan | 🔴 🟡 | Naufal |
+| 10 | Explore Beasiswa: katalog dan beasiswa tersimpan | 🔴 | Naufal + tim data |
+| 11 | Action Plan: pengaturan, latihan harian, hasil per latihan | 🔴 | Naufal |
+| 12 | Persiapan: Siap SNBP, rasionalisasi, riwayat latihan, bank soal, tryout | 🔴 | Naufal + tim data (bank soal); rumus disetujui tim |
+| 13 | Profil: data diri dari sekolah, hak ubah siswa, nama panggilan/foto/password | 🔴 | Naufal + sekolah |
+| 14 | Akun berlangganan: admin membuat akun, wajib ganti password awal | 🔴 | Naufal |
+| 15 | Portal Wali Kelas: peran `WALI_KELAS`, profil wali, dashboard kelas, daftar dan detail siswa, impor rapor | 🔴 | Naufal |
+| 16 | Portal Guru BK: profil konselor, dashboard sekolah, daftar & detail siswa lintas kelas, catatan konseling | 🔴 | Naufal |
+| 17 | Pesan "Hubungi Kami" dari halaman FAQ (publik) | 🔴 | Naufal |
+
 ---
 
 ## 1. Keamanan (prioritas tertinggi)
@@ -55,6 +80,12 @@ Hasil pengecekan kode backend (2026-09-28):
 - `GET /ptn/practice/questions` mengirim `answerIndex`.
 - **Dibutuhkan:** soal dikirim tanpa kunci. Penilaian dan pembahasan dikirim oleh backend **setelah** jawaban disubmit (lihat 5.2).
 - **Frontend:** tidak pernah menampilkan kunci sebelum soal disubmit. Halaman pengerjaan hanya menerima soal tanpa kunci; bentuk endpoint pengganti di bagian 12.5–12.6. Sementara `GET /ptn/practice/questions` tidak dipakai.
+- **Update PR #6 (Naufal):** `GET /ptn/practice/questions` sudah tidak mengirim `answerIndex`, tetapi kunci jawaban masih bisa diambil lewat endpoint baru di 1.6.
+
+### 1.6 Endpoint pembuat soal AI terbuka untuk umum 🔴
+- `POST /ptn/practice/generate-ai` (dari PR #6) bisa dipanggil **tanpa login**. Responsnya berisi soal lengkap dengan `answerIndex` dan `explanation`, termasuk soal yang diambil dari arsip bank soal (`master_questions.json`) saat Gemini tidak dipakai. Dengan `saveToBank: true`, siapa pun juga bisa menambah soal ke tabel `QuestionBank`, dan setiap panggilan bisa memakai kuota Gemini.
+- **Dibutuhkan:** `authenticateToken` + `requireRole("ADMIN")` (atau peran tim konten) di endpoint ini. `GET /ptn/practice/blueprints` boleh tetap publik kalau isinya hanya taksonomi tanpa contoh soal berkunci.
+- **Frontend:** tidak memakai endpoint ini.
 
 ---
 
@@ -193,9 +224,9 @@ GET /assessment/answers → { "answers": { … } | null }        // jawaban tes 
 
 ---
 
-## 4. Kebutuhan lain yang sudah diketahui
+## 4. Kebutuhan per fase
 
-Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
+Daftar kebutuhan menurut fase pengerjaan frontend. Bentuk endpoint lengkapnya ada di bagian yang disebut di tiap baris.
 
 | Kebutuhan | Fase | Status |
 |---|---|---|
@@ -218,20 +249,9 @@ Belum ada bentuk final. Dirinci saat fasenya dikerjakan.
 - Frontend mem-parse-nya di service.
 - Jika backend pindah ke PostgreSQL, sebaiknya dikirim sebagai array/objek asli. Beri tahu tim frontend agar service ikut diubah.
 
-### 5.2 Penilaian tryout
-- `POST /ptn/practice/submit` saat ini menghitung skor dari jumlah soal yang **dijawab**, bukan yang benar.
-- **Dibutuhkan:** backend menilai jawaban dan mengirim hasil per soal:
-
-```jsonc
-{
-  "result": {
-    "totalScore": 612, "maxScore": 1000,
-    "correctCount": 14, "totalQuestions": 20,
-    "perSubtest": [ { "subtest": "PU", "correct": 3, "total": 4 } ],
-    "answers": [ { "questionId": "…", "chosenIndex": 2, "answerIndex": 1, "explanation": "…" } ]
-  }
-}
-```
+### 5.2 Penilaian tryout (lihat 12.6)
+- `POST /ptn/practice/submit` yang ada menghitung skor dari jumlah soal yang **dijawab**, bukan yang benar. Frontend tidak memakainya.
+- Bentuk penilaian yang dibutuhkan (dinilai di server, skor per subtes, kunci dan pembahasan hanya setelah selesai) sudah dirinci di **bagian 12.6**. Bagian ini tidak lagi punya bentuk respons sendiri supaya tidak ada dua versi.
 
 ### 5.3 Target kampus dan prodi tidak saling cocok (data seed)
 - Di seed backend, akun `siswa@orbita.id` punya `targetPtn` Universitas Indonesia, tetapi `targetMajor`-nya milik kampus lain (`targetMajor.universityId` ≠ `targetPtnId`). Penyebabnya, `seed.ts` mencari prodi dengan `findFirst({ name: { contains: "Komputer" } })` tanpa menyaring kampus.
@@ -362,10 +382,10 @@ PATCH /notifications/:id/read → { "message": "…" }
 
 - Sumber: pengingat Action Plan (`notifyEmail`/`notifyWa` sudah ada di `ActionPlanItem`) dan hasil tryout.
 
-### 7.5 Nama panggilan 🔴
-Sapaan Dashboard ("Selamat pagi, Rizki!") memakai `profile.nickname`, yang sudah diusulkan di bagian 2.3 tetapi belum ada di backend.
+### 7.5 Nama panggilan (lihat 13.3) 🔴
+Sapaan Dashboard ("Selamat pagi, Rizki!") memakai `profile.nickname`.
 
-- `GET /auth/me` dan `GET /profile` mengirim `profile.nickname` (string atau `null`); `PUT /profile` menerimanya.
+- Bentuk endpoint mengikuti **bagian 13.3**: siswa mengubahnya lewat `PUT /profile/nickname` (bukan `PUT /profile`), dan `GET /auth/me` serta `GET /profile` mengirim `profile.nickname` (string atau `null`).
 - Selama kosong, frontend memakai kata pertama nama lengkap (dengan backend asli: "Selamat malam, Ahmad!"). Mode dummy sudah mengisi `"Rizki"` dan `"Budi"`.
 
 ---
@@ -807,3 +827,63 @@ POST /admin/students/bulk             ← file CSV/Excel: name, email, schoolNam
 - Setelah admin mereset password (bagian 2.5), `mustChangePassword` kembali `true`.
 - **Frontend:** halaman Aktivasi langkah 1. Selama `/auth/me` belum mengirim `mustChangePassword`, langkah ini dilewati di mode backend.
 
+---
+
+## 15. Portal Wali Kelas (`/walikelas`)
+
+Dibuat di PR #7 (akira4n). Sementara hanya berjalan di mode dummy: `frontend/src/services/waliService.ts` memakai `frontend/src/mocks/waliMock.ts`, dan di mode backend setiap fungsi melempar error "Endpoint backend … belum tersedia" (halaman menampilkan pesan gagal memuat). Bentuk data mengikuti `frontend/src/types/wali.ts`.
+
+### 15.1 Peran `WALI_KELAS` 🔴
+- Enum `Role` di `schema.prisma` baru berisi `STUDENT`, `BK_TEACHER`, `ADMIN`. Frontend sudah mengenal `WALI_KELAS` (`types/backend.ts`) dan mengarahkannya ke `/walikelas` setelah masuk.
+- **Dibutuhkan:** tambah `WALI_KELAS` ke enum `Role`, plus relasi wali ↔ kelas (satu wali memegang satu kelas di satu tahun ajaran), supaya setiap endpoint di bawah hanya mengembalikan siswa di kelasnya sendiri (cek kepemilikan, lihat 1.4).
+
+### 15.2 Endpoint yang dibutuhkan 🔴
+Semua wajib `authenticateToken` + `requireRole("WALI_KELAS")`.
+```
+GET  /walikelas/profile        → WaliTeacherProfile   { id, name, nip, kelas, semester, tahunAjaran, avatarUrl?, initials }
+GET  /walikelas/dashboard      → WaliDashboardData    (KPI, distribusi nilai, tren semester, kelengkapan profil, catatan BK)
+GET  /walikelas/students       → StudentSummary[]
+GET  /walikelas/students/:id   → StudentDetail        (404 kalau siswa bukan di kelas wali ini)
+POST /profile/rapor/import-excel  (multipart: file, semester, tahunAjaran) → { "success": true, "count": 36 }
+```
+- `import-excel` sudah ada, tetapi sejak PR #6 hanya untuk `ADMIN` dan `BK_TEACHER`. Kalau wali kelas yang mengimpor rapor, `WALI_KELAS` perlu ditambahkan dan dibatasi ke siswa di kelasnya.
+- `initials` boleh dihitung di frontend dari `name`; kirim `null` untuk kolom yang belum ada, jangan nilai contoh.
+
+---
+
+## 16. Portal Guru BK (`/bk`)
+
+Sementara berjalan di mode dummy: `frontend/src/services/bkService.ts` memakai `frontend/src/mocks/bkMock.ts`, dan di mode backend setiap fungsi melempar error `"Endpoint backend … belum tersedia"` hingga endpoint siap. Bentuk data mengikuti `frontend/src/types/bk.ts`.
+
+### 16.1 Kondisi backend saat ini 🟡
+- Peran `BK_TEACHER` sudah ada di `schema.prisma` dan akun seed `gurubk@orbita.id` sudah tersedia (`password123`).
+- Endpoint `/bk/teachers` dan `/bk/bookings` (jadwal konseling) sudah ada, namun belum ada endpoint agregasi dashboard sekolah, pemantauan siswa lintas kelas, tryout summary, maupun catatan konseling terstruktur untuk Portal Guru BK.
+
+### 16.2 Endpoint yang dibutuhkan 🔴
+Semua endpoint di bawah wajib `authenticateToken` + `requireRole("BK_TEACHER")`:
+```
+GET  /bk/profile                 → BkTeacherProfile   { id, name, nip, jabatan, sekolah, semester, tahunAjaran, avatarUrl?, initials }
+GET  /bk/dashboard               → BkDashboardData    (KPI sekolah, AI monitoring mingguan, peta potensi X/XI/XII, aktivitas terkini)
+GET  /bk/students                → BkStudentSummary[] (daftar siswa lintas kelas beserta status tes minat & prioritas pendampingan)
+GET  /bk/students/:id            → BkStudentDetail    (profil, absensi, rapor semester 1–6, tryout SNBT/TKA/SKD, minat & rekomendasi, prestasi, catatan BK)
+POST /bk/students/:id/notes      ← CreateBkNoteInput  { tanggal, konselor, topik, catatan, rekomendasi, tindakLanjut, prioritas }
+                                 → 201 BkNoteItem
+```
+- `GET /bk/students` dan `GET /bk/students/:id` dibatasi ke siswa pada sekolah konselor yang login.
+- Catatan konseling baru (`POST /bk/students/:id/notes`) juga dapat diteruskan sebagai notifikasi ke Wali Kelas siswa terkait (bagian 15).
+
+## 17. Pesan "Hubungi Kami" (`/faq`, Fase 10)
+
+Sementara form "Kirim Pesan Langsung" di `/faq` (`frontend/src/components/faq/FaqKontak.tsx`) membuka WhatsApp dengan pesan yang sudah terisi (`whatsappTextLink` di `frontend/src/config/brand.ts`). Tidak ada data yang dikirim ke backend.
+
+### 17.1 Endpoint yang dibutuhkan 🔴
+```
+POST /contact-messages           (publik, tanpa login)
+  ← { nama: string, email?: string, peran: "Sekolah" | "Guru BK" | "Wali Kelas" | "Partner" | "Siswa" | "Lainnya", pesan: string }
+  → 201 { id: string, createdAt: string }
+  → 400 { error: string, code: "INVALID_INPUT" }   (nama/pesan kosong, email tidak valid, pesan terlalu panjang)
+  → 429 { error: string, code: "RATE_LIMITED" }
+```
+- **Alasan:** pesan sekolah dan calon partner bisa dicatat dan ditindaklanjuti tim, tidak hanya bergantung pada WhatsApp.
+- Karena publik, perlu batas jumlah kiriman per IP dan batas panjang pesan (mis. 2.000 karakter) di backend.
+- Saat endpoint siap, form tetap menampilkan tautan WhatsApp sebagai alternatif.

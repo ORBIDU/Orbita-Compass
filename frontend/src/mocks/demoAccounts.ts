@@ -9,5 +9,7 @@ export const AUTH_DEMO_HINT = {
   accounts: [
     { email: "siswa@orbita.id", note: "siswa aktif" },
     { email: "dimas@orbita.id", note: "login pertama" },
+    { email: "walkel@orbita.id", note: "wali kelas" },
+    { email: "gurubk@orbita.id", note: "guru BK" },
   ],
 };

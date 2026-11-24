@@ -23,6 +23,9 @@ export const SNBP_ELIGIBLE = {
   notEligibleCta: "Buka Siap SNBT",
 };
 
+/** Label daftar langkah (untuk pembaca layar). */
+export const SNBP_STEPS_LABEL = "Langkah rasionalisasi";
+
 export const SNBP_STEPS = [
   { label: "Input data", sub: "Rapor, TKA, prestasi, prodi" },
   { label: "Review", sub: "Periksa sebelum dihitung" },
